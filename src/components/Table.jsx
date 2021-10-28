@@ -1,10 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
+import PlanetsContext from '../context/PlanetsContext';
+
+const URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
 
 const tableHeaders = ['Name', 'Rotation Period', 'Orbital Period', 'Diameter', 'Climate',
   'Gravity', 'Terrain', 'Surface Water',
   'Population', 'Films', 'Created', 'Edited', 'URL'];
 
 export default function Table() {
+  const { data, setData } = useContext(PlanetsContext);
+
+  const fetchPlanets = async () => {
+    const response = await fetch(URL);
+    const resolve = await response.json();
+    setData(resolve.results);
+  };
+
+  useEffect(fetchPlanets, []);
 
   return (
     <table>
