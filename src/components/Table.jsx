@@ -1,23 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
-const URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
-
 const tableHeaders = ['Name', 'Rotation Period', 'Orbital Period', 'Diameter', 'Climate',
   'Gravity', 'Terrain', 'Surface Water',
   'Population', 'Films', 'Created', 'Edited', 'URL'];
 
 export default function Table() {
-  const [data, setData] = useState([]);
-
-  const fetchPlanets = async () => {
-    const response = await fetch(URL);
-    const resolve = await response.json();
-    setData(resolve.results);
-  };
-
-  useEffect(() => {
-    fetchPlanets();
-  }, [data]);
 
   return (
     <table>
@@ -32,7 +19,7 @@ export default function Table() {
       <tbody>
         { data.map((planet) => (
           <tr key={ planet.url }>
-            <td>{ planet.name }</td>
+            <td data-testid="name-filter">{ planet.name }</td>
             <td>{ planet.rotation_period }</td>
             <td>{ planet.orbital_period }</td>
             <td>{ planet.diameter }</td>
