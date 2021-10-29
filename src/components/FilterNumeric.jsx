@@ -1,19 +1,11 @@
 import React, { useState, useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
-const selectColumnList = [
-  'population',
-  'orbital_period',
-  'diameter',
-  'rotation_period',
-  'surface_water',
-];
-
 const selectComparationList = ['maior que', 'menor que', 'igual a'];
 
 export default function FilterNumeric() {
   const {
-    setFilter, filterObject, setPlanetsFilter, allPlanets,
+    setFilter, columns, setColumns, filterObject, setPlanetsFilter, allPlanets,
   } = useContext(PlanetsContext);
 
   const [column, setColumn] = useState('population');
@@ -42,7 +34,9 @@ export default function FilterNumeric() {
       }
       return null;
     });
+    const newColumns = columns.filter((columnItem) => columnItem !== column);
     setPlanetsFilter(filterByNumeric);
+    setColumns(newColumns);
   };
 
   return (
@@ -52,7 +46,7 @@ export default function FilterNumeric() {
         value={ column }
         onChange={ ({ target: { value: targetValue } }) => setColumn(targetValue) }
       >
-        {selectColumnList.map((item) => (
+        {columns.map((item) => (
           <option key={ item }>{item}</option>
         ))}
       </select>
