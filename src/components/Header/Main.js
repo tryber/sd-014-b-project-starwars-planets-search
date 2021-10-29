@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import Context from '../../context/Context';
-
+import Filter from './Filter';
+import Select from './Select';
 
 function Header() {
   const { filters,
@@ -50,10 +51,19 @@ function Header() {
     return copyColumns;
   };
 
+  const columnsOptions = setColumnsOptions();
+
+  const handleRemoveFilter = (col) => {
+    const removeFilter = filterByNumericValues.filter((item) => item.column !== col);
+    setFilters({
+      ...filters,
+      filterByNumericValues: removeFilter,
+    });
+  };
 
   return (
     <header>
-      <h1> StarWars Planets </h1>
+      <h1> Star Wars Planets </h1>
       <form>
         <div>
           <label htmlFor="filterByName">
@@ -70,6 +80,21 @@ function Header() {
             />
           </label>
         </div>
+        <div>
+          <Select
+            testid="column-filter"
+            options={ columnsOptions }
+            name="column"
+            value={ filterOptions.column }
+            handleChange={ handleChange }
+          />
+          <Select
+            testid="comparison-filter"
+            options={ comparisonOptions }
+            name="comparison"
+            value={ filterOptions.comparison }
+            handleChange={ handleChange }
+          />
           <input
             type="number"
             data-testid="value-filter"
@@ -86,7 +111,7 @@ function Header() {
           </button>
         </div>
         <div>
-          <RenderFilters
+          <Filter
             filters={ filterByNumericValues }
             handleClick={ handleRemoveFilter }
           />
