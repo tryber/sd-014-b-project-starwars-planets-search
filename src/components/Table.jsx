@@ -6,7 +6,7 @@ const tableHeaders = ['Name', 'Rotation Period', 'Orbital Period', 'Diameter', '
   'Population', 'Films', 'Created', 'Edited', 'URL'];
 
 export default function Table() {
-  const { dataFilter } = useContext(PlanetsContext);
+  const { planetsFilter } = useContext(PlanetsContext);
 
   return (
     <table>
@@ -19,7 +19,7 @@ export default function Table() {
       </thead>
       {/* { map abaixo feito com ajuda do github copilot } */}
       <tbody>
-        { dataFilter.map((planet) => (
+        { planetsFilter.map((planet) => (
           <tr key={ planet.url }>
             <td>{ planet.name }</td>
             <td>{ planet.rotation_period }</td>

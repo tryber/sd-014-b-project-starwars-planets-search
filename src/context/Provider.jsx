@@ -5,25 +5,29 @@ import mockData from '../testData';
 
 const URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
 
-export default function Provider({ children }) {
-  const [data, setData] = useState([]);
-  const [dataFilter, setDataFilter] = useState(data);
-  const [filterName, setFilterName] = useState('');
-  const [filter, setFilter] = useState({
-    filters: {
-      filterByName: {
-        name: '',
-      },
+const INITIAL_STATE = {
+  filters:
+  {
+    filterByName: {
+      name: '',
     },
-  });
+    filterByNumericValues: [],
+  },
+};
+
+export default function Provider({ children }) {
+  const [allPlanets, setAllPlanets] = useState([]);
+  const [planetsFilter, setPlanetsFilter] = useState(allPlanets);
+  const [name, setName] = useState('');
+  const [filterObject, setFilter] = useState(INITIAL_STATE);
 
   const fetchPlanets = async () => {
     try {
       const response = await fetch(URL);
       const resolve = await response.json();
-      setData(resolve.results);
+      setAllPlanets(resolve.results);
     } catch (error) {
-      setData(mockData.results);
+      setAllPlanets(mockData.results);
     }
   };
 
@@ -33,28 +37,20 @@ export default function Provider({ children }) {
   }, []);
 
   useEffect(() => {
-    setFilter({
-      filters: {
-        filterByName: {
-          name: filterName,
-        },
-      },
-    });
     console.log('filter');
-    const filterDataByName = data.filter(({ name }) => (
-      name.toLowerCase().includes(filterName.toLowerCase())
+    const filterDataByName = allPlanets.filter(({ name: nameData }) => (
+      nameData.toLowerCase().includes(name.toLowerCase())
     ));
-    setDataFilter(filterDataByName);
-  }, [data, filterName]);
+    setPlanetsFilter(filterDataByName);
+  }, [allPlanets, name]);
 
   const context = {
-    data,
-    dataFilter,
-    filterName,
-    setData,
-    filter,
+    allPlanets,
+    planetsFilter,
+    name,
+    setName,
+    filterObject,
     setFilter,
-    setFilterName,
   };
 
   return (
