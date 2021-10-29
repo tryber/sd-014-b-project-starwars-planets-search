@@ -36,21 +36,14 @@ export default function Provider({ children }) {
     console.log('fetch-planets');
   }, []);
 
-  useEffect(() => {
-    console.log('filter');
-    const filterDataByName = allPlanets.filter(({ name: nameData }) => (
-      nameData.toLowerCase().includes(name.toLowerCase())
-    ));
-    setPlanetsFilter(filterDataByName);
-  }, [allPlanets, name]);
-
   const context = {
     allPlanets,
     planetsFilter,
     name,
-    setName,
     filterObject,
+    setName,
     setFilter,
+    setPlanetsFilter,
   };
 
   return (

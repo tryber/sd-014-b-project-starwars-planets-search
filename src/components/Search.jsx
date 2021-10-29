@@ -2,7 +2,9 @@ import React, { useState, useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 export default function Search() {
-  const { setFilter, filterObject, setName } = useContext(PlanetsContext);
+  const {
+    setFilter, filterObject, setName, setPlanetsFilter, allPlanets,
+  } = useContext(PlanetsContext);
   const [searchValue, setSearchValue] = useState('');
 
   const handleFilter = (value) => {
@@ -16,6 +18,10 @@ export default function Search() {
         },
       },
     });
+    const filterDataByName = allPlanets.filter(({ name: nameData }) => (
+      nameData.toLowerCase().includes(value.toLowerCase())
+    ));
+    setPlanetsFilter(filterDataByName);
   };
 
   return (

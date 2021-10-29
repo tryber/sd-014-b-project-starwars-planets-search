@@ -9,7 +9,7 @@ export default function Table() {
   const { planetsFilter } = useContext(PlanetsContext);
 
   return (
-    <table>
+    <table className="table table-dark">
       <thead>
         <tr>
           { tableHeaders.map((header) => (
