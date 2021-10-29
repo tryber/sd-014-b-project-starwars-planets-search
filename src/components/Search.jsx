@@ -3,13 +3,12 @@ import PlanetsContext from '../context/PlanetsContext';
 
 export default function Search() {
   const {
-    setFilter, filterObject, setName, setPlanetsFilter, allPlanets,
+    setFilter, filterObject, setPlanetsFilter, allPlanets,
   } = useContext(PlanetsContext);
   const [searchValue, setSearchValue] = useState('');
 
   const handleFilter = (value) => {
     setSearchValue(value);
-    setName(value);
     setFilter({
       filters: {
         ...filterObject,

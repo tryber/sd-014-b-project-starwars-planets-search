@@ -12,7 +12,9 @@ const selectColumnList = [
 const selectComparationList = ['maior que', 'menor que', 'igual a'];
 
 export default function FilterNumeric() {
-  const { setFilter, filterObject } = useContext(PlanetsContext);
+  const {
+    setFilter, filterObject, setPlanetsFilter, allPlanets,
+  } = useContext(PlanetsContext);
 
   const [column, setColumn] = useState('population');
   const [comparation, setComparation] = useState('maior que');
@@ -28,6 +30,19 @@ export default function FilterNumeric() {
         ],
       },
     });
+    const filterByNumeric = allPlanets.filter((planet) => {
+      if (comparation === 'maior que') {
+        return Number(planet[column]) > Number(value);
+      }
+      if (comparation === 'menor que') {
+        return Number(planet[column]) < Number(value);
+      }
+      if (comparation === 'igual a') {
+        return Number(planet[column]) === Number(value);
+      }
+      return null;
+    });
+    setPlanetsFilter(filterByNumeric);
   };
 
   return (

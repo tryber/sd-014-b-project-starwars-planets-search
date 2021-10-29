@@ -18,7 +18,6 @@ const INITIAL_STATE = {
 export default function Provider({ children }) {
   const [allPlanets, setAllPlanets] = useState([]);
   const [planetsFilter, setPlanetsFilter] = useState(allPlanets);
-  const [name, setName] = useState('');
   const [filterObject, setFilter] = useState(INITIAL_STATE);
 
   const fetchPlanets = async () => {
@@ -26,8 +25,10 @@ export default function Provider({ children }) {
       const response = await fetch(URL);
       const resolve = await response.json();
       setAllPlanets(resolve.results);
+      setPlanetsFilter(resolve.results);
     } catch (error) {
       setAllPlanets(mockData.results);
+      setPlanetsFilter(mockData.results);
     }
   };
 
@@ -39,9 +40,7 @@ export default function Provider({ children }) {
   const context = {
     allPlanets,
     planetsFilter,
-    name,
     filterObject,
-    setName,
     setFilter,
     setPlanetsFilter,
   };
