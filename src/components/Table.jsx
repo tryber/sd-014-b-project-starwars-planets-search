@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
+import mockData from '../testData';
 
 const URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
 
@@ -11,12 +12,18 @@ export default function Table() {
   const { data, setData } = useContext(PlanetsContext);
 
   const fetchPlanets = async () => {
-    const response = await fetch(URL);
-    const resolve = await response.json();
-    setData(resolve.results);
+    try {
+      const response = await fetch(URL);
+      const resolve = await response.json();
+      setData(resolve.results);
+    } catch (error) {
+      setData(mockData.results);
+    }
   };
 
-  useEffect(fetchPlanets, []);
+  useEffect(() => {
+    fetchPlanets();
+  });
 
   return (
     <table>
