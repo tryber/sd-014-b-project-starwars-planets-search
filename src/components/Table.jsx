@@ -1,29 +1,12 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
-import mockData from '../testData';
-
-const URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
 
 const tableHeaders = ['Name', 'Rotation Period', 'Orbital Period', 'Diameter', 'Climate',
   'Gravity', 'Terrain', 'Surface Water',
   'Population', 'Films', 'Created', 'Edited', 'URL'];
 
 export default function Table() {
-  const { data, setData } = useContext(PlanetsContext);
-
-  const fetchPlanets = async () => {
-    try {
-      const response = await fetch(URL);
-      const resolve = await response.json();
-      setData(resolve.results);
-    } catch (error) {
-      setData(mockData.results);
-    }
-  };
-
-  useEffect(() => {
-    fetchPlanets();
-  });
+  const { dataFilter } = useContext(PlanetsContext);
 
   return (
     <table>
@@ -36,9 +19,9 @@ export default function Table() {
       </thead>
       {/* { map abaixo feito com ajuda do github copilot } */}
       <tbody>
-        { data.map((planet) => (
+        { dataFilter.map((planet) => (
           <tr key={ planet.url }>
-            <td data-testid="name-filter">{ planet.name }</td>
+            <td>{ planet.name }</td>
             <td>{ planet.rotation_period }</td>
             <td>{ planet.orbital_period }</td>
             <td>{ planet.diameter }</td>
