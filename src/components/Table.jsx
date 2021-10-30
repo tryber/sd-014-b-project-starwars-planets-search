@@ -1,14 +1,6 @@
-import React, { useEffect } from 'react';
-import getPlanets from '../services/getPlanets';
+import React from 'react';
 
 export default function Table() {
-  const fetchPlanets = async () => {
-    await getPlanets();
-  };
-
-  useEffect(() => {
-    fetchPlanets();
-  }, []);
   return (
     <div>
       table
