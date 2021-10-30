@@ -22,7 +22,6 @@ export default function useFetch(URL) {
         setAllPlanets(mockData.results);
         setIsLoading(false);
       }
-      console.log('fetch-planets');
     };
     fetchPlanets();
   }, [URL]);
