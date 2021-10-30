@@ -11,12 +11,13 @@ export default function Table() {
     setHeaders(data, setTableHeaders);
   }, []);
 
-  console.log(tableHeaders);
+  console.log(`corpo: ${tableHeaders}`);
 
-  const headers = headersFilter(data, filteredCharact);
+  const characts = headersFilter(data, filteredCharact);
 
   return ( // // adaptado do site https://edrodrigues.com.br/blog/criando-tabelas-com-filtros-%E2%80%8B%E2%80%8Busando-react/
     <table border="1">
+      {console.log('return')}
       <thead>
         <tr>
           {tableHeaders.map((description) => (
@@ -26,7 +27,7 @@ export default function Table() {
       <tbody>
         { data.map((desc, i) => (
           <tr key={ i }>
-            {headers.map((charact) => (
+            {characts.map((charact) => (
               <td key={ charact }>{ desc[`${charact}`] }</td>
             ))}
           </tr>
