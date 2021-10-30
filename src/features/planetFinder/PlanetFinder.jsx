@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { PlanetContext } from '../../context/PlanetProvider';
-import './style.css';
+import './PlanetFinder.css';
 
 export default function PlanetFinder() {
   const { planets } = useContext(PlanetContext);
