@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import fetchPlanet from '../services/fetchPlanets';
+import fetchPlanets from '../services/fetchPlanets';
 
 export const PlanetContext = createContext();
 
@@ -9,7 +9,11 @@ export default function PlanetProvider(props) {
   const [planets, setPlanets] = useState([]);
 
   useEffect(() => {
-    setPlanets(fetchPlanet);
+    const getPlanets = async () => {
+      const response = await fetchPlanets();
+      setPlanets(response.results);
+    };
+    getPlanets();
   }, []);
 
   return (

@@ -1,12 +1,12 @@
 import React from 'react';
 import PlanetProvider from './context/PlanetProvider';
-import Home from './Pages/Home';
+import PlanetFinder from './features/planetFinder/PlanetFinder';
 import './App.css';
 
 function App() {
   return (
     <PlanetProvider>
-      <Home />
+      <PlanetFinder />
     </PlanetProvider>
   );
 }
