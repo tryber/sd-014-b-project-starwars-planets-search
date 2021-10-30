@@ -1,6 +1,9 @@
-export default function (dataFromContext, setState) {
-  const allHeaders = (Object.keys(dataFromContext[0]));
-  const headers = allHeaders.filter((head) => head !== 'residents');
+import headersFilter from './headersFilter';
+
+export const filteredCharact = 'residents';
+
+export function setHeaders(dataFromContext, setState) {
+  const headers = headersFilter(dataFromContext, filteredCharact);
 
   for (let i = 0; i < headers.length; i += 1) { // adaptado de https://stackoverflow.com/questions/953311/replace-string-in-javascript-array
     headers[i] = headers[i].replace('_', ' ');
