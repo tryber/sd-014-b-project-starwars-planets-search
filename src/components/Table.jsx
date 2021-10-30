@@ -10,24 +10,35 @@ export default function Table() {
     setHeaders(data, setTableHeaders);
   }, []);
 
-  // const allHeaders = (Object.keys(data[0]));
-  // const headers = allHeaders.filter((head) => head !== 'residents');
-
-  // const modifiedHeaders = headers;
-
-  // for (let i = 0; i < modifiedHeaders.length; i += 1) { // adaptado de https://stackoverflow.com/questions/953311/replace-string-in-javascript-array
-  //   modifiedHeaders[i] = modifiedHeaders[i].replace('_', ' ');
-  // }
-
-  // for (let i = 0; i < modifiedHeaders.length; i += 1) { // adaptado de https://stackoverflow.com/questions/1026069/how-do-i-make-the-first-letter-of-a-string-uppercase-in-javascript
-  //   modifiedHeaders[i] = modifiedHeaders[i]
-  //     .charAt(0).toUpperCase() + modifiedHeaders[i].slice(1);
-  //   setTableHeaders(modifiedHeaders);
-  // }
-
   console.log(tableHeaders);
 
   return ( // // adaptado do site https://edrodrigues.com.br/blog/criando-tabelas-com-filtros-%E2%80%8B%E2%80%8Busando-react/
-    <div>oi</div>
+    <table border="1">
+      <thead>
+        <tr>
+          {tableHeaders.map((description) => (
+            <th key={ description }>{ description }</th>))}
+        </tr>
+      </thead>
+      <tbody>
+        { data.map((desc, i) => (
+          <tr key={ i }>
+            <td>{ desc.name }</td>
+            <td>{ desc.rotation_period }</td>
+            <td>{ desc.orbital_period }</td>
+            <td>{ desc.diameter }</td>
+            <td>{ desc.climate }</td>
+            <td>{ desc.gravity }</td>
+            <td>{ desc.terrain }</td>
+            <td>{ desc.surface_water }</td>
+            <td>{ desc.population }</td>
+            <td>{ desc.films }</td>
+            <td>{ desc.created }</td>
+            <td>{ desc.edited }</td>
+            <td>{ desc.url }</td>
+          </tr>
+        )) }
+      </tbody>
+    </table>
   );
 }
