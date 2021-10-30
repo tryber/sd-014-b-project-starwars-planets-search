@@ -27,5 +27,5 @@ export default function useFetch(URL) {
     fetchPlanets();
   }, [URL]);
 
-  return { allPlanets, isLoading, serverError };
+  return [allPlanets, isLoading, serverError];
 }
