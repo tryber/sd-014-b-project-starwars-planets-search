@@ -5,20 +5,22 @@ import PlanetsContext from './PlanetsContext';
 
 export default function PlanetsProvider({ children }) {
   const [data, setData] = useState([]);
+  const [isFetching, setIsFetching] = useState(true);
 
   const fetchPlanets = async () => {
+    setIsFetching(true);
     const planetsFromApi = await getPlanets();
     setData(planetsFromApi);
+    setIsFetching(false);
   };
 
   useEffect(() => {
     fetchPlanets();
-  }, [data]);
+  }, []);
 
   return (
-    <PlanetsContext.Provider value={ data }>
-      {children}
-    </PlanetsContext.Provider>
+    isFetching ? 'Loading'
+      : <PlanetsContext.Provider value={ { data } }>{children}</PlanetsContext.Provider>
   );
 }
 
