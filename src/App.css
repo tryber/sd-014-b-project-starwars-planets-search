@@ -1,4 +1,9 @@
 .header {
+  background: url(https://i.imgur.com/59SyQyl.jpeg);
+  display: flex;
+  flex-direction: column;
+  height: 35vh;
+  justify-content: space-evenly;
   padding: 1rem;
 }
 
@@ -9,6 +14,7 @@
 
 .search-and-title {
   align-items: center;
+  color: white;
   display: flex;
   flex-direction: column;
 }
