@@ -1,5 +1,5 @@
 .header {
-  background: url(https://i.imgur.com/59SyQyl.jpeg);
+  background: url('https://i.imgur.com/59SyQyl.jpeg');
   display: flex;
   flex-direction: column;
   height: 35vh;
