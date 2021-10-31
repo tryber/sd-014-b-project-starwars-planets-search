@@ -11,7 +11,7 @@ export default function Search() {
     setSearchValue(value);
     setFilter({
       filters: {
-        ...filterObject,
+        ...filterObject.filters,
         filterByName: {
           name: value,
         },
