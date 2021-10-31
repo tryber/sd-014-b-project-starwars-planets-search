@@ -40,8 +40,9 @@ export default function FilterNumeric() {
   };
 
   return (
-    <form>
+    <form className="filter-numeric-form">
       <select
+        className="form-control"
         data-testid="column-filter"
         value={ column }
         onChange={ ({ target: { value: targetValue } }) => setColumn(targetValue) }
@@ -51,6 +52,7 @@ export default function FilterNumeric() {
         ))}
       </select>
       <select
+        className="form-control"
         data-testid="comparison-filter"
         value={ comparation }
         onChange={ ({ target: { value: targetValue } }) => setComparation(targetValue) }
@@ -60,6 +62,7 @@ export default function FilterNumeric() {
         ))}
       </select>
       <input
+        className="form-control"
         data-testid="value-filter"
         type="number"
         value={ value }
@@ -68,6 +71,7 @@ export default function FilterNumeric() {
       <button
         type="button"
         data-testid="button-filter"
+        className="btn btn-primary"
         onClick={ () => handleClick() }
       >
         Filtrar

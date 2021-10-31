@@ -25,6 +25,7 @@ export default function Search() {
 
   return (
     <input
+      className="form-control"
       data-testid="name-filter"
       type="text"
       value={ searchValue }

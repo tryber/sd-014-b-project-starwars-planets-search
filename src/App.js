@@ -8,8 +8,13 @@ import Provider from './context/Provider';
 function App() {
   return (
     <Provider>
-      <Search />
-      <FilterNumeric />
+      <header className="header">
+        <section className="search-and-title">
+          <h1>Projeto Star Wars - Trybe</h1>
+          <Search />
+        </section>
+        <FilterNumeric />
+      </header>
       <Table />
     </Provider>
   );
