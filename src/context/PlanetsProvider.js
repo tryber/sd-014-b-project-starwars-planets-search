@@ -13,19 +13,23 @@ class PlanetsProvider extends React.Component {
     this.requestApi = this.requestApi.bind(this);
   }
 
+  componentDidMount() {
+    this.requestApi();
+  }
+
   async requestApi() {
     const results = await fetchApi();
     this.setState({
       planets: results,
     });
+    console.log(results);
   }
 
   render() {
     const { children } = this.props;
     const { planets } = this.state;
-    console.log(planets);
     return (
-      <PlanetsContext.Provider value={ planets }>
+      <PlanetsContext.Provider value={ { planets } }>
         { children }
       </PlanetsContext.Provider>
     );
@@ -33,7 +37,7 @@ class PlanetsProvider extends React.Component {
 }
 
 PlanetsProvider.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.arrayOf.isRequired,
 };
 
 export default PlanetsProvider;
