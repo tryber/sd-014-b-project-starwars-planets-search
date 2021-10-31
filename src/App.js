@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 
 import './App.css';
 
+const columnOptions = ['population', 'orbital_period',
+  'diameter', 'rotation_period', 'surface_water'];
+
 function App() {
   const URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
   const [planetList, setPlanets] = useState([]);
@@ -9,6 +12,7 @@ function App() {
   const [columnFilter, setColumnFilter] = useState('population');
   const [comparisonFilter, setComparisonFilter] = useState('maior que');
   const [valueFilter, setValueFilter] = useState('');
+  const [selectorOptions, setSelectorOptions] = useState(columnOptions);
 
   // componentDidMount
   useEffect(() => {
@@ -43,6 +47,10 @@ function App() {
     return textFilter;
   }
 
+  function removeFilterFromOptions() {
+    return selectorOptions.filter((item) => item !== columnFilter);
+  }
+
   function filterNumericValues(rows) {
     const textFilter = search(rows);
     const numericFilter = textFilter.filter((row) => {
@@ -60,6 +68,8 @@ function App() {
         return row;
       }
     });
+    setSelectorOptions(removeFilterFromOptions());
+    setColumnFilter(selectorOptions[0]); // para ajustar o valor para o primeiro valor mostrado no dropdown
     setPlanets(numericFilter);
   }
 
@@ -121,11 +131,12 @@ function App() {
           value={ columnFilter }
           onChange={ (e) => setColumnFilter(e.target.value) }
         >
-          <option value="population">population</option>
-          <option value="orbital_period">orbital_period</option>
-          <option value="diameter">diameter</option>
-          <option value="rotation_period">rotation_period</option>
-          <option value="surface_water">surface_water</option>
+          { selectorOptions.map(
+            (option, index) => (
+              <option key={ index } value={ option }>
+                {option}
+              </option>),
+          ) }
         </select>
         <select
           data-testid="comparison-filter"
