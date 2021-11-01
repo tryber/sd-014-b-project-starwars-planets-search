@@ -22,7 +22,6 @@ class PlanetsProvider extends React.Component {
     this.setState({
       planets: results,
     });
-    console.log(results);
   }
 
   render() {
