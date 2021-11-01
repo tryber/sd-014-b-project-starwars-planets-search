@@ -4,15 +4,15 @@ import MyContext from '../context/MyContext';
 import Table from '../components/Table';
 
 function Main() {
-  const { data, getPlanets } = useContext(MyContext);
-  console.log(data);
+  const { planetsList, getPlanets } = useContext(MyContext);
+  // console.log(data);
 
   useEffect(() => {
     getPlanets();
   }, []);
 
   return (
-    <Table data={ data } />
+    <Table data={ planetsList } />
   );
 }
 
