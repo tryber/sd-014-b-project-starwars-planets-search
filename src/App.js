@@ -1,9 +1,12 @@
 import React from 'react';
 import './App.css';
+import Planets from './components/Planets';
 
 function App() {
   return (
-    <span>Hello Word!</span>
+    <div>
+      <Planets />
+    </div>
   );
 }
 
