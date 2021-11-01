@@ -3,10 +3,10 @@ import React, { useState } from 'react';
 import myContext from './MyContext';
 
 function Provider({ children }) {
-  const [planetsList, setPlanetsList] = useState([]);
+  const [data, setData] = useState([]);
   const contextValue = {
-    planetsList,
-    setPlanetsList,
+    data,
+    setData,
   };
   return (
     <myContext.Provider value={ contextValue }>
