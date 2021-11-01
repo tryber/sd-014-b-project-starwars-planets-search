@@ -3,7 +3,7 @@ import MyContext from '../context/MyContext';
 import FormFilter from './FormFilter';
 
 function TablePlanets() {
-  const { data } = useContext(MyContext);
+  const { data, filteredPlanets, isFiltering } = useContext(MyContext);
   const firstRow = (
     <tr>
       <th>Name</th>
@@ -44,7 +44,9 @@ function TablePlanets() {
       <table>
         <tbody>
           {firstRow}
-          {data.map((planet) => infoRow(planet, planet.url))}
+          {!isFiltering
+            ? data.map((planet) => infoRow(planet, planet.url))
+            : filteredPlanets.map((planet) => infoRow(planet, planet.url))}
         </tbody>
       </table>
     </section>
