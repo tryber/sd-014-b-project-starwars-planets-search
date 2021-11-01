@@ -1,10 +1,21 @@
 import React from 'react';
-import './App.css';
+import Table from './components/Table';
+import useFetchPlanets from './services/useFetchPlanets';
 
-function App() {
+import './App.css';
+import AppContext from './context';
+
+const App = () => {
+  const [data] = useFetchPlanets('https://swapi-trybe.herokuapp.com/api/planets/');
+
   return (
-    <span>Hello, App!</span>
+    <AppContext.Provider value={ { data } }>
+      <main>
+        Hello, App!
+        <Table />
+      </main>
+    </AppContext.Provider>
   );
-}
+};
 
 export default App;
