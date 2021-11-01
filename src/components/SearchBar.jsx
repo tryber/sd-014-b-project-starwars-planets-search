@@ -3,6 +3,7 @@ import Input from './Input';
 import PlanetsContext from '../context/PlanetsContext';
 import Select from './Select';
 import Button from './Button';
+import InputRadio from './InputRadio';
 import { columnOptions, comparisonOptions, columnSortOptions } from './selectOptionsData';
 
 function SearchBar() {
@@ -22,6 +23,7 @@ function SearchBar() {
         type="text"
         label=""
         value={ filterByName.name }
+        placeholder="Filtrar por nome"
         dataTestid="name-filter"
         onchange={ handleChangeByNameValues }
       />
@@ -44,6 +46,7 @@ function SearchBar() {
         type="number"
         label=""
         value={ filterByNumericValues.value }
+        placeholder="0"
         dataTestid="value-filter"
         onchange={ handleChangeByNumericValues }
       />
@@ -60,21 +63,21 @@ function SearchBar() {
         onchange={ handleChangeByOrderValues }
         options={ columnSortOptions }
       />
-      <Input
+      <InputRadio
         id="sort"
         type="radio"
         label="Ascendente"
         value="ASC"
         dataTestid="name-filter"
-        onchange={ handleChangeByOrderValues }
+        onclick={ handleChangeByOrderValues }
       />
-      <Input
+      <InputRadio
         id="sort"
         type="radio"
         label="Descendente"
         value="DESC"
         dataTestid="name-filter"
-        onchange={ handleChangeByOrderValues }
+        onclick={ handleChangeByOrderValues }
       />
       <Button
         name="Ordenar"

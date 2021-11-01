@@ -11,7 +11,7 @@ function Provider({ children }) {
     filterByNumericValues: {
       column: 'population',
       comparison: 'maior que',
-      value: '100000',
+      value: '',
     },
     order: {
       column: 'name',
@@ -59,6 +59,8 @@ function Provider({ children }) {
         [id]: value,
       },
     });
+
+    console.log(value);
   }
   function handleFilterByNumericValues() {
     console.log('handleFilterByNumericValues');
