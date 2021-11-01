@@ -8,7 +8,7 @@ function TableProvider({ children }) {
     filterByName: {
       name: '',
     },
-    /* filterByNumericValues: [{ column, comparison, value }], */
+    filterByNumericValues: [{ column, comparison, value }],
   });
   const URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
 
