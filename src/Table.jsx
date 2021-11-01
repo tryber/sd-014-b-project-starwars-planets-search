@@ -2,8 +2,7 @@ import React, { useContext } from 'react';
 import AppContext from './Context';
 
 function Table() {
-  const { data } = useContext(AppContext);
-  console.log(data);
+  const { filtred } = useContext(AppContext);
 
   const tableHead = ['Name', 'Rotation Period', 'Orbital Period',
     'Diameter', 'Climate', 'Gravity', 'Terrain', 'Surface Water',
@@ -17,7 +16,7 @@ function Table() {
             <th key={ index }><b>{ element }</b></th>
           ))}
         </tr>
-        {data.map((element, index) => (
+        {filtred.map((element, index) => (
           <tr key={ index }>
             <td>{ element.name }</td>
             <td>{ element.rotation_period }</td>

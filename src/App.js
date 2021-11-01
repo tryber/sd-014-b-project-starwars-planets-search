@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import AppContext from './Context';
+import SearchBar from './searchBar';
 import Table from './Table';
 
 function App() {
   const [data, setData] = useState([]);
+  const [filtred, setFiltred] = useState([]);
 
   const api = async () => {
     const response = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
@@ -17,7 +19,13 @@ function App() {
   const contextValue = {
     data,
     setData,
+    filtred,
+    setFiltred,
   };
+
+  useEffect(() => {
+    setFiltred(data);
+  }, [data]);
 
   useEffect(() => {
     api();
@@ -25,6 +33,7 @@ function App() {
 
   return (
     <AppContext.Provider value={ contextValue }>
+      <SearchBar />
       <Table />
     </AppContext.Provider>
   );
