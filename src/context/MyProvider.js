@@ -4,11 +4,19 @@ import MyContext from './MyContext';
 
 export const URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
 export const FILTER_TEXT = {
-  filters: {
-    filterByName: {
-      name: '',
+  filters:
+    {
+      filterByName: {
+        name: '',
+      },
+      filterByNumericValues: [
+        {
+          column: 'population',
+          comparison: 'maior que',
+          value: '100000',
+        },
+      ],
     },
-  },
 };
 
 function MyProvider({ children }) {
@@ -39,6 +47,33 @@ function MyProvider({ children }) {
     setIsFiltering(true);
   }
 
+  function handleClick(select1, select2, number) {
+    setIsFiltering(false);
+    const newFilter = {
+      column: select1,
+      comparison: select2,
+      value: number,
+    };
+    FILTER_TEXT.filters.filterByNumericValues.push(newFilter);
+    setFilter(FILTER_TEXT);
+    if (select2 === 'maior que') {
+      const filterPlanets = data.filter((planet) => Number(planet[select1])
+      > Number(number));
+      setFilteredPlanets(filterPlanets);
+      setIsFiltering(true);
+    } else if (select2 === 'menor que') {
+      const filterPlanets = data.filter((planet) => Number(planet[select1]) 
+    < Number(number));
+      setFilteredPlanets(filterPlanets);
+      setIsFiltering(true);
+    } else if (select2 === 'igual a') {
+      const filterPlanets = data.filter((planet) => Number(planet[select1])
+      === Number(number));
+      setFilteredPlanets(filterPlanets);
+      setIsFiltering(true);
+    }
+  }
+
   useEffect(() => {
     fetchPlanets();
   }, []);
@@ -52,7 +87,8 @@ function MyProvider({ children }) {
         isFiltering,
         filteredPlanets,
         fetchPlanets,
-        handlechange } }
+        handlechange,
+        handleClick } }
     >
       {children}
     </MyContext.Provider>
