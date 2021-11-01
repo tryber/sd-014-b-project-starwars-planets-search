@@ -1,7 +1,8 @@
-import React from 'react';
-import getPlanets from '../services/starWarsApi';
+import React, { useContext } from 'react';
+import TableContext from '../context/TableContext';
 
 function Table() {
+  const { data } = useContext(TableContext);
   return (
     <table>
       <tr>
@@ -19,7 +20,7 @@ function Table() {
         <th>Edited</th>
         <th>URL</th>
       </tr>
-      {dataPlanets.map((planet) => (
+      {data.results.map((planet) => (
         <tr key={ planet.name }>
           <td>{planet.name}</td>
           <td>{planet.rotation_period}</td>
