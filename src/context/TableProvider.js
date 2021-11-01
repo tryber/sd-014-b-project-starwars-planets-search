@@ -4,22 +4,19 @@ import TableContext from './TableContext';
 
 function TableProvider({ children }) {
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
   const URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
 
   useEffect(() => {
-    setLoading(true);
     const fetchPlanets = async () => {
       const response = await fetch(URL);
       const resolve = await response.json();
       setData(resolve.results);
-      setLoading(false);
     };
     fetchPlanets();
   }, []);
 
   return (
-    <TableContext.Provider value={ { data, loading } }>
+    <TableContext.Provider value={ { data } }>
       {children}
     </TableContext.Provider>
   );

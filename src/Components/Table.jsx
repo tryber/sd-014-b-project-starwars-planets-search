@@ -3,6 +3,7 @@ import TableContext from '../context/TableContext';
 
 function Table() {
   const { data } = useContext(TableContext);
+  console.log(data, 'aqui');
   return (
     <table>
       <thead>
