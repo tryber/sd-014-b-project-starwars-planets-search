@@ -62,7 +62,7 @@ function MyProvider({ children }) {
       setFilteredPlanets(filterPlanets);
       setIsFiltering(true);
     } else if (select2 === 'menor que') {
-      const filterPlanets = data.filter((planet) => Number(planet[select1]) 
+      const filterPlanets = data.filter((planet) => Number(planet[select1])
     < Number(number));
       setFilteredPlanets(filterPlanets);
       setIsFiltering(true);
@@ -72,6 +72,8 @@ function MyProvider({ children }) {
       setFilteredPlanets(filterPlanets);
       setIsFiltering(true);
     }
+    const deleteOption = document.getElementById(select1);
+    deleteOption.parentNode.removeChild(deleteOption);
   }
 
   useEffect(() => {
