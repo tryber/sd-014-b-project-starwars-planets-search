@@ -31,9 +31,9 @@ function Table({ data }) {
           return (
             <tr key={ index }>
               <td>{name}</td>
+              <td>{diameter}</td>
               <td>{planet.rotation_period}</td>
               <td>{planet.orbital_period}</td>
-              <td>{diameter}</td>
               <td>{climate}</td>
               <td>{gravity}</td>
               <td>{terrain}</td>
