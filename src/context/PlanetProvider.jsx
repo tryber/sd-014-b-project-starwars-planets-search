@@ -36,10 +36,14 @@ export default function PlanetProvider(props) {
   const handleFiltering = () => {
     switch (comparison) {
     case 'maior que':
-      setFilteredPlanets(planets.filter((planet) => planet[column] >= value));
+      setFilteredPlanets(
+        planets.filter((planet) => parseInt(planet[column], 10) > value),
+      );
       break;
     case 'menor que':
-      setFilteredPlanets(planets.filter((planet) => planet[column] <= value));
+      setFilteredPlanets(
+        planets.filter((planet) => parseInt(planet[column], 10) < value),
+      );
       break;
     case 'igual a':
       setFilteredPlanets(
