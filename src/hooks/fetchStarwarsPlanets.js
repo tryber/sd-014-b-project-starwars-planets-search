@@ -25,11 +25,30 @@ function useFetchPlanets() {
     }
   };
 
+  const filterPlanetsForValues = (filtersValues) => {
+    if (filtersValues.length !== 0) {
+      filtersValues.forEach((filter) => {
+        const filtered = planets.filter((item) => {
+          const columnValue = Number(item[filter.column]);
+          const filterValue = Number(filter.value);
+          if (filter.comparison === 'maior que') {
+            return columnValue > filterValue;
+          }
+          if (filter.comparison === 'menor que') {
+            return columnValue < filterValue;
+          }
+          return columnValue === filterValue;
+        });
+        setPlanets(filtered);
+      });
+    }
+  };
+
   useEffect(() => {
     getDataAPI();
   }, []);
 
-  return [planets, filterDataForName];
+  return [planets, filterDataForName, filterPlanetsForValues];
 }
 
 export default useFetchPlanets;
