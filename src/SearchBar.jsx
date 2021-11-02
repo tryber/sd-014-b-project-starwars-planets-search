@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import AppContext from './Context';
 
 function SearchBar() {
-  const { data, filtred, setFiltred } = useContext(AppContext);
+  const { data, setFiltred } = useContext(AppContext);
 
   function searching({ target }) {
     const word = target.value;
@@ -10,10 +10,7 @@ function SearchBar() {
       element.name.includes(word)
     ));
     setFiltred(array);
-    return console.log(word);
   }
-
-  console.log(filtred);
 
   return (
     <input

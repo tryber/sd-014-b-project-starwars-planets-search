@@ -27,7 +27,7 @@ function Table() {
             <td>{ element.terrain }</td>
             <td>{ element.surface_water }</td>
             <td>{ element.population }</td>
-            <td><a href=" element.films">{ element.films }</a></td>
+            <td><a href={ element.films }>{ element.films }</a></td>
             <td>{ element.created }</td>
             <td>{ element.edited }</td>
             <td><a href="element.url">{ element.url }</a></td>
