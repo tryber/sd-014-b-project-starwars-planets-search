@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-max-depth */
 import React, { useContext, useState } from 'react';
 import { PlanetContext } from '../../context/PlanetProvider';
 import Table from './components/Table';

@@ -1,5 +1,5 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default function Form(props) {
   const {
@@ -56,7 +56,7 @@ export default function Form(props) {
           data-testid="button-filter"
           type="button"
           onClick={ () => {
-            handleFiltering(comparison, column, value);
+            handleFiltering(column, comparison, value);
           } }
         >
           Filtrar
@@ -65,3 +65,14 @@ export default function Form(props) {
     </form>
   );
 }
+
+Form.propTypes = {
+  filterByName: PropTypes.shape({
+    name: PropTypes.string,
+    setName: PropTypes.func,
+  }).isRequired,
+  numericValues: PropTypes.arrayOf(PropTypes.any).isRequired,
+  setters: PropTypes.arrayOf(PropTypes.func).isRequired,
+  handleFiltering: PropTypes.func.isRequired,
+  columns: PropTypes.arrayOf(PropTypes.string).isRequired,
+};

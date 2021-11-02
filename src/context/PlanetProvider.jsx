@@ -40,7 +40,7 @@ export default function PlanetProvider(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [name]);
 
-  const handleFiltering = (comparison, column, value) => {
+  const handleFiltering = (column, comparison, value) => {
     setFilterByNumericValues([
       ...filterByNumericValues,
       { column, comparison, value },
