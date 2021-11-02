@@ -4,6 +4,35 @@ import PlanetsContext from './PlanetsContext';
 
 function Provider({ children }) {
   const [data, setData] = useState([]);
+  const [selectOptions, setSelectOptions] = useState({
+    columnOptions : [
+      'population',
+      'orbital_period',
+      'diameter',
+      'rotation_period',
+      'surface_water',
+    ],
+    comparisonOptions: [
+      'maior que',
+      'menor que',
+      'igual a',
+    ],
+    columnSortOptions: [
+      'name',
+      'rotation_period',
+      'orbital_period',
+      'diameter',
+      'climate',
+      'gravity',
+      'terrain',
+      'surface_water',
+      'population',
+      'films',
+      'created',
+      'edited',
+      'url',
+    ],
+  });
   const [filters, setFilters] = useState({
     filterByName: {
       name: '',
@@ -59,6 +88,7 @@ function Provider({ children }) {
 
   function handleFilterByNumericValues() {
     const { column, comparison, value } = filterByNumericValues;
+    const { columnOptions } = selectOptions;
     if(comparison === 'maior que') {
       const newData = data.filter((planet) => Number(planet.[column])  > value);
       setData(newData);
@@ -73,8 +103,16 @@ function Provider({ children }) {
       ...filters,
       filterByNumericValues: [...filters.filterByNumericValues, filterByNumericValues ]
     });
-
-    console.log(filters);
+    const newColumnOptions = columnOptions.filter((option) => option !== column);
+    setSelectOptions({
+      ...selectOptions,
+      columnOptions: newColumnOptions,
+    });
+    setFilterByNumericValues({
+      column: columnOptions[1],
+      comparison: 'maior que',
+      value: '',
+    })
   }
 
   function handleByOrder() {
@@ -82,6 +120,7 @@ function Provider({ children }) {
 
   const CONTEXT_DEFAULT = {
     data,
+    selectOptions,
     setData,
     fetchPlanetsApi,
     filters,

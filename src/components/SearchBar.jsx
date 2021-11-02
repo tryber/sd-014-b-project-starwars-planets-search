@@ -4,7 +4,6 @@ import PlanetsContext from '../context/PlanetsContext';
 import Select from './Select';
 import Button from './Button';
 import InputRadio from './InputRadio';
-import { columnOptions, comparisonOptions, columnSortOptions } from './selectOptionsData';
 
 function SearchBar() {
   const {
@@ -15,6 +14,7 @@ function SearchBar() {
     handleByOrder,
     filterByNumericValues,
     filters: { filterByName, order },
+    selectOptions: { columnOptions, comparisonOptions, columnSortOptions },
   } = useContext(PlanetsContext);
   return (
     <div>
