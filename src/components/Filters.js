@@ -3,7 +3,9 @@ import planetsContext from '../context/PlanetsContext';
 import '../styles/Filters.css';
 
 function Filters() {
-  const { handleChange } = useContext(planetsContext);
+  const { handleChange,
+    handleColumnFilter,
+    handleComparisonFilter } = useContext(planetsContext);
   return (
     <main className="main-filters">
       <label htmlFor="input-filter">
@@ -18,14 +20,20 @@ function Filters() {
         />
       </label>
       <section className="section-filters">
-        <select data-testid="column-filter">
+        <select
+          data-testid="column-filter"
+          onChange={ (event) => handleColumnFilter(event) }
+        >
           <option>population</option>
           <option>orbital_period</option>
           <option>diameter</option>
           <option>rotation_period</option>
           <option>surface_water</option>
         </select>
-        <select data-testid="comparison-filter">
+        <select
+          data-testid="comparison-filter"
+          onChange={ (event) => handleComparisonFilter(event) }
+        >
           <option>maior que</option>
           <option>menor que</option>
           <option>igual a</option>
