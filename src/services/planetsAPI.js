@@ -1,6 +1,6 @@
 const PLANET_LIST_URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
 
-export const getPlanetList = () => (
+const getPlanetList = () => (
   fetch(PLANET_LIST_URL)
     .then((response) => (
       response
