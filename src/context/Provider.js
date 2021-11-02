@@ -11,7 +11,12 @@ function Provider({ children }) {
     filterByNumericValues: [],
   };
 
-  const [planets, filterDataForName, filterPlanetsForValues] = useFetchPlanets();
+  const [
+    planets,
+    filterDataForName,
+    filterPlanetsForValues,
+    resetPlanets,
+  ] = useFetchPlanets();
   const [filters, setFilters] = useState(initialFilters);
 
   const handleFilterName = ({ target }) => {
@@ -29,6 +34,16 @@ function Provider({ children }) {
     });
   };
 
+  const deleteFilterNumeric = (column) => {
+    const updateFilterNumeric = filters.filterByNumericValues
+      .filter((item) => item.column !== column);
+    resetPlanets();
+    setFilters({
+      ...filters,
+      filterByNumericValues: updateFilterNumeric,
+    });
+  };
+
   useEffect(() => {
     filterPlanetsForValues(filters.filterByNumericValues);
   }, [filters.filterByNumericValues]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -38,6 +53,7 @@ function Provider({ children }) {
     filters,
     handleFilterName,
     handleFilterValues,
+    deleteFilterNumeric,
   };
 
   return (

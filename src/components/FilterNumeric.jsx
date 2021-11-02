@@ -10,7 +10,12 @@ function FilterNumeric() {
   const initialColumnOptions = ['population', 'orbital_period', 'diameter',
     'rotation_period', 'surface_water'];
 
-  const { handleFilterValues, filters: { filterByNumericValues } } = useContext(Context);
+  const {
+    handleFilterValues,
+    deleteFilterNumeric,
+    filters: { filterByNumericValues },
+  } = useContext(Context);
+
   const [filterNumeric, setFilterNumeric] = useState(initialFilter);
   const [columnOptions, setColumnOptions] = useState(initialColumnOptions);
 
@@ -25,8 +30,14 @@ function FilterNumeric() {
     handleFilterValues(filterNumeric);
     const newOptions = [...columnOptions];
     newOptions.splice(columnOptions.indexOf(filterNumeric.column), 1);
-    console.log(newOptions);
     setColumnOptions(newOptions);
+  };
+
+  // a posição de retorno da column varia
+  const removeFilterNumeric = (column) => {
+    const updateOptions = [...columnOptions, column];
+    setColumnOptions(updateOptions);
+    deleteFilterNumeric(column);
   };
 
   return (
@@ -65,7 +76,12 @@ function FilterNumeric() {
           filterByNumericValues.map(({ column, comparison, value }, i) => (
             <div key={ i } data-testid="filter">
               { `${column} ${comparison} ${value}` }
-              <button type="button">X</button>
+              <button
+                type="button"
+                onClick={ () => removeFilterNumeric(column) }
+              >
+                X
+              </button>
             </div>
           ))
         }

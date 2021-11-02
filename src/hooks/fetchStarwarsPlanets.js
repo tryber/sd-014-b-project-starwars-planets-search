@@ -44,11 +44,15 @@ function useFetchPlanets() {
     }
   };
 
+  const resetPlanets = () => {
+    setPlanets(data.results);
+  };
+
   useEffect(() => {
     getDataAPI();
   }, []);
 
-  return [planets, filterDataForName, filterPlanetsForValues];
+  return [planets, filterDataForName, filterPlanetsForValues, resetPlanets];
 }
 
 export default useFetchPlanets;
