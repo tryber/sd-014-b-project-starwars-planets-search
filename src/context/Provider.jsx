@@ -25,7 +25,7 @@ const selectColumnList = [
 
 export default function Provider({ children }) {
   const [allPlanets] = useFetch(URL);
-  const [planetsFilter, setPlanetsFilter] = useState(allPlanets);
+  const [planetsFilter, setPlanetsFilter] = useState([]);
   const [filterObject, setFilter] = useState(INITIAL_STATE);
   const [columns, setColumns] = useState(selectColumnList);
 
