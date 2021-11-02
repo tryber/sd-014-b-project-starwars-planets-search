@@ -2,20 +2,20 @@ import React, { useContext } from 'react';
 import TableContext from '../context/TableContext';
 
 function FilterForm() {
-  const { filters, setFilters } = useContext(TableContext);
+  /* const { filters, setFilters } = useContext(TableContext);
   function handleChange({ target }) {
     if (target.name === 'columns') {
       setFilters({ filterByNumericValues: [{ column: target.value }] });
     }
-  }
+  } */
   return (
     <div>
       <form>
         <select
           name="columns"
           data-testid="column-filter"
-          value={ filters.filterByNumericValues[0].column }
-          onChange={ (event) => handleChange(event) }
+          /* value={ filters.filterByNumericValues[0].column }
+          onChange={ (event) => handleChange(event) } */
         >
           <option value="population">population</option>
           <option value="orbital_period">orbital_period</option>
@@ -26,7 +26,7 @@ function FilterForm() {
         <select
           name="comparison"
           data-testid="comparison-filter"
-          value={ filterByNumericValues[0].comparison }
+          /* value={ filters.filterByNumericValues[0].comparison } */
         >
           <option value="maior que">maior que</option>
           <option value="menor que">menor que</option>
@@ -36,14 +36,14 @@ function FilterForm() {
           type="number"
           name="value"
           data-testid="value-filter"
-          value={ filterByNumericValues[0].value }
+          /* value={ filters.filterByNumericValues[0].value } */
         />
       </form>
       <button
         type="button"
         data-testid="button-filter"
       >
-        filtrar
+        Filtrar
       </button>
     </div>
   );

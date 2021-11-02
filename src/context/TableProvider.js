@@ -8,7 +8,13 @@ function TableProvider({ children }) {
     filterByName: {
       name: '',
     },
-    filterByNumericValues: [{ column, comparison, value }],
+    filterByNumericValues: [
+      {
+        column: '',
+        comparison: '',
+        value: 0,
+      },
+    ],
   });
   const URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
 
@@ -27,9 +33,19 @@ function TableProvider({ children }) {
       fetchPlanets();
     }
     setData((prevState) => prevState.filter(
-      (planet) => planet.name.includes(filters.filterByName.name),
+      ({ name }) => name.includes(filters.filterByName.name),
     ));
   }, [filters.filterByName]);
+
+  /* useEffect(() => {
+    if (filters.filterByNumericValues[0].comparison === 'maior que') {
+      setData((prevState) => prevState.filter(
+        (planet) => planet[
+          `${filters.filterByNumericValues[0].column}`
+        ] > filters.filterByNumericValues[0].value,
+      ));
+    }
+  }, [filters.filterByNumericValues]); */
 
   return (
     <TableContext.Provider value={ { data, setData, filters, setFilters } }>
