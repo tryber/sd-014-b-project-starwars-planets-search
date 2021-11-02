@@ -1,10 +1,13 @@
 import React, { useContext } from 'react';
 import PlanetContext from '../context/PlanetContext';
+import HeaderInput from './HeaderInput';
 
 function Table() {
   const { data } = useContext(PlanetContext);
-  if (data.length > 0) {
-    return (
+
+  return (
+    <div>
+      <HeaderInput />
       <table>
         <thead>
           <tr>
@@ -24,14 +27,13 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          (// https://github.com/tryber/sd-013-b-project-starwars-planets-search/commit/76fb97947ec80e70578e4c8121fa4558d4344ede)
           {
             data.map((planet, index) => (
               <tr key={ index }>
                 {
-                  Object.values(planet).map((name, indx) => (
+                  Object.values(planet).map((values, indx) => (
                     <td key={ indx }>
-                      {name}
+                      {values}
                     </td>
                   ))
                 }
@@ -40,11 +42,11 @@ function Table() {
           }
         </tbody>
       </table>
-    );
-  }
-  return (
-    <span>Loading</span>
+    </div>
   );
 }
 
 export default Table;
+// Consultei o esse repositorio para realização do map e Object.values
+// com objetivo de criar a parte inferior da tabela de forma dinâmica
+// https://github.com/tryber/sd-013-b-project-starwars-planets-search/commit/76fb97947ec80e70578e4c8121fa4558d4344ede
