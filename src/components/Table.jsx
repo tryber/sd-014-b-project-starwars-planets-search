@@ -2,22 +2,72 @@ import React, { useContext } from 'react';
 import AppContext from '../context/AppContext';
 
 function Table() {
-  const { isLoading, data } = useContext(AppContext);
+  const { data, filteredData } = useContext(AppContext);
+  const tableHead = ['Name', 'Rotation Period', 'Orbital Period',
+    'Diameter', 'Climate', 'Gravity', 'Terrain', 'Surface Water',
+    'Population', 'Films', 'Create', 'Edited', 'Url'];
 
-  function mapPlanets() {
+  function handleFiltered() {
     return (
-      <div>
-        <table key="planet-table">
+      filteredData
+        .map((eachPlanet) => (
+          <tr key={ eachPlanet.name }>
+            <td>
+              {eachPlanet.name}
+            </td>
+            <td>
+              {eachPlanet.rotation_period}
+            </td>
+            <td>
+              {eachPlanet.orbital_period}
+            </td>
+            <td>
+              {eachPlanet.diameter}
+            </td>
+            <td>
+              {eachPlanet.climate}
+            </td>
+            <td>
+              {eachPlanet.gravity}
+            </td>
+            <td>
+              {eachPlanet.terrain}
+            </td>
+            <td>
+              {eachPlanet.surface_water}
+            </td>
+            <td>
+              {eachPlanet.population}
+            </td>
+            <td>
+              {eachPlanet.films}
+            </td>
+            <td>
+              {eachPlanet.created}
+            </td>
+            <td>
+              {eachPlanet.edited}
+            </td>
+            <td>
+              {eachPlanet.url}
+            </td>
+          </tr>
+        ))
+    );
+  }
+
+  return (
+    <div>
+      <table key="planet-table">
+        <tbody>
+          <tr>
+            {tableHead.map((eachKey) => <th key={ eachKey }>{eachKey}</th>)}
+          </tr>
           {
-            data
-              .map((eachPlanet) => (
-                <>
-                  <tr>
-                    {Object.keys(eachPlanet)
-                      .filter((isResident) => isResident !== 'residents')
-                      .map((eachKey) => <th key={ `${eachKey} chave` }>{eachKey}</th>)}
-                  </tr>
-                  <tr>
+            filteredData.length === 0
+              ? data
+                .map((eachPlanet) => (
+                  <tr key={ eachPlanet.name }>
                     <td>
                       {eachPlanet.name}
                     </td>
@@ -58,17 +108,11 @@ function Table() {
                       {eachPlanet.url}
                     </td>
                   </tr>
-                </>
-              ))
+                )) : handleFiltered()
           }
-        </table>
-      </div>);
-  }
-
-  return (
-    isLoading ? ''
-      : mapPlanets()
-  );
+        </tbody>
+      </table>
+    </div>);
 }
 
 export default Table;
