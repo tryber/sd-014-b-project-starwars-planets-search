@@ -6,7 +6,13 @@ import fetchPlanets from '../services/fetchPlanetsAPI';
 const PlanetsProvider = ({ children }) => {
   const [data, setData] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
-  const [filters, setFilters] = useState({ filterByName: { name: '' } });
+  const [filters, setFilters] = useState({ filterByName: { name: '' },
+    filterByNumericValues: [] });
+  const [selectObjects, setSelectObjects] = useState({
+    column: '',
+    comparison: '',
+    value: 0,
+  });
 
   useEffect(() => {
     setIsFetching(true);
@@ -25,15 +31,41 @@ const PlanetsProvider = ({ children }) => {
       } });
   };
 
-  // setFilters((prevState) => ({
-  //   ...prevState,
-  //   filterByNumericValues: [],
-  // }));
+  const handleSelectOptions = ({ column, comparison, value }) => {
+    console.log(column, comparison, value)
+    setSelectObjects((prevState) => {
+      if (prevState === undefined) {
+        return {
+          ...prevState,
+          column,
+          comparison,
+          value,
+        };
+      }
+      return {
+        ...prevState,
+        column: prevState[prevState.column] === column ? '' : column,
+        comparison: prevState[prevState.comparison] === comparison ? '' : comparison,
+        value: prevState[prevState.value] === value ? '' : value,
+      };
+    });
+  };
+
+  const handleFilterButtonClick = () => {
+    console.log(selectObjects)
+    setFilters((prevState) => ({
+      ...prevState,
+      filterByNumericValues: [...prevState.filterByNumericValues,
+        selectObjects],
+    }));
+  };
 
   const contextValue = {
     data,
     isFetching,
     handleChange,
+    handleSelectOptions,
+    handleFilterButtonClick,
     filters,
   };
 

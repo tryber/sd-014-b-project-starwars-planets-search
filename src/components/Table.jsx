@@ -6,12 +6,21 @@ import PlanetsContext from '../context/PlanetsContext';
 //       ? <span>Loading...</span>
 //       :
 const Table = () => {
-  const { data, filters: { filterByName: { name } } } = useContext(PlanetsContext);
+  const { data, filters: { filterByName: { name },
+    filterByNumericValues } } = useContext(PlanetsContext);
+
   const dealWithFilterPresence = () => {
     if (name.length !== 0) {
-      return data
+      data
         .filter((item) => item.name.toLowerCase().includes(name.toLowerCase()));
     }
+    filterByNumericValues.map((chave) => (
+      data
+        .filter((item) => item[chave.column]
+        === chave.column
+      && item[chave.comparison]
+      === chave.comparison
+      && item[chave.value] === chave.value)));
     return data;
   };
 
