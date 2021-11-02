@@ -3,14 +3,14 @@ import StarContext from '../context/Context';
 import TrTable from './TrTable';
 
 const Table = () => {
-  const { planets } = useContext(StarContext);
+  const { planetsFilter } = useContext(StarContext);
   return (
     <table>
       <thead>
         <TrTable />
       </thead>
       <tbody>
-        {planets.map((planet, index) => (
+        {planetsFilter.map((planet, index) => (
           <tr key={ index }>
             <td data-testid="planet-name">{planet.name}</td>
             <td>{planet.rotation_period}</td>
