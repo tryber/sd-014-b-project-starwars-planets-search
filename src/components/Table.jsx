@@ -2,7 +2,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-function Table({ data }) {
+function Table({ array }) {
   const tableTitles = [
     'Name', 'Diameter', 'Rotation Period', 'Orbital Period', 'Climate',
     'Gravity', 'Terrain', 'Surface Water', 'Population',
@@ -16,7 +16,7 @@ function Table({ data }) {
         </tr>
       </thead>
       <tbody>
-        {data.map((planet, index) => {
+        {array.map((planet, index) => {
           const {
             name,
             diameter,
@@ -52,7 +52,7 @@ function Table({ data }) {
 }
 
 Table.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  array: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default Table;

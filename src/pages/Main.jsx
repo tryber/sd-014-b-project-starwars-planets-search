@@ -12,7 +12,7 @@ function Main() {
   }, []);
 
   return (
-    <Table data={ planetsList } />
+    <Table array={ planetsList } />
   );
 }
 
