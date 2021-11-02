@@ -1,15 +1,13 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
-import PropTypes from 'prop-types';
 
 export default function Form(props) {
   const {
-    filters: {
-      filterByName: { name, setName },
-      filterByNumericValues: [
-        { column, setColumn, comparison, setComparison, value, setValue },
-      ],
-    },
+    filterByName: { name, setName },
+    numericValues: [column, comparison, value],
+    setters: [setColumn, setComparison, setValue],
     handleFiltering,
+    columns,
   } = props;
 
   return (
@@ -31,11 +29,11 @@ export default function Form(props) {
           value={ column }
           onChange={ (e) => setColumn(e.target.value) }
         >
-          <option value="population">population</option>
-          <option value="orbital_period">orbital_period</option>
-          <option value="diameter">diameter</option>
-          <option value="rotation_period">rotation_period</option>
-          <option value="surface_water">surface_water</option>
+          {columns.map((option) => (
+            <option key={ option } value={ option }>
+              {option}
+            </option>
+          ))}
         </select>
         <select
           data-testid="comparison-filter"
@@ -57,7 +55,9 @@ export default function Form(props) {
         <button
           data-testid="button-filter"
           type="button"
-          onClick={ handleFiltering }
+          onClick={ () => {
+            handleFiltering(comparison, column, value);
+          } }
         >
           Filtrar
         </button>
@@ -65,23 +65,3 @@ export default function Form(props) {
     </form>
   );
 }
-
-Form.propTypes = {
-  filters: PropTypes.shape({
-    filterByName: PropTypes.shape({
-      name: PropTypes.string,
-      setName: PropTypes.func,
-    }),
-    filterByNumericValues: PropTypes.arrayOf(
-      PropTypes.shape({
-        column: PropTypes.string,
-        setColumn: PropTypes.func,
-        comparison: PropTypes.string,
-        setComparison: PropTypes.func,
-        value: PropTypes.number,
-        setValue: PropTypes.func,
-      }),
-    ),
-  }).isRequired,
-  handleFiltering: PropTypes.func.isRequired,
-};
