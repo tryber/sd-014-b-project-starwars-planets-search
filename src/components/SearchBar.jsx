@@ -11,9 +11,10 @@ function SearchBar() {
     handleChangeByNumericValues,
     handleChangeByOrderValues,
     handleFilterByNumericValues,
+    handleRemoveFilter,
     handleByOrder,
     filterByNumericValues,
-    filters: { filterByName, order },
+    filters: { filterByName, order, filterByNumericValues: filterByNumericValuesFilter },
     selectOptions: { columnOptions, comparisonOptions, columnSortOptions },
   } = useContext(PlanetsContext);
   return (
@@ -85,6 +86,12 @@ function SearchBar() {
         dataTestid="column-sort-button"
         onclick={ handleByOrder }
       />
+      { filterByNumericValuesFilter.map(({ column, comparison, value }, index) => (
+        <div key={ `${index}-${column}` } data-testid="filter">
+          {`${column}-${comparison}-${value}`}
+          <button onClick={ () => handleRemoveFilter(column) } type="button">X</button>
+        </div>
+      ))}
     </div>
   );
 }

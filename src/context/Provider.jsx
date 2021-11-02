@@ -109,10 +109,23 @@ function Provider({ children }) {
       columnOptions: newColumnOptions,
     });
     setFilterByNumericValues({
-      column: columnOptions[1],
+      column: newColumnOptions[0],
       comparison: 'maior que',
       value: '',
     })
+  }
+
+  function filterData() {
+
+  }
+
+  function handleRemoveFilter(filterOption){
+    const { filterByNumericValues } = filters;
+    const newFilters = filterByNumericValues.filter((filter) => filter.column !== filterOption);
+    setFilters({
+      ...filters,
+      filterByNumericValues: newFilters,
+    });
   }
 
   function handleByOrder() {
@@ -129,6 +142,7 @@ function Provider({ children }) {
     handleChangeByNumericValues,
     handleChangeByOrderValues,
     handleFilterByNumericValues,
+    handleRemoveFilter,
     handleByOrder,
   };
   return (
