@@ -1,15 +1,20 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import planetsContext from '../context/PlanetsContext';
 import '../styles/Filters.css';
 
 function Filters() {
+  const { handleChange } = useContext(planetsContext);
   return (
     <main className="main-filters">
       <label htmlFor="input-filter">
         <input
+          data-testid="name-filter"
           type="text"
           id="input-filter"
+          name="name"
           placeholder="Filtrar por nome"
           className="input-filter"
+          onKeyUp={ (event) => handleChange(event) }
         />
       </label>
       <section className="section-filters">

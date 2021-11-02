@@ -8,14 +8,53 @@ class PlanetsProvider extends React.Component {
     super();
     this.state = {
       planets: [],
+      filters: {
+        filterByName: {
+          name: '',
+        },
+        filterByNumericValues: [
+          {
+            column: '',
+            comparison: '',
+            value: '',
+          },
+        ],
+      },
     };
 
     this.requestApi = this.requestApi.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    // this.filterPlanets = this.filterPlanets.bind(this);
   }
 
   componentDidMount() {
     this.requestApi();
   }
+
+  handleChange({ target }) {
+    this.setState({
+      filters: {
+        filterByName: {
+          name: target.value,
+        },
+      },
+    });
+    console.log(target.value);
+  }
+
+  /* filterPlanets() {
+    const { filters: { filterByName }, planets } = this.state;
+    if (filterByName.name !== '') {
+      const planetsFiltered = planets
+        .filter((planet) => planet.name.toLowerCase()
+          .includes(filterByName.name.toLowerCase()) === true);
+      this.setState({
+        planets: planetsFiltered,
+      });
+    }
+       console.log('cheguei aqui');
+    console.log(planets);
+  } */
 
   async requestApi() {
     const results = await fetchApi();
@@ -26,9 +65,16 @@ class PlanetsProvider extends React.Component {
 
   render() {
     const { children } = this.props;
-    const { planets } = this.state;
+    const { planets, filters: { filterByName, filterByNumericValues } } = this.state;
     return (
-      <PlanetsContext.Provider value={ { planets } }>
+      <PlanetsContext.Provider
+        value={
+          { planets,
+            filterByName,
+            filterByNumericValues,
+            handleChange: this.handleChange }
+        }
+      >
         { children }
       </PlanetsContext.Provider>
     );

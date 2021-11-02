@@ -3,13 +3,10 @@ import planetsContext from '../context/PlanetsContext';
 import '../styles/Table.css';
 
 function TableOfPlanets() {
-  const { planets } = useContext(planetsContext);
-  /* const headerTable = [
-    'Name', 'Rotation Period',
-    'Orbital Period', 'Diameter',
-    'Climate', 'Gravity', 'Terrain',
-    'Surface Water', 'Population', 'Films', 'Created', 'Edited', 'Url',
-  ]; */
+  const { planets, filterByName } = useContext(planetsContext);
+  const planetsFiltered = planets
+    .filter((planet) => planet.name.toLowerCase()
+      .includes(filterByName.name.toLowerCase()));
   return (
     <table>
       <tr>.</tr>
@@ -26,46 +23,46 @@ function TableOfPlanets() {
       <th>Created</th>
       <th>Edited</th>
       <th>Url</th>
-      { planets.map((planet, index) => (
+      { planetsFiltered.map((planet, index) => (
         <tr key={ index }>
-          <td className="column" key={ index }>{ planet.name }</td>
+          <td className="column" key={ planet.name }>{ planet.name }</td>
           <td
             className="column"
-            key={ index }
+            key={ planet.rotation_period }
           >
             { planet.rotation_period }
           </td>
           <td
             className="column"
-            key={ index }
+            key={ planet.orbital_period }
           >
             { planet.orbital_period }
           </td>
           <td
             className="column"
-            key={ index }
+            key={ planet.diameter }
           >
             { planet.diameter }
           </td>
-          <td className="column" key={ index }>{ planet.climate }</td>
-          <td className="column" key={ index }>{ planet.gravity }</td>
-          <td className="column" key={ index }>{ planet.terrain }</td>
+          <td className="column" key={ planet.climate }>{ planet.climate }</td>
+          <td className="column" key={ planet.gravity }>{ planet.gravity }</td>
+          <td className="column" key={ planet.terrain }>{ planet.terrain }</td>
           <td
             className="column"
-            key={ index }
+            key={ planet.surface_water }
           >
             { planet.surface_water }
           </td>
           <td
             className="column"
-            key={ index }
+            key={ planet.population }
           >
             { planet.population }
           </td>
-          <td className="column" key={ index }>{ planet.films }</td>
-          <td className="column" key={ index }>{ planet.created }</td>
-          <td className="column" key={ index }>{ planet.edited }</td>
-          <td className="column" key={ index }>{ planet.url }</td>
+          <td className="column" key={ planet.films }>{ planet.films }</td>
+          <td className="column" key={ planet.created }>{ planet.created }</td>
+          <td className="column" key={ planet.edited }>{ planet.edited }</td>
+          <td className="column" key={ planet.url }>{ planet.url }</td>
         </tr>
       )) }
     </table>
