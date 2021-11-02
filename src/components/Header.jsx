@@ -12,7 +12,9 @@ function Header() {
     columnFilter,
     comparisonFilter,
     valueFilter,
-    setFilteredData } = useContext(AppContext);
+    setFilteredData,
+    selectColumn,
+    setSelectColumn } = useContext(AppContext);
 
   function handleChange({ target }) {
     const takeFilteredPlanets = data
@@ -40,6 +42,7 @@ function Header() {
   }
 
   function filteredButton() {
+    setSelectColumn(selectColumn.filter((eachSelect) => eachSelect !== columnFilter));
     const aConstante = data.filter((eachPlanet) => {
       if (comparisonFilter === 'maior que') {
         return Number(eachPlanet[columnFilter]) > Number(valueFilter);
@@ -55,6 +58,12 @@ function Header() {
     setFilteredData(aConstante);
   }
 
+  function selectColumnFilter() {
+    return selectColumn
+      .map((eachSelect) => (
+        <option key={ eachSelect } value={ eachSelect }>{eachSelect}</option>));
+  }
+
   return (
     <>
       <header>
@@ -67,11 +76,7 @@ function Header() {
       </header>
       <section>
         <select data-testid="column-filter" onChange={ takeChangeColumn }>
-          <option value="population">population</option>
-          <option value="orbital_period">orbital_period</option>
-          <option value="diameter">diameter</option>
-          <option value="rotation_period">rotation_period</option>
-          <option value="surface_water">surface_water</option>
+          {selectColumnFilter()}
         </select>
         <select data-testid="comparison-filter" onChange={ takeComparison }>
           <option value="maior que">maior que</option>
