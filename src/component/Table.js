@@ -1,6 +1,9 @@
 import React, { useContext } from 'react';
 import PlanetContext from '../context/PlanetContext';
 import HeaderInput from './HeaderInput';
+import ColumnFilter from './ColumnFilter';
+import ComparisonFilter from './ComparisonFilter';
+import FilterValue from './FilterValue';
 
 function Table() {
   const { data } = useContext(PlanetContext);
@@ -8,6 +11,9 @@ function Table() {
   return (
     <div>
       <HeaderInput />
+      <ColumnFilter />
+      <ComparisonFilter />
+      <FilterValue />
       <table>
         <thead>
           <tr>

@@ -11,6 +11,13 @@ function PlanetProvider({ children }) {
       filterByName: {
         name: '',
       },
+      filterByNumericValues: [
+        {
+          column: 'population',
+          comparison: 'maior que',
+          value: 0,
+        },
+      ],
     },
   });
 
@@ -32,7 +39,7 @@ function PlanetProvider({ children }) {
 
   function filterData(name) {
     const dataFilter = [...dataRestore];
-    return dataFilter.filter((value) => value
+    return dataFilter.filter((text) => text
       .name.toLowerCase().includes(name.toLowerCase()));
   }
 
@@ -43,14 +50,75 @@ function PlanetProvider({ children }) {
         filterByName: {
           name: string,
         },
+        filterByNumericValues: {
+          column: '',
+          comparison: '',
+          value: 0,
+        },
       },
     });
+  }
+
+  function handleClick() {
+    const dataFilter = [...dataRestore];
+    if (filterSearch.filters.filterByNumericValues[0].comparison === 'maior que') {
+      setData(dataFilter.filter((choice) => parseInt(choice[filterSearch.filters
+        .filterByNumericValues[0].column], 10)
+        > parseInt(filterSearch.filters.filterByNumericValues[0].value, 10)));
+    } else if (filterSearch.filters.filterByNumericValues[0].comparison === 'menor que') {
+      setData(dataFilter.filter((choice) => parseInt(choice[filterSearch.filters
+        .filterByNumericValues[0].column], 10)
+        < parseInt(filterSearch.filters.filterByNumericValues[0].value, 10)));
+    } else {
+      setData(dataFilter.filter((choice) => choice[filterSearch.filters
+        .filterByNumericValues[0].column]
+        === filterSearch.filters.filterByNumericValues[0].value));
+    }
+  }
+
+  function handleSelect(event) {
+    if (event.target.id === 'column') {
+      setFilterSearch({
+        ...filterSearch,
+        filters: {
+          filterByNumericValues: [{
+            column: event.target.value,
+            comparison: filterSearch.filters.filterByNumericValues[0].comparison,
+            value: filterSearch.filters.filterByNumericValues[0].value,
+          }],
+        },
+      });
+    } else if (event.target.id === 'comparison') {
+      setFilterSearch({
+        ...filterSearch,
+        filters: {
+          filterByNumericValues: [{
+            column: filterSearch.filters.filterByNumericValues[0].column,
+            comparison: event.target.value,
+            value: filterSearch.filters.filterByNumericValues[0].value,
+          }],
+        },
+      });
+    } else if (event.target.id === 'number-value') {
+      setFilterSearch({
+        ...filterSearch,
+        filters: {
+          filterByNumericValues: [{
+            column: filterSearch.filters.filterByNumericValues[0].column,
+            comparison: filterSearch.filters.filterByNumericValues[0].comparison,
+            value: event.target.value,
+          }],
+        },
+      });
+    }
   }
 
   const newObject = {
     data,
     handleChange,
     filterSearch,
+    handleSelect,
+    handleClick,
   };
 
   return (
