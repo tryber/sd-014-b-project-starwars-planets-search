@@ -1,22 +1,16 @@
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
-import fetchPlanetsAPI from '../services/PlanetsAPI';
 import PlanetsContext from './PlanetsContext';
 
 function PlanetsProvider({ children }) {
-  const [planets, setPlanets] = useState({
-    data: [],
-  });
-
-  const requestPlanets = async () => {
-    const { results } = await fetchPlanetsAPI();
-    console.log(results);
-    setPlanets({ data: [...results] });
-  };
+  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const context = {
-    data: planets.data,
-    requestPlanets,
+    data,
+    setData,
+    isLoading,
+    setIsLoading,
   };
 
   return (

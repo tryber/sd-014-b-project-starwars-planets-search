@@ -1,19 +1,18 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import './App.css';
-import Table from './components/Table';
+import Loading from './components/Loading';
 import PlanetsContext from './context/PlanetsContext';
+import PlanetsProvider from './context/PlanetsProvider';
+import Home from './pages/Home';
 
 function App() {
-  const { requestPlanets } = useContext(PlanetsContext);
-
-  useEffect(() => {
-    requestPlanets();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const { isLoading } = useContext(PlanetsContext);
 
   return (
     <main>
-      <Table />
+      <PlanetsProvider>
+        { isLoading ? <Loading /> : <Home /> }
+      </PlanetsProvider>
     </main>
   );
 }
