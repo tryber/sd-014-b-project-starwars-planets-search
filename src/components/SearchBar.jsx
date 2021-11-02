@@ -13,7 +13,8 @@ function SearchBar() {
     handleChangeByOrderValues,
     handleFilterByNumericValues,
     handleByOrder,
-    filters: { filterByName, filterByNumericValues, order },
+    filterByNumericValues,
+    filters: { filterByName, order },
   } = useContext(PlanetsContext);
   return (
     <div>

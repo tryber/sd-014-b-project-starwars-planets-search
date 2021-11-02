@@ -8,16 +8,19 @@ function Provider({ children }) {
     filterByName: {
       name: '',
     },
-    filterByNumericValues: {
-      column: 'population',
-      comparison: 'maior que',
-      value: '',
-    },
+    filterByNumericValues: [],
     order: {
       column: 'name',
       sort: 'ASC',
     },
   });
+
+  const [filterByNumericValues, setFilterByNumericValues] = useState({
+    column: 'population',
+    comparison: 'maior que',
+    value: '',
+  });
+
 
   const fetchPlanetsApi = async () => {
     const PLANETS_URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
@@ -33,20 +36,13 @@ function Provider({ children }) {
         name: value,
       },
     });
-    const newData = data.filter(
-      ({ name }) => name.toLowerCase().startsWith(value.toLowerCase()),
-    );
-    setData(newData);
   }
 
   function handleChangeByNumericValues({ target }) {
     const { value, id } = target;
-    setFilters({
-      ...filters,
-      filterByNumericValues: {
-        ...filters.filterByNumericValues,
+    setFilterByNumericValues({
+        ...filterByNumericValues,
         [id]: value,
-      },
     });
   }
 
@@ -59,21 +55,37 @@ function Provider({ children }) {
         [id]: value,
       },
     });
-
-    console.log(value);
   }
+
   function handleFilterByNumericValues() {
-    console.log('handleFilterByNumericValues');
+    const { column, comparison, value } = filterByNumericValues;
+    if(comparison === 'maior que') {
+      const newData = data.filter((planet) => Number(planet.[column])  > value);
+      setData(newData);
+    }else if (comparison === 'menor que'){
+      const newData = data.filter((planet) => Number(planet.[column])  < value);
+      setData(newData);
+    } else if (comparison === 'igual a'){
+      const newData = data.filter((planet) => Number(planet.[column])  == value);
+      setData(newData);
+    }
+    setFilters({
+      ...filters,
+      filterByNumericValues: [...filters.filterByNumericValues, filterByNumericValues ]
+    });
+
+    console.log(filters);
   }
 
   function handleByOrder() {
-    console.log('handleByOrder');
   }
 
   const CONTEXT_DEFAULT = {
     data,
+    setData,
     fetchPlanetsApi,
     filters,
+    filterByNumericValues,
     handleChangeByNameValues,
     handleChangeByNumericValues,
     handleChangeByOrderValues,
