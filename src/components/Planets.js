@@ -1,29 +1,15 @@
-import React, { useEffect, useState } from 'react';
-// import { NewContext } from '../context/NewContext';
-import getDataByPlanets from '../services/ApiPlanets';
+import React, { useContext } from 'react';
+import NewContext from '../context/NewContext';
 import TablePlanets from './TablePlanets';
+import FilterName from './FilterName';
 
 function Planets() {
-  const [titlePlanets, setTitlePlanets] = useState([]);
-  const [planets, setPlanets] = useState([]);
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    setLoading(true);
-    getDataByPlanets().then((data) => {
-      const getPlanets = data.results.map((planet) => {
-        delete planet.residents;
-        return planet;
-      });
-      setTitlePlanets(Object.keys(getPlanets[0]));
-      setPlanets(getPlanets);
-      setLoading(false);
-    });
-  }, []);
+  const { loading } = useContext(NewContext);
   return (
     <div>
+      <FilterName />
       {loading ? null
-        : <TablePlanets planets={ planets } titlePlanets={ titlePlanets } />}
+        : <TablePlanets />}
     </div>
   );
 }

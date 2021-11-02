@@ -1,9 +1,9 @@
-import React from 'react';
-// import NewContext from '../context/NewContext';
-import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
+import NewContext from '../context/NewContext';
 // import getDataByPlanets from '../services/ApiPlanets';
 
-function TablePlanets({ planets, titlePlanets }) {
+function TablePlanets() {
+  const { filterPlanets, titlePlanets } = useContext(NewContext);
   return (
     <table>
       <thead>
@@ -14,7 +14,8 @@ function TablePlanets({ planets, titlePlanets }) {
         </tr>
       </thead>
       <tbody>
-        {planets.map((planet) => (
+        { filterPlanets.length > 0 ? null : <p>Nenhum planeta encontrado</p>}
+        {filterPlanets.map((planet) => (
           <tr key={ planet.name }>
             { Object.values(planet).map((value) => (
               <td key={ value }>{ value }</td>
@@ -25,12 +26,5 @@ function TablePlanets({ planets, titlePlanets }) {
     </table>
   );
 }
-
-TablePlanets.propTypes = {
-  planets: PropTypes.shape({
-    map: PropTypes.func,
-  }).isRequired,
-  titlePlanets: PropTypes.objectOf().isRequired,
-};
 
 export default TablePlanets;
