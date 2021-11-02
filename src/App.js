@@ -5,9 +5,11 @@ import './App.css';
 
 function App() {
   return (
-    <PlanetProvider>
-      <PlanetFinder />
-    </PlanetProvider>
+    <div className="App">
+      <PlanetProvider>
+        <PlanetFinder />
+      </PlanetProvider>
+    </div>
   );
 }
 

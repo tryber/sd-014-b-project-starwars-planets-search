@@ -6,9 +6,13 @@ export const PlanetContext = createContext();
 
 export default function PlanetProvider(props) {
   const { children } = props;
+  const INITIAL_VALUE = 100000;
   const [planets, setPlanets] = useState([]);
   const [filteredPlanets, setFilteredPlanets] = useState([]);
   const [name, setName] = useState('');
+  const [column, setColumn] = useState('population');
+  const [comparison, setComparison] = useState('maior que');
+  const [value, setValue] = useState(INITIAL_VALUE);
 
   useEffect(() => {
     const getPlanets = async () => {
@@ -29,6 +33,24 @@ export default function PlanetProvider(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [name]);
 
+  const handleFiltering = () => {
+    switch (comparison) {
+    case 'maior que':
+      setFilteredPlanets(planets.filter((planet) => planet[column] >= value));
+      break;
+    case 'menor que':
+      setFilteredPlanets(planets.filter((planet) => planet[column] <= value));
+      break;
+    case 'igual a':
+      setFilteredPlanets(
+        planets.filter((planet) => planet[column] === value),
+      );
+      break;
+    default:
+      break;
+    }
+  };
+
   return (
     <PlanetContext.Provider
       value={ {
@@ -38,7 +60,18 @@ export default function PlanetProvider(props) {
             name,
             setName,
           },
+          filterByNumericValues: [
+            {
+              column,
+              setColumn,
+              comparison,
+              setComparison,
+              value,
+              setValue,
+            },
+          ],
         },
+        handleFiltering,
       } }
     >
       {children}

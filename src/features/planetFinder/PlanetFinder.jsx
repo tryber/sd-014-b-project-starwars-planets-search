@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-max-depth */
 import React, { useContext } from 'react';
 import { PlanetContext } from '../../context/PlanetProvider';
 import './PlanetFinder.css';
@@ -7,7 +8,11 @@ export default function PlanetFinder() {
     planets,
     filters: {
       filterByName: { name, setName },
+      filterByNumericValues: [
+        { column, setColumn, comparison, setComparison, value, setValue },
+      ],
     },
+    handleFiltering,
   } = useContext(PlanetContext);
 
   return (
@@ -24,6 +29,44 @@ export default function PlanetFinder() {
               value={ name }
               onChange={ (e) => setName(e.target.value) }
             />
+          </fieldset>
+          <fieldset>
+            <select
+              data-testid="column-filter"
+              name="column"
+              value={ column }
+              onChange={ (e) => setColumn(e.target.value) }
+            >
+              <option value="population">population</option>
+              <option value="orbital_period">orbital_period</option>
+              <option value="diameter">diameter</option>
+              <option value="rotation_period">rotation_period</option>
+              <option value="surface_water">surface_water</option>
+            </select>
+            <select
+              data-testid="comparison-filter"
+              name="comparison"
+              value={ comparison }
+              onChange={ (e) => setComparison(e.target.value) }
+            >
+              <option value="maior que">maior que</option>
+              <option value="menor que">menor que</option>
+              <option value="igual a">igual a</option>
+            </select>
+            <input
+              type="number"
+              data-testid="value-filter"
+              name="value"
+              value={ value }
+              onChange={ (e) => setValue(e.target.value) }
+            />
+            <button
+              data-testid="button-filter"
+              type="button"
+              onClick={ handleFiltering }
+            >
+              Filtrar
+            </button>
           </fieldset>
         </form>
       </header>
