@@ -1,13 +1,15 @@
 import React from 'react';
 import './App.css';
 import Table from './Components/Table';
-import DataProvider from './context/myContext';
+import TextInput from './Components/TextInput';
+import Provider from './context/Provider';
 
 function App() {
   return (
-    <DataProvider>
+    <Provider>
+      <TextInput testId="name-filter" />
       <Table />
-    </DataProvider>
+    </Provider>
   );
 }
 
