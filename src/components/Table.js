@@ -1,30 +1,19 @@
-import React, { useState, useEffect } from 'react';
-
-const API = 'https://swapi-trybe.herokuapp.com/api/planets/';
+import React, { useContext } from 'react';
+import DataContext from '../context/DataContext';
 
 function Table() {
-  const [data, setData] = useState([]);
-  const [keys, setKeys] = useState([]);
-
-  const fetchApiPlanets = async () => {
-    const response = await fetch(API);
-    const resolve = await response.json();
-    setData(resolve.results);
-    const dataOfPlanet = Object.values((resolve.results))[0];
-    const keysOfPlanet = Object.keys(dataOfPlanet)
-      .filter((key) => key !== 'residents');
-    setKeys(keysOfPlanet);
-  };
-
-  useEffect(() => {
-    fetchApiPlanets();
-  }, []);
-
+  const { data, keys } = useContext(DataContext);
   return (
     <table>
       <thead>
         <tr>
-          { keys.map((key, index) => <th key={ index }>{key}</th>)}
+          { keys.map(
+            (key, index) => (
+              <th key={ index }>
+                {key[0].toUpperCase() + key.substr(1) }
+              </th>
+            ),
+          )}
         </tr>
       </thead>
       <tbody>
