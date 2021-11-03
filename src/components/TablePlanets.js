@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import NewContext from '../context/NewContext';
-// import getDataByPlanets from '../services/ApiPlanets';
 
 function TablePlanets() {
   const { filterPlanets, titlePlanets } = useContext(NewContext);
