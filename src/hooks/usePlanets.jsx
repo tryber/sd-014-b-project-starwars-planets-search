@@ -5,27 +5,27 @@ const PlanetsContext = createContext({});
 
 export function PlanetsProvider({ children }) {
   const URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
+  const [allPlanets, setAllPlanets] = useState([]);
   const [data, setData] = useState([]);
   const [filters, setFilters] = useState({
     filterByName: { name: '' },
     filterByNumericValues: [],
   });
 
+  const requestAPI = async () => {
+    const response = await fetch(URL);
+    const apiData = await response.json();
+    setData(apiData.results);
+    setAllPlanets(apiData.results);
+  };
+
   useEffect(() => {
-    fetch(URL)
-      .then((response) => response.json())
-      .then((apiData) => {
-        setData(apiData.results);
-      });
+    requestAPI();
   }, []);
 
   useEffect(() => {
     if (filters.filterByName.name === '') {
-      fetch(URL)
-        .then((response) => response.json())
-        .then((apiData) => {
-          setData(apiData.results);
-        });
+      requestAPI();
     }
 
     setData((prevData) => prevData.filter(
@@ -34,14 +34,6 @@ export function PlanetsProvider({ children }) {
   }, [filters.filterByName]);
 
   useEffect(() => {
-    // if (filters.filterByNumericValues) {
-    //   fetch(URL)
-    //     .then((response) => response.json())
-    //     .then((apiData) => {
-    //       setData(apiData.results);
-    //     });
-    // }
-
     filters.filterByNumericValues.forEach((filter) => {
       const { column } = filter;
       const { value } = filter;
@@ -66,7 +58,7 @@ export function PlanetsProvider({ children }) {
         break;
       }
     });
-  }, [filters.filterByNumericValues]);
+  }, [allPlanets, filters.filterByNumericValues]);
 
   function handleClickDeleteFilter(index) {
     const allFilters = filters.filterByNumericValues;
@@ -75,6 +67,7 @@ export function PlanetsProvider({ children }) {
       ...prevState,
       filterByNumericValues: allFilters,
     }));
+    setData(allPlanets);
   }
 
   return (
