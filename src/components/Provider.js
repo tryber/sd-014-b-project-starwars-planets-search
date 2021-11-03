@@ -4,7 +4,24 @@ import MyContext from '../MyContext';
 
 export default function DataProvider({ children }) {
   const [data, setData] = useState([]);
+  /*   const [filters, setFilters] = useState({
+    filterByName: {
+      name: '',
+    },
+    filterByNumericValues: [
+      {
+        column: '',
+        comparison: '',
+        value: '',
+      },
+    ],
+  }); */
   const [filterByName, setFilterByName] = useState({ name: '' });
+  const [filterByNumericValues, setFilterByNumericValues] = useState([{
+    column: '',
+    comparison: '',
+    value: '',
+  }]);
   const url = 'https://swapi-trybe.herokuapp.com/api/planets/';
 
   const contextValue = {
@@ -12,6 +29,8 @@ export default function DataProvider({ children }) {
     setData,
     filterByName,
     setFilterByName,
+    filterByNumericValues,
+    setFilterByNumericValues,
   };
   useEffect(() => {
     const fetchData = async () => {
