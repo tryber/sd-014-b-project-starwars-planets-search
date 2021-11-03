@@ -3,19 +3,18 @@ import MyContext from '../context/MyContext';
 
 export default function Table() {
   const { data } = useContext(MyContext);
-  const [setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     console.log('use context dentro do table', data);
-    if (data > 0) {
+    if (data.length > 0) {
       setLoading(false);
     } else {
       setLoading(true);
     }
-  }, [data, setLoading]);
+  }, [data]);
 
-  return (
-
+  const table = (
     <table>
       <thead>
         <tr>
@@ -53,6 +52,14 @@ export default function Table() {
           </tr>
         ))}
       </tbody>
-    </table>
+    </table>);
+
+  return (
+
+    <div>
+      {loading ? <p>Carregando...</p> : table }
+
+    </div>
+
   );
 }
