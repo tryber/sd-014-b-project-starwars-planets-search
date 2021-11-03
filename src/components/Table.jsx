@@ -1,26 +1,12 @@
 import React, { useContext } from 'react';
 import StarwarsContext from '../context/StarwarsContext';
+import { columns } from '../services/data';
 import Loading from './Loading';
 
-const columns = [
-  'Name',
-  'Rotation Period',
-  'Orbital Period',
-  'Diameter',
-  'Climate',
-  'Gravity',
-  'Terrain',
-  'Surface Water',
-  'Population',
-  'Residents',
-  'Films',
-  'Created',
-  'Edited',
-];
 export default function Table() {
-  const { planets, isFetching } = useContext(StarwarsContext);
+  const { planets, loading } = useContext(StarwarsContext);
   return (
-    isFetching ? <Loading /> : (
+    loading ? <Loading /> : (
       <section>
         <table border="1">
           <thead>
