@@ -5,49 +5,75 @@ import StarContext from './Context';
 const URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
 
 const PlanetsProvider = ({ children }) => {
-  const [planets, setPlanets] = useState([]);
-  const [planetsFilter, setPlanetsFilter] = useState(planets);
-  const [nameFilter, setName] = useState('');
-  const [filter, setFilter] = useState({
-    filters: {
-      filterByName: {
-        name: '',
-      },
-    },
-  });
+  const [data, setData] = useState([]);
+  const [dataFiltered, setDataFiltered] = useState([]);
+
+  const [nameState, setName] = useState({ name: '' });
+  const [columnState, setColumn] = useState('population');
+  const [comparisonState, setComparison] = useState('maior que');
+  const [valueState, setValueSearch] = useState('100000');
+
+  const [objectNumerics, setObjectNumerics] = useState({}); // salvando os valores dos handle em um objeto
+  const [filterByNumericValues, setFilterByNumericValues] = useState([]); // setando multiplos objetos no filterByNumericValues
+  const [filters, setFilters] = useState({
+    nameState,
+    filterByNumericValues,
+  }); // junta o nome e o objeto
 
   const fetchPlanets = async () => {
     const fetchApi = await fetch(URL);
-    const data = await fetchApi.json();
-    const result = data.results;
-    setPlanets(result);
+    const response = await fetchApi.json();
+    const result = response.results;
+    setData(result);
+    setDataFiltered(result);
   };
 
   useEffect(() => {
     fetchPlanets();
   }, []);
 
-  useEffect(() => { // chamada toda vez q muda o estado planets e nameFilter
-    setFilter({
-      filters: {
-        filterByName: {
-          name: nameFilter,
-        },
-      },
-    });
+  useEffect(() => {
+    const { name } = nameState;
+    const filter = data.filter((planet) => planet.name.toLowerCase().includes(name));
+    setDataFiltered(filter);
+  }, [nameState, data]);
 
-    const filterPlanets = planets.filter((planet) => (planet.name.toLowerCase()
-      .includes(nameFilter.toLocaleLowerCase())));
-    setPlanetsFilter(filterPlanets);
-  }, [planets, nameFilter]); // valores setados pela função handleChange do Form
+  useEffect(() => { // toda vez que o valor do filtro mudar, será acionada
+    filterByNumericValues.forEach((filter) => {
+      switch (filter.comparison) {
+      case 'maior que':
+        setDataFiltered(data
+          .filter((planet) => Number(planet[filter.column]) > Number(filter.value)));
+        break;
+      case 'menor que':
+        setDataFiltered(data
+          .filter((planet) => Number(planet[filter.column]) < Number(filter.value)));
+        break;
+      default:
+        setDataFiltered(data
+          .filter((planet) => Number(planet[filter.column]) === Number(filter.value)));
+        break;
+      }
+    });
+  }, [filterByNumericValues, data]);
 
   const contextValue = {
-    planets,
-    filter,
-    setFilter,
     setName,
-    planetsFilter,
+    dataFiltered,
+    setColumn,
+    objectNumerics,
+    setObjectNumerics,
+    setComparison,
+    setValueSearch,
+    setFilterByNumericValues,
+    filterByNumericValues,
+    setFilters,
+    filters,
+    columnState,
+    comparisonState,
+    valueState,
   };
+
   return (
     <StarContext.Provider value={ contextValue }>
       {children}
