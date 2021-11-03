@@ -10,7 +10,13 @@ export default function SelectGenerator({ dataID, handleChange, value, options, 
       onChange={ handleChange }
     >
       { options.map((option) => (
-        <option key={ option } value={ option }>{option}</option>
+        <option
+          key={ option }
+          value={ option }
+        >
+          {option}
+
+        </option>
       )) }
     </select>
   );

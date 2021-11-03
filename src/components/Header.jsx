@@ -1,12 +1,22 @@
 import React, { useContext } from 'react';
 import StarwarsContext from '../context/StarwarsContext';
-import { columnFilter, comparisonFilter } from '../services/data';
+import { comparisonFilter } from '../services/data';
 import SelectGenerator from './SelectGenerator';
 
 export default function Header() {
-  const { filters, setFilters, filterStarwarsComparison } = useContext(StarwarsContext);
+  const {
+    filters,
+    setFilters,
+    filterStarwarsComparison,
+    setStateComparison,
+    stateComparison,
+    columns,
+    filterStarwarsPlanetByName,
+  } = useContext(StarwarsContext);
   const { filterByName } = filters;
+
   const updateFiltersByName = (e) => {
+    filterStarwarsPlanetByName(e);
     setFilters({
       ...filters,
       filterByName: {
@@ -17,12 +27,10 @@ export default function Header() {
 
   const updateFiltersByOptions = (e) => {
     const { name, value } = e.target;
-    setFilters({
-      ...filters,
-      filterByNumericValues: [{
-        ...filters.filterByNumericValues[0],
-        [name]: value,
-      }],
+
+    setStateComparison({
+      ...stateComparison,
+      [name]: value,
     });
   };
 
@@ -43,14 +51,14 @@ export default function Header() {
       <div>
         <SelectGenerator
           handleChange={ updateFiltersByOptions }
-          value={ filters.filterByNumericValues[0].column }
-          options={ columnFilter }
+          value={ stateComparison.column }
+          options={ columns }
           name="column"
           dataID="column-filter"
         />
         <SelectGenerator
           handleChange={ updateFiltersByOptions }
-          value={ filters.filterByNumericValues[0].comparison }
+          value={ stateComparison.comparison }
           options={ comparisonFilter }
           name="comparison"
           dataID="comparison-filter"
@@ -61,6 +69,7 @@ export default function Header() {
           id="valueFilter"
           data-testid="value-filter"
           placeholder="Insira um número"
+          value={ stateComparison.value }
           onChange={ updateFiltersByOptions }
         />
         <button

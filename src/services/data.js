@@ -28,15 +28,15 @@ export const comparisonFilter = [
   'igual a',
 ];
 
+export const INITIAL_COMPARISON = {
+  column: 'population',
+  comparison: 'maior que',
+  value: '',
+};
+
 export const FILTERS = {
   filterByName: {
     name: '',
   },
-  filterByNumericValues: [
-    {
-      column: 'population',
-      comparison: 'maior que',
-      value: '',
-    },
-  ],
+  filterByNumericValues: [],
 };

@@ -1,25 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import StarwarsContext from './StarwarsContext';
-import { FILTERS } from '../services/data';
+import { columnFilter, FILTERS, INITIAL_COMPARISON } from '../services/data';
 import useFetch from '../hooks/useFetch';
 
 const StarwarsProvider = ({ children }) => {
   const [data, loading] = useFetch('https://swapi-trybe.herokuapp.com/api/planets');
   const [planets, setPlanets] = useState(data);
+  const [columns, setColumns] = useState(columnFilter);
   const [filters, setFilters] = useState(FILTERS);
+  const [stateComparison, setStateComparison] = useState(INITIAL_COMPARISON);
 
-  const filterStarwarsPlanetByName = () => {
-    const { filterByName } = filters;
-    const { name } = filterByName;
+  const filterStarwarsPlanetByName = ({ target: { value } }) => {
     const filterByNamePlanet = data.filter(
-      (planet) => planet.name.toLowerCase().includes(name.toLowerCase()),
+      (planet) => planet.name.toLowerCase().includes(value.toLowerCase()),
     );
     return setPlanets(filterByNamePlanet);
   };
 
-  const switchComparison = (planet, filterByNumericValues) => {
-    const { comparison, column, value } = filterByNumericValues;
+  const switchComparison = (planet, state) => {
+    const { comparison, column, value } = state;
     switch (comparison) {
     case 'maior que':
       return Number(planet[column]) > Number(value);
@@ -34,27 +34,33 @@ const StarwarsProvider = ({ children }) => {
 
   const filterStarwarsComparison = () => {
     const { filterByNumericValues } = filters;
+    setFilters({ ...filters,
+      filterByNumericValues: [
+        ...filterByNumericValues, stateComparison,
+      ] });
+
     const filterByNumericValuesPlanet = data.filter(
-      (planet) => switchComparison(planet, filterByNumericValues[0]),
+      (planet) => switchComparison(planet, stateComparison),
     );
-    return setPlanets(filterByNumericValuesPlanet);
+    setColumns(columns.filter((column) => column !== stateComparison.column));
+    setPlanets(filterByNumericValuesPlanet);
   };
 
   useEffect(() => {
     setPlanets(data);
   }, [data]);
 
-  useEffect(() => {
-    filterStarwarsPlanetByName();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters]);
-
   const state = {
     planets,
     loading,
     filters,
+    stateComparison,
+    columns,
     setFilters,
     filterStarwarsComparison,
+    setStateComparison,
+    setColumns,
+    filterStarwarsPlanetByName,
   };
 
   return (
