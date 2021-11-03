@@ -28,15 +28,33 @@ function PlanetsProvider({ children }) {
   function fetchPlanets() {
     fetch(PLANETS_URL)
       .then((response) => response.json())
-      .then((result) => getPlanets(result.results));
+      .then((result) => {
+        getPlanets(result.results);
+        setData(result.results);
+      });
   }
 
   useEffect(() => fetchPlanets(), []);
 
-  useEffect(() => setData(planets), [planets]);
+  useEffect(() => {
+    function filterByName() {
+      return planets.filter(({ name }) => (
+        name.toLowerCase().includes(filters.filters.filterByName.name)
+      ));
+    }
+
+    if (planets.length > 0) setData(filterByName());
+  }, [filters, planets]);
+
+  const state = {
+    data,
+    setData,
+    filters: filters.filters,
+    setFilters,
+  };
 
   return (
-    <PlanetsContext.Provider value={ { data } }>
+    <PlanetsContext.Provider value={ state }>
       { children }
     </PlanetsContext.Provider>);
 }
