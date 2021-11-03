@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 // Referência 01: Filtro para updatedColumns.
 // src: https://stackoverflow.com/a/19957433
 
@@ -42,7 +43,6 @@ export default function PlanetFinderProvider({ children }) {
         return planetName.includes(filter);
       }),
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [name]);
 
   useEffect(() => {
@@ -51,7 +51,6 @@ export default function PlanetFinderProvider({ children }) {
       (filter) => !columns.includes(filter),
     );
     setFilteredColumns(updatedColumns);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filterByNumericValues]);
 
   useEffect(() => {
