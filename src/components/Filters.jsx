@@ -1,9 +1,27 @@
 import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
+const columnOptions = ['population', 'orbital_period', 'diameter',
+  'rotation_period', 'surface_water'];
+
+const comparisonOptions = ['menor que', 'igual a', 'maior que'];
+
 const Filters = () => {
   const { handleChange, handleSelectOptions,
-    handleFilterButtonClick } = useContext(PlanetsContext);
+    handleFilterButtonClick,
+    filters: { filterByNumericValues } } = useContext(PlanetsContext);
+
+  const removeColumnOptions = () => {
+    if (filterByNumericValues.length !== 0) {
+      const columnOptionsFiltered = filterByNumericValues
+        .map((filterColumn) => (
+          columnOptions.filter((options) => options !== filterColumn.column)
+        ));
+      return columnOptionsFiltered[0];
+    }
+    return columnOptions;
+  };
+
   return (
     <div>
       <input
@@ -19,11 +37,11 @@ const Filters = () => {
           name, value,
         ) }
       >
-        <option>population</option>
-        <option>orbital_period</option>
-        <option>diameter</option>
-        <option>rotation_period</option>
-        <option>surface_water</option>
+        {removeColumnOptions()
+          .map((option, index) => {
+            console.log(option);
+            return <option key={ index }>{option}</option>;
+          })}
       </select>
       <select
         data-testid="comparison-filter"
@@ -32,9 +50,8 @@ const Filters = () => {
           target.name, target.value,
         ) }
       >
-        <option>menor que</option>
-        <option>igual a</option>
-        <option>maior que</option>
+        {comparisonOptions
+          .map((option, index) => <option key={ index }>{option}</option>)}
       </select>
       <input
         type="number"

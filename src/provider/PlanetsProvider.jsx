@@ -44,6 +44,11 @@ const PlanetsProvider = ({ children }) => {
       filterByNumericValues: [...prevState.filterByNumericValues,
         selectObjects],
     }));
+    setSelectObjects({
+      column: '',
+      comparison: '',
+      value: 0,
+    });
   };
 
   const contextValue = {

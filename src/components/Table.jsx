@@ -1,17 +1,10 @@
 import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 import Loading from './Loading';
-// <div>
-// isFetching,
-//     {isFetching
-//       ? <span>Loading...</span>
-//       :
+
 const Table = () => {
   const { data, filters: { filterByName: { name },
     filterByNumericValues }, isFetching } = useContext(PlanetsContext);
-  console.log(filterByNumericValues);
-  console.log(name);
-
   const dealWithFilterPresence = () => {
     if (name.length !== 0) {
       return data
