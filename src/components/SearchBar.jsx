@@ -70,7 +70,7 @@ function SearchBar() {
         type="radio"
         label="Ascendente"
         value="ASC"
-        dataTestid="name-filter"
+        dataTestid="column-sort-input-asc"
         onclick={ handleChangeByOrderValues }
       />
       <InputRadio
@@ -78,7 +78,7 @@ function SearchBar() {
         type="radio"
         label="Descendente"
         value="DESC"
-        dataTestid="name-filter"
+        dataTestid="column-sort-input-desc"
         onclick={ handleChangeByOrderValues }
       />
       <Button
