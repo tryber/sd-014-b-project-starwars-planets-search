@@ -17,11 +17,25 @@ export default function PlanetsTableProvider({ children }) {
     },
   });
   const [loading, setLoading] = useState(true);
+  const numericOptions = [
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ];
+  const numericComparisons = {
+    'igual a': (a, b) => Number(a) === Number(b),
+    'maior que': (a, b) => Number(a) > Number(b),
+    'menor que': (a, b) => Number(a) < Number(b),
+  };
 
   const contextValue = {
     data,
     filters,
     loading,
+    numericOptions,
+    numericComparisons,
     setData,
     setFilters,
     setLoading,

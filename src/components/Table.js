@@ -4,12 +4,25 @@ import PlanetsTableContext from '../contexts';
 import applyDataFilters from '../data/filters';
 
 export default function Table() {
-  const { data: { planets }, filters } = useContext(PlanetsTableContext);
-  const { filterByName: { name: planetName } } = filters;
+  const {
+    data: { planets },
+    filters,
+    numericComparisons,
+  } = useContext(PlanetsTableContext);
+  const {
+    filterByName: { name: nameToFilter },
+    filterByNumericValues,
+  } = filters;
   planets.forEach((planet) => delete planet.residents);
 
+  const numericFilters = filterByNumericValues.map(
+    ({ column, comparison, value }) => ({ [column]: numericProperty }) => (
+      numericComparisons[comparison](numericProperty, value)
+    ),
+  );
   const filtersToApply = [
-    ({ name }) => name.toLowerCase().includes(planetName.toLowerCase()),
+    ({ name }) => name.toLowerCase().includes(nameToFilter.toLowerCase()),
+    ...numericFilters,
   ];
   const filteredPlanets = applyDataFilters(planets, filtersToApply);
 
