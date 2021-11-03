@@ -1,11 +1,25 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import planetsContext from '../context/PlanetsContext';
 import '../styles/Filters.css';
 
 function Filters() {
-  const { handleChange,
-    handleColumnFilter,
-    handleComparisonFilter } = useContext(planetsContext);
+  const initialState = {
+    column: 'population',
+    comparison: 'maior que',
+    value: 0,
+  };
+
+  const [filterNumericValues, setHandleFilter] = useState(initialState);
+
+  const handleFilter = ({ target }) => (
+    setHandleFilter({
+      ...filterNumericValues,
+      [target.name]: target.value,
+    })
+  );
+
+  const { handleChange, handleFilterClick } = useContext(planetsContext);
+
   return (
     <main className="main-filters">
       <label htmlFor="input-filter">
@@ -22,7 +36,8 @@ function Filters() {
       <section className="section-filters">
         <select
           data-testid="column-filter"
-          onChange={ (event) => handleColumnFilter(event) }
+          name="column"
+          onChange={ (event) => handleFilter(event) }
         >
           <option>population</option>
           <option>orbital_period</option>
@@ -32,14 +47,26 @@ function Filters() {
         </select>
         <select
           data-testid="comparison-filter"
-          onChange={ (event) => handleComparisonFilter(event) }
+          name="comparison"
+          onChange={ (event) => handleFilter(event) }
         >
           <option>maior que</option>
           <option>menor que</option>
           <option>igual a</option>
         </select>
-        <input data-testid="value-filter" type="number" />
-        <button data-testid="button-filter" type="submit">Filtrar</button>
+        <input
+          data-testid="value-filter"
+          type="number"
+          name="value"
+          onChange={ (event) => handleFilter(event) }
+        />
+        <button
+          data-testid="button-filter"
+          type="submit"
+          onClick={ () => handleFilterClick(filterNumericValues) }
+        >
+          Filtrar
+        </button>
       </section>
     </main>
   );

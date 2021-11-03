@@ -7,7 +7,41 @@ const itemsHeader = ['Name', 'Rotation Period', 'Orbital Period',
   'Population', 'Films', 'Created', 'Edited', 'URL'];
 
 function TableOfPlanets() {
-  const { planets, filterByName } = useContext(planetsContext);
+  const { planets,
+    filterByName,
+    filterByNumericValues,
+    buttonClick } = useContext(planetsContext);
+
+  const comparateNumbers = () => {
+    if (filterByNumericValues[0].comparison === 'maior que') {
+      return planets.filter((planet) => (
+        Number(planet[filterByNumericValues[0]
+          .column]) > Number(filterByNumericValues[0].value)
+      ));
+    }
+    if (filterByNumericValues[0].comparison === 'menor que') {
+      return planets.filter((planet) => (
+        Number(planet[filterByNumericValues[0]
+          .column]) < Number(filterByNumericValues[0].value)
+      ));
+    }
+    if (filterByNumericValues[0].comparison === 'igual a') {
+      return planets.filter((planet) => (
+        Number(planet[filterByNumericValues[0]
+          .column]) === Number(filterByNumericValues[0].value)
+      ));
+    }
+    return planets;
+  };
+
+  const checkButtonClick = () => {
+    if (buttonClick) {
+      const array = comparateNumbers();
+      return array;
+    }
+    return planets;
+  };
+
   if (filterByName.name !== '') {
     const planetsFiltered = planets
       .filter((planet) => planet.name.toLowerCase()
@@ -76,7 +110,7 @@ function TableOfPlanets() {
         </tr>
       </thead>
       <tbody>
-        {planets.map((planet, index) => (
+        {checkButtonClick().map((planet, index) => (
           <tr key={ index }>
             <td key={ `${planet.name}_${index}` }>{ planet.name }</td>
             <td key={ `${planet.name}_${index}` }>{ planet.rotation_period }</td>
