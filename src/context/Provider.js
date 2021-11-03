@@ -5,12 +5,15 @@ import PlanetContext from './PlanetContext';
 function Provider({ children }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [name, setName] = useState('');
 
   const contextValue = {
     data,
     setData,
     loading,
     setLoading,
+    name,
+    setName,
   };
 
   return (
