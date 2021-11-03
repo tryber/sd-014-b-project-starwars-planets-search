@@ -78,19 +78,19 @@ function TableOfPlanets() {
       <tbody>
         {planets.map((planet, index) => (
           <tr key={ index }>
-            <td key={ planet.name }>{ planet.name }</td>
-            <td key={ planet.name }>{ planet.rotation_period }</td>
-            <td key={ planet.name }>{ planet.orbital_period }</td>
-            <td key={ planet.name }>{ planet.diameter }</td>
-            <td key={ planet.name }>{ planet.climate }</td>
-            <td key={ planet.name }>{ planet.gravity }</td>
-            <td key={ planet.name }>{ planet.terrain }</td>
-            <td key={ planet.name }>{ planet.surface_water }</td>
-            <td key={ planet.name }>{ planet.population }</td>
-            <td key={ planet.name }>{ planet.films }</td>
-            <td key={ planet.name }>{ planet.created }</td>
-            <td key={ planet.name }>{ planet.edited }</td>
-            <td key={ planet.name }>{ planet.url }</td>
+            <td key={ `${planet.name}_${index}` }>{ planet.name }</td>
+            <td key={ `${planet.name}_${index}` }>{ planet.rotation_period }</td>
+            <td key={ `${planet.name}_${index}` }>{ planet.orbital_period }</td>
+            <td key={ `${planet.name}_${index}` }>{ planet.diameter }</td>
+            <td key={ `${planet.name}_${index}` }>{ planet.climate }</td>
+            <td key={ `${planet.name}_${index}` }>{ planet.gravity }</td>
+            <td key={ `${planet.name}_${index}` }>{ planet.terrain }</td>
+            <td key={ `${planet.name}_${index}` }>{ planet.surface_water }</td>
+            <td key={ `${planet.name}_${index}` }>{ planet.population }</td>
+            <td key={ `${planet.name}_${index}` }>{ planet.films }</td>
+            <td key={ `${planet.name}_${index}` }>{ planet.created }</td>
+            <td key={ `${planet.name}_${index}` }>{ planet.edited }</td>
+            <td key={ `${planet.name}_${index}` }>{ planet.url }</td>
           </tr>
         ))}
       </tbody>

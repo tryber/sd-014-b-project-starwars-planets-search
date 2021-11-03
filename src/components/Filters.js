@@ -16,7 +16,7 @@ function Filters() {
           name="name"
           placeholder="Filtrar por nome"
           className="input-filter"
-          onKeyUp={ (event) => handleChange(event) }
+          onChange={ (event) => handleChange(event) }
         />
       </label>
       <section className="section-filters">
