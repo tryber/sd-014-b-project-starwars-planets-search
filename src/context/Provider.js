@@ -6,14 +6,21 @@ function Provider({ children }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [name, setName] = useState('');
+  const [filtered, setFiltered] = useState([]);
 
   const contextValue = {
     data,
     setData,
     loading,
     setLoading,
-    name,
+    filters: {
+      filterByName: {
+        name,
+      },
+    },
     setName,
+    filtered,
+    setFiltered,
   };
 
   return (

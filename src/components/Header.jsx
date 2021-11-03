@@ -2,27 +2,33 @@ import React, { useContext, useEffect } from 'react';
 import PlanetContext from '../context/PlanetContext';
 
 function Header() {
-  const { setData, setLoading, setName, filters } = useContext(PlanetContext);
+  const { setData, data, setLoading, filters: { filterByName },
+    setName, setFiltered } = useContext(PlanetContext);
   useEffect(() => {
     const fetchPlanets = async () => {
       const result = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
-      const data = await result.json();
-      const planets = await data.results;
-      const filtered = planets.filter(({ name }) => (
-        name.toLowerCase().includes(filters.filterByName.name.toLowerCase())));
-      setData(filtered);
+      const planets = await result.json();
+      setData(planets.results);
+      setFiltered(planets.results);
       setLoading(false);
     };
     fetchPlanets();
-  }, [setLoading, setData, filters]);
+  }, [setLoading, setData, setFiltered]);
+  useEffect(() => {
+    const filtered = data.filter(({ name }) => (
+      name.toLowerCase().includes(filterByName.name.toLowerCase())
+    ));
+    setFiltered(filtered);
+  }, [filterByName.name, setFiltered, data]);
+
   return (
     <header>
       <h1>Projeto Star Wars - Trybe</h1>
       <input
-        data-testid="name-filter"
-        onChange={ ({ target }) => setName(target.value) }
         type="text"
         placeholder="Filtrar por nome"
+        onChange={ ({ target }) => setName(target.value) }
+        data-testid="name-filter"
       />
     </header>
   );

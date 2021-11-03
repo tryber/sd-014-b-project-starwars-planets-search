@@ -7,7 +7,7 @@ function Table() {
     'Climate', 'Gravity', 'Terrain', 'Surface Water', 'Population', 'Films',
     'Created', 'Edited', 'URL',
   ];
-  const { data, loading } = useContext(PlanetContext);
+  const { filtered, loading } = useContext(PlanetContext);
   if (loading) {
     return (<h2>Loading...</h2>);
   }
@@ -19,7 +19,7 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {data.map((planet) => (
+        {filtered.map((planet) => (
           <tr key={ planet.name }>
             <td>{planet.name}</td>
             <td>{planet.rotation_period}</td>
