@@ -8,7 +8,7 @@ function PlanetsProvider({ children }) {
   const [isLoading, setIsLoading] = useState(false);
   const [filters, setFilters] = useState({
     filterByName: {
-      name: 'Tatoo',
+      name: '',
     },
   });
 
