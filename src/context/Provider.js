@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React from 'react';
 import myContext from './MyContext';
 
 function Provider({ children }) {
-  const [data, setData] = useState([]);
+  // const [data, setData] = useState([]);
   const contextValue = {
-    data,
-    setData,
+    // data,
+    // setData,
   };
   return (
     <myContext.Provider value={ contextValue }>
