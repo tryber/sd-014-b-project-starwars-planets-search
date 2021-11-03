@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import MyContext from '../context/MyContext';
-import FormFilter from './FormFilter';
 
 function TablePlanets() {
   const { data, filteredPlanets, isFiltering } = useContext(MyContext);
@@ -40,7 +39,6 @@ function TablePlanets() {
 
   return (
     <section>
-      <FormFilter />
       <table>
         <tbody>
           {firstRow}
