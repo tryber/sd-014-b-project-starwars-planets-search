@@ -74,7 +74,12 @@ function PlanetProvider({ children }) {
         .filterByNumericValues[0].column]
         === filterSearch.filters.filterByNumericValues[0].value));
     }
+    document.getElementById(filterSearch.filters
+      .filterByNumericValues[0].column).remove();
   }
+
+  // https://qastack.com.br/programming/5933157/how-to-remove-an-html-element-using-javascript
+  // Utilização da função remove para apagar o elemento da option.
 
   function handleSelect(event) {
     if (event.target.id === 'column') {
