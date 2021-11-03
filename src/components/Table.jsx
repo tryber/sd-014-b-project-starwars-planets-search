@@ -3,7 +3,7 @@ import MyContext from '../context/MyContext';
 
 export default function Table() {
   const { data } = useContext(MyContext);
-  const [loading, setLoading] = useState(false);
+  const [setLoading] = useState(false);
 
   useEffect(() => {
     console.log('use context dentro do table', data);
@@ -12,7 +12,7 @@ export default function Table() {
     } else {
       setLoading(true);
     }
-  }, [data]);
+  }, [data, setLoading]);
 
   return (
 
