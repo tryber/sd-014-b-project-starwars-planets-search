@@ -1,10 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
+import Tabela from './Table';
 
-function App() {
+const App = () => {
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    const URL_API = 'https://swapi-trybe.herokuapp.com/api/planets/';
+    const fetchData = async () => {
+      try {
+        const response = await fetch(URL_API);
+        const json = await response.json();
+        setData(json.results);
+      } catch (error) {
+        setData(error);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
-    <span>Hello, App!</span>
+    <div>
+      <Tabela state={ data } />
+    </div>
   );
-}
+};
 
 export default App;
