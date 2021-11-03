@@ -8,14 +8,26 @@ class PlanetsProvider extends React.Component {
     super();
 
     this.state = {
-      planetsList: 'salve<euBom',
+      planetsList: [],
     };
+
+    this.fetchPlanets = this.fetchPlanets.bind(this);
+  }
+
+  fetchPlanets() {
+    fetch('https://swapi-trybe.herokuapp.com/api/planets/')
+      .then((response) => response.json()
+        .then((results) => {
+          this.setState({ planetsList: results.results });
+        }));
   }
 
   render() {
     const { children } = this.props;
     return (
-      <PlanetsContext.Provider value={ { ...this.state } }>
+      <PlanetsContext.Provider
+        value={ { ...this.state, fetchPlanets: this.fetchPlanets } }
+      >
         { children }
       </PlanetsContext.Provider>
     );
@@ -23,7 +35,7 @@ class PlanetsProvider extends React.Component {
 }
 
 PlanetsProvider.propTypes = {
-  children: PropTypes.arrayOf(PropTypes.element).isRequired,
+  children: PropTypes.objectOf(PropTypes.func).isRequired,
 };
 
 export default PlanetsProvider;
