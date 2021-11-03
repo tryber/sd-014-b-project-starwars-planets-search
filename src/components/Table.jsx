@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { SearchContext } from '../provider/Provider';
 import RenderTable from './RenderTable';
 
 function Table() {
   const APIurl = 'https://swapi-trybe.herokuapp.com/api/planets/';
   const [loading, setLoading] = useState(false);
-  const [array, setArray] = useState([]);
+  const { setArray } = useContext(SearchContext);
 
   useEffect(() => {
     setLoading(true);
@@ -15,12 +16,12 @@ function Table() {
     }
     getData();
     setLoading(false);
-  }, []);
+  }, [setArray]);
 
   return (
     <div>
       { loading && 'Carregando...'}
-      <RenderTable array={ array } />
+      <RenderTable />
     </div>
   );
 }

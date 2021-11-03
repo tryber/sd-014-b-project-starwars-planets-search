@@ -1,7 +1,16 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext, useEffect, useState } from 'react';
+import { SearchContext } from '../provider/Provider';
 
-function RenderTable({ array }) {
+function RenderTable() {
+  const { filter, array } = useContext(SearchContext);
+  const [filtered, setFiltered] = useState([]);
+
+  useEffect(() => {
+    const newArray = [...array].filter(({ name }) => (
+      name.toLowerCase().includes(filter.toLowerCase())));
+    setFiltered(newArray);
+  }, [array, filter]);
+
   function renderRow({ name, rotation_period: rotation, orbital_period: orbital, diameter,
     climate, gravity, terrain, surface_water: water, population,
     films, created, edited, url }) {
@@ -45,17 +54,12 @@ function RenderTable({ array }) {
       </thead>
       <tbody>
         {
-          array.map((e) => renderRow(e))
+          filtered
+            .map((e) => renderRow(e))
         }
       </tbody>
     </table>
   );
 }
-
-RenderTable.propTypes = {
-  array: PropTypes.shape({
-    map: PropTypes.func,
-  }).isRequired,
-};
 
 export default RenderTable;
