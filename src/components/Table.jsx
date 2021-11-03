@@ -1,9 +1,12 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function Table() {
-  const { contextValue:
-    { data, filterByName, setFilterByName } } = useContext(PlanetsContext);
+  const { contextValue: { data, filter, setFilter } } = useContext(PlanetsContext);
+  const [filterName, setFilterName] = useState('');
+  const [column, setColumn] = useState('population');
+  const [comparison, setComparison] = useState('maior que');
+  const [value, setValue] = useState('0');
   return (
     <>
       <label htmlFor="research">
@@ -12,9 +15,50 @@ function Table() {
           type="text"
           id="research"
           data-testid="name-filter"
-          onChange={ (event) => setFilterByName(event.target.value) }
+          onChange={ (event) => setFilterName(event.target.value) }
         />
       </label>
+      <select
+        data-testid="column-filter"
+        onChange={ (event) => setColumn(event.target.value) }
+      >
+        <option value="population">population</option>
+        <option value="orbital_period">orbital_period</option>
+        <option value="diameter">diameter</option>
+        <option value="rotation_period">rotation_period</option>
+        <option value="surface_water">surface_water</option>
+      </select>
+      <select
+        data-testid="comparison-filter"
+        onChange={ (event) => setComparison(event.target.value) }
+      >
+        <option value="maior que">maior que</option>
+        <option value="menor que">menor que</option>
+        <option value="igual a">igual a</option>
+      </select>
+      <label htmlFor="value-filter">
+        Filtrar Valor
+        <input
+          type="number"
+          id="value-filter"
+          data-testid="value-filter"
+          onChange={ (event) => setValue(event.target.value) }
+        />
+      </label>
+      <button
+        type="button"
+        data-testid="button-filter"
+        onClick={ () => {
+          setFilter({
+            ...filter,
+            filters: {
+              filterByNumericValues: [{ column, comparison, value }],
+            },
+          });
+        } }
+      >
+        Filtrar
+      </button>
       <table>
         <thead>
           <tr>
@@ -34,8 +78,22 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          { data.filter((planet) => planet.name.toLowerCase()
-            .includes(filterByName.toLowerCase()))
+          { data
+            .filter((planet) => {
+              const numericValues = filter.filters.filterByNumericValues[0];
+              let filteredValue = [];
+              if (numericValues.comparison === 'maior que') {
+                filteredValue = Number(planet[numericValues.column])
+                > Number(numericValues.value);
+              } else if (numericValues.comparison === 'menor que') {
+                filteredValue = Number(planet[numericValues.column])
+                < Number(numericValues.value);
+              } else if (numericValues.comparison === 'igual a') {
+                filteredValue = Number(planet[numericValues.column])
+                === Number(numericValues.value);
+              } return filteredValue;
+            }).filter((planet) => planet.name.toLowerCase()
+              .includes(filterName.toLowerCase()))
             .map((planet) => (
               <tr key={ planet.name }>
                 <td>{ planet.name }</td>

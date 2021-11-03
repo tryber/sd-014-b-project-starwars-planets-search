@@ -4,12 +4,23 @@ import PlanetsContext from './PlanetsContext';
 
 function PlanetsProvider({ children }) {
   const [data, setData] = useState([]);
-  const [filterByName, setFilterByName] = useState('');
+  const [filter, setFilter] = useState(
+    { filters: {
+      filterByName: {
+        name: '',
+      },
+      filterByNumericValues: [{
+        column: '',
+        comparison: '',
+        value: '',
+      }],
+    } },
+  );
 
   const contextValue = {
     data,
-    filterByName,
-    setFilterByName,
+    filter,
+    setFilter,
   };
 
   useEffect(() => {
