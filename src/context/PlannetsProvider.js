@@ -6,6 +6,9 @@ import fetchAPI from '../services/StarWarsAPI';
 export default function PlannetsProvider({ children }) {
   const [data, setData] = useState([]);
   const [name, setName] = useState('');
+  const [column, setColumn] = useState('population');
+  const [comparison, setComparison] = useState('maior que');
+  const [value, setFilterValue] = useState(0);
   const [filterData, setFilterData] = useState([]);
 
   useEffect(() => {
@@ -17,10 +20,23 @@ export default function PlannetsProvider({ children }) {
   }, []);
 
   const INITIAL_STATE = { data,
-    filters: { filterByName: { name } },
+    filters: {
+      filterByName: { name },
+      filterByNumericValues: [
+        {
+          column,
+          comparison,
+          value,
+        },
+      ],
+    },
     setName,
     filterData,
-    setFilterData };
+    setFilterData,
+    setColumn,
+    setComparison,
+    setFilterValue,
+  };
 
   return (
     <PlannetsContext.Provider value={ INITIAL_STATE }>

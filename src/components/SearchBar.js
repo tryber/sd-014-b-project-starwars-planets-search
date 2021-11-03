@@ -10,6 +10,7 @@ export default function SearchBar() {
         data-testid="name-filter"
         value={ name }
         onChange={ ({ target }) => setName(target.value) }
+        placeholder="Filtrar por nome"
       />
     </label>
   );
