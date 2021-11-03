@@ -1,26 +1,30 @@
-import React, {useState, useEffect} from "react";
-import tableContext from "./tableContext";
+import PropTypes from 'prop-types';
+import React, { useState, useEffect } from 'react';
+import tableContext from './tableContext';
 import requestPlanets from '../services/api';
 
-export default function Provider({children}) {
+export default function Provider({ children }) {
+  const [data, setData] = useState({ data: { results: [{ name: 'oi' }] } });
 
-  const [data, setData] = useState({data: {results: [{name: 'oi'}]}});
-
-  useEffect( () => { 
+  useEffect(() => {
     async function fetchDatasetData() {
-      const data = await requestPlanets()
-      setData(data);
+      const dataValue = await requestPlanets();
+      setData(dataValue);
     }
     fetchDatasetData();
-  }, [])
+  }, []);
 
   const contextValue = {
     data,
-  }
+  };
 
   return (
-    <tableContext.Provider value={contextValue}>
+    <tableContext.Provider value={ contextValue }>
       {children}
     </tableContext.Provider>
-  )
+  );
 }
+
+Provider.propTypes = {
+  children: PropTypes.objectOf(PropTypes.any).isRequired,
+};

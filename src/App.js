@@ -7,7 +7,6 @@ function App() {
   return (
     <main>
       <Provider>
-        <span>Hello, App!</span>
         <Table />
       </Provider>
     </main>

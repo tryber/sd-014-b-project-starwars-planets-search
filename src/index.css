@@ -18,7 +18,7 @@ table {
   width: 100%;
 }
 
-td, th {
+td, th, tbody, thead {
   border: 1px solid #dddddd;
   text-align: left;
   padding: 8px;
