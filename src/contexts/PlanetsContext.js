@@ -6,8 +6,19 @@ export const PlanetsContext = createContext();
 function PlanetsContextProvider({ children }) {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [filters, setFilters] = useState({
+    filterByName: '',
+  });
+  const context = {
+    data,
+    setData,
+    isLoading,
+    setIsLoading,
+    filters,
+    setFilters,
+  };
   return (
-    <PlanetsContext.Provider value={ { data, setData, isLoading, setIsLoading } }>
+    <PlanetsContext.Provider value={ context }>
       { children }
     </PlanetsContext.Provider>
   );
