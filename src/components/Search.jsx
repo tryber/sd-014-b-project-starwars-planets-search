@@ -5,9 +5,10 @@ export default function Search() {
   const { data, setFilterInput } = useContext(AppContext);
 
   const handleFilterInput = ({ target }) => {
-    const inputValue = target.value.toLowerCase();
+    const inputValue = target.value;
     const filteredArray = data
-      .filter((element) => element.name.includes(inputValue.toLowerCase()));
+      .filter((element) => element.name.toLowerCase()
+        .includes(inputValue.toLowerCase()));
 
     setFilterInput(filteredArray);
   };
