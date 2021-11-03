@@ -5,7 +5,12 @@ import TableHeader from './TableHeader';
 import TableRows from './TableRows';
 
 const Table = () => {
-  const { data } = useContext(StarWarsContext);
+  const { data, filters } = useContext(StarWarsContext);
+
+  const filter = () => {
+    const { filterByName: { name } } = filters;
+    return data.filter((planet) => planet.name.includes(name));
+  };
 
   return (
     <table>
@@ -13,7 +18,7 @@ const Table = () => {
         <TableHeader />
       </thead>
       <tbody>
-        { data.map((planet, index) => (
+        { filter().map((planet, index) => (
           <TableRows key={ index } planet={ planet } />
         ))}
       </tbody>

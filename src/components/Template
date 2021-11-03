@@ -1,0 +1,13 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+
+const TableRows = () => {
+  return (
+  );
+};
+
+export default TableRows;
+
+TableRows.propTypes = {
+  planet: PropTypes.objectOf(PropTypes.any).isRequired,
+};
