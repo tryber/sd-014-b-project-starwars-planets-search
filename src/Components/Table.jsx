@@ -1,13 +1,10 @@
-import React, { useContext } from 'react';
-
-import { MyContext } from '../Context/MyContext';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 import TableHeader from './TableHeader';
 import TableRow from './TableRow';
 
-function Table() {
-  const { data } = useContext(MyContext);
-
+function Table({ data }) {
   return (
     <div className="table-container">
       <table>
@@ -21,5 +18,9 @@ function Table() {
     </div>
   );
 }
+
+Table.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+};
 
 export default Table;
