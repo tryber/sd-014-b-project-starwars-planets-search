@@ -7,8 +7,8 @@ function Provider({ children }) {
   const [dataResult, setData] = useState([]);
   const [keys, setKeys] = useState([]);
   const [inputName, setInputName] = useState('');
-  const [column, setColumn] = useState('diameter');
-  const [comparison, setComparison] = useState('maior que');
+  const [column, setColumn] = useState();
+  const [comparison, setComparison] = useState();
   const [value, setValue] = useState();
 
   async function setApi() {
@@ -20,18 +20,11 @@ function Provider({ children }) {
     return resultData;
   }
   useEffect(() => { setApi(); }, []);
-
   const filters = {
     filterByName: {
       name: inputName,
     },
-    filterByNumericValues: [
-      {
-        column,
-        comparison,
-        value,
-      },
-    ],
+    filterByNumericValues: [{ comparison, column, value }],
   };
 
   return (
@@ -40,10 +33,10 @@ function Provider({ children }) {
         keys,
         filters,
         setInputName,
+        setData,
         setColumn,
         setComparison,
         setValue,
-        setData,
       } }
     >
       { children }
