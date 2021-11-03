@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import Context from './Context';
 
 function Provider({ children }) {
-  const [planets, setPlanets] = useState([]);
+  const [data, setData] = useState([]);
 
   const fetchPlanets = async () => {
-    const { results } = await fetch('https://swapi-trybe.herokuapp.com/api/planets/')
+    const { results } = await fetch('https://swapi.dev/api/planets')
       .then((response) => response.json());
-    setPlanets(results);
+    setData(results);
   };
 
   useEffect(() => {
@@ -16,7 +16,7 @@ function Provider({ children }) {
   }, []);
 
   const context = {
-    planets,
+    data,
   };
 
   return (
