@@ -3,7 +3,7 @@ import { Context } from '../context/Provider';
 import fetchPlanets from '../api/StarWars';
 
 function Header() {
-  const { setData, setIsLoading } = useContext(Context);
+  const { setData, setIsLoading, data, setFilters } = useContext(Context);
 
   useEffect(() => {
     const getPlanets = async () => {
@@ -15,9 +15,30 @@ function Header() {
     getPlanets();
   }, []);
 
+  const handleInput = async ({ target }) => {
+    const searchedPlanet = target.value.toLowerCase();
+    const filteredPlanets = data.filter((planet) => (
+      planet.name.toLowerCase().includes(searchedPlanet)
+    ));
+    setData(filteredPlanets);
+    setFilters({ filterByName: { name: searchedPlanet } });
+    if (searchedPlanet.length === 0) {
+      const planets = await fetchPlanets();
+      setData(planets);
+    }
+  };
+
   return (
     <div>
       <h1>Star Wars Planet Search</h1>
+      <div>
+        <input
+          data-testid="name-filter"
+          onChange={ handleInput }
+          type="text"
+          placeholder="filtar por nome"
+        />
+      </div>
     </div>
   );
 }
