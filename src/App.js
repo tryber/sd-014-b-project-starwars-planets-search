@@ -7,7 +7,7 @@ function App() {
   return (
     <PlanetProvider>
       <span>
-        Hello, App!
+        <h1>StarWars Planets Search</h1>
         <Table />
       </span>
     </PlanetProvider>
