@@ -5,17 +5,35 @@ export const PlanetsContext = createContext();
 
 const PLANETS_URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
 
+const INITIAL_FILTER = {
+  filters: {
+    filterByName: {
+      name: '',
+    },
+    filterByNumericValues: [
+      {
+        column: '',
+        comparison: '',
+        value: '',
+      },
+    ],
+  },
+};
+
 function PlanetsProvider({ children }) {
-  const [data, setData] = useState();
+  const [planets, getPlanets] = useState([]);
+  const [data, setData] = useState([]);
+  const [filters, setFilters] = useState(INITIAL_FILTER);
+
   function fetchPlanets() {
     fetch(PLANETS_URL)
       .then((response) => response.json())
-      .then((result) => setData(result.results));
+      .then((result) => getPlanets(result.results));
   }
 
-  useEffect(() => {
-    fetchPlanets();
-  }, []);
+  useEffect(() => fetchPlanets(), []);
+
+  useEffect(() => setData(planets), [planets]);
 
   return (
     <PlanetsContext.Provider value={ { data } }>
@@ -24,7 +42,7 @@ function PlanetsProvider({ children }) {
 }
 
 PlanetsProvider.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.arrayOf(PropTypes.element).isRequired,
 };
 
 export default PlanetsProvider;
