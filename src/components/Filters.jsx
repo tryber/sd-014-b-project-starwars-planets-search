@@ -38,10 +38,7 @@ const Filters = () => {
         ) }
       >
         {removeColumnOptions()
-          .map((option, index) => {
-            console.log(option);
-            return <option key={ index }>{option}</option>;
-          })}
+          .map((option, index) => <option key={ index }>{option}</option>)}
       </select>
       <select
         data-testid="comparison-filter"

@@ -10,7 +10,7 @@ const Table = () => {
       return data
         .filter((item) => item.name.toLowerCase().includes(name.toLowerCase()));
     }
-    if (filterByNumericValues !== undefined && filterByNumericValues.length !== 0) {
+    if (filterByNumericValues.length !== 0) {
       const filterWithNumericConditions = filterByNumericValues
         .map(({ column, comparison, value }) => {
           switch (comparison) {

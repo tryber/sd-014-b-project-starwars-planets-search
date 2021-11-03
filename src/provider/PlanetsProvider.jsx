@@ -25,10 +25,11 @@ const PlanetsProvider = ({ children }) => {
   }, []);
 
   const handleChange = (value) => {
-    setFilters({
+    setFilters((prevState) => ({
+      ...prevState,
       filterByName: {
         name: value,
-      } });
+      } }));
   };
 
   const handleSelectOptions = (name, value) => {
