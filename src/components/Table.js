@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import './table.css';
-
-// campo chamado data do contexto
+import DataContext from '../context/DataContext';
 
 function Table() {
+  const { data, fetchRequestApiPlanets } = useContext(DataContext);
+  useEffect(() => {
+    fetchRequestApiPlanets();
+  }, []);
+  console.log(data);
   return (
     <div>
       <table border="1" className="table">
@@ -25,7 +29,21 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          <tr><td>cecilia</td></tr>
+          <tr>
+            <td>Name</td>
+            <td>Rotation</td>
+            <td>Orbital</td>
+            <td>Diameter</td>
+            <td>Climate</td>
+            <td>Gravity</td>
+            <td>Terrain</td>
+            <td>Surface</td>
+            <td>Population</td>
+            <td>Films</td>
+            <td>Created</td>
+            <td>Edited</td>
+            <td>URL</td>
+          </tr>
         </tbody>
       </table>
     </div>

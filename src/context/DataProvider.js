@@ -8,7 +8,7 @@ function DataProvider({ children }) {
 
   async function fetchRequestApiPlanets() {
     const resposta = await requestApiPlanets();
-    setData(resposta);
+    setData(resposta.results);
   }
 
   return (
