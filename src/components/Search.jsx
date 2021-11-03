@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import MyContext from '../context/MyContext';
 
 export default function Search() {
