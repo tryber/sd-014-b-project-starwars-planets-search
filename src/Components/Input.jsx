@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function Input({
-  className, id, inputName, onChange, type, value, children, placeholder,
+  className, id, inputName, onChange, type, value, children, placeholder, dataTestId,
 }) {
   return (
     <label htmlFor={ id }>
@@ -16,6 +16,7 @@ function Input({
         placeholder={ placeholder }
         type={ type }
         value={ value }
+        data-testid={ dataTestId }
       />
     </label>
   );
@@ -24,6 +25,7 @@ function Input({
 Input.propTypes = {
   className: PropTypes.string.isRequired,
   children: PropTypes.string.isRequired,
+  dataTestId: PropTypes.string.isRequired,
   id: PropTypes.string,
   inputName: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,

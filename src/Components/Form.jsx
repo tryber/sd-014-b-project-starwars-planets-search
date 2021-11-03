@@ -24,6 +24,7 @@ function Form({ filterByName }) {
         placeholder="Ex: Tatoonie"
         type="text"
         value={ textSearch }
+        dataTestId="name-filter"
       >
         Faça sua pesquisa:
       </Input>
