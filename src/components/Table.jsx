@@ -6,6 +6,7 @@ export default function Table() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    console.log('use context dentro do table', data);
     if (data > 0) {
       setLoading(false);
     } else {
@@ -13,10 +14,8 @@ export default function Table() {
     }
   }, [data]);
 
-  console.log(data);
-  console.log(loading);
-
   return (
+
     <table>
       <thead>
         <tr>
@@ -42,7 +41,7 @@ export default function Table() {
             <td>{planets.created}</td>
             <td>{planets.diameter}</td>
             <td>{planets.edited}</td>
-            <td><a href={ planets.films }>{planets.films}</a></td>
+            <td>{planets.films}</td>
             <td>{planets.gravity}</td>
             <td>{planets.name}</td>
             <td>{planets.orbital_period}</td>
@@ -51,7 +50,7 @@ export default function Table() {
             <td>{planets.surface_water}</td>
             <td>{planets.terrain}</td>
             <td>{planets.url}</td>
-        </tr>
+          </tr>
         ))}
       </tbody>
     </table>
