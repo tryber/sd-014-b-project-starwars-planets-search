@@ -2,8 +2,25 @@ import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 export default function Table() {
-  const planets = useContext(PlanetsContext);
+  const { data } = useContext(PlanetsContext);
+  const planets = data;
+  const headers = [
+    'Name',
+    'Rotation Period',
+    'Orbital Period',
+    'Diameter',
+    'Climate',
+    'Gravity',
+    'Terrain',
+    'Surface Water',
+    'Population',
+    'Films',
+    'Created',
+    'Edited',
+    'Url',
+  ];
 
+  const renderedHeaders = headers.map((header, index) => <th key={ index }>{header}</th>);
   const renderedPlanets = planets.map((planet, index) => (
     <tr key={ index }>
       <td>{planet.name}</td>
@@ -26,19 +43,7 @@ export default function Table() {
     <table>
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Rotation Period</th>
-          <th>Orbital Period</th>
-          <th>Diameter</th>
-          <th>Climate</th>
-          <th>Gravity</th>
-          <th>Terrain</th>
-          <th>Surface Water</th>
-          <th>Population</th>
-          <th>Films</th>
-          <th>Created</th>
-          <th>Edited</th>
-          <th>Url</th>
+          {renderedHeaders}
         </tr>
       </thead>
       <tbody>{renderedPlanets}</tbody>
