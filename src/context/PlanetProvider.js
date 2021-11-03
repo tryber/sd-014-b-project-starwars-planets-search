@@ -5,7 +5,7 @@ import getPlanet from '../services/planetApi';
 
 function PlanetProvider({ children }) {
   const [planet, setPlanet] = useState([]);
-  const [inicialPlanet, setInicialPlanet] = useState([]);
+  const [inicialPlanet, setInicialPlanet] = useState([]); // Referência: Albuquerque Bel, 2021
   const [filterName, setFilterName] = useState('');
   const [filter, setFilter] = useState({
     filters: {
