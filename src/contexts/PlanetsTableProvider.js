@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import PlanetsTableContext from '.';
 
-function PlanetsTableProvider({ children }) {
-  const [data, setData] = useState({});
+export default function PlanetsTableProvider({ children }) {
+  const [data, setData] = useState({
+    planets: [],
+  });
   const [filters, setFilters] = useState({
     filterByName: {
       name: '',
@@ -35,5 +37,3 @@ function PlanetsTableProvider({ children }) {
 PlanetsTableProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
-
-export default PlanetsTableProvider;

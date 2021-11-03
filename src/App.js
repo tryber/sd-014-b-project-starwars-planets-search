@@ -1,25 +1,14 @@
-import React, { useContext, useEffect } from 'react';
-import PlanetsTableContext from './contexts';
-import fetchPlanets from './services/StarWarsAPI';
+import React from 'react';
+import Main from './components/Main';
+import PlanetsTableProvider from './contexts/PlanetsTableProvider';
 import './App.css';
 
 function App() {
-  const { data, setData, setLoading } = useContext(PlanetsTableContext);
-
-  useEffect(() => {
-    const getPlanets = async () => {
-      const planets = await fetchPlanets();
-      setData({ ...data, planets });
-      setLoading(false);
-    };
-
-    getPlanets();
-  }, []);
-
   return (
-    <div>
+    <PlanetsTableProvider>
       <h1>Star Wars Planets Search</h1>
-    </div>
+      <Main />
+    </PlanetsTableProvider>
   );
 }
 
