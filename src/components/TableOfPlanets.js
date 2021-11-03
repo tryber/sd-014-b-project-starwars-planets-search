@@ -101,34 +101,47 @@ function TableOfPlanets() {
     );
   }
   return (
-    <table>
-      <thead>
-        <tr>
-          {itemsHeader.map((item, index) => (
-            <th key={ index }>{item}</th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {checkButtonClick().map((planet, index) => (
-          <tr key={ index }>
-            <td key={ `${planet.name}_${index}` }>{ planet.name }</td>
-            <td key={ `${planet.name}_${index}` }>{ planet.rotation_period }</td>
-            <td key={ `${planet.name}_${index}` }>{ planet.orbital_period }</td>
-            <td key={ `${planet.name}_${index}` }>{ planet.diameter }</td>
-            <td key={ `${planet.name}_${index}` }>{ planet.climate }</td>
-            <td key={ `${planet.name}_${index}` }>{ planet.gravity }</td>
-            <td key={ `${planet.name}_${index}` }>{ planet.terrain }</td>
-            <td key={ `${planet.name}_${index}` }>{ planet.surface_water }</td>
-            <td key={ `${planet.name}_${index}` }>{ planet.population }</td>
-            <td key={ `${planet.name}_${index}` }>{ planet.films }</td>
-            <td key={ `${planet.name}_${index}` }>{ planet.created }</td>
-            <td key={ `${planet.name}_${index}` }>{ planet.edited }</td>
-            <td key={ `${planet.name}_${index}` }>{ planet.url }</td>
+    <main>
+      { buttonClick ? (
+        <div>
+          <h4 data-testid="filter">
+            {
+              `${filterByNumericValues[0].column}
+          ${filterByNumericValues[0].comparison} 
+          ${filterByNumericValues[0].value}`
+            }
+          </h4>
+          <button type="button"> X </button>
+        </div>) : <p>Sem filtros</p>}
+      <table>
+        <thead>
+          <tr>
+            {itemsHeader.map((item, index) => (
+              <th key={ index }>{item}</th>
+            ))}
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {checkButtonClick().map((planet, index) => (
+            <tr key={ index }>
+              <td key={ `${planet.name}_${index}` }>{ planet.name }</td>
+              <td key={ `${planet.name}_${index}` }>{ planet.rotation_period }</td>
+              <td key={ `${planet.name}_${index}` }>{ planet.orbital_period }</td>
+              <td key={ `${planet.name}_${index}` }>{ planet.diameter }</td>
+              <td key={ `${planet.name}_${index}` }>{ planet.climate }</td>
+              <td key={ `${planet.name}_${index}` }>{ planet.gravity }</td>
+              <td key={ `${planet.name}_${index}` }>{ planet.terrain }</td>
+              <td key={ `${planet.name}_${index}` }>{ planet.surface_water }</td>
+              <td key={ `${planet.name}_${index}` }>{ planet.population }</td>
+              <td key={ `${planet.name}_${index}` }>{ planet.films }</td>
+              <td key={ `${planet.name}_${index}` }>{ planet.created }</td>
+              <td key={ `${planet.name}_${index}` }>{ planet.edited }</td>
+              <td key={ `${planet.name}_${index}` }>{ planet.url }</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </main>
   );
 }
 
