@@ -11,6 +11,14 @@ const INITIAL_FILTER = {
   },
 };
 
+const filtersToSelect = [
+  'population',
+  'orbital_period',
+  'diameter',
+  'rotation_period',
+  'surface_water',
+];
+
 const Provider = ({ children }) => {
   const [originalList, setOriginalList] = useState([]);
   const [planetList, setPlanetList] = useState([]);
@@ -41,6 +49,7 @@ const Provider = ({ children }) => {
     isLoading,
     setIsLoading,
     filterByName,
+    filtersToSelect,
   };
 
   useEffect(() => {

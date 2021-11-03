@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import './App.css';
-import Filter from './components/Filter';
+import FilterByName from './components/FilterByName';
+import FilterByNumber from './components/FilterByNumber';
 import Table from './components/Table';
 import Context from './context/Context';
 import Provider from './context/Provider';
@@ -11,7 +12,8 @@ function App() {
     <Provider>
       <div>
         <h1>Projeto Star Wars Trybe</h1>
-        <Filter />
+        <FilterByName />
+        <FilterByNumber />
         { isLoading ? <p>Loading...</p> : <Table /> }
       </div>
     </Provider>

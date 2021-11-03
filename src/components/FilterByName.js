@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import Context from '../context/Context';
 
-function Filter() {
+function FilterByName() {
   const { filterByName } = useContext(Context);
   return (
     <div>
@@ -15,4 +15,4 @@ function Filter() {
   );
 }
 
-export default Filter;
+export default FilterByName;
