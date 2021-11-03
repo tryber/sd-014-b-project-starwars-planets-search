@@ -100,7 +100,7 @@ function Provider({ children }) {
       setData(newData);
     } else if (comparison === 'igual a') {
       const newData = data.filter(
-        ({ [column]: columnObject }) => Number(columnObject) == value,
+        ({ [column]: columnObject }) => Number(columnObject) === Number(value),
       );
       setData(newData);
     }
