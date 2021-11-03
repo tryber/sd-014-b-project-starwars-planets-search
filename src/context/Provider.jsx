@@ -4,6 +4,7 @@ import PlanetsContext from './PlanetsContext';
 
 function Provider({ children }) {
   const [data, setData] = useState([]);
+  const [backup, setBackup] = useState([]);
   const [selectOptions, setSelectOptions] = useState({
     columnOptions: [
       'population',
@@ -54,6 +55,7 @@ function Provider({ children }) {
     const PLANETS_URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
     const fetchPlanets = await fetch(PLANETS_URL).then((response) => response.json());
     setData(fetchPlanets.results);
+    setBackup(fetchPlanets.results);
   };
 
   function handleChangeByNameValues({ target }) {
@@ -120,21 +122,53 @@ function Provider({ children }) {
     });
   }
 
-  function filterData() {
-    console.log('filterData');
+  function filterData(planet, newFilters) {
+    let boolean = false;
+    newFilters.map(({ column, comparison, value }) => {
+      if (comparison === 'maior que') {
+        const { [column]: columnObject } = planet;
+        boolean = Number(columnObject) > Number(value);
+      } if (comparison === 'menor que') {
+        const { [column]: columnObject } = planet;
+        boolean = Number(columnObject) < Number(value);
+      } if (comparison === 'igual a') {
+        const { [column]: columnObject } = planet;
+        boolean = Number(columnObject) === Number(value);
+      }
+      return false;
+    });
+    return boolean;
   }
 
-  function handleRemoveFilter(filterOption) {
+  function handleRemoveFilter(column) {
     const newFilters = filters.filterByNumericValues.filter(
-      (filter) => filter.column !== filterOption,
+      (filter) => filter.column !== column,
     );
     setFilters({
       ...filters,
       filterByNumericValues: newFilters,
     });
+    if (newFilters.length >= 1) {
+      const newData = backup.filter((planet) => filterData(planet, newFilters));
+      setData(newData);
+    } else {
+      setData(backup);
+    }
   }
 
   function handleByOrder() {
+    const { column, sort } = filters.order;
+    if (sort === 'ASC') {
+      const newData = data.sort(
+        ({ [column]: a }, { [column]: b }) => Number(a) - Number(b),
+      );
+      setData(newData);
+    } else if (sort === 'DESC') {
+      const newData = data.sort(
+        ({ [column]: a }, { [column]: b }) => Number(b) - Number(a),
+      );
+      setData(newData);
+    }
   }
 
   const CONTEXT_DEFAULT = {
