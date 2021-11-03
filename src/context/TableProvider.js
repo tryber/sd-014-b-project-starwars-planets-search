@@ -37,16 +37,6 @@ function TableProvider({ children }) {
     ));
   }, [filters.filterByName]);
 
-  /* useEffect(() => {
-    if (filters.filterByNumericValues[0].comparison === 'maior que') {
-      setData((prevState) => prevState.filter(
-        (planet) => planet[
-          `${filters.filterByNumericValues[0].column}`
-        ] > filters.filterByNumericValues[0].value,
-      ));
-    }
-  }, [filters.filterByNumericValues]); */
-
   return (
     <TableContext.Provider value={ { data, setData, filters, setFilters } }>
       {children}
