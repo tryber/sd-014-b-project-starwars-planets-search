@@ -4,8 +4,14 @@ import PlanetContext from './PlanetContext';
 
 function PlanetProvider({ children }) {
   const [planets, setPlanets] = useState([]);
+  const [click, setClick] = useState(false);
   const [filters, setFilters] = useState({
     filterByName: { name: '' },
+    filterByNumericValues: [{
+      column: 'population',
+      comparison: 'maior que',
+      value: 0,
+    }],
   });
 
   useEffect(() => {
@@ -22,6 +28,8 @@ function PlanetProvider({ children }) {
   const stateProps = {
     filters,
     setFilters,
+    click,
+    setClick,
     planets,
   };
 
@@ -33,7 +41,7 @@ function PlanetProvider({ children }) {
 }
 
 PlanetProvider.propTypes = {
-  children: PropTypes.arrayOf(PropTypes.any).isRequired,
+  children: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default PlanetProvider;

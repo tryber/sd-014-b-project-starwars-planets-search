@@ -2,8 +2,25 @@ import React, { useContext } from 'react';
 import PlanetContext from '../context/PlanetContext';
 
 function Table() {
-  const { filters, planets } = useContext(PlanetContext);
+  const { filters, planets, click } = useContext(PlanetContext);
   const { name } = filters.filterByName;
+  const [{ column, comparison, value }] = filters.filterByNumericValues;
+
+  const filterFunction = (planet) => {
+    if (click) {
+      switch (comparison) {
+      case 'maior que':
+        return Number(planet[column]) > Number(value);
+      case 'menor que':
+        return Number(planet[column]) < Number(value);
+      case 'igual a':
+        return Number(planet[column]) === Number(value);
+      default:
+        break;
+      }
+    }
+    return planet;
+  };
 
   const renderTable = () => (
     <table>
@@ -12,40 +29,29 @@ function Table() {
           {Object.keys(planets[0]).map((objKey, index) => (
             <th key={ index }>
               { objKey.toUpperCase().replace('_', ' ') }
+              {/* // https://stackoverflow.com/questions/441018/replacing-spaces-with-underscores-in-javascript/441035 */}
             </th>
           ))}
-          {/* // https://stackoverflow.com/questions/441018/replacing-spaces-with-underscores-in-javascript/441035 */}
         </tr>
       </thead>
       <tbody>
-        {
-          (!name) // "Algo foi digitado no input de Filters e salvo em filterByName.name?"
-            ? planets.map((planet, index1) => (
-              <tr key={ index1 }>
-                {Object.values(planet).map((value, index2) => (
-                  <td key={ index2 }>
-                    { value }
-                  </td>
-                ))}
-              </tr>
-            ))
-            : planets
-              .filter((planet) => planet.name.toLowerCase().includes(name.toLowerCase()))
-              .map((planet, index1) => (
-                <tr key={ index1 }>
-                  {Object.values(planet).map((value, index2) => (
-                    <td key={ index2 }>
-                      { value }
-                    </td>
-                  ))}
-                </tr>
-              ))
-        }
+        {planets
+          .filter((planet) => planet.name.toLowerCase().includes(name.toLowerCase()))
+          .filter((planet) => filterFunction(planet))
+          .map((planet, index1) => (
+            <tr key={ index1 }>
+              {Object.values(planet).map((objValue, index2) => (
+                <td key={ index2 }>
+                  { objValue }
+                </td>
+              ))}
+            </tr>
+          ))}
       </tbody>
     </table>
   );
 
-  if (planets.length === 0) return (<p> Carregando ... </p>);
+  if (planets.length === 0) return (<p> LOADING ... </p>);
 
   return (
     <div>
