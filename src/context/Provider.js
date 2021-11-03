@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import DataContext from './DataContext';
 import Table from '../components/Table';
+import Search from '../components/Search';
 
 const API = 'https://swapi-trybe.herokuapp.com/api/planets/';
 
 function Provider() {
   const [data, setData] = useState([]);
   const [keys, setKeys] = useState([]);
+  const [filter, setFilter] = useState([]);
 
   const fetchApiPlanets = async () => {
     const response = await fetch(API);
@@ -22,12 +24,17 @@ function Provider() {
     fetchApiPlanets();
   }, []);
 
+  useEffect(() => {
+    setFilter(data);
+  }, [data]);
+
   const state = {
-    data, setData, keys, setKeys,
+    data, setData, keys, setKeys, filter, setFilter,
   };
 
   return (
     <DataContext.Provider value={ state }>
+      <Search />
       <Table />
     </DataContext.Provider>
   );
