@@ -1,20 +1,41 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Select from './Select';
 import PlanetsTableContext from '../contexts';
+import getArrayDifference from '../utils/arrays';
 
 export default function NumericFilter() {
   const {
     filters,
-    setFilters,
     numericOptions,
     numericComparisons,
+    setFilters,
   } = useContext(PlanetsTableContext);
+
   const numericComparisonsLabels = Object.keys(numericComparisons);
+
   const [inputValues, setInputValues] = useState({
     column: numericOptions[0],
     comparison: numericComparisonsLabels[0],
     value: '',
   });
+
+  const [numericOptionsToShow, setNumericOptionsToShow] = useState([...numericOptions]);
+
+  function getActiveNumericFilters() {
+    const { filterByNumericValues } = filters;
+
+    return filterByNumericValues.map(({ column }) => column);
+  }
+
+  useEffect(() => {
+    const activeNumericFilters = getActiveNumericFilters();
+    const newNumericOptionsToShow = getArrayDifference(
+      numericOptions,
+      activeNumericFilters,
+    );
+    setNumericOptionsToShow(newNumericOptionsToShow);
+    setInputValues({ ...inputValues, column: newNumericOptionsToShow[0] });
+  }, [filters]);
 
   function handleChange({ target: { name, value } }) {
     setInputValues({
@@ -36,7 +57,7 @@ export default function NumericFilter() {
     <div>
       <Select
         name="column"
-        options={ numericOptions }
+        options={ numericOptionsToShow }
         onChange={ (event) => handleChange(event) }
         data-testid="column-filter"
       />
@@ -55,6 +76,7 @@ export default function NumericFilter() {
       <button
         type="button"
         onClick={ handleClick }
+        disabled={ !numericOptionsToShow.length }
         data-testid="button-filter"
       >
         Filtrar

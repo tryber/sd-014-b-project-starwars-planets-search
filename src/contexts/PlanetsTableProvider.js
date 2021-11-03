@@ -6,6 +6,7 @@ export default function PlanetsTableProvider({ children }) {
   const [data, setData] = useState({
     planets: [],
   });
+
   const [filters, setFilters] = useState({
     filterByName: {
       name: '',
@@ -16,7 +17,9 @@ export default function PlanetsTableProvider({ children }) {
       sort: 'ASC',
     },
   });
+
   const [loading, setLoading] = useState(true);
+
   const numericOptions = [
     'population',
     'orbital_period',
@@ -24,6 +27,7 @@ export default function PlanetsTableProvider({ children }) {
     'rotation_period',
     'surface_water',
   ];
+
   const numericComparisons = {
     'igual a': (a, b) => Number(a) === Number(b),
     'maior que': (a, b) => Number(a) > Number(b),

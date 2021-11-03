@@ -9,10 +9,12 @@ export default function Table() {
     filters,
     numericComparisons,
   } = useContext(PlanetsTableContext);
+
   const {
     filterByName: { name: nameToFilter },
     filterByNumericValues,
   } = filters;
+
   planets.forEach((planet) => delete planet.residents);
 
   const numericFilters = filterByNumericValues.map(
@@ -20,10 +22,12 @@ export default function Table() {
       numericComparisons[comparison](numericProperty, value)
     ),
   );
+
   const filtersToApply = [
     ({ name }) => name.toLowerCase().includes(nameToFilter.toLowerCase()),
     ...numericFilters,
   ];
+
   const filteredPlanets = applyDataFilters(planets, filtersToApply);
 
   return (
