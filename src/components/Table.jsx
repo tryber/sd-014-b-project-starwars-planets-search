@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
 import MyContext from '../context/MyContext';
+import Search from './Search';
 
 export default function Table() {
-  const { data } = useContext(MyContext);
+  const { data, filterByName } = useContext(MyContext);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -34,7 +35,7 @@ export default function Table() {
         </tr>
       </thead>
       <tbody>
-        {data.map((planets) => (
+        {filterByName.map((planets) => (
           <tr key={ planets.name }>
             <td>{planets.climate}</td>
             <td>{planets.created}</td>
@@ -57,6 +58,7 @@ export default function Table() {
   return (
 
     <div>
+      <Search />
       {loading ? <p>Carregando...</p> : table }
 
     </div>

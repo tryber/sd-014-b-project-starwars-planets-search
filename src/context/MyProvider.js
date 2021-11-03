@@ -4,15 +4,19 @@ import MyContext from './MyContext';
 
 export default function Provider({ children }) {
   const [data, setData] = useState([]);
+  const [filterByName, setFilterByName] = useState([]);
   const contextValue = {
     data,
     setData,
+    filterByName,
+    setFilterByName,
   };
 
   async function fecthPlanets() {
     const planets = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
     const { results } = await planets.json();
     setData(results);
+    setFilterByName(results);
     console.log('state do context', results);
   }
 
