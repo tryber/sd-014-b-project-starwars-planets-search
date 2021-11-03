@@ -3,12 +3,15 @@ import PlanetsContext from '../contexts/PlanetsContext';
 
 function Table() {
   const { planets, loading } = useContext(PlanetsContext);
-  // const columnKeys = Object.keys(planets);
+  
+  const renderTableHeaders = () => {
+    planets.map((planet) => )
+  }
 
   return (
     <div>
       <table>
-        { planets.map((column) => <th key={ column }>{ column }</th>) }
+        {/* { planets.map((column) => <th key={ column }>{ column }</th>) } */}
       </table>
     </div>
   );
