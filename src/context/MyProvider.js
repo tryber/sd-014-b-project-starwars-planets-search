@@ -4,6 +4,8 @@ import MyContext from './MyContext';
 import fetchPlanetsAPI from '../services/planetsAPI';
 
 function Provider({ children }) {
+  const columnOptions = [
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
   const [data, setData] = useState([]);
   const [planetsList, setPlanetsList] = useState([]);
   const [filters, setFilters] = useState({
@@ -16,6 +18,7 @@ function Provider({ children }) {
       value: 0,
     }],
   });
+  const [columns, setColumns] = useState(columnOptions);
 
   async function getPlanets() {
     const planets = await fetchPlanetsAPI();
@@ -30,6 +33,8 @@ function Provider({ children }) {
     setFilters,
     planetsList,
     setPlanetsList,
+    columns,
+    setColumns,
   };
 
   return (
