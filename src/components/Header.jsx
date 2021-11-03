@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import StarwarsContext from '../context/StarwarsContext';
 import { comparisonFilter } from '../services/data';
+import HistoryFilters from './HistoryFilters';
 import SelectGenerator from './SelectGenerator';
 
 export default function Header() {
@@ -12,8 +13,9 @@ export default function Header() {
     stateComparison,
     columns,
     filterStarwarsPlanetByName,
+    filterStarwarsByHistory,
   } = useContext(StarwarsContext);
-  const { filterByName } = filters;
+  const { filterByName, filterByNumericValues } = filters;
 
   const updateFiltersByName = (e) => {
     filterStarwarsPlanetByName(e);
@@ -32,6 +34,15 @@ export default function Header() {
       ...stateComparison,
       [name]: value,
     });
+  };
+
+  const removeFilter = ({ column }) => {
+    const newFilters = filterByNumericValues.filter((filter) => filter.column !== column);
+    setFilters({
+      ...filters,
+      filterByNumericValues: newFilters,
+    });
+    filterStarwarsByHistory(column);
   };
 
   return (
@@ -79,6 +90,14 @@ export default function Header() {
         >
           Filtrar
         </button>
+      </div>
+      <div>
+        { filterByNumericValues.map((filter) => (
+          <HistoryFilters
+            key={ filter.value }
+            columns={ filter }
+            removeFilter={ removeFilter }
+          />))}
       </div>
     </header>
   );

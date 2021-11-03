@@ -15,7 +15,7 @@ const StarwarsProvider = ({ children }) => {
     const filterByNamePlanet = data.filter(
       (planet) => planet.name.toLowerCase().includes(value.toLowerCase()),
     );
-    return setPlanets(filterByNamePlanet);
+    setPlanets(filterByNamePlanet);
   };
 
   const switchComparison = (planet, state) => {
@@ -39,11 +39,26 @@ const StarwarsProvider = ({ children }) => {
         ...filterByNumericValues, stateComparison,
       ] });
 
-    const filterByNumericValuesPlanet = data.filter(
+    const filterByNumericValuesPlanet = planets.filter(
       (planet) => switchComparison(planet, stateComparison),
     );
     setColumns(columns.filter((column) => column !== stateComparison.column));
     setPlanets(filterByNumericValuesPlanet);
+  };
+
+  const filterStarwarsByHistory = (column) => {
+    const { filterByNumericValues } = filters;
+
+    if (!filterByNumericValues[filterByNumericValues.length - 2]) {
+      setColumns([...columns, column]);
+      return setPlanets(data);
+    }
+    const filterByHistoryPlanet = data.filter(
+      (planet) => switchComparison(planet,
+        filterByNumericValues[filterByNumericValues.length - 2]),
+    );
+    setColumns([...columns, column]);
+    setPlanets(filterByHistoryPlanet);
   };
 
   useEffect(() => {
@@ -54,13 +69,15 @@ const StarwarsProvider = ({ children }) => {
     planets,
     loading,
     filters,
-    stateComparison,
     columns,
-    setFilters,
-    filterStarwarsComparison,
-    setStateComparison,
+    stateComparison,
     setColumns,
+    setFilters,
+    switchComparison,
+    setStateComparison,
+    filterStarwarsComparison,
     filterStarwarsPlanetByName,
+    filterStarwarsByHistory,
   };
 
   return (
