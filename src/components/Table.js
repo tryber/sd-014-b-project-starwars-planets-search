@@ -19,19 +19,19 @@ function Table() {
       <tbody>
         {planet.map((item, index) => (
           <tr key={ index }>
-            <td key={ index }>{ item.name }</td>
-            <td key={ index }>{ item.rotation_period }</td>
-            <td key={ index }>{ item.orbital_period }</td>
-            <td key={ index }>{ item.diameter }</td>
-            <td key={ index }>{ item.climate }</td>
-            <td key={ index }>{ item.gravity }</td>
-            <td key={ index }>{ item.terrain }</td>
-            <td key={ index }>{ item.surface_water }</td>
-            <td key={ index }>{ item.population }</td>
-            <td key={ index }>{ item.films }</td>
-            <td key={ index }>{ item.created }</td>
-            <td key={ index }>{ item.edited }</td>
-            <td key={ index }>{ item.url }</td>
+            <td>{ item.name }</td>
+            <td>{ item.rotation_period }</td>
+            <td>{ item.orbital_period }</td>
+            <td>{ item.diameter }</td>
+            <td>{ item.climate }</td>
+            <td>{ item.gravity }</td>
+            <td>{ item.terrain }</td>
+            <td>{ item.surface_water }</td>
+            <td>{ item.population }</td>
+            <td>{ item.films }</td>
+            <td>{ item.created }</td>
+            <td>{ item.edited }</td>
+            <td>{ item.url }</td>
           </tr>
         ))}
       </tbody>
