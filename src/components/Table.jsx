@@ -3,7 +3,37 @@ import heads from '../data/tableHeads';
 import usePlanets from '../hooks/usePlanets';
 
 export default function Table() {
-  const { data } = usePlanets();
+  const { data, filters } = usePlanets();
+
+  // Refatorando e excluindo useEffects com ajuda do Glauco e o video https://www.youtube.com/watch?v=OlVkYnVXPl0
+
+  let filteredData = data.filter(
+    (planet) => planet.name.includes(filters.filterByName.name),
+  );
+
+  filters.filterByNumericValues.forEach((filter) => {
+    const { column, value, comparison } = filter;
+
+    switch (comparison) {
+    case 'maior que':
+      filteredData = filteredData.filter(
+        (planet) => Number(planet[`${column}`]) > Number(value),
+      );
+      break;
+    case 'menor que':
+      filteredData = filteredData.filter(
+        (planet) => Number(planet[`${column}`]) < Number(value),
+      );
+      break;
+    case 'igual a':
+      filteredData = filteredData.filter(
+        (planet) => Number(planet[`${column}`]) === Number(value),
+      );
+      break;
+    default:
+      break;
+    }
+  });
 
   return (
     <table>
@@ -13,7 +43,7 @@ export default function Table() {
         </tr>
       </thead>
       <tbody>
-        {data.map((planet) => (
+        {filteredData.map((planet) => (
           <tr key={ planet.name }>
             <td>{planet.name}</td>
             <td>{planet.rotation_period}</td>
