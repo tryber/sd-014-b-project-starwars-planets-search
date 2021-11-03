@@ -1,10 +1,17 @@
 import React, { useContext } from 'react';
 import TableRow from './TableRow';
 import PlanetsTableContext from '../contexts';
+import applyDataFilters from '../data/filters';
 
 export default function Table() {
-  const { data: { planets } } = useContext(PlanetsTableContext);
+  const { data: { planets }, filters } = useContext(PlanetsTableContext);
+  const { filterByName: { name: planetName } } = filters;
   planets.forEach((planet) => delete planet.residents);
+
+  const filtersToApply = [
+    ({ name }) => name.toLowerCase().includes(planetName.toLowerCase()),
+  ];
+  const filteredPlanets = applyDataFilters(planets, filtersToApply);
 
   return (
     <table>
@@ -26,7 +33,7 @@ export default function Table() {
         </tr>
       </thead>
       <tbody>
-        {planets.map(
+        {filteredPlanets.map(
           (planet, index) => <TableRow key={ index } data={ Object.values(planet) } />,
         )}
       </tbody>

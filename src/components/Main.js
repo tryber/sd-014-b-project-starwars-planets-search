@@ -1,10 +1,15 @@
 import React, { useContext, useEffect } from 'react';
 import Table from './Table';
+import NameFilter from './NameFilter';
 import PlanetsTableContext from '../contexts';
 import fetchPlanets from '../services/StarWarsAPI';
 
 export default function Main() {
-  const { data, setData, setLoading } = useContext(PlanetsTableContext);
+  const {
+    data,
+    setData,
+    setLoading,
+  } = useContext(PlanetsTableContext);
 
   useEffect(() => {
     const getPlanets = async () => {
@@ -21,6 +26,9 @@ export default function Main() {
   }, []);
 
   return (
-    <Table />
+    <>
+      <NameFilter />
+      <Table />
+    </>
   );
 }
