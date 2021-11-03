@@ -7,11 +7,22 @@ function PlanetProvider({ children }) {
   const [planet, setPlanet] = useState([]);
   const [inicialPlanet, setInicialPlanet] = useState([]); // Referência: Albuquerque Bel, 2021
   const [filterName, setFilterName] = useState('');
+  const [filterColumn, setFilterColumn] = useState('population');
+  const [filterComparison, setFilterComparison] = useState('maior que');
+  const [filterValue, setFilterValue] = useState('100000');
+
   const [filter, setFilter] = useState({
     filters: {
       filterByName: {
         name: filterName,
       },
+      filterByNumericValues: [
+        {
+          column: filterColumn,
+          comparison: filterComparison,
+          value: filterValue,
+        },
+      ],
     },
   });
 
@@ -33,6 +44,13 @@ function PlanetProvider({ children }) {
     filter,
     setFilter,
     inicialPlanet,
+    setInicialPlanet,
+    filterColumn,
+    setFilterColumn,
+    filterComparison,
+    setFilterComparison,
+    filterValue,
+    setFilterValue,
   };
 
   return (
