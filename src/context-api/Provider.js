@@ -6,12 +6,14 @@ import getPlanets from '../services/getPlanets';
 
 function Provider({ children }) {
   const [planets, setPlanets] = useState([]);
-  const [arraySearch, setArraySearch] = useState([]);
+  // const [arraySearch, setArraySearch] = useState([]);
+  // const [arrayNumeric, setArrayNumeric] = useState([]);
+  const [filtredArray, setFiltredArray] = useState([]);
 
   const context = {
     data: planets,
-    arraySearch,
-    setArraySearch,
+    filtredArray,
+    setFiltredArray,
   };
 
   const fetchPlanets = async () => {

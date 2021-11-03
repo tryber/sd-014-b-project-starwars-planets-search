@@ -2,8 +2,8 @@ import React, { useContext } from 'react';
 import MyContext from '../context-api/MyContext';
 
 function Table() {
-  const { data, arraySearch } = useContext(MyContext);
-  const validate = arraySearch.length === 0 ? data : arraySearch;
+  const { data, filtredArray } = useContext(MyContext);
+  const validate = filtredArray.length === 0 ? data : filtredArray;
   return (
     <div>
       <span>Tabela</span>

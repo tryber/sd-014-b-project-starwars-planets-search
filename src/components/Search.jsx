@@ -3,11 +3,11 @@ import MyContext from '../context-api/MyContext';
 
 function Search() {
   const [inputSearch, setSearch] = useState('');
-  const { data, setArraySearch } = useContext(MyContext);
+  const { data, setFiltredArray } = useContext(MyContext);
 
   const filterByName = (input) => {
     const filtred = data.filter((element) => element.name.includes(input));
-    setArraySearch(filtred);
+    setFiltredArray(filtred);
   };
 
   return (
