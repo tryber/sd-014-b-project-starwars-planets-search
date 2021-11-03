@@ -4,7 +4,8 @@ import MyContext from './MyContext';
 
 function Provider({ children }) {
   const [data, setData] = useState([]);
-  const contextValue = { data, setData };
+  const [inputText, setInputText] = useState('');
+  const contextValue = { data, setData, inputText, setInputText };
 
   return (
     <MyContext.Provider value={ contextValue }>
