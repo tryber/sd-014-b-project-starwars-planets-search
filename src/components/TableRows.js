@@ -12,7 +12,6 @@ const TableRows = ({ planet }) => {
     terrain,
     surface_water: surfaceWater,
     population,
-    residents,
     films,
     created,
     edited,
@@ -30,7 +29,6 @@ const TableRows = ({ planet }) => {
       <td header="terrain">{ terrain }</td>
       <td header="surface_water">{ surfaceWater }</td>
       <td header="population">{ population }</td>
-      <td header="residents">{ residents }</td>
       <td header="films">{ films }</td>
       <td header="created">{ created }</td>
       <td header="edited">{ edited }</td>

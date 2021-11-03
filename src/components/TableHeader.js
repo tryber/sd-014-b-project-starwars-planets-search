@@ -11,11 +11,10 @@ const TableHeader = () => (
     <th colSpan="6" id="terrain">Terrain</th>
     <th colSpan="7" id="surface_water">Surface Water</th>
     <th colSpan="8" id="population">Population</th>
-    <th colSpan="9" id="residents">Residents</th>
-    <th colSpan="10" id="films">Films</th>
-    <th colSpan="11" id="created">Created</th>
-    <th colSpan="12" id="edited">Edited</th>
-    <th colSpan="13" id="url">URL</th>
+    <th colSpan="9" id="films">Films</th>
+    <th colSpan="10" id="created">Created</th>
+    <th colSpan="11" id="edited">Edited</th>
+    <th colSpan="12" id="url">URL</th>
   </tr>
 );
 
