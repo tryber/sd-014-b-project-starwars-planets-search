@@ -4,20 +4,29 @@ import getDataByPlanets from '../services/ApiPlanets';
 import NewContext from './NewContext';
 
 export default function Provider({ children }) {
+  // Estados requisito 1
   const [loading, setLoading] = useState(false);
   const [titlePlanets, setTitlePlanets] = useState([]);
   const [planets, setPlanets] = useState([]);
+  // Estados requisito 2
   const [filterPlanets, setFilterPlanets] = useState(planets);
   const [filter, setFilter] = useState('');
-  const [filterName, setFilterName] = useState(
+  const [filterItem, setFilterItem] = useState(
     {
       filters: {
         filterByName: {
           name: '',
         },
+        filterByNumericValues: [],
       },
     },
   );
+  // Estados requisito 3
+  const [comparison, setComparison] = useState({
+    column: '',
+    comparison: '',
+    value: '',
+  });
 
   const context = {
     titlePlanets,
@@ -30,8 +39,9 @@ export default function Provider({ children }) {
     setFilterPlanets,
     filter,
     setFilter,
-    filterName,
-    setFilterName,
+    filterItem,
+    setFilterItem,
+    setComparison,
   };
 
   const callApi = () => {
@@ -52,12 +62,13 @@ export default function Provider({ children }) {
   }, []);
 
   useEffect(() => {
-    setFilterName(
+    setFilterItem(
       {
         filters: {
           filterByName: {
             name: filter,
           },
+          filterByNumericValues: [],
         },
       },
     );
@@ -66,6 +77,33 @@ export default function Provider({ children }) {
     ));
     setFilterPlanets(getPlanetName);
   }, [filter, planets]);
+
+  useEffect(() => {
+    setFilterItem(
+      {
+        filters:
+          {
+            filterByName: {
+              name: filter,
+            },
+            filterByNumericValues: [comparison],
+          },
+      },
+    );
+    const getPlanetByNumbers = planets.filter((item) => {
+      switch (comparison.comparison) {
+      case 'menor que':
+        return Number(item[comparison.column]) < comparison.value;
+      case 'maior que':
+        return Number(item[comparison.column]) > comparison.value;
+      case 'igual a':
+        return Number(item[comparison.column]) === Number(comparison.value);
+      default:
+        return item;
+      }
+    });
+    setFilterPlanets(getPlanetByNumbers);
+  }, [comparison, filter, planets]);
 
   return (
     <NewContext.Provider value={ context }>
