@@ -1,41 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import PlanetsContext from './PlanetsContext';
 
-class PlanetsProvider extends React.Component {
-  constructor() {
-    super();
+function PlanetsProvider({ children }) {
+  const [planetsList, setPlanetList] = useState([]);
 
-    this.state = {
-      planetsList: [],
-    };
+  const contextValue = {
+    planetsList,
+  };
 
-    this.fetchPlanets = this.fetchPlanets.bind(this);
-  }
-
-  fetchPlanets() {
+  function fetchPlanets() {
     fetch('https://swapi-trybe.herokuapp.com/api/planets/')
       .then((response) => response.json()
         .then((results) => {
-          this.setState({ planetsList: results.results });
+          setPlanetList(results.results);
         }));
   }
 
-  render() {
-    const { children } = this.props;
-    return (
-      <PlanetsContext.Provider
-        value={ { ...this.state, fetchPlanets: this.fetchPlanets } }
-      >
-        { children }
-      </PlanetsContext.Provider>
-    );
-  }
+  return (
+    <PlanetsContext.Provider
+      value={ { ...contextValue, fetchPlanets } }
+    >
+      { children }
+    </PlanetsContext.Provider>
+  );
 }
 
 PlanetsProvider.propTypes = {
-  children: PropTypes.objectOf(PropTypes.func).isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default PlanetsProvider;
