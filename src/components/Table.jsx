@@ -2,7 +2,8 @@ import React, { useContext } from 'react';
 import MyContext from '../context-api/MyContext';
 
 function Table() {
-  const { data } = useContext(MyContext);
+  const { data, arraySearch } = useContext(MyContext);
+  const validate = arraySearch.length === 0 ? data : arraySearch;
   return (
     <div>
       <span>Tabela</span>
@@ -25,7 +26,7 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {data.map((element) => (
+          {validate.map((element) => (
             <tr key={ element.name }>
               <td>{ element.name }</td>
               <td>{ element.rotation_period }</td>
