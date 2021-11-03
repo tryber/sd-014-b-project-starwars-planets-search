@@ -5,7 +5,7 @@ import PlanetsContext from './PlanetsContext';
 function Provider({ children }) {
   const [data, setData] = useState([]);
   const [selectOptions, setSelectOptions] = useState({
-    columnOptions : [
+    columnOptions: [
       'population',
       'orbital_period',
       'diameter',
@@ -50,7 +50,6 @@ function Provider({ children }) {
     value: '',
   });
 
-
   const fetchPlanetsApi = async () => {
     const PLANETS_URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
     const fetchPlanets = await fetch(PLANETS_URL).then((response) => response.json());
@@ -70,8 +69,8 @@ function Provider({ children }) {
   function handleChangeByNumericValues({ target }) {
     const { value, id } = target;
     setFilterByNumericValues({
-        ...filterByNumericValues,
-        [id]: value,
+      ...filterByNumericValues,
+      [id]: value,
     });
   }
 
@@ -89,19 +88,25 @@ function Provider({ children }) {
   function handleFilterByNumericValues() {
     const { column, comparison, value } = filterByNumericValues;
     const { columnOptions } = selectOptions;
-    if(comparison === 'maior que') {
-      const newData = data.filter((planet) => Number(planet.[column])  > value);
+    if (comparison === 'maior que') {
+      const newData = data.filter(
+        ({ [column]: columnObject }) => Number(columnObject) > value,
+      );
       setData(newData);
-    }else if (comparison === 'menor que'){
-      const newData = data.filter((planet) => Number(planet.[column])  < value);
+    } else if (comparison === 'menor que') {
+      const newData = data.filter(
+        ({ [column]: columnObject }) => Number(columnObject) < value,
+      );
       setData(newData);
-    } else if (comparison === 'igual a'){
-      const newData = data.filter((planet) => Number(planet.[column])  == value);
+    } else if (comparison === 'igual a') {
+      const newData = data.filter(
+        ({ [column]: columnObject }) => Number(columnObject) == value,
+      );
       setData(newData);
     }
     setFilters({
       ...filters,
-      filterByNumericValues: [...filters.filterByNumericValues, filterByNumericValues ]
+      filterByNumericValues: [...filters.filterByNumericValues, filterByNumericValues],
     });
     const newColumnOptions = columnOptions.filter((option) => option !== column);
     setSelectOptions({
@@ -112,16 +117,17 @@ function Provider({ children }) {
       column: newColumnOptions[0],
       comparison: 'maior que',
       value: '',
-    })
+    });
   }
 
   function filterData() {
-
+    console.log('filterData');
   }
 
-  function handleRemoveFilter(filterOption){
-    const { filterByNumericValues } = filters;
-    const newFilters = filterByNumericValues.filter((filter) => filter.column !== filterOption);
+  function handleRemoveFilter(filterOption) {
+    const newFilters = filters.filterByNumericValues.filter(
+      (filter) => filter.column !== filterOption,
+    );
     setFilters({
       ...filters,
       filterByNumericValues: newFilters,
@@ -138,6 +144,7 @@ function Provider({ children }) {
     fetchPlanetsApi,
     filters,
     filterByNumericValues,
+    filterData,
     handleChangeByNameValues,
     handleChangeByNumericValues,
     handleChangeByOrderValues,
