@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import AppContext from '../context';
 
 const Table = () => {
-  const { data } = useContext(AppContext);
+  const { filterInput } = useContext(AppContext);
   const thContent = ['Name', 'Rotation Period', 'Orbital Period',
     'Diameter', 'Climate', 'Gravity', 'Terrain', 'Surface Water',
     'Population', 'Films', 'Created', 'Edited', 'Url'];
@@ -15,7 +15,7 @@ const Table = () => {
         </tr>
       </thead>
       <tbody>
-        { data.map((planet) => (
+        { filterInput.map((planet) => (
           <tr key={ planet.name }>
             <td>{ planet.name }</td>
             <td>{ planet.rotation_period }</td>
