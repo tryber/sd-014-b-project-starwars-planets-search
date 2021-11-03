@@ -8,13 +8,7 @@ export function PlanetsProvider({ children }) {
   const [data, setData] = useState([]);
   const [filters, setFilters] = useState({
     filterByName: { name: '' },
-    filterByNumericValues: [
-      {
-        column: '',
-        comparison: '',
-        value: '',
-      },
-    ],
+    filterByNumericValues: [],
   });
 
   useEffect(() => {
@@ -40,40 +34,54 @@ export function PlanetsProvider({ children }) {
   }, [filters.filterByName]);
 
   useEffect(() => {
-    const { column } = filters.filterByNumericValues[0];
-    const { value } = filters.filterByNumericValues[0];
+    // if (filters.filterByNumericValues) {
+    //   fetch(URL)
+    //     .then((response) => response.json())
+    //     .then((apiData) => {
+    //       setData(apiData.results);
+    //     });
+    // }
 
-    if (value === '') {
-      fetch(URL)
-        .then((response) => response.json())
-        .then((apiData) => {
-          setData(apiData.results);
-        });
-    }
+    filters.filterByNumericValues.forEach((filter) => {
+      const { column } = filter;
+      const { value } = filter;
 
-    switch (filters.filterByNumericValues[0].comparison) {
-    case 'maior que':
-      setData((prevData) => prevData.filter(
-        (planet) => Number(planet[`${column}`]) > Number(value),
-      ));
-      break;
-    case 'menor que':
-      setData((prevData) => prevData.filter(
-        (planet) => Number(planet[`${column}`]) < Number(value),
-      ));
-      break;
-    case 'igual a':
-      setData((prevData) => prevData.filter(
-        (planet) => Number(planet[`${column}`]) === Number(value),
-      ));
-      break;
-    default:
-      break;
-    }
+      switch (filter.comparison) {
+      case 'maior que':
+        setData((prevData) => prevData.filter(
+          (planet) => Number(planet[`${column}`]) > Number(value),
+        ));
+        break;
+      case 'menor que':
+        setData((prevData) => prevData.filter(
+          (planet) => Number(planet[`${column}`]) < Number(value),
+        ));
+        break;
+      case 'igual a':
+        setData((prevData) => prevData.filter(
+          (planet) => Number(planet[`${column}`]) === Number(value),
+        ));
+        break;
+      default:
+        break;
+      }
+    });
   }, [filters.filterByNumericValues]);
 
+  function handleClickDeleteFilter(index) {
+    const allFilters = filters.filterByNumericValues;
+    allFilters.splice(index, 1);
+    setFilters((prevState) => ({
+      ...prevState,
+      filterByNumericValues: allFilters,
+    }));
+  }
+
   return (
-    <PlanetsContext.Provider value={ { data, setData, filters, setFilters } }>
+    <PlanetsContext.Provider
+      value={ {
+        data, setData, filters, setFilters, handleClickDeleteFilter } }
+    >
       {children}
     </PlanetsContext.Provider>
   );

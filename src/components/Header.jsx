@@ -3,8 +3,8 @@ import columnsFilter from '../data/columnsFilter';
 import usePlanets from '../hooks/usePlanets';
 
 export default function Header() {
-  const { filters, setFilters } = usePlanets();
-  const [columnFilter, setColumnFilter] = useState('population');
+  const { filters, setFilters, handleClickDeleteFilter } = usePlanets();
+  const [columnFilter, setColumnFilter] = useState(columnsFilter[0]);
   const [comparisonFilter, setComparisonFilter] = useState('maior que');
   const [valueFilter, setValueFilter] = useState('');
 
@@ -14,6 +14,22 @@ export default function Header() {
       .filter((column) => !utilizedOptions.includes(column));
     return columnsFiltered.map((column) => (
       <option value={ column } key={ column }>{column}</option>
+    ));
+  }
+
+  function renderAppliedFilters() {
+    return filters.filterByNumericValues.map((filter, index) => (
+      <div key={ index } data-testid="filter">
+        <span>{`${filter.column} `}</span>
+        <span>{`${filter.comparison} `}</span>
+        <span>{`${filter.value} `}</span>
+        <button
+          type="button"
+          onClick={ () => handleClickDeleteFilter(index) }
+        >
+          X
+        </button>
+      </div>
     ));
   }
 
@@ -60,6 +76,7 @@ export default function Header() {
           onClick={ () => setFilters((prevState) => ({
             ...prevState,
             filterByNumericValues: [
+              ...prevState.filterByNumericValues,
               {
                 column: columnFilter,
                 comparison: comparisonFilter,
@@ -70,6 +87,7 @@ export default function Header() {
         >
           Filtrar
         </button>
+        {filters.filterByNumericValues.length > 0 && renderAppliedFilters()}
       </div>
     </div>
   );
