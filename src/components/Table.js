@@ -2,9 +2,8 @@ import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 export default function Table() {
-  const { data } = useContext(PlanetsContext);
-  const planets = data;
-  const headers = [
+  const { data, searchTerm } = useContext(PlanetsContext);
+  const categories = [
     'Name',
     'Rotation Period',
     'Orbital Period',
@@ -20,8 +19,18 @@ export default function Table() {
     'Url',
   ];
 
-  const renderedHeaders = headers.map((header, index) => <th key={ index }>{header}</th>);
-  const renderedPlanets = planets.map((planet, index) => (
+  // https://www.youtube.com/watch?v=OlVkYnVXPl0 <- Insane Filter
+
+  const ONE = -1;
+  const filteredData = data.filter(
+    (planet) => planet.name.toLowerCase().indexOf(searchTerm.toLowerCase()) !== ONE,
+  );
+
+  const renderedCategories = categories.map((header, index) => (
+    <th key={ index }>{header}</th>
+  ));
+
+  const renderedPlanets = filteredData.map((planet, index) => (
     <tr key={ index }>
       <td>{planet.name}</td>
       <td>{planet.rotation_period}</td>
@@ -42,9 +51,7 @@ export default function Table() {
   return (
     <table>
       <thead>
-        <tr>
-          {renderedHeaders}
-        </tr>
+        <tr>{renderedCategories}</tr>
       </thead>
       <tbody>{renderedPlanets}</tbody>
     </table>

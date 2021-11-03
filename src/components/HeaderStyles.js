@@ -9,6 +9,10 @@ const styled = {
     justifyContent: 'center',
     color: 'green',
   },
+  container: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
 };
 
 module.exports = styled;

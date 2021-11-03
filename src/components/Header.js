@@ -1,11 +1,17 @@
 import React from 'react';
-import styled from './HeaderStyles';
+import Form from './Form';
+import { container, h1, h2 } from './HeaderStyles';
+import Input from './Input';
 
 export default function Header() {
   return (
     <>
-      <h1 style={ styled.h1 }>StarWars Planets</h1>
-      <h2 style={ styled.h2 }>Meu pai estilizado</h2>
+      <h1 style={ h1 }>StarWars Planets</h1>
+      <h2 style={ h2 }>Meu pai estilizado</h2>
+      <div style={ container }>
+        <Input />
+        <Form />
+      </div>
     </>
   );
 }
