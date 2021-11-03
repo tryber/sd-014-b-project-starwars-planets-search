@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import fetchData from '../services/StarWarsApi';
 import DataContext from './DataContext';
@@ -8,7 +9,7 @@ export default function Provider({ children }) {
     const getResponse = async () => {
       const response = await fetchData();
       setData(response);
-      console.log(response);
+      // console.log(response);
       return response;
     };
     getResponse();
@@ -20,3 +21,7 @@ export default function Provider({ children }) {
     </DataContext.Provider>
   );
 }
+
+Provider.propTypes = {
+  children: PropTypes.objectOf(PropTypes.any).isRequired,
+};
