@@ -1,5 +1,5 @@
 import { createContext } from 'react';
 
-const PlanetApiProvider = createContext();
+const PlanetApiContext = createContext();
 
-export default PlanetApiProvider;
+export default PlanetApiContext;
