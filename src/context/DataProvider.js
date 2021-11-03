@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import DataContext from './DataContext';
 
 const DataProvider = (props) => {
   const [data, setData] = useState();
+  const { children } = props;
   const fetchData = () => {
-    feth('https://swapi-trybe.herokuapp.com/api/planets/')
+    fetch('https://swapi-trybe.herokuapp.com/api/planets/')
       .then((response) => response.json())
-      .then((d) => setData(d));
+      .then((d) => setData(d.results));
   };
 
   useEffect(() => {
@@ -15,9 +17,13 @@ const DataProvider = (props) => {
 
   return (
     <DataContext.Provider value={ { data } }>
-      { props.children }
+      { children }
     </DataContext.Provider>
   );
+};
+
+DataProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 export default DataProvider;
