@@ -10,9 +10,9 @@ function Table() {
     console.log(keys);
     return (
       <tbody>
-        { data.map((planet) => (
-          <tr key={ planet.name }>
-            { keys.map((key, index) => <td key={ index }>{ planet[key] }</td>) }
+        { data.map((planet, index) => (
+          <tr key={ index }>
+            { keys.map((key) => <td key={ key }>{ planet[key] }</td>) }
           </tr>)) }
       </tbody>
     );
