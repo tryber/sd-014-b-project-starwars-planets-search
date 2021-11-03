@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import PlanetsTableContext from '../contexts';
 
-export default function NameFilter() {
+export default function NameFilterInput() {
   const { filters, setFilters } = useContext(PlanetsTableContext);
   const { filterByName: { name } } = filters;
 

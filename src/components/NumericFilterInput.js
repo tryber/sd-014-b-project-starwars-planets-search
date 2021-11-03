@@ -3,7 +3,7 @@ import Select from './Select';
 import PlanetsTableContext from '../contexts';
 import getArrayDifference from '../utils/arrays';
 
-export default function NumericFilter() {
+export default function NumericFilterInput() {
   const {
     filters,
     numericOptions,
@@ -33,6 +33,7 @@ export default function NumericFilter() {
       numericOptions,
       activeNumericFilters,
     );
+
     setNumericOptionsToShow(newNumericOptionsToShow);
     setInputValues({ ...inputValues, column: newNumericOptionsToShow[0] });
   }, [filters]);
@@ -53,30 +54,36 @@ export default function NumericFilter() {
     });
   }
 
+  const { column, comparison, value } = inputValues;
+
   return (
+
     <div>
       <Select
         name="column"
         options={ numericOptionsToShow }
+        value={ column }
         onChange={ (event) => handleChange(event) }
         data-testid="column-filter"
       />
       <Select
         name="comparison"
         options={ numericComparisonsLabels }
+        value={ comparison }
         onChange={ (event) => handleChange(event) }
         data-testid="comparison-filter"
       />
       <input
         name="value"
         type="number"
+        value={ value }
         onChange={ (event) => handleChange(event) }
         data-testid="value-filter"
       />
       <button
         type="button"
         onClick={ handleClick }
-        disabled={ !numericOptionsToShow.length }
+        disabled={ !numericOptionsToShow.length || !value.length }
         data-testid="button-filter"
       >
         Filtrar

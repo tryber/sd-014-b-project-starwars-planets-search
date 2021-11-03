@@ -1,7 +1,8 @@
 import React, { useContext, useEffect } from 'react';
 import Table from './Table';
-import NameFilter from './NameFilter';
-import NumericFilter from './NumericFilter';
+import NameFilterInput from './NameFilterInput';
+import NumericFilterInput from './NumericFilterInput';
+import ActiveNumericFilters from './ActiveNumericFilters';
 import PlanetsTableContext from '../contexts';
 import fetchPlanets from '../services/StarWarsAPI';
 
@@ -28,8 +29,9 @@ export default function Main() {
 
   return (
     <>
-      <NameFilter />
-      <NumericFilter />
+      <NameFilterInput />
+      <NumericFilterInput />
+      <ActiveNumericFilters />
       <Table />
     </>
   );
