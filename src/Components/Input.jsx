@@ -1,11 +1,13 @@
-import PropTypes from "prop-types"
 import React from 'react';
+
+import PropTypes from 'prop-types';
 
 function Input({ id }) {
   return (
-    <label htmlFor={ id }>
-      Label
-    </label>
+    <div>
+      Input
+      { id }
+    </div>
   );
 }
 
