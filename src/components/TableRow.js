@@ -4,7 +4,11 @@ import React from 'react';
 export default function TableRow({ data }) {
   return (
     <tr>
-      {data.map((cellData, index) => <td key={ index }>{cellData}</td>)}
+      {data.map(
+        (cellData, index) => (
+          <td key={ index } data-testid={ !index ? 'planet-name' : '' }>{cellData}</td>
+        ),
+      )}
     </tr>
   );
 }

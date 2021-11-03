@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import TableRow from './TableRow';
 import PlanetsTableContext from '../contexts';
-import applyDataFilters from '../data/filters';
+import applyDataFilters, { sortBy } from '../data/filters';
 
 export default function Table() {
   const {
@@ -11,9 +11,12 @@ export default function Table() {
   } = useContext(PlanetsTableContext);
 
   const {
-    filterByName: { name: nameToFilter },
+    filterByName: { name: nameToFilterBy },
     filterByNumericValues,
+    order,
   } = filters;
+
+  const { column: columnToSortBy, sort: sortOrder } = order;
 
   planets.forEach((planet) => delete planet.residents);
 
@@ -24,11 +27,12 @@ export default function Table() {
   );
 
   const filtersToApply = [
-    ({ name }) => name.toLowerCase().includes(nameToFilter.toLowerCase()),
+    ({ name }) => name.toLowerCase().includes(nameToFilterBy.toLowerCase()),
     ...numericFilters,
   ];
 
   const filteredPlanets = applyDataFilters(planets, filtersToApply);
+  sortBy(columnToSortBy, sortOrder, filteredPlanets);
 
   return (
     <table>

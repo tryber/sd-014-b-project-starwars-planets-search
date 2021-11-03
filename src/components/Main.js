@@ -3,6 +3,7 @@ import Table from './Table';
 import NameFilterInput from './NameFilterInput';
 import NumericFilterInput from './NumericFilterInput';
 import ActiveNumericFilters from './ActiveNumericFilters';
+import SortingInput from './SortingInput';
 import PlanetsTableContext from '../contexts';
 import fetchPlanets from '../services/StarWarsAPI';
 
@@ -31,6 +32,7 @@ export default function Main() {
     <>
       <NameFilterInput />
       <NumericFilterInput />
+      <SortingInput />
       <ActiveNumericFilters />
       <Table />
     </>
