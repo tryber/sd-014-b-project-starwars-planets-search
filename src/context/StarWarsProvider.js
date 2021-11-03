@@ -26,7 +26,8 @@ function Provider({ children }) {
       name: inputName,
     },
     filterByNumericValues: [
-      { column,
+      {
+        column,
         comparison,
         value,
       },

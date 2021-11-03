@@ -44,14 +44,20 @@ function TableStarWars() {
   function handleClick() {
     if (comparison === 'maior que') {
       const filtered = data.filter((planet) => Number(planet[column]) > value);
+      const index = columns.indexOf(column);
+      columns.splice(index, 1);
       setData(filtered);
     }
     if (comparison === 'menor que') {
       const filtered = data.filter((planet) => Number(planet[column]) < value);
+      const index = columns.indexOf(column);
+      columns.splice(index, 1);
       setData(filtered);
     }
     if (comparison === 'igual a') {
       const filtered = data.filter((planet) => planet[column] === value);
+      const index = columns.indexOf(column);
+      columns.splice(index, 1);
       setData(filtered);
     }
   }
