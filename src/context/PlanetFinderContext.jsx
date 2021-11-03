@@ -1,3 +1,6 @@
+// Referência 01: Filtro para updatedColumns.
+// src: https://stackoverflow.com/a/19957433
+
 import React, { createContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import fetchPlanets from '../api/starWarsPlanets';
@@ -5,10 +8,22 @@ import fetchPlanets from '../api/starWarsPlanets';
 export const PlanetFinderContext = createContext();
 
 export default function PlanetFinderProvider({ children }) {
+  const FILTER_COLUMN = [
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ];
+
+  const [filteredColumns, setFilteredColumns] = useState(FILTER_COLUMN);
   const [initialPlanets, setInitialPlanets] = useState([]);
   const [filteredPlanets, setFilteredPlanets] = useState(initialPlanets);
   const [name, setName] = useState('');
   const [filterByNumericValues, setFilterByNumericValues] = useState([]);
+  const [column, setColumn] = useState('population');
+  const [comparison, setComparison] = useState('maior que');
+  const [value, setValue] = useState('100000');
 
   useEffect(() => {
     const getPlanets = async () => {
@@ -30,14 +45,35 @@ export default function PlanetFinderProvider({ children }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [name]);
 
-  const value = {
+  useEffect(() => {
+    const columns = filterByNumericValues.map((filter) => filter.column);
+    const updatedColumns = FILTER_COLUMN.filter(
+      (filter) => !columns.includes(filter),
+    );
+    setFilteredColumns(updatedColumns);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filterByNumericValues]);
+
+  useEffect(() => {
+    setColumn(filteredColumns[0]);
+  }, [filteredColumns]);
+
+  const providerValue = {
     planets: filteredPlanets,
+    columns: filteredColumns,
+    numericValues: { column, comparison, value },
     filters: { filterByName: { name }, filterByNumericValues },
-    setters: { setName, setFilterByNumericValues },
+    setters: {
+      setName,
+      setFilterByNumericValues,
+      setColumn,
+      setComparison,
+      setValue,
+    },
   };
 
   return (
-    <PlanetFinderContext.Provider value={ value }>
+    <PlanetFinderContext.Provider value={ providerValue }>
       {children}
     </PlanetFinderContext.Provider>
   );

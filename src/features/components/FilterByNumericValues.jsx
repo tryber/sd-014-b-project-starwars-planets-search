@@ -1,15 +1,13 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { PlanetFinderContext } from '../../context/PlanetFinderContext';
 
 export default function FilterByNumericValues() {
   const {
+    columns,
+    numericValues: { column, comparison, value },
     filters: { filterByNumericValues },
-    setters: { setFilterByNumericValues },
+    setters: { setFilterByNumericValues, setColumn, setComparison, setValue },
   } = useContext(PlanetFinderContext);
-
-  const [column, setColumn] = useState('population');
-  const [comparison, setComparison] = useState('maior que');
-  const [value, setValue] = useState('100000');
 
   const handleClick = () => {
     setFilterByNumericValues([
@@ -26,11 +24,11 @@ export default function FilterByNumericValues() {
         value={ column }
         onChange={ (e) => setColumn(e.target.value) }
       >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        {columns.map((option) => (
+          <option key={ option } value={ option }>
+            {option}
+          </option>
+        ))}
       </select>
       <select
         data-testid="comparison-filter"
