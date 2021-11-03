@@ -6,10 +6,13 @@ import SearchBar from './SearchBar';
 import Table from './Table';
 
 function App() {
+  const columnsArray = ['population', 'orbital_period',
+    'diameter', 'rotation_period', 'surface_water'];
   const [data, setData] = useState([]);
   const [filtred, setFiltred] = useState([]);
-  const [columnFilter, setColumnFilter] = useState('');
-  const [compairsonFilter, setComparisonFilter] = useState('');
+  const [columnFilter, setColumnFilter] = useState('population');
+  const [column, setColumn] = useState([...columnsArray]);
+  const [comparisonFilter, setComparisonFilter] = useState('');
   const [value, setValue] = useState('');
 
   const api = async () => {
@@ -27,7 +30,9 @@ function App() {
     setFiltred,
     columnFilter,
     setColumnFilter,
-    compairsonFilter,
+    column,
+    setColumn,
+    comparisonFilter,
     setComparisonFilter,
     value,
     setValue,

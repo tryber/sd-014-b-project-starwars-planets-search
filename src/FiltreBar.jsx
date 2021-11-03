@@ -4,7 +4,9 @@ import AppContext from './Context';
 function FilterBar() {
   const { columnFilter,
     setColumnFilter,
-    compairsonFilter,
+    column,
+    setColumn,
+    comparisonFilter,
     setComparisonFilter,
     value,
     setValue,
@@ -14,18 +16,20 @@ function FilterBar() {
 
   const handleClick = () => {
     const filtred = data.filter((planet) => {
-      if (compairsonFilter === 'maior que') {
+      if (comparisonFilter === 'maior que') {
         return Number(planet[columnFilter]) > Number(value);
       }
-      if (compairsonFilter === 'menor que') {
+      if (comparisonFilter === 'menor que') {
         return Number(planet[columnFilter]) < Number(value);
       }
-      if (compairsonFilter === 'igual a') {
+      if (comparisonFilter === 'igual a') {
         return Number(planet[columnFilter]) === Number(value);
       }
       return null;
     });
+    const newColumn = column.filter((option) => (option !== columnFilter));
     setFiltred(filtred);
+    setColumn(newColumn);
   };
 
   return (
@@ -34,22 +38,21 @@ function FilterBar() {
         onChange={ (event) => setColumnFilter(event.target.value) }
         data-testid="column-filter"
       >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        {column.map((element) => (
+          <option key={ element }>{element}</option>
+        ))}
       </select>
       <select
         onChange={ (event) => setComparisonFilter(event.target.value) }
         data-testid="comparison-filter"
       >
-        <option value="maior que">maior que</option>
-        <option value="menor que">menor que</option>
-        <option value="igual a">igual a</option>
+        <option key="maior que">maior que</option>
+        <option key="menor que">menor que</option>
+        <option key="igual a">igual a</option>
       </select>
       <input
         onChange={ (event) => setValue(event.target.value) }
+        value={ value }
         type="number"
         data-testid="value-filter"
       />
