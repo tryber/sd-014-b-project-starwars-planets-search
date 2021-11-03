@@ -4,20 +4,24 @@ import headersFilter from '../services/headersFilter';
 import { filteredCharact, setHeaders } from '../services/setHeaders';
 
 export default function Table() {
-  const { data } = useContext(PlanetsContext);
+  const { data, filteredData } = useContext(PlanetsContext);
   const [tableHeaders, setTableHeaders] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const characts = headersFilter(data, filteredCharact);
 
   useEffect(() => {
     setHeaders(data, setTableHeaders);
+    setIsLoading(false);
   }, []);
 
-  console.log(`corpo: ${tableHeaders}`);
+  console.log(filteredData);
 
-  const characts = headersFilter(data, filteredCharact);
-
-  return ( // // adaptado do site https://edrodrigues.com.br/blog/criando-tabelas-com-filtros-%E2%80%8B%E2%80%8Busando-react/
+  if (isLoading) {
+    return 'Loading...';
+  }
+  // adaptado do site https://edrodrigues.com.br/blog/criando-tabelas-com-filtros-%E2%80%8B%E2%80%8Busando-react/
+  return (
     <table border="1">
-      {console.log('return')}
       <thead>
         <tr>
           {tableHeaders.map((description) => (
@@ -25,7 +29,7 @@ export default function Table() {
         </tr>
       </thead>
       <tbody>
-        { data.map((desc, i) => (
+        { filteredData.map((desc, i) => (
           <tr key={ i }>
             {characts.map((charact) => (
               <td key={ charact }>{ desc[`${charact}`] }</td>
