@@ -9,8 +9,8 @@ const PlanetsProvider = ({ children }) => {
   const [filters, setFilters] = useState({ filterByName: { name: '' },
     filterByNumericValues: [] });
   const [selectObjects, setSelectObjects] = useState({
-    column: '',
-    comparison: '',
+    column: 'population',
+    comparison: 'menor que',
     value: 0,
   });
 
@@ -31,28 +31,14 @@ const PlanetsProvider = ({ children }) => {
       } });
   };
 
-  const handleSelectOptions = ({ column, comparison, value }) => {
-    console.log(column, comparison, value)
-    setSelectObjects((prevState) => {
-      if (prevState === undefined) {
-        return {
-          ...prevState,
-          column,
-          comparison,
-          value,
-        };
-      }
-      return {
-        ...prevState,
-        column: prevState[prevState.column] === column ? '' : column,
-        comparison: prevState[prevState.comparison] === comparison ? '' : comparison,
-        value: prevState[prevState.value] === value ? '' : value,
-      };
-    });
+  const handleSelectOptions = (name, value) => {
+    setSelectObjects((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
   };
 
   const handleFilterButtonClick = () => {
-    console.log(selectObjects)
     setFilters((prevState) => ({
       ...prevState,
       filterByNumericValues: [...prevState.filterByNumericValues,

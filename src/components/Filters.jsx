@@ -15,8 +15,8 @@ const Filters = () => {
       <select
         data-testid="column-filter"
         name="column"
-        onChange={ ({ target: { name, value } }, prev) => handleSelectOptions(
-          { ...prev, [name]: value },
+        onChange={ ({ target: { name, value } }) => handleSelectOptions(
+          name, value,
         ) }
       >
         <option>population</option>
@@ -26,10 +26,10 @@ const Filters = () => {
         <option>surface_water</option>
       </select>
       <select
-        data-testid="value-filter"
+        data-testid="comparison-filter"
         name="comparison"
-        onChange={ ({ target }, prev) => handleSelectOptions(
-          { ...prev, [target.name]: target.value },
+        onChange={ ({ target }) => handleSelectOptions(
+          target.name, target.value,
         ) }
       >
         <option>menor que</option>
@@ -41,7 +41,9 @@ const Filters = () => {
         placeholder="insira um valor"
         data-testid="value-filter"
         name="value"
-        onChange={ (e, prev) => handleSelectOptions({ ...prev, [e.target.name]: e.target.value })}
+        onChange={ (e) => handleSelectOptions(
+          e.target.name, e.target.value,
+        ) }
       />
       <button
         type="button"

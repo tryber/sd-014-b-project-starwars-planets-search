@@ -11,16 +11,26 @@ const Table = () => {
 
   const dealWithFilterPresence = () => {
     if (name.length !== 0) {
-      data
+      return data
         .filter((item) => item.name.toLowerCase().includes(name.toLowerCase()));
     }
-    filterByNumericValues.map((chave) => (
-      data
-        .filter((item) => item[chave.column]
-        === chave.column
-      && item[chave.comparison]
-      === chave.comparison
-      && item[chave.value] === chave.value)));
+    if (filterByNumericValues.length !== 0) {
+      const filterWithNumericConditions = filterByNumericValues
+        .map(({ column, comparison, value }) => {
+          switch (comparison) {
+          case 'menor que':
+            return data.filter((itemTable) => Number(itemTable[column]) < Number(value));
+          case 'igual a':
+            return data.filter((itemTable) => Number(itemTable[column])
+            === Number(value));
+          case 'maior que':
+            return data.filter((itemTable) => Number(itemTable[column]) > Number(value));
+          default:
+            return data;
+          }
+        });
+      return filterWithNumericConditions[0];
+    }
     return data;
   };
 
@@ -56,7 +66,7 @@ const Table = () => {
               <td>{planet.terrain}</td>
               <td>{planet.surface_water}</td>
               <td>{planet.population}</td>
-              <td>{planet.films.toString()}</td>
+              <td>{planet.films}</td>
               <td>{planet.created}</td>
               <td>{planet.edited}</td>
               <td>{planet.url}</td>
