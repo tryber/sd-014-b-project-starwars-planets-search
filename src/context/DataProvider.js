@@ -4,7 +4,7 @@ import DataContext from './DataContext';
 import requestApiPlanets from '../services/requestApiPlanets';
 
 function DataProvider({ children }) {
-  const [data, setData] = useState({});
+  const [data, setData] = useState([]);
 
   async function fetchRequestApiPlanets() {
     const resposta = await requestApiPlanets();
