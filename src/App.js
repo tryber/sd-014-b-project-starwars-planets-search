@@ -1,11 +1,10 @@
 import React from 'react';
-import FetchPlanets from './api/ApiPlanets';
+import Principal from './pages/Principal';
 
 function App() {
   return (
     <div>
-      <span>Hello, App!</span>
-      <FetchPlanets />
+      <Principal />
     </div>
   );
 }
