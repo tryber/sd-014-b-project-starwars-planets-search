@@ -18,7 +18,7 @@ const filterName = (data, filter) => (<table>
       <th>URL</th>
     </tr>
   </thead>
-  {data.filter((e) => e.name.startsWith(filter))
+  {data.filter((e) => e.name.includes(filter))
     .map(({ name, population, rotation_period: rotationPeriod,
       orbital_period: orbitalPeriod, diameter,
       climate, gravity, terrain, surface_water: surfaceWater, films,
