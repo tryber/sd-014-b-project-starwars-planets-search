@@ -9,11 +9,27 @@ export default function InputFilter() {
     value: 0,
   });
 
+  const columns = [
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ];
+
+  const [columnsContext, setColumnsContext] = useState(columns);
+
   const handleChange = ({ target }) => {
     setOptionSelect({
       ...optionSelect, // preserva no contexto o que não mudou
       [target.id]: target.value,
     });
+  };
+
+  const excludeColumns = () => {
+    setColumnsContext(columns);
+    const filter = columnsContext.filter((c) => c !== optionSelect.column);
+    setColumnsContext(filter);
   };
 
   const filterData = () => {
@@ -34,16 +50,15 @@ export default function InputFilter() {
 
   const handleClick = () => {
     setData(filterData);
+    excludeColumns();
   };
 
   return (
     <div>
       <select data-testid="column-filter" id="column" onChange={ handleChange }>
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        {columnsContext.map((column) => (
+          <option key={ column } value={ column }>{column}</option>
+        ))}
       </select>
       <select data-testid="comparison-filter" id="comparison" onChange={ handleChange }>
         <option value="maior que">maior que</option>
