@@ -14,7 +14,7 @@ function App() {
         <h1>Projeto Star Wars Trybe</h1>
         <FilterByName />
         <FilterByNumber />
-        { isLoading ? <p>Loading...</p> : <Table /> }
+        { isLoading ? <h1>Loading...</h1> : <Table /> }
       </div>
     </Provider>
   );

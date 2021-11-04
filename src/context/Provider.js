@@ -12,7 +12,7 @@ const INITIAL_FILTER = {
   },
 };
 
-const filtersToSelect = [
+const initFiltersToSelect = [
   'population',
   'orbital_period',
   'diameter',
@@ -23,11 +23,11 @@ const filtersToSelect = [
 const Provider = ({ children }) => {
   // Dados originais
   const [originalList, setOriginalList] = useState([]);
-
   // Dados que renderizaram a tabela
   const [planetList, setPlanetList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
+  const [filtersToSelect, setFiltersToSelect] = useState(initFiltersToSelect);
+  // Filtros da tabela e criador do objeto
   const [tableFilters, setTableFilters] = useState(INITIAL_FILTER);
 
   const [auxFilterByNumber, setAuxFilterByNumber] = useState({});
@@ -36,6 +36,20 @@ const Provider = ({ children }) => {
     comparison: 'maior que',
     value: '0',
   });
+
+  const updateSelectList = () => {
+    const { filters: { filterByNumericValues } } = tableFilters;
+    let newSelect = [];
+
+    filterByNumericValues.forEach((element) => {
+      newSelect = filtersToSelect.filter((filter) => {
+        if (element.column !== filter) return filter;
+        return false;
+      });
+    });
+    console.log(newSelect);
+    if (newSelect.length > 0) setFiltersToSelect(newSelect);
+  };
 
   const recoverPlanetList = async () => {
     const list = await getPlanetList();
@@ -108,6 +122,7 @@ const Provider = ({ children }) => {
 
   useEffect(() => {
     filterByNumber();
+    updateSelectList();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filtersByNumber]);
 
