@@ -6,10 +6,8 @@ import requestApi from '../services/api';
 function Provider({ children }) {
   const [dataResult, setData] = useState([]);
   const [keys, setKeys] = useState([]);
-  const [inputName, setInputName] = useState('');
-  const [column, setColumn] = useState();
-  const [comparison, setComparison] = useState();
-  const [value, setValue] = useState();
+  const [filters, setFilters] = useState({ filtersByName: { name: '' },
+    filterByNumericValues: [] });
 
   async function setApi() {
     const result = await requestApi();
@@ -17,26 +15,16 @@ function Provider({ children }) {
     const resultData = data.map(({ residents, ...element }) => element);
     setData(resultData);
     setKeys(Object.keys(resultData[0]));
-    return resultData;
   }
   useEffect(() => { setApi(); }, []);
-  const filters = {
-    filterByName: {
-      name: inputName,
-    },
-    filterByNumericValues: [{ comparison, column, value }],
-  };
 
   return (
     <StarWarsContext.Provider
       value={ { data: dataResult,
         keys,
         filters,
-        setInputName,
         setData,
-        setColumn,
-        setComparison,
-        setValue,
+        setFilters,
       } }
     >
       { children }

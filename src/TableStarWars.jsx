@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import StarWarsContext from './context/StarWarsContext';
 import Select from './components/Select';
 
@@ -13,17 +13,16 @@ function TableStarWars() {
   const {
     data,
     keys,
-    inputName,
-    setInputName,
+    setFilters,
     filters,
-    setColumn,
-    setComparison,
-    setValue,
     setData,
   } = useContext(StarWarsContext);
+  const [column, setColumn] = useState();
+  const [value, setValue] = useState();
+  const [comparison, setComparison] = useState();
 
-  function handleChange(event) {
-    setInputName(event.target.value);
+  function handleName(event) {
+    setFilters({ ...filters, filtersByName: { name: event.target.value } });
   }
 
   function handleColumns(event) {
@@ -38,10 +37,11 @@ function TableStarWars() {
     setValue(event.target.value);
   }
 
-  const { filterByName: { name } } = filters;
-  const { filterByNumericValues: [{ column, comparison, value }] } = filters;
-
   function handleClick() {
+    const obj = { comparison, value, column };
+    setFilters({ ...filters,
+      filterByNumericValues: [...filters.filterByNumericValues, obj],
+    });
     if (comparison === 'maior que') {
       const filtered = data.filter((planet) => Number(planet[column]) > value);
       const index = columns.indexOf(column);
@@ -66,9 +66,9 @@ function TableStarWars() {
     <div>
       <input
         type="text"
-        value={ inputName }
+        value={ filters.filtersByName.name }
         data-testid="name-filter"
-        onChange={ handleChange }
+        onChange={ handleName }
       />
       <Select
         array={ columns }
@@ -103,7 +103,7 @@ function TableStarWars() {
           </tr>
         </thead>
         <tbody>
-          {data.filter((planet) => planet.name.includes(name))
+          {data.filter((planet) => planet.name.includes(filters.filtersByName.name))
             .map((element, index) => (
               <tr key={ index }>
                 <td>{element.name}</td>
