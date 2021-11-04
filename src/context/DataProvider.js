@@ -7,6 +7,11 @@ const filtersKeys = {
     filterByName: {
       name: '',
     },
+    filterByNumericValues: {
+      column: 'population',
+      comparison: 'maior que',
+      value: '100000',
+    },
   },
 };
 
@@ -20,15 +25,45 @@ const DataProvider = (props) => {
       .then((d) => setData(d.results));
   };
 
-  const handleFilters = ({ target: { value } }) => {
-    setFilters({
-      filters: {
-        ...filters.filters,
-        filterByName: {
-          name: value,
+  const handleFilterByNumericValues = () => {
+    const { filters: { filterByNumericValues: { column, comparison, value } } } = filters;
+    if (comparison === 'maior que') {
+      const filteredData = data
+        .filter((planet) => Number(planet[column]) > Number(value));
+      return setData(filteredData);
+    }
+    if (comparison === 'menor que') {
+      const filteredData = data
+        .filter((planet) => Number(planet[column]) < Number(value));
+      return setData(filteredData);
+    }
+    const filteredData = data
+      .filter((planet) => Number(planet[column]) === Number(value));
+    return setData(filteredData);
+  };
+
+  const handleFilters = ({ target: { value, name } }) => {
+    if (name === 'name') {
+      return (
+        setFilters({
+          filters: {
+            ...filters.filters,
+            filterByName: { name: value },
+          },
+        })
+      );
+    }
+    return (
+      setFilters({
+        filters: {
+          ...filters.filters,
+          filterByNumericValues: {
+            ...filters.filters.filterByNumericValues,
+            [name]: value,
+          },
         },
-      },
-    });
+      })
+    );
   };
 
   useEffect(() => {
@@ -39,6 +74,7 @@ const DataProvider = (props) => {
     data,
     filters,
     handleFilters,
+    handleFilterByNumericValues,
   };
 
   return (

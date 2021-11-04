@@ -31,7 +31,7 @@ const Table = () => {
   return (
     <table border="1">
       <thead>
-        <caption>Table!</caption>
+        <caption>Star Wars Planets</caption>
         <tr>
           <th>Name</th>
           <th>Rotation Period</th>
