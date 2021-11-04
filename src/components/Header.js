@@ -17,7 +17,7 @@ function Header() {
       ],
     },
   } = planetName;
-  console.log(planetName);
+
   const firstColumn = ['population', 'orbital_period',
     'diameter', 'rotation_period', 'surface_water'];
   const secondColumn = ['maior que', 'menor que', 'igual a'];

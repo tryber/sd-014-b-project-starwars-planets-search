@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import PlanetsContext from './PlanetsContext';
 
 function PlanetsProvider({ children }) {
-  const [click, setClick] = useState(false);
+  const [filteredData, setFilteredData] = useState([]);
   const [data, setData] = useState([]);
   const [planetName, setPlanetName] = useState({
     filters: {
@@ -102,9 +102,9 @@ function PlanetsProvider({ children }) {
   };
 
   const searchPlanetByName = (arrayPlanets) => {
-    const filteredPlanets = !click
+    const filteredPlanets = arrayPlanets.length === 0 && comparison !== 'igual a'
       ? data.filter((planet) => planet.name.includes(name))
-      : arrayPlanets.filter((planet) => planet.name.includes(name));
+      : arrayPlanets;
 
     return filteredPlanets.map((planet, index) => (
       <tr key={ index }>
@@ -125,23 +125,98 @@ function PlanetsProvider({ children }) {
     ));
   };
 
-  const handleClick = () => {
+  const populationResults = () => {
     let arrayPlanets = [];
-
     if (column === 'population' && comparison === 'maior que') {
-      arrayPlanets = data.map((planet) => planet.population > value);
+      arrayPlanets = data.filter((planet) => +planet.population > value);
     }
-
-    setClick(true);
-
-    searchPlanetByName(arrayPlanets);
+    if (column === 'population' && comparison === 'menor que') {
+      arrayPlanets = data.filter((planet) => +planet.population < value);
+    }
+    if (column === 'population' && comparison === 'igual a') {
+      arrayPlanets = data.filter((planet) => planet.population === value);
+    }
+    return arrayPlanets;
   };
 
-  const url = 'https://swapi-trybe.herokuapp.com/api/planets/';
+  const orbitalResults = () => {
+    let arrayPlanets = [];
+    if (column === 'orbital_period' && comparison === 'maior que') {
+      arrayPlanets = data.filter((planet) => +planet.orbital_period > value);
+    }
+    if (column === 'orbital_period' && comparison === 'menor que') {
+      arrayPlanets = data.filter((planet) => +planet.orbital_period < value);
+    }
+    if (column === 'orbital_period' && comparison === 'igual a') {
+      arrayPlanets = data.filter((planet) => planet.orbital_period === value);
+    }
+    return arrayPlanets;
+  };
 
+  const diameterResults = () => {
+    let arrayPlanets = [];
+    if (column === 'diameter' && comparison === 'maior que') {
+      arrayPlanets = data.filter((planet) => +planet.diameter > value);
+    }
+    if (column === 'diameter' && comparison === 'menor que') {
+      arrayPlanets = data.filter((planet) => +planet.diameter < value);
+    }
+    if (column === 'diameter' && comparison === 'igual a') {
+      arrayPlanets = data.filter((planet) => planet.diameter === value);
+    }
+    return arrayPlanets;
+  };
+
+  const rotationResults = () => {
+    let arrayPlanets = [];
+    if (column === 'rotation_period' && comparison === 'maior que') {
+      arrayPlanets = data.filter((planet) => +planet.rotation_period > value);
+    }
+    if (column === 'rotation_period' && comparison === 'menor que') {
+      arrayPlanets = data.filter((planet) => +planet.rotation_period < value);
+    }
+    if (column === 'rotation_period' && comparison === 'igual a') {
+      arrayPlanets = data.filter((planet) => planet.rotation_period === value);
+    }
+    return arrayPlanets;
+  };
+
+  const surfaceResults = () => {
+    let arrayPlanets = [];
+    if (column === 'surface_water' && comparison === 'maior que') {
+      arrayPlanets = data.filter((planet) => +planet.surface_water > value);
+    }
+    if (column === 'surface_water' && comparison === 'menor que') {
+      arrayPlanets = data.filter((planet) => +planet.surface_water < value);
+    }
+    if (column === 'surface_water' && comparison === 'igual a') {
+      arrayPlanets = data.filter((planet) => planet.surface_water === value);
+    }
+    return arrayPlanets;
+  };
+
+  const handleClick = () => {
+    let arrayPlanets = [];
+    if (column === 'population') {
+      arrayPlanets = populationResults();
+    }
+    if (column === 'orbital_period') {
+      arrayPlanets = orbitalResults();
+    }
+    if (column === 'diameter') {
+      arrayPlanets = diameterResults();
+    }
+    if (column === 'rotation_period') {
+      arrayPlanets = rotationResults();
+    }
+    if (column === 'surface_water') {
+      arrayPlanets = surfaceResults();
+    }
+    setFilteredData(arrayPlanets);
+  };
   useEffect(() => {
     async function fetchData() {
-      const { results } = await fetch(url).then((response) => response.json());
+      const { results } = await fetch('https://swapi-trybe.herokuapp.com/api/planets/').then((response) => response.json());
       setData(results);
     }
     fetchData();
@@ -157,7 +232,8 @@ function PlanetsProvider({ children }) {
           handleChangeComparison,
           handleChangeValue,
           searchPlanetByName,
-          handleClick } }
+          handleClick,
+          filteredData } }
       >
         {children}
       </PlanetsContext.Provider>

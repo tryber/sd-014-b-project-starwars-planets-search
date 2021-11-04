@@ -3,7 +3,7 @@ import PlanetsContext from '../context/PlanetsContext';
 import './Table.css';
 
 function Table() {
-  const { searchPlanetByName } = useContext(PlanetsContext);
+  const { searchPlanetByName, filteredData } = useContext(PlanetsContext);
 
   return (
     <main>
@@ -26,7 +26,7 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          { searchPlanetByName() }
+          { searchPlanetByName(filteredData) }
         </tbody>
       </table>
     </main>
