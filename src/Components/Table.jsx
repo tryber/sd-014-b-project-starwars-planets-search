@@ -8,7 +8,8 @@ function Table() {
   // ideia dada pelos meus amigos Matheus silveira, Glauco Lomenha e tirada do video https://www.youtube.com/watch?v=OlVkYnVXPl0
   // isso poupa requisicoes, consequentemente dinheiro!!
   let filteredPlanetsFromData = data.filter(
-    (planet) => planet.name.includes(filters.filterByName.name),
+    (planet) => planet.name.toLowerCase()
+      .includes(filters.filterByName.name.toLowerCase()),
   );
 
   console.log(filters);
@@ -18,17 +19,17 @@ function Table() {
 
     if (comparison === 'maior que') {
       filteredPlanetsFromData = filteredPlanetsFromData.filter(
-        (planet) => Number(planet[`${column}`]) > Number(value), // passar a chave dinamicamente, ideia de Matheus silveira https://github.com/matheuspmsilveira
+        (planet) => Number(planet[column]) > Number(value), // passar a chave dinamicamente, ideia de Matheus silveira https://github.com/matheuspmsilveira
       );
     }
     if (comparison === 'menor que') {
       filteredPlanetsFromData = filteredPlanetsFromData.filter(
-        (planet) => Number(planet[`${column}`]) < Number(value),
+        (planet) => Number(planet[column]) < Number(value),
       );
     }
     if (comparison === 'igual a') {
       filteredPlanetsFromData = filteredPlanetsFromData.filter(
-        (planet) => Number(planet[`${column}`]) === Number(value),
+        (planet) => Number(planet[column]) === Number(value),
       );
     }
   });
