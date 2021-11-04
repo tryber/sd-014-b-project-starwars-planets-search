@@ -6,7 +6,7 @@ function SearchBar() {
   const [name, setName] = useState({ name: '' });
 
   const applyFilter = () => {
-    const search = filteredData.filter((planet) => planet.name.includes(name.name));
+    const search = data.filter((planet) => planet.name.includes(name.name));
     setFilteredData(search);
   };
 
