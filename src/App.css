@@ -1,5 +1,14 @@
+* {
+  background: rgb(29, 29, 29);
+  margin: 0;
+}
+
 h1 {
+  background: #333;
+  color: white;
   font-family: 'Press Start 2P' , Courier New , Courier , monospace;
+  font-size: 50px;
+  padding: 50px;
   text-align: center;
   text-shadow: 4px 4px 4px rgba(170, 170, 170, 0.479);
 }
@@ -13,9 +22,81 @@ h1 {
 }
 
 .search-bar-input {
-  border: 1px solid green;
+  background: #e8e8e8;
+  border: 1px solid white;
   border-radius: 0;
+  color: white;
+  font-family: Poppins , sans-serif;
+  font-size: 16px;
   height: 35px;
+  text-align: center;
   width: 40%;
 }
 
+table {
+  border-collapse: collapse;
+}
+
+th {
+  background: #333;
+  border: 1px solid #999;
+  color: white;
+  font-family: Poppins , sans-serif;
+  font-size: 15px;
+  padding: 0.5rem;
+  text-align: center;
+}
+
+td {
+  backdrop-filter: blur(12px);
+  background: #e8e8e8;
+  border: 1px solid #999;
+  font-family: Poppins , sans-serif;
+  font-size: 13px;
+  padding: 0.5rem;
+  text-align: left;
+  width: 100%;
+}
+
+.filter-form {
+  display: flex;
+  font-family: Poppins , sans-serif;
+  font-size: 16px;
+  justify-content: center;
+  margin-bottom: 3%;
+  margin-top: 3%;
+  width: 100%;
+}
+
+.filter-form select {
+  background: #e8e8e8;
+  border: 1px solid white;
+  border-radius: 0;
+  font-family: Poppins , sans-serif;
+  font-size: 14px;
+  height: 34px;
+  width: 20%;
+}
+
+.filter-form input {
+  background: #e8e8e8;
+  border: 1px solid white;
+  border-radius: 0;
+  font-family: Poppins , sans-serif;
+  font-size: 14px;
+  height: 30px;
+  width: 20%;
+}
+
+button {
+  background: #333;
+  border: 1px solid white;
+  border-radius: 0;
+  color: #e8e8e8;
+  font-family: Poppins , sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  height: 34px;
+  text-transform: uppercase;
+  width: 13%;
+}
