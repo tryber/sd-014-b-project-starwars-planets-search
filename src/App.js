@@ -1,9 +1,17 @@
 import React from 'react';
-import './App.css';
+import TablePlanets from './components/TablePlanets';
+import FormFilter from './components/FormFilter';
+import MyProvider from './context/MyProvider';
 
 function App() {
   return (
-    <span>Hello, App!</span>
+    <MyProvider>
+      <main>
+        <span>Hello, App!</span>
+        <FormFilter />
+        <TablePlanets />
+      </main>
+    </MyProvider>
   );
 }
 
