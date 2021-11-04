@@ -11,9 +11,7 @@ export default function Table() {
     (planet) => planet.name.includes(filters.filterByName.name),
   );
 
-  filters.filterByNumericValues.forEach((filter) => {
-    const { column, value, comparison } = filter;
-
+  filters.filterByNumericValues.forEach(({ column, value, comparison }) => {
     switch (comparison) {
     case 'maior que':
       filteredData = filteredData.filter(

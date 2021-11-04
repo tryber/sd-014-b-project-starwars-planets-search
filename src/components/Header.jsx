@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import columnsFilter from '../data/columnsFilter';
 import usePlanets from '../hooks/usePlanets';
 
+import styles from '../styles/header.module.scss';
+
 export default function Header() {
   const { filters, setFilters, handleClickDeleteFilter } = usePlanets();
   const [columnFilter, setColumnFilter] = useState(columnsFilter[0]);
@@ -19,10 +21,10 @@ export default function Header() {
 
   function renderAppliedFilters() {
     return filters.filterByNumericValues.map((filter, index) => (
-      <div key={ index } data-testid="filter">
+      <div key={ index } data-testid="filter" className={ styles.filters }>
         <span>{`${filter.column} `}</span>
         <span>{`${filter.comparison} `}</span>
-        <span>{`${filter.value} `}</span>
+        <span className={ styles.value }>{`${filter.value} `}</span>
         <button
           type="button"
           onClick={ () => handleClickDeleteFilter(index) }
@@ -34,8 +36,8 @@ export default function Header() {
   }
 
   return (
-    <div>
-      <h1>Projeto Star Wars - Trybe</h1>
+    <div className={ styles.header }>
+      <h1>Star Wars Planets</h1>
       <input
         data-testid="name-filter"
         type="text"
@@ -44,8 +46,9 @@ export default function Header() {
           setFilters((prevState) => ({ ...prevState, filterByName: { name: value } }));
         } }
         placeholder="Filtrar por nome"
+        className={ styles.filterByName }
       />
-      <div>
+      <div className={ styles.filterByNumericValues }>
         <select
           data-testid="column-filter"
           name="column-filter"
@@ -87,6 +90,9 @@ export default function Header() {
         >
           Filtrar
         </button>
+      </div>
+      <div>
+        <h3>Filtros:</h3>
         {filters.filterByNumericValues.length > 0 && renderAppliedFilters()}
       </div>
     </div>
