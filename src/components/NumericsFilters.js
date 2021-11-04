@@ -3,25 +3,47 @@ import PlannetsContext from '../context/PlannetsContext';
 
 export default function NumericsFilters() {
   const { setColumn, setComparison,
-    setFilterValue, filterDataByNumericValues } = useContext(PlannetsContext);
+    setFilterValue, filterDataByNumericValues,
+    setFilterParams, filterParams } = useContext(PlannetsContext);
 
   const [comparison, setStateComparison] = useState('maior que');
+  const [columnActualValue, setColumnActualValue] = useState('population');
+  const [valueComparason, setValueComparason] = useState(0);
+  const [column, setFilterColumn] = useState(['population', 'orbital_period',
+    'rotation_period', 'diameter', 'surface_water']);
 
   useEffect(() => {
     setComparison(comparison);
   }, [comparison, setComparison]);
 
+  function removeColumnValue() {
+    const index = column.indexOf(columnActualValue);
+    column.splice(index, 1);
+    setFilterColumn(column);
+    filterDataByNumericValues();
+    setFilterParams([...filterParams,
+      { columnActualValue, comparison, valueComparason }]);
+  }
+
+  function atualizeColumnValue(target) {
+    const { value } = target;
+    setColumnActualValue(value);
+    setColumn(value);
+  }
+
+  function setValueFilter(target) {
+    const { value } = target;
+    setFilterValue(value);
+    setValueComparason(value);
+  }
+
   return (
     <form>
       <select
         data-testid="column-filter"
-        onChange={ ({ target }) => setColumn(target.value) }
+        onChange={ ({ target }) => atualizeColumnValue(target) }
       >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="diameter">diameter</option>
-        <option value="surface_water">surface_water</option>
+        {column.map((value) => <option key={ value } value={ value }>{value}</option>)}
       </select>
 
       <select
@@ -37,13 +59,13 @@ export default function NumericsFilters() {
         <input
           type="number"
           data-testid="value-filter"
-          onChange={ ({ target }) => setFilterValue(target.value) }
+          onChange={ ({ target }) => setValueFilter(target) }
         />
       </label>
       <button
         data-testid="button-filter"
         type="button"
-        onClick={ filterDataByNumericValues }
+        onClick={ () => removeColumnValue() }
       >
         Filtrar
       </button>

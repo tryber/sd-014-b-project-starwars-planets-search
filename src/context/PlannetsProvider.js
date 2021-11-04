@@ -9,6 +9,7 @@ export default function PlannetsProvider({ children }) {
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior');
   const [value, setFilterValue] = useState(0);
+  const [filterParams, setFilterParams] = useState([{ column, comparison, value }]);
   const [filterData, setFilterData] = useState([]);
 
   useEffect(() => {
@@ -43,13 +44,8 @@ export default function PlannetsProvider({ children }) {
   const INITIAL_STATE = { data,
     filters: {
       filterByName: { name },
-      filterByNumericValues: [
-        {
-          column,
-          comparison,
-          value,
-        },
-      ],
+      filterByNumericValues:
+        filterParams,
     },
     setName,
     filterData,
@@ -58,6 +54,8 @@ export default function PlannetsProvider({ children }) {
     setComparison,
     setFilterValue,
     filterDataByNumericValues,
+    setFilterParams,
+    filterParams,
   };
 
   return (
