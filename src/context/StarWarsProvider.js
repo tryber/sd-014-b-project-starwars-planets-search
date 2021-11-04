@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import fetchPlanetsAPI from '../services/PlanetsAPI';
@@ -7,9 +6,15 @@ import StarWarsContext from './StarWarsContext';
 function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
 
-  useEffect(async () => {
-    const results = await fetchPlanetsAPI();
-    setData(results);
+  // A synthax do useEffect abaixo foi retirado da resposta do Kenny John Jacob em
+  // https://stackoverflow.com/questions/63570597/typeerror-func-apply-is-not-a-function
+  // Não está clara ainda pra mim...
+
+  useEffect(() => {
+    (async () => {
+      const results = await fetchPlanetsAPI();
+      setData(results);
+    })();
   }, []);
 
   const context = {
