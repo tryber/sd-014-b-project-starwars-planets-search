@@ -14,6 +14,7 @@ function NumericFilter() {
     setPlanet, inicialPlanet, filter } = useContext(PlanetContext);
 
   const [boolean, setBoolean] = useState(false);
+  const [optionCol, setOptionCol] = useState(options);
 
   useEffect(() => {
     if (boolean) {
@@ -48,24 +49,22 @@ function NumericFilter() {
         ...filter.filters,
         filterByNumericValues: [
           ...filter.filters.filterByNumericValues,
-          { filterColumn, filterComparison, filterValue },
         ],
       },
     });
+    const newOptions = options.filter((item) => item !== filterColumn);
+    setOptionCol(newOptions);
     setBoolean(true);
-
-    // const newColumns = options.filter((item) => item !== filterColumn);
-    // setPlanet(filterByNumValue);
   }
 
   return (
-    <form>
+    <form className="filter-form">
       <select
         data-testid="column-filter"
         value={ filterColumn }
         onChange={ ({ target: { value: targetValue } }) => setFilterColumn(targetValue) }
       >
-        {options.map((item, index) => (
+        {optionCol.map((item, index) => (
           <option
             key={ index }
             value={ item }
