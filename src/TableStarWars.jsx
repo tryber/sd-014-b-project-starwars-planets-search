@@ -44,6 +44,19 @@ function TableStarWars() {
     columns.splice(index, 1);
   }
 
+  function removeElement(id) {
+    filters.filterByNumericValues.splice(id, 1);
+  }
+
+  function onClickDelete(event) {
+    const element = event.target.parentNode;
+    const deletObject = event.target.id;
+    console.log(deletObject);
+    const split = element.innerText.split(' ');
+    columns.push(split[0]);
+    removeElement(deletObject);
+  }
+
   function handleClick() {
     const obj = { comparison, value, column };
     setFilters({ ...filters,
@@ -97,12 +110,15 @@ function TableStarWars() {
       >
         Filtrar
       </button>
-      { filters.filterByNumericValues.length > 0
-        ? filters.filterByNumericValues.map((element) => (
-          <p key={ element }>
-            {`${element.column} ${element.comparison} ${element.value}`}
-          </p>))
-        : ''}
+      <div>
+        { filters.filterByNumericValues.length > 0
+          ? filters.filterByNumericValues.map((element, index) => (
+            <p key={ element }>
+              {`${element.column} ${element.comparison} ${element.value}` }
+              <button type="submit" id={ index } onClick={ onClickDelete }>X</button>
+            </p>))
+          : ''}
+      </div>
       <table>
         <thead>
           <tr>
