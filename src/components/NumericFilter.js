@@ -8,6 +8,7 @@ function NumericFilter() {
 
   const {
     filtersList, setFiltersList, setToShowPlanetsList, allPlanetsList,
+    columnsList, setColumnsList,
   } = useContext(PlanetsContext);
 
   function addFilter() {
@@ -37,7 +38,7 @@ function NumericFilter() {
       }
       return null;
     });
-
+    setColumnsList(columnsList.filter((column) => column !== columnFilterValue));
     setToShowPlanetsList(filteredPlanets);
   }
 
@@ -52,11 +53,9 @@ function NumericFilter() {
             setColumnFilterValue(value);
           } }
         >
-          <option value="population">population</option>
-          <option value="orbital_period">orbital_period</option>
-          <option value="diameter">diameter</option>
-          <option value="rotation_period">rotation_period</option>
-          <option value="surface_water">surface_water</option>
+          { columnsList.map((column, key) => (
+            <option key={ key } value={ column }>{ column }</option>
+          )) }
         </select>
       </label>
       <label htmlFor="comparison-filter">

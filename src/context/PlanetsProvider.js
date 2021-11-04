@@ -6,6 +6,9 @@ import PlanetsContext from './PlanetsContext';
 function PlanetsProvider({ children }) {
   const [allPlanetsList, setAllPlanetsList] = useState([]);
   const [toShowPlanetsList, setToShowPlanetsList] = useState([]);
+  const [columnsList, setColumnsList] = useState([
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+  ]);
   const [filtersList, setFiltersList] = useState({
     filters: {
       filterByName: {
@@ -34,9 +37,11 @@ function PlanetsProvider({ children }) {
     allPlanetsList,
     toShowPlanetsList,
     filtersList,
+    columnsList,
     fetchPlanets,
     setFiltersList,
     filterByName,
+    setColumnsList,
     setToShowPlanetsList,
   };
 
