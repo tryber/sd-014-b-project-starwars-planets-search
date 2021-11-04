@@ -49,6 +49,9 @@ class FilterInput extends Component {
           value={ value }
           onChange={ this.onChange }
         />
+        <button type="button">
+          Filtrar
+        </button>
       </>
     );
   }

@@ -3,13 +3,13 @@ function compare(element, operator, value) {
     return true;
   }
   if (operator === 'maior que') {
-    return element > value;
+    return parseInt(element, 10) > value;
   }
   if (operator === 'menor que') {
-    return element < value;
+    return parseInt(element, 10) < value;
   }
   if (operator === 'igual a') {
-    return element === value;
+    return parseInt(element, 10) === value;
   }
 }
 
