@@ -17,9 +17,9 @@ function TableStarWars() {
     filters,
     setData,
   } = useContext(StarWarsContext);
-  const [column, setColumn] = useState();
-  const [value, setValue] = useState();
-  const [comparison, setComparison] = useState();
+  const [column, setColumn] = useState('population');
+  const [value, setValue] = useState(null);
+  const [comparison, setComparison] = useState('maior que');
 
   function handleName(event) {
     setFilters({ ...filters, filtersByName: { name: event.target.value } });
@@ -37,6 +37,11 @@ function TableStarWars() {
     setValue(event.target.value);
   }
 
+  function deleteColumnFilter() {
+    const index = columns.indexOf(column);
+    columns.splice(index, 1);
+  }
+
   function handleClick() {
     const obj = { comparison, value, column };
     setFilters({ ...filters,
@@ -44,22 +49,17 @@ function TableStarWars() {
     });
     if (comparison === 'maior que') {
       const filtered = data.filter((planet) => Number(planet[column]) > value);
-      const index = columns.indexOf(column);
-      columns.splice(index, 1);
       setData(filtered);
     }
     if (comparison === 'menor que') {
       const filtered = data.filter((planet) => Number(planet[column]) < value);
-      const index = columns.indexOf(column);
-      columns.splice(index, 1);
       setData(filtered);
     }
     if (comparison === 'igual a') {
       const filtered = data.filter((planet) => planet[column] === value);
-      const index = columns.indexOf(column);
-      columns.splice(index, 1);
       setData(filtered);
     }
+    deleteColumnFilter();
   }
 
   return (
