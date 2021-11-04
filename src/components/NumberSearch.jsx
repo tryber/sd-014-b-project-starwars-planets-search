@@ -2,12 +2,12 @@ import React, { useState, useContext } from 'react';
 import MyContext from '../context/MyContext';
 
 export default function NumberSearch() {
-  const [columnFilter, setColumnFilter] = useState('population');
+  const [columnFilter, setColumnFilter] = useState('diameter');
   const handleChangeColumnFilter = ({ target: { value } }) => {
     setColumnFilter(value);
   };
 
-  const [comparisonFilter, setComparisonFilter] = useState('>');
+  const [comparisonFilter, setComparisonFilter] = useState('maior que');
   const handleChangeComparisonFilter = ({ target: { value } }) => {
     setComparisonFilter(value);
   };
@@ -19,31 +19,34 @@ export default function NumberSearch() {
 
   const { setFilterByNumericValues, data, setDataFilter } = useContext(MyContext);
 
+  const setFilterData = () => {
+    let filtrado = [];
+    if (comparisonFilter === 'igual a') {
+      filtrado = data.filter((item) => (
+        item[columnFilter] === valueFilter
+      ));
+      setDataFilter(filtrado);
+    } if (comparisonFilter === 'maior que') {
+      filtrado = data.filter((item) => (
+        item[columnFilter] > valueFilter
+      ));
+      setDataFilter(filtrado);
+    } if (comparisonFilter === 'menor que') {
+      filtrado = data.filter((item) => (
+        item[columnFilter] < valueFilter
+      ));
+      setDataFilter(filtrado);
+      console.log('filtrado', filtrado);
+    }
+  };
+
   const sendFilters = () => {
     setFilterByNumericValues({
       column: columnFilter,
       comparison: comparisonFilter,
       value: valueFilter,
     });
-  };
-
-  const setFilterData = () => {
-    if (comparisonFilter === 'igual a') {
-      const filtrado = data.mapa((item) => (
-        item.columnFilter === valueFilter
-      ));
-      setDataFilter(filtrado);
-    } if (comparisonFilter === 'maior que') {
-      const filtrado = data.mapa((item) => (
-        item.columnFilter > valueFilter
-      ));
-      setDataFilter(filtrado);
-    } if (comparisonFilter === 'menor que') {
-      const filtrado = data.mapa((item) => (
-        item.columnFilter < valueFilter
-      ));
-      setDataFilter(filtrado);
-    }
+    setFilterData();
   };
 
   return (
@@ -55,9 +58,9 @@ export default function NumberSearch() {
         value={ columnFilter }
         onChange={ handleChangeColumnFilter }
       >
-        <option selected value="population">population</option>
+        <option selected value="diameter">diameter</option>
+        <option value="population">population</option>
         <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
         <option value="rotation_period">rotation_period</option>
         <option value="surface_water">surface_water</option>
       </select>
