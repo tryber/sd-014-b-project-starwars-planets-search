@@ -41,6 +41,7 @@ export default function NumericFIlter() {
     const newColumns = columns.filter((columnItem) => columnItem !== columnInput);
     setColumns(newColumns);
     setFilteredData(filterByNumeric);
+    setValueInput('');
   };
 
   return (
