@@ -4,7 +4,8 @@ import tableContext from './tableContext';
 import requestPlanets from '../services/api';
 
 export default function Provider({ children }) {
-  const [data, setData] = useState({ data: { results: [{ name: 'oi' }] } });
+  const [data, setData] = useState({ results: [{ name: '' }] });
+  const [filters, setFilter] = useState({ filterByName: { name: '' } });
 
   useEffect(() => {
     async function fetchDatasetData() {
@@ -16,6 +17,8 @@ export default function Provider({ children }) {
 
   const contextValue = {
     data,
+    filters,
+    setFilter,
   };
 
   return (
