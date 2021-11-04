@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import PlanetContext from '../context/PlanetContext';
+import SearchInput from './SearchInput';
 
 function Table() {
   const { planetsData } = useContext(PlanetContext);
@@ -20,6 +21,7 @@ function Table() {
         ))}
       </tr>
     ))
+
   );
 
   if (planetsData.length === 0) return (<span> Carregando ... </span>);
@@ -27,20 +29,23 @@ function Table() {
   link: https://github.com/tryber/sd-014-b-project-starwars-planets-search/pull/10/commits/f0c8ad8b373f0ab69d556818afcea2075fc12e77 */
 
   return (
-    <table>
-      <thead>
-        <tr>
-          {tableHead()}
-        </tr>
+    <section>
+      <SearchInput />
+      <table>
+        <thead>
+          <tr>
+            {tableHead()}
+          </tr>
 
-      </thead>
-      <tbody>
-        <td>
-          {tableBody()}
-        </td>
-      </tbody>
-      <td />
-    </table>
+        </thead>
+        <tbody>
+          <td>
+            {tableBody()}
+          </td>
+        </tbody>
+        <td />
+      </table>
+    </section>
   );
 }
 export default Table;

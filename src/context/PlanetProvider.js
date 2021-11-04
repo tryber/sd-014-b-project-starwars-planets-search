@@ -4,7 +4,15 @@ import PlanetContext from './PlanetContext';
 
 function PlanetProvider({ children }) {
   const [planetsData, setPlanetsData] = useState([]);
+  const [planetsFilter, setPlanetsFilter] = useState([]);
   const endPoint = 'https://swapi-trybe.herokuapp.com/api/planets/';
+  const [planetsSearch, setPlanetsSearch] = useState({
+    filters: {
+      filterByName: {
+        name: '',
+      },
+    },
+  });
 
   async function fetchPlanetAPI() {
     const response = await fetch(endPoint);
@@ -12,14 +20,38 @@ function PlanetProvider({ children }) {
     const { results } = data;
     const planetResult = results.filter((result) => delete result.residents);
     setPlanetsData(planetResult);
+    setPlanetsFilter(planetResult);
   }
 
   useEffect(() => {
     fetchPlanetAPI();
   }, []);
 
+  function filterTable(name) {
+    const filterData = [...planetsFilter];
+    return filterData.filter((value) => value
+      .name.toLowerCase().includes(name.toLowerCase()));
+  }
+
+  function handleChange(string) {
+    setPlanetsData(filterTable(string));
+    setPlanetsSearch({
+      filters: {
+        filterByName: {
+          name: string,
+        },
+      },
+    });
+  }
+
+  const contextObject = {
+    planetsData,
+    handleChange,
+    planetsSearch,
+  };
+
   return (
-    <PlanetContext.Provider value={ { planetsData } }>
+    <PlanetContext.Provider value={ contextObject }>
       {children}
     </PlanetContext.Provider>
   );
