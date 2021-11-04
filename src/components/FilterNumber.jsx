@@ -24,9 +24,9 @@ function FilterNumber() {
         value={ comparison }
         onChange={ ({ target }) => setComparison(target.value) }
       >
-        <option value=">">maior que</option>
-        <option value="<">menor que</option>
-        <option value="===">igual a</option>
+        <option>maior que</option>
+        <option>menor que</option>
+        <option>igual a</option>
       </select>
       <input
         type="number"

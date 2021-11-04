@@ -31,18 +31,18 @@ function PlanetContext() {
         {
           data
             .filter(({ name }) => name.includes(text))
-            // eslint-disable-next-line array-callback-return
-            .filter((e) => {
-              if (!filterData) return (e);
-              if (filterData.comparison === '>') {
-                return (Number(e[filterData.column]) > Number(filterData.value));
+            .filter((planet) => {
+              if (!filterData.value) return true;
+              if (filterData.comparison === 'maior que') {
+                return Number(planet[filterData.column]) > Number(filterData.value);
               }
-              if (filterData.comparison === '<') {
-                return (Number(e[filterData.column]) < Number(filterData.value));
+              if (filterData.comparison === 'menor que') {
+                return Number(planet[filterData.column]) < Number(filterData.value);
               }
-              if (filterData.comparison === '===') {
-                return (Number(e[filterData.column]) === Number(filterData.value));
+              if (filterData.comparison === 'igual a') {
+                return planet[filterData.column] === filterData.value;
               }
+              return true; // eslint(array-callback-return)
             })
             .map((item, idx) => (
               <tr key={ idx }>
