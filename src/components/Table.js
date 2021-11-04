@@ -3,7 +3,7 @@ import PlanetApiContext from '../context/PlanetContext';
 import HeaderTable from './HeaderTable';
 import Header from './Header';
 import TableBody from './TableBody';
-// import Filter from './Filter';
+import FilterSelect from './FilterSelect';
 
 function Table() {
   const { dataPlanet } = useContext(PlanetApiContext);
@@ -15,8 +15,6 @@ function Table() {
       setIsLoading(true);
     }
   }, [dataPlanet]);
-
-  console.log(values);
 
   function handleChange({ target }) {
     const { name, value } = target;
@@ -40,6 +38,7 @@ function Table() {
           />
         </label>
       </div>
+      <div><FilterSelect /></div>
       <table>
         <thead>
           <HeaderTable />
