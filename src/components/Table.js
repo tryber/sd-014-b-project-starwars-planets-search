@@ -9,6 +9,9 @@ function Table() {
   const [drop, setDrop] = useState('population');
   const [getComp, setGetComp] = useState('maior que');
   const [number, setNumber] = useState('');
+  const [columns] = useState(
+    ['population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'],
+  );
 
   useEffect(() => {
     if (data.length !== 0) {
@@ -45,18 +48,18 @@ function Table() {
           comparison: getComp,
           value: number },
       ] });
+    const indexDrop = columns.indexOf(drop);
+    console.log(indexDrop);
+    columns.splice(indexDrop, 1);
     if (getComp === 'maior que') {
       setDataFilter(data
         .filter((planet) => Number(planet[drop]) > Number(number)));
-      // console.log(dataFilter);
     } if (getComp === 'menor que') {
       setDataFilter(data
         .filter((planet) => Number(planet[drop]) < Number(number)));
-      // console.log(dataFilter);
     } if (getComp === 'igual a') {
       setDataFilter(data
         .filter((planet) => Number(planet[drop]) === Number(number)));
-      // console.log(dataFilter);
     }
   };
 
@@ -65,11 +68,7 @@ function Table() {
       <input data-testid="name-filter" onChange={ filterName } />
       <label htmlFor="dropdown">
         <select data-testid="column-filter" id="dropdown" onChange={ dropDown }>
-          <option>population</option>
-          <option>orbital_period</option>
-          <option>diameter</option>
-          <option>rotation_period</option>
-          <option>surface_water</option>
+          {columns.map((item) => <option key={ item }>{item}</option>)}
         </select>
       </label>
       <label htmlFor="comparison">
