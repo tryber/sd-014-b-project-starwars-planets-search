@@ -50,15 +50,15 @@ function TableStarWars() {
       filterByNumericValues: [...filters.filterByNumericValues, obj],
     });
     if (comparison === 'maior que') {
-      const filtered = data.filter((planet) => Number(planet[column]) > value);
+      const filtered = data.filter((planet) => Number(planet[column]) > Number(value));
       setData(filtered);
     }
     if (comparison === 'menor que') {
-      const filtered = data.filter((planet) => Number(planet[column]) < value);
+      const filtered = data.filter((planet) => Number(planet[column]) < Number(value));
       setData(filtered);
     }
     if (comparison === 'igual a') {
-      const filtered = data.filter((planet) => planet[column] === value);
+      const filtered = data.filter((planet) => Number(planet[column]) === Number(value));
       setData(filtered);
     }
     deleteColumnFilter();
@@ -96,8 +96,13 @@ function TableStarWars() {
         data-testid="button-filter"
       >
         Filtrar
-
       </button>
+      { filters.filterByNumericValues.length > 0
+        ? filters.filterByNumericValues.map((element) => (
+          <p key={ element }>
+            {`${element.column} ${element.comparison} ${element.value}`}
+          </p>))
+        : ''}
       <table>
         <thead>
           <tr>
