@@ -1,53 +1,37 @@
 import React from 'react';
 import './App.css';
 import Table from './Components/Table';
-import SearchForm from './Components/SearchForm';
-import FilterContext from './Context/FilterContext';
-import PlanetContext from './Context/PlanetContext';
-import fetchPlanets from './services/fetchPlanets';
+import PlanetProvider from './Context/PlanetContext';
 
 function App() {
-  const filterState = {
-    filters:
-    {
-      filterByName: {
-        name: 'Esta é a chave "name". Aqui deverá ter um input para o usuário filtrar planetas',
-      },
-      filterByNumericValues: [
-        {
-          column: '',
-          comparison: '',
-          value: '',
-        }
-      ]
-    }
-  };
-
-  const planetState = {
-    placeholder: 'muitos planetas bacanas (alguns nem tanto)'
-    // será o resultado de getPlanets();
-  }
-
-  const getPlanets = () => {
-    fetchPlanets();
-    //entrar com useState;
-  }
-
   return (
     <main>
-      <span>Hello, StarWars!</span>
-      <FilterContext.Provider value={ filterState }>
+      <h1>Hello, StarWars!</h1>
+      <PlanetProvider>
         <form>
-          <h1>Pesquise por um planeta</h1>
+          <h2>Pesquise por um planeta</h2>
           <span>*Alguns inputs aqui*</span>
-          <SearchForm />
         </form>
-      </FilterContext.Provider>
-      <PlanetContext.Provider value ={ planetState }>
         <Table />
-      </PlanetContext.Provider>
+      </PlanetProvider>
     </main>
   );
 }
 
 export default App;
+
+/* const filterState = {
+  filters:
+  {
+    filterByName: {
+      name: 'Esta é a chave "name". Aqui teremos inputs para o user filtrar planetas',
+    },
+    filterByNumericValues: [
+      {
+        column: '',
+        comparison: '',
+        value: '',
+      },
+    ],
+  },
+}; */
