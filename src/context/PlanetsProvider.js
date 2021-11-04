@@ -3,12 +3,21 @@ import React, { useEffect, useState } from 'react';
 import getPlanets from '../services/getPlanets';
 import PlanetsContext from './PlanetsContext';
 
+const selectColumnList = [
+  'population',
+  'orbital_period',
+  'diameter',
+  'rotation_period',
+  'surface_water',
+];
+
 export default function PlanetsProvider({ children }) {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [isFetching, setIsFetching] = useState(true);
   const [nameFilter, setNameFilter] = useState('');
   const [numericFilter, setNumericFilter] = useState({});
+  const [columns, setColumns] = useState(selectColumnList);
 
   const fetchPlanets = async () => {
     setIsFetching(true);
@@ -30,6 +39,9 @@ export default function PlanetsProvider({ children }) {
     setNumericFilter,
     setNameFilter,
     setFilteredData,
+    columns,
+    setColumns,
+
   };
 
   if (isFetching === true) {

@@ -1,23 +1,22 @@
 import React, { useContext, useState } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
-const selectColumnList = [
-  'population',
-  'orbital_period',
-  'diameter',
-  'rotation_period',
-  'surface_water',
-];
+// const columnInput = [
+//   'population',
+//   'orbital_period',
+//   'diameter',
+//   'rotation_period',
+//   'surface_water',
+// ];
 
 const selectComparisonList = ['maior que', 'menor que', 'igual a'];
 
 export default function NumericFIlter() {
-  const [columnInput, setColumnInput] = useState(selectColumnList[0]);
+  const { setFilteredData,
+    setNumericFilter, data, columns, setColumns } = useContext(PlanetsContext);
+  const [columnInput, setColumnInput] = useState(columns[0]);
   const [comparisonInput, setComparisonInput] = useState(selectComparisonList[0]);
   const [valueInput, setValueInput] = useState('');
-
-  const { setFilteredData,
-    setNumericFilter, data } = useContext(PlanetsContext);
 
   const handleClick = () => {
     setNumericFilter({
@@ -39,6 +38,8 @@ export default function NumericFIlter() {
       }
       return null;
     });
+    const newColumns = columns.filter((columnItem) => columnItem !== columnInput);
+    setColumns(newColumns);
     setFilteredData(filterByNumeric);
   };
 
@@ -49,7 +50,7 @@ export default function NumericFIlter() {
         value={ columnInput }
         onChange={ ({ target: { value: targetValue } }) => setColumnInput(targetValue) }
       >
-        {selectColumnList.map((item) => (
+        {columns.map((item) => (
           <option key={ item }>{item}</option>
         ))}
       </select>
