@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import Table from './Table';
 import ContextPlanets from '../context/ContextPlanets';
+import Filter from './Filter';
 
 const Header = () => {
   const { filter, getPlanetName } = useContext(ContextPlanets);
@@ -21,6 +22,7 @@ const Header = () => {
           data-testid="name-filter"
         />
       </header>
+      <Filter />
       <Table />
     </>
   );
