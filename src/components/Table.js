@@ -2,11 +2,18 @@ import React, { useContext, useEffect } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 const Table = () => {
-  const { data, columns, settingPlanets } = useContext(PlanetsContext);
+  const { columns, settingPlanets, resultSearch } = useContext(PlanetsContext);
   useEffect(() => {
     settingPlanets();
   }, []);
 
+  // const newData = data;
+  // useEffect(() => {
+  //   if (resultSearch.length > 0) {
+  //     const newData = resultSearch;
+  //   }
+  // }, []);
+  console.log(columns);
   return (
     <table border="1">
       <thead>
@@ -20,7 +27,7 @@ const Table = () => {
       </thead>
       <tbody>
         {
-          data.map((item, index) => (
+          resultSearch.map((item, index) => (
             <tr key={ index }>
               <td>{item.name}</td>
               <td>{item.rotation_period}</td>
