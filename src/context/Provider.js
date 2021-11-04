@@ -6,7 +6,6 @@ function Provider({ children }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [name, setName] = useState('');
-  const [filtered, setFiltered] = useState([]);
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState('0');
@@ -32,8 +31,6 @@ function Provider({ children }) {
     comparison,
     value,
     setName,
-    filtered,
-    setFiltered,
     setColumn,
     setComparison,
     setValue,

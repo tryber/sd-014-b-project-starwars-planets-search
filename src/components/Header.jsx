@@ -2,27 +2,20 @@ import React, { useContext, useEffect } from 'react';
 import PlanetContext from '../context/PlanetContext';
 
 function Header() {
-  const { setData, data, setLoading, filters: { filterByName },
-    setFilterByNumericValues, value, column, comparison, setName,
-    setFiltered, setValue, setColumn, setComparison, filterColumn,
-    setFilterColumn, optionColumn } = useContext(PlanetContext);
+  const {
+    setData, setLoading, setFilterByNumericValues, value,
+    column, comparison, setName, setFiltered, setValue, setColumn,
+    setComparison, filterColumn, setFilterColumn, optionColumn,
+  } = useContext(PlanetContext);
   useEffect(() => {
     const fetchPlanets = async () => {
       const result = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
       const planets = await result.json();
       setData(planets.results);
-      setFiltered(planets.results);
       setLoading(false);
     };
     fetchPlanets();
   }, [setData, setFiltered, setLoading]);
-
-  useEffect(() => {
-    const filtered = data.filter(({ name }) => (
-      name.toLowerCase().includes(filterByName.name.toLowerCase())
-    ));
-    setFiltered(filtered);
-  }, [filterByName.name, setFiltered, data]);
 
   return (
     <header>
