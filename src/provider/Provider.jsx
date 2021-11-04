@@ -1,9 +1,8 @@
 import PropTypes from 'prop-types';
-import React, { createContext, useState } from 'react';
+import React, { useState } from 'react';
+import SearchContext from './SearchContext';
 
-export const SearchContext = createContext();
-
-export function Provider({ children }) {
+function Provider({ children }) {
   const [filter, setFilter] = useState('');
   const [data, setData] = useState([]);
   const [column, setColumn] = useState('population');
@@ -41,3 +40,5 @@ export function Provider({ children }) {
 Provider.propTypes = {
   children: PropTypes.node,
 }.isRequired;
+
+export default Provider;

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { SearchContext } from '../provider/Provider';
+import SearchContext from '../provider/SearchContext';
 import compare from '../services';
 
 function RenderTable() {

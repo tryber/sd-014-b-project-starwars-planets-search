@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { SearchContext } from '../provider/Provider';
+import SearchContext from '../provider/SearchContext';
 
 class FilterInput extends Component {
   constructor() {
@@ -22,10 +22,16 @@ class FilterInput extends Component {
   }
 
   render() {
-    const { setColumn, setComparison } = this.context;
+    const { setColumn, setComparison, setFilter } = this.context;
     const { value } = this.state;
     return (
       <>
+        <input
+          data-testid="name-filter"
+          type="text"
+          onChange={ (e) => setFilter(e.target.value) }
+          placeholder="Filtrar por nome"
+        />
         <select
           data-testid="column-filter"
           onChange={ (e) => setColumn(e.target.value) }
