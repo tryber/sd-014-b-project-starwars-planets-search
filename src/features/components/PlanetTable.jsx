@@ -1,7 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
+import { PlanetFinderContext } from '../../context/PlanetFinderContext';
 
-export default function PlanetTable({ planets }) {
+export default function PlanetTable() {
+  const { planets } = useContext(PlanetFinderContext);
+
   return (
     <table>
       <thead>
@@ -43,7 +45,3 @@ export default function PlanetTable({ planets }) {
     </table>
   );
 }
-
-PlanetTable.propTypes = {
-  planets: PropTypes.arrayOf(PropTypes.object).isRequired,
-};
