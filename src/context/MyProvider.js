@@ -70,19 +70,6 @@ function MyProvider({ children }) {
     deleteOption.parentNode.removeChild(deleteOption);
   }
 
-  function deleteFilter({ target }) {
-    const selectColumn = document.getElementById('column');
-    const optionText = document.getElementsByTagName('h3');
-    const option = document.createElement('option');
-    option.innerText = optionText[0].id;
-    option.value = optionText[0].id;
-    selectColumn.appendChild(option);
-    const filterPlanets = data.filter((planet) => planet[optionText[0].id]
-    > 0);
-    setFilteredPlanets(filterPlanets);
-    target.parentNode.remove();
-  }
-
   useEffect(() => {
     fetchPlanets();
   }, []);
@@ -96,7 +83,6 @@ function MyProvider({ children }) {
         isFiltering,
         filteredPlanets,
         fetchPlanets,
-        deleteFilter,
         handlechange,
         handleClick } }
     >
