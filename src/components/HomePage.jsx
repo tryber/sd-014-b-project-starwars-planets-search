@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import Table from './Table';
 import InputSearchText from './InputSearchText';
 import PlanetsContext from '../context/PlanetsContext';
+import FilterNumber from './FilterNumber';
 
 function HomePage() {
   const { requestPlanets } = useContext(PlanetsContext);
@@ -14,6 +15,7 @@ function HomePage() {
   return (
     <main>
       <InputSearchText />
+      <FilterNumber />
       <Table />
     </main>
   );

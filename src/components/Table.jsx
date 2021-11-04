@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function PlanetContext() {
-  const { data, requestPlanets, text } = useContext(PlanetsContext);
+  const { data, requestPlanets, text, filterData } = useContext(PlanetsContext);
   useEffect(() => {
     requestPlanets();
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -29,23 +29,38 @@ function PlanetContext() {
       </thead>
       <tbody>
         {
-          data.filter(({ name }) => name.includes(text)).map((item, idx) => (
-            <tr key={ idx }>
-              <td>{ item.name }</td>
-              <td>{ item.rotation_period }</td>
-              <td>{ item.orbital_period }</td>
-              <td>{ item.diameter }</td>
-              <td>{ item.climate }</td>
-              <td>{ item.gravity }</td>
-              <td>{ item.terrain }</td>
-              <td>{ item.surface_water }</td>
-              <td>{ item.population }</td>
-              <td>{ item.films.map((film) => film) }</td>
-              <td>{ item.created }</td>
-              <td>{ item.edited }</td>
-              <td>{ item.url }</td>
-            </tr>
-          ))
+          data
+            .filter(({ name }) => name.includes(text))
+            // eslint-disable-next-line array-callback-return
+            .filter((e) => {
+              if (!filterData) return (e);
+              if (filterData.comparison === '>') {
+                return (Number(e[filterData.column]) > Number(filterData.value));
+              }
+              if (filterData.comparison === '<') {
+                return (Number(e[filterData.column]) < Number(filterData.value));
+              }
+              if (filterData.comparison === '===') {
+                return (Number(e[filterData.column]) === Number(filterData.value));
+              }
+            })
+            .map((item, idx) => (
+              <tr key={ idx }>
+                <td>{ item.name }</td>
+                <td>{ item.rotation_period }</td>
+                <td>{ item.orbital_period }</td>
+                <td>{ item.diameter }</td>
+                <td>{ item.climate }</td>
+                <td>{ item.gravity }</td>
+                <td>{ item.terrain }</td>
+                <td>{ Number(item.surface_water) }</td>
+                <td>{ item.population }</td>
+                <td>{ item.films.map((film) => film) }</td>
+                <td>{ item.created }</td>
+                <td>{ item.edited }</td>
+                <td>{ item.url }</td>
+              </tr>
+            ))
         }
       </tbody>
     </table>
