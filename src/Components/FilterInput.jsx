@@ -4,7 +4,7 @@ import TableContext from '../context/TableContext';
 function FilterInput() {
   const { filters, setFilters } = useContext(TableContext);
   function handleChange({ target }) {
-    setFilters({ filterByName: { name: target.value } });
+    setFilters({ ...filters, filterByName: { name: target.value } });
   }
   return (
     <div>

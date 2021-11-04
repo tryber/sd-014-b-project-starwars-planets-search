@@ -11,17 +11,19 @@ function Table() {
     (planet) => planet.name.includes(filters.filterByName.name),
   );
 
+  console.log(filters);
+
   filters.filterByNumericValues.forEach((filter) => {
     const { column, value, comparison } = filter;
 
     if (comparison === 'maior que') {
       filteredPlanetsFromData = filteredPlanetsFromData.filter(
-        (planet) => Number(planet[`${column}`]) > value, // passar a chave dinamicamente, ideia de Matheus silveira https://github.com/matheuspmsilveira
+        (planet) => Number(planet[`${column}`]) > Number(value), // passar a chave dinamicamente, ideia de Matheus silveira https://github.com/matheuspmsilveira
       );
     }
     if (comparison === 'menor que') {
       filteredPlanetsFromData = filteredPlanetsFromData.filter(
-        (planet) => Number(planet[`${column}`]) < value,
+        (planet) => Number(planet[`${column}`]) < Number(value),
       );
     }
     if (comparison === 'igual a') {
