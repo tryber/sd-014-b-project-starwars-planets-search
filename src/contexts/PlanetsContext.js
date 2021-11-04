@@ -8,13 +8,7 @@ function PlanetsContextProvider({ children }) {
   const [isLoading, setIsLoading] = useState(false);
   const [filters, setFilters] = useState({
     filterByName: '',
-    filterByNumericValues: [
-      {
-        column: 'population',
-        comparison: 'maior que',
-        value: '',
-      },
-    ],
+    filterByNumericValues: [],
   });
   const context = {
     data,

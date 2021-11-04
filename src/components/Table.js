@@ -5,7 +5,10 @@ import Loading from './Loading';
 function Table() {
   const { data, isLoading,
     filters: { filterByName, filterByNumericValues } } = useContext(PlanetsContext);
-  const { column, comparison, value } = filterByNumericValues[0];
+  const defaultValue = { column: 'population', comparison: 'maior que', value: '' };
+  const {
+    column, comparison, value,
+  } = filterByNumericValues[filterByNumericValues.length - 1] || defaultValue;
   return (
     isLoading ? <Loading /> : (
       <table>
@@ -30,7 +33,7 @@ function Table() {
           { data
             .filter(({ name }) => name.toLowerCase().includes(filterByName.toLowerCase()))
             .filter((planet) => {
-              if (!value) return planet;
+              if (!value) return true;
               if (comparison === 'maior que') {
                 return Number(planet[column]) > Number(value);
               }
@@ -38,7 +41,7 @@ function Table() {
                 return Number(planet[column]) < Number(value);
               }
               if (comparison === 'igual a') return planet[column] === value;
-              return planet; // eslint(array-callback-return)
+              return true; // eslint(array-callback-return)
             })
             .map((planet) => (
               <tr key={ planet.name }>
