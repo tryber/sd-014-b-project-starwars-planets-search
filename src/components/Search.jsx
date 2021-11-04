@@ -3,7 +3,7 @@ import MyContext from '../context-api/MyContext';
 
 function Search() {
   const [inputSearch, setSearch] = useState('');
-  const { data, setFiltredArray } = useContext(MyContext);
+  const { data, setFiltredArray, setFilters, filters } = useContext(MyContext);
 
   const filterByName = (input) => {
     const filtred = data.filter((element) => element.name.includes(input));
@@ -19,6 +19,10 @@ function Search() {
         onChange={ ({ target: { value } }) => {
           setSearch(value);
           filterByName(value);
+          setFilters({ ...filters,
+            filterByName: {
+              name: value,
+            } });
         } }
       />
     </form>

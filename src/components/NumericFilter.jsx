@@ -2,13 +2,15 @@ import React, { useContext, useState } from 'react';
 import MyContext from '../context-api/MyContext';
 
 function NumericFilter() {
+  const [arrayOptions, setArrayOptions] = useState(['population', 'orbital_period',
+    'diameter', 'rotation_period', 'surface_water']);
   const [inputColumn, setInputColumn] = useState('population');
   const [inputComparison, setInputComparison] = useState('maior que');
   const [inputValue, setInputValue] = useState('');
-  const { data, setFiltredArray } = useContext(MyContext);
+  const { setFiltredArray, filtredArray, setFilters, filters } = useContext(MyContext);
 
   const filterNumeric = () => {
-    const filtered = data.filter((element) => {
+    const filtered = filtredArray.filter((element) => {
       if (inputComparison === 'maior que') {
         return Number(element[inputColumn]) > Number(inputValue);
       }
@@ -23,17 +25,24 @@ function NumericFilter() {
     setFiltredArray(filtered);
   };
 
+  const removeOption = () => {
+    const newArrayOptions = arrayOptions.filter((element) => element !== inputColumn);
+    setArrayOptions(newArrayOptions);
+    setInputColumn(newArrayOptions[0]);
+    setFilters({ ...filters,
+      filterByNumericValues: [
+        { column: inputColumn,
+          comparison: inputComparison,
+          value: inputValue }] });
+  };
+
   return (
     <form>
       <select
         data-testid="column-filter"
         onChange={ ({ target: { value } }) => setInputColumn(value) }
       >
-        <option>population</option>
-        <option>orbital_period</option>
-        <option>diameter</option>
-        <option>rotation_period</option>
-        <option>surface_water</option>
+        {arrayOptions.map((option) => (<option key={ option }>{ option }</option>))}
       </select>
 
       <select
@@ -54,7 +63,10 @@ function NumericFilter() {
       <button
         data-testid="button-filter"
         type="button"
-        onClick={ filterNumeric }
+        onClick={ () => {
+          filterNumeric();
+          removeOption();
+        } }
       >
         Filtrar
 

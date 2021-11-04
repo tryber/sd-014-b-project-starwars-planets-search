@@ -2,8 +2,8 @@ import React, { useContext } from 'react';
 import MyContext from '../context-api/MyContext';
 
 function Table() {
-  const { data, filtredArray } = useContext(MyContext);
-  const validate = filtredArray.length === 0 ? data : filtredArray;
+  const { filtredArray } = useContext(MyContext);
+  // const validate = filtredArray.length === 0 ? data : filtredArray;
   return (
     <div>
       <span>Tabela</span>
@@ -26,7 +26,7 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {validate.map((element) => (
+          {filtredArray.map((element) => (
             <tr key={ element.name }>
               <td>{ element.name }</td>
               <td>{ element.rotation_period }</td>
