@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import Table from './components/Table';
 import useFetchPlanets from './hooks/useFetchPlanets';
 
-import './App.css';
 import AppContext from './context';
+
+import Table from './components/Table';
 import Search from './components/Search';
+import Filter from './components/Filter';
+
+import './App.css';
 
 const App = () => {
   const [data] = useFetchPlanets('https://swapi-trybe.herokuapp.com/api/planets/');
@@ -24,6 +27,7 @@ const App = () => {
     <AppContext.Provider value={ context }>
       <main>
         <Search />
+        <Filter />
         <Table />
       </main>
     </AppContext.Provider>
