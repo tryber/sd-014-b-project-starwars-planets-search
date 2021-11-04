@@ -1,9 +1,17 @@
 import React from 'react';
 import './App.css';
+import DropDown from './Components/DropDown';
+import Table from './Components/Table';
+import TextInput from './Components/TextInput';
+import Provider from './context/Provider';
 
 function App() {
   return (
-    <span>Hello, App!</span>
+    <Provider>
+      <TextInput />
+      <DropDown />
+      <Table />
+    </Provider>
   );
 }
 
