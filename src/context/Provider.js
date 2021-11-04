@@ -102,6 +102,7 @@ const Provider = ({ children }) => {
     });
     setPlanetList([...newFilter]);
     setIsFiltering(true);
+    updateSelectList();
   };
 
   const context = {
@@ -125,8 +126,6 @@ const Provider = ({ children }) => {
 
   useEffect(() => {
     filterByNumber();
-    updateSelectList();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filtersByNumber]);
 
   return (
