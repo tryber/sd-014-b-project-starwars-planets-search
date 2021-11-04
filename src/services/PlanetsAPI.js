@@ -1,9 +1,10 @@
 const URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
 
-export const data = async () => {
+const dataPlanets = async () => {
   const response = await fetch(URL);
-  const result = await response.json().results;
-  delete result.residents;
+  const result = await response.json();
 
   return result;
-}
+};
+
+export default dataPlanets;

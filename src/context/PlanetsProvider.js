@@ -1,39 +1,42 @@
-import React from 'react';
+import PropTypes from 'prop-types';
+import React, { useState } from 'react';
+import dataPlanets from '../services/PlanetsAPI';
 import PlanetsContext from './PlanetsContext';
-import { data } from '../services/PlanetsAPI';
 
-class PlanetsProvider extends React.Component {
-  constructor () {
-    super();
+function PlanetsProvider({ children }) {
+  const [planets, setPlanets] = useState({
+    data: [],
+    columns: [],
+  });
 
-    this.state = {
-      columns: [],
-      search: '',
-      listOfPlanets: [],
-    }
-    this.createColumns = this.createColumns.bind(this);
-  }
+  const settingPlanets = async () => {
+    const { results } = await dataPlanets();
+    const columnsNames = Object.keys(results[0]);
+    const positionResidents = 9;
+    columnsNames.splice(positionResidents, 1);
+    setPlanets({
+      data: [...results],
+      columns: [...columnsNames],
+    });
+  };
 
-  async createColumns() {
-    const resultado = await data();
-    const columnsNames = Object.keys(resultado);
+  const contextValue = {
+    data: planets.data,
+    columns: planets.columns,
+    settingPlanets,
+  };
 
-    this.setState({ columns: columnsNames });
-  }
-
-  render() {
-    const { children } = this.props;
-    return(
-      <PlanetsContext.Provider
-        value={ {
-          ...this.state,
-          createColumns: this.createColumns,
-        } }
-      >
-        { children }
-      </PlanetsContext.Provider>
-    )
-  }
+  return (
+    <PlanetsContext.Provider
+      value={ contextValue }
+    >
+      { children }
+    </PlanetsContext.Provider>
+  );
 }
+
+PlanetsProvider.propTypes = {
+  children: PropTypes.objectOf(PropTypes.any).isRequired,
+};
 
 export default PlanetsProvider;
