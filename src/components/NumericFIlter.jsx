@@ -17,7 +17,7 @@ export default function NumericFIlter() {
   const [valueInput, setValueInput] = useState('');
 
   const { setFilteredData,
-    setNumericFilter, data, numericFilter } = useContext(PlanetsContext);
+    setNumericFilter, data } = useContext(PlanetsContext);
 
   const handleClick = async () => {
     await setNumericFilter({
