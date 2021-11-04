@@ -4,7 +4,14 @@ import Table from '../components/Table';
 import PlanetsContext from '../context/PlanetsContext';
 
 function Planets() {
-  const { backup, data, setData, filters, fetchPlanetsApi } = useContext(PlanetsContext);
+  const {
+    backup,
+    data,
+    setData,
+    filters,
+    filterSort,
+    fetchPlanetsApi } = useContext(PlanetsContext);
+
   useEffect(() => {
     fetchPlanetsApi();
   }, []);
@@ -22,23 +29,26 @@ function Planets() {
   }, [filters.filterByName.name]);
 
   useEffect(() => {
-    const { column, sort } = filters.order;
-    if (sort === 'ASC') {
-      const newData = data.sort(
-        ({ [column]: a }, { [column]: b }) => (
-          column === 'name' ? a.localeCompare(b) : a - b
-        ),
-      );
-      setData(newData);
-    } else if (sort === 'DESC') {
-      const newData = data.sort(
-        ({ [column]: a }, { [column]: b }) => (
-          column === 'name' ? b.localeCompare(a) : b - a
-        ),
-      );
-      setData(newData);
+    function sortData() {
+      const { column, sort } = filters.order;
+      if (sort === 'ASC') {
+        const newData = data.sort(
+          ({ [column]: a }, { [column]: b }) => (
+            filterSort(column) ? a.localeCompare(b) : a - b
+          ),
+        );
+        setData(newData);
+      } else if (sort === 'DESC') {
+        const newData = data.sort(
+          ({ [column]: a }, { [column]: b }) => (
+            filterSort(column) ? b.localeCompare(a) : b - a
+          ),
+        );
+        setData(newData);
+      }
     }
-  }, [filters.order]);
+    sortData();
+  }, [data, setData, filters.order]);
 
   return (
     <div>

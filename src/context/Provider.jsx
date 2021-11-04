@@ -55,9 +55,12 @@ function Provider({ children }) {
 
   const fetchPlanetsApi = async () => {
     const PLANETS_URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
-    const fetchPlanets = await fetch(PLANETS_URL).then((response) => response.json());
-    setData(fetchPlanets.results);
-    setBackup(fetchPlanets.results);
+    const { results } = await fetch(PLANETS_URL).then((response) => response.json());
+    const newData = results.sort(
+      ({ name: a }, { name: b }) => a.localeCompare(b),
+    );
+    setData(newData);
+    setBackup(newData);
   };
 
   function handleChangeByNameValues({ target }) {
@@ -139,6 +142,40 @@ function Provider({ children }) {
     return boolean;
   }
 
+  function filterSort(column) {
+    let boolean = false;
+    switch (column) {
+    case 'name':
+      boolean = true;
+      break;
+    case 'climate':
+      boolean = true;
+      break;
+    case 'gravity':
+      boolean = true;
+      break;
+    case 'terrain':
+      boolean = true;
+      break;
+    case 'films':
+      boolean = true;
+      break;
+    case 'edited':
+      boolean = true;
+      break;
+    case 'created':
+      boolean = true;
+      break;
+    case 'url':
+      boolean = true;
+      break;
+    default:
+      boolean = false;
+      break;
+    }
+    return boolean;
+  }
+
   function handleRemoveFilter(column) {
     const newFilters = filters.filterByNumericValues.filter(
       (filter) => filter.column !== column,
@@ -172,6 +209,7 @@ function Provider({ children }) {
     filterByNumericValues,
     order,
     filterData,
+    filterSort,
     handleChangeByNameValues,
     handleChangeByNumericValues,
     handleChangeByOrderValues,
