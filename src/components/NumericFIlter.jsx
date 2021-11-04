@@ -12,22 +12,24 @@ const selectColumnList = [
 const selectComparisonList = ['maior que', 'menor que', 'igual a'];
 
 export default function NumericFIlter() {
-  const [column, setColumn] = useState(selectColumnList[0]);
-  const [comparison, setComparison] = useState(selectComparisonList[0]);
-  const [value, setValue] = useState(0);
+  const [columnInput, setColumnInput] = useState(selectColumnList[0]);
+  const [comparisonInput, setComparisonInput] = useState(selectComparisonList[0]);
+  const [valueInput, setValueInput] = useState(0);
 
-  // const { setFilteredData, setNumericFilter, data } = useContext(PlanetsContext);
+  const { setFilteredData, setNumericFilter, data, numericFilter } = useContext(PlanetsContext);
 
   const handleClick = () => {
-    console.log(column + comparison + value);
+    console.log(columnInput + comparisonInput + valueInput);
+    setNumericFilter({
+      value: valueInput, column: columnInput, comparison: comparisonInput });
   };
 
   return (
     <form>
       <select
         data-testid="column-filter"
-        value={ column }
-        onChange={ ({ target: { value: targetValue } }) => setColumn(targetValue) }
+        value={ columnInput }
+        onChange={ ({ target: { value: targetValue } }) => setColumnInput(targetValue) }
       >
         {selectColumnList.map((item) => (
           <option key={ item }>{item}</option>
@@ -35,8 +37,8 @@ export default function NumericFIlter() {
       </select>
       <select
         data-testid="comparison-filter"
-        value={ comparison }
-        onChange={ ({ target: { value: targetValue } }) => setComparison(targetValue) }
+        value={ comparisonInput }
+        onChange={ ({ target: { value: targetValue } }) => setComparisonInput(targetValue) }
       >
         {selectComparisonList.map((item) => (
           <option key={ item }>{item}</option>
@@ -45,8 +47,8 @@ export default function NumericFIlter() {
       <input
         data-testid="value-filter"
         type="number"
-        value={ value }
-        onChange={ ({ target: { value: targetValue } }) => setValue(targetValue) }
+        value={ valueInput }
+        onChange={ ({ target: { value: targetValue } }) => setValueInput(targetValue) }
       />
       <button
         type="button"
