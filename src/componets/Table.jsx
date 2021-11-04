@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import Context from '../context/Context';
 
 function Table() {
-  const { data, isFiltering, filteredPlanets } = useContext(Context);
+  const { planets } = useContext(Context);
 
   const firstRow = (
     <tr>
@@ -21,34 +21,12 @@ function Table() {
       <th>URL</th>
     </tr>);
 
-  const infoRow = (planet, url) => (
-    <tr key={ url }>
-      <td>{planet.name}</td>
-      <td>{planet.rotation_period}</td>
-      <td>{planet.orbital_period}</td>
-      <td>{planet.diameter}</td>
-      <td>{planet.climate}</td>
-      <td>{planet.gravity}</td>
-      <td>{planet.terrain}</td>
-      <td>{planet.surface_water}</td>
-      <td>{planet.population}</td>
-      <td>{planet.films}</td>
-      <td>{planet.created}</td>
-      <td>{planet.edited}</td>
-      <td>{planet.url}</td>
-    </tr>);
-
   return (
-    <div>
-      <table>
-        <tbody>
-          {firstRow}
-          {!isFiltering
-            ? data.map((planet) => infoRow(planet, planet.url))
-            : filteredPlanets.map((planet) => infoRow(planet, planet.url))}
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <tbody>
+        {firstRow}
+      </tbody>
+    </table>
   );
 }
 
