@@ -7,7 +7,8 @@ const PlanetsProvider = ({ children }) => {
   const [data, setData] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
   const [filters, setFilters] = useState({ filterByName: { name: '' },
-    filterByNumericValues: [] });
+    filterByNumericValues: [],
+    order: { column: 'name', sort: 'ASC' } });
   const [selectObjects, setSelectObjects] = useState({
     column: 'population',
     comparison: 'menor que',
@@ -58,6 +59,26 @@ const PlanetsProvider = ({ children }) => {
     }));
   };
 
+  const handleSortChange = (value) => {
+    setFilters((prevState) => ({
+      ...prevState,
+      order: {
+        ...prevState.order,
+        sort: value,
+      },
+    }));
+  };
+
+  const handleSelectOrderColumn = (name, value) => {
+    setFilters((prevState) => ({
+      ...prevState,
+      order: {
+        ...prevState.order,
+        [name]: value,
+      },
+    }));
+  };
+
   const contextValue = {
     data,
     isFetching,
@@ -65,6 +86,8 @@ const PlanetsProvider = ({ children }) => {
     handleSelectOptions,
     handleFilterButtonClick,
     handleDeleteClick,
+    handleSortChange,
+    handleSelectOrderColumn,
     filters,
   };
 

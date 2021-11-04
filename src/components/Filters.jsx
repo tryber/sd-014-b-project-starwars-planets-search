@@ -1,10 +1,6 @@
 import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
-
-const columnOptions = ['population', 'orbital_period', 'diameter',
-  'rotation_period', 'surface_water'];
-
-const comparisonOptions = ['menor que', 'igual a', 'maior que'];
+import { columnOptions, comparisonOptions } from '../services/arraysForSelects';
 
 const Filters = () => {
   const { handleChange, handleSelectOptions,
