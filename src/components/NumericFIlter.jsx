@@ -19,8 +19,8 @@ export default function NumericFIlter() {
   const { setFilteredData,
     setNumericFilter, data } = useContext(PlanetsContext);
 
-  const handleClick = async () => {
-    await setNumericFilter({
+  const handleClick = () => {
+    setNumericFilter({
       value: Number(valueInput),
       column: columnInput,
       comparison: comparisonInput });
@@ -39,7 +39,7 @@ export default function NumericFIlter() {
       }
       return null;
     });
-    await setFilteredData(filterByNumeric);
+    setFilteredData(filterByNumeric);
   };
 
   return (
