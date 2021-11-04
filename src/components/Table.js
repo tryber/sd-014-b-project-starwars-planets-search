@@ -1,11 +1,28 @@
-import React from 'react';
+import React, { useContext, useState, useEffect } from 'react';
+import MyContext from '../context/MyContext';
 import useData from '../hooks/useData';
 
-function Header() {
+function Table() {
+  const { filters, setFilters } = useContext(MyContext);
   const [data] = useData();
-  console.log(data);
+  const [dataFilter, setDataFilter] = useState([]);
+
+  useEffect(() => {
+    if (data.length !== 0) {
+      setDataFilter(data);
+    }
+  }, [data]);
+
+  console.log(dataFilter);
+  const filterName = ({ target }) => {
+    setFilters({ ...filters, filterByName: { name: target.value } });
+    setDataFilter(data
+      .filter((planet) => planet.name.toLowerCase().includes(target.value)));
+  };
+
   return (
     <div>
+      <input data-testid="name-filter" onChange={ filterName } />
       {
         data.length === 0 ? <h1>Loading...</h1>
           : (
@@ -18,7 +35,7 @@ function Header() {
                 }
               </tr>
               {
-                data.map((item) => (
+                dataFilter.map((item) => (
                   <tr key={ item.name }>
                     <td>{item.name}</td>
                     <td>{item.rotation_period}</td>
@@ -42,4 +59,4 @@ function Header() {
   );
 }
 
-export default Header;
+export default Table;
