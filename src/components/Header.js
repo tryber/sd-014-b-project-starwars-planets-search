@@ -7,7 +7,7 @@ export default function Header() {
   return (
     <>
       <h1 style={ h1 }>StarWars Planets</h1>
-      <h2 style={ h2 }>Meu pai estilizado</h2>
+      <h2 style={ h2 }>Vários filtros</h2>
       <div style={ container }>
         <Input />
         <Form />

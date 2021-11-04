@@ -2,7 +2,12 @@ import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 export default function Table() {
-  const { data, searchTerm } = useContext(PlanetsContext);
+  const {
+    searchTerm,
+    data,
+    filters,
+  } = useContext(PlanetsContext);
+
   const categories = [
     'Name',
     'Rotation Period',
@@ -21,16 +26,39 @@ export default function Table() {
 
   // https://www.youtube.com/watch?v=OlVkYnVXPl0 <- Insane Filter
 
-  const ONE = -1;
-  const filteredData = data.filter(
-    (planet) => planet.name.toLowerCase().indexOf(searchTerm.toLowerCase()) !== ONE,
-  );
+  let filteredData = data.filter((planet) => planet.name
+    .toLowerCase()
+    .includes(searchTerm.toLowerCase()));
+
+  filters.filterByNumericValues.forEach((filter) => {
+    const { column, value, comparison } = filter;
+
+    switch (comparison) {
+    case 'maior que':
+      filteredData = filteredData.filter(
+        (planet) => Number(planet[`${column}`]) > Number(value),
+      );
+      break;
+    case 'menor que':
+      filteredData = filteredData.filter(
+        (planet) => Number(planet[`${column}`]) < Number(value),
+      );
+      break;
+    case 'igual a':
+      filteredData = filteredData.filter(
+        (planet) => Number(planet[`${column}`]) === Number(value),
+      );
+      break;
+    default:
+      break;
+    }
+  });
 
   const renderedCategories = categories.map((header, index) => (
     <th key={ index }>{header}</th>
   ));
 
-  const renderedPlanets = filteredData.map((planet, index) => (
+  const renderedPlanets = () => filteredData.map((planet, index) => (
     <tr key={ index }>
       <td>{planet.name}</td>
       <td>{planet.rotation_period}</td>
@@ -53,7 +81,7 @@ export default function Table() {
       <thead>
         <tr>{renderedCategories}</tr>
       </thead>
-      <tbody>{renderedPlanets}</tbody>
+      <tbody>{renderedPlanets()}</tbody>
     </table>
   );
 }

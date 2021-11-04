@@ -6,14 +6,7 @@ const utils = {
     'rotation_period',
     'surface_water',
   ],
-  label: [
-    'População',
-    'Período Orbital',
-    'Diâmetro',
-    'Período de Rotação ',
-    'Superfície Aquática',
-  ],
-  comparison: ['maior que', 'menor que', 'igual a'],
+  comparisons: ['maior que', 'menor que', 'igual a'],
 };
 
 module.exports = utils;

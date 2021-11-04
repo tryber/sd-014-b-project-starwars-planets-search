@@ -2,17 +2,15 @@ import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 export default function Input() {
-  const { numberTerm, setNumberTerm } = useContext(PlanetsContext);
+  const { value, setValue } = useContext(PlanetsContext);
 
   return (
     <div>
       <input
-        data-testid="name-filter"
-        value={ numberTerm }
+        data-testid="value-filter"
+        value={ value }
         type="number"
-        onChange={ (e) => {
-          setNumberTerm(e.target.value);
-        } }
+        onChange={ (e) => setValue(e.target.value) }
       />
     </div>
   );
