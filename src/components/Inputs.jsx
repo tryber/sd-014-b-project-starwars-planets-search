@@ -8,11 +8,14 @@ export default function Inputs() {
     setInputNameFilter(target.value);
   }
   return (
-    <input
-      type="text"
-      data-testid="name-filter"
-      value={ inputNameFilter }
-      onChange={ handleInputChange }
-    />
+    <label htmlFor="name">
+      Name:
+      <input
+        type="text"
+        data-testid="name-filter"
+        value={ inputNameFilter }
+        onChange={ handleInputChange }
+      />
+    </label>
   );
 }
