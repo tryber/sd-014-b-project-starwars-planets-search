@@ -1,12 +1,9 @@
 import React from 'react';
 import './App.css';
-import Table from './componentes/Table';
-import DataProvider from './context/DataProvider';
+import Content from './componentes/Content';
 
 const App = () => (
-  <DataProvider>
-    <Table />
-  </DataProvider>
+  <Content />
 );
 
 export default App;

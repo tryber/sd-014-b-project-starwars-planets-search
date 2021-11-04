@@ -2,11 +2,14 @@ import React, { useContext } from 'react';
 import DataContext from '../context/DataContext';
 
 const Table = () => {
-  const { data } = useContext(DataContext);
+  const {
+    data,
+    filters: { filters: { filterByName: { name } } } } = useContext(DataContext);
   let tBody = [];
-  console.log(data);
   if (data) {
-    tBody = data.map((row) => (
+    const filters = data.filter((palanet) => palanet.name.includes(name));
+    console.log(filters);
+    tBody = filters.map((row) => (
       <tr key={ row.name }>
         <td>{ row.name }</td>
         <td>{ row.rotation_period }</td>

@@ -2,8 +2,17 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import DataContext from './DataContext';
 
+const filtersKeys = {
+  filters: {
+    filterByName: {
+      name: '',
+    },
+  },
+};
+
 const DataProvider = (props) => {
   const [data, setData] = useState();
+  const [filters, setFilters] = useState(filtersKeys);
   const { children } = props;
   const fetchData = () => {
     fetch('https://swapi-trybe.herokuapp.com/api/planets/')
@@ -11,12 +20,29 @@ const DataProvider = (props) => {
       .then((d) => setData(d.results));
   };
 
+  const handleFilters = ({ target: { value } }) => {
+    setFilters({
+      filters: {
+        ...filters.filters,
+        filterByName: {
+          name: value,
+        },
+      },
+    });
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
 
+  const valueOBJ = {
+    data,
+    filters,
+    handleFilters,
+  };
+
   return (
-    <DataContext.Provider value={ { data } }>
+    <DataContext.Provider value={ valueOBJ }>
       { children }
     </DataContext.Provider>
   );
