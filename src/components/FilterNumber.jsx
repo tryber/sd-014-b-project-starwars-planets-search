@@ -5,7 +5,7 @@ function FilterNumber() {
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState(0);
-  const { setFilter, filterColumn,
+  const { filterColumn,
     setFilterColumn, setOptionsColumn, optionsColumn } = useContext(PlanetsContext);
 
   return (
@@ -36,7 +36,6 @@ function FilterNumber() {
         type="button"
         data-testid="button-filter"
         onClick={ () => {
-          setFilter({ column, comparison, value });
           setFilterColumn([...filterColumn, { column, comparison, value }]);
           setOptionsColumn(optionsColumn.filter((e) => e !== column));
         } }

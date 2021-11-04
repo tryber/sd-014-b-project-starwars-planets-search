@@ -8,7 +8,6 @@ function PlanetsProvider({ children }) {
     data: [],
   });
   const [text, setText] = useState('');
-  const [filterData, setFilter] = useState('');
   const [filterColumn, setFilterColumn] = useState([]);
 
   const requestPlanets = async () => {
@@ -24,8 +23,6 @@ function PlanetsProvider({ children }) {
     requestPlanets,
     text,
     setText,
-    filterData,
-    setFilter,
     filterColumn,
     setFilterColumn,
     optionsColumn,
