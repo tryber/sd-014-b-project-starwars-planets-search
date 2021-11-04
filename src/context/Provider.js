@@ -11,6 +11,11 @@ function Provider({ children }) {
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState('0');
   const [filterByNumericValues, setFilterByNumericValues] = useState({});
+  const [optionColumn, setOptionColumn] = useState([
+    'population', 'orbital_period', 'diameter',
+    'rotation_period', 'surface_water',
+  ]);
+  const [filterColumn, setFilterColumn] = useState(optionColumn);
 
   const contextValue = {
     data,
@@ -33,6 +38,10 @@ function Provider({ children }) {
     setComparison,
     setValue,
     setFilterByNumericValues,
+    filterColumn,
+    setFilterColumn,
+    optionColumn,
+    setOptionColumn,
   };
 
   return (

@@ -1,15 +1,11 @@
 import React, { useContext, useEffect } from 'react';
 import PlanetContext from '../context/PlanetContext';
 
-const filterValues = [
-  'population', 'orbital_period', 'diameter',
-  'rotation_period', 'surface_water',
-];
-
 function Header() {
   const { setData, data, setLoading, filters: { filterByName },
     setFilterByNumericValues, value, column, comparison, setName,
-    setFiltered, setValue, setColumn, setComparison } = useContext(PlanetContext);
+    setFiltered, setValue, setColumn, setComparison, filterColumn,
+    setFilterColumn, optionColumn } = useContext(PlanetContext);
   useEffect(() => {
     const fetchPlanets = async () => {
       const result = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
@@ -41,7 +37,7 @@ function Header() {
         data-testid="column-filter"
         onChange={ ({ target }) => setColumn(target.value) }
       >
-        {filterValues.map((columnName, index) => (
+        {filterColumn.map((columnName, index) => (
           <option value={ columnName } key={ index }>{ columnName }</option>
         ))}
       </select>
@@ -61,7 +57,10 @@ function Header() {
       <button
         type="button"
         data-testid="button-filter"
-        onClick={ () => setFilterByNumericValues({ value, column, comparison }) }
+        onClick={ () => {
+          setFilterByNumericValues({ value, column, comparison });
+          setFilterColumn(optionColumn.filter((columnOption) => columnOption !== column));
+        } }
       >
         Filtrar
       </button>
