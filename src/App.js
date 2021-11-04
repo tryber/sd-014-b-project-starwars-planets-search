@@ -1,9 +1,30 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
+import Table from './Component/Table';
+import planetContext from './Context/planetContext';
 
 function App() {
+  const [data, setData] = useState([]);
+  const url = 'https://swapi-trybe.herokuapp.com/api/planets/';
+
+  useEffect(() => {
+    async function fetchData() {
+      const { results } = await fetch(url).then((response) => response.json());
+      setData(results);
+      console.log(results);
+    }
+    fetchData();
+  }, [url]);
+
+  const contextValue = {
+    data,
+    setData,
+  };
+
   return (
-    <span>Hello, Rafael Veiga!</span>
+    <planetContext.Provider value={ contextValue }>
+      <Table />
+    </planetContext.Provider>
   );
 }
 
