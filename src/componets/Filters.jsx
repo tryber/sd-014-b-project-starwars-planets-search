@@ -3,15 +3,18 @@ import Context from '../context/Context';
 
 function Filters() {
   const { handlechange, filter } = useContext(Context);
+
   return (
-    <input
-      data-testid="name-filter"
-      type="text"
-      id="name"
-      placeholder="Filtrar por nome"
-      value={ filter.filters.filterByName.name }
-      onChange={ handlechange }
-    />
+    <form>
+      <input
+        data-testid="name-filter"
+        type="text"
+        id="name"
+        placeholder="Filtrar por nome"
+        defaultValue={ filter.filters.filterByName.name }
+        onChange={ handlechange }
+      />
+    </form>
   );
 }
 

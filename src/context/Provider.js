@@ -23,19 +23,22 @@ function Provider({ children }) {
     setData(results);
   }
 
-  useEffect(() => {
-    fetchPlanets();
-  }, []);
-
   function handleChange({ target }) {
     setIsFiltering(false);
-    FILTER_TEXT.filters.filterByName.name = target.value;
+
+    FILTER_TEXT.filters.filterByName.name = target.defaultValue;
     setFilter(FILTER_TEXT);
+
     const filterPlanets = data.filter((planet) => (
       planet.name.toLowerCase().includes(target.value.toLowerCase())));
     setFilteredPlanets(filterPlanets);
+
     setIsFiltering(true);
   }
+
+  useEffect(() => {
+    fetchPlanets();
+  }, []);
 
   const context = {
     data,

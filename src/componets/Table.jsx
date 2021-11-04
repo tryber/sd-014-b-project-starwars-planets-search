@@ -39,14 +39,16 @@ function Table() {
     </tr>);
 
   return (
-    <table>
-      <tbody>
-        {firstRow}
-        {!isFiltering
-          ? data.map((planet) => infoRow(planet, planet.url))
-          : filteredPlanets.map((planet) => infoRow(planet, planet.url))}
-      </tbody>
-    </table>
+    <div>
+      <table>
+        <tbody>
+          {firstRow}
+          {!isFiltering
+            ? data.map((planet) => infoRow(planet, planet.url))
+            : filteredPlanets.map((planet) => infoRow(planet, planet.url))}
+        </tbody>
+      </table>
+    </div>
   );
 }
 
