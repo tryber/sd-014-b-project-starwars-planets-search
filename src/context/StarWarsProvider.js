@@ -38,7 +38,6 @@ export default function StarWarsProvider({ children }) {
     </StarWarsContext.Provider>
     /* deixando as propriedades do value disponivel para os outros componentes terem acesso */
   /* children se refere que qualquer componente filho deste todoProvider será renderizado aqui */
-
   );
 }
 
