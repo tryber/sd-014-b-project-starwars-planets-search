@@ -33,8 +33,7 @@ function TablePlanets() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [textFilter, columnFilter, comparisonFilter, valueFilter]); // update qnd elemento do array alterado
 
-  /*
-  const handleChange = ({ target: { value } }) => {
+  /* const handleChange = ({ target: { value } }) => {
     setFilters({ ...filters, filterByName: { name: value } });
     console.log(filters.filterByName.name);
   }; */
@@ -57,6 +56,9 @@ function TablePlanets() {
         ),
       );
     }
+
+    const deleteOption = document.getElementById(columnFilter);
+    deleteOption.parentNode.removeChild(deleteOption);
   }
   console.log('dataFiltered.map: ', dataFiltered);
   return (
@@ -82,11 +84,11 @@ function TablePlanets() {
           value={ columnFilter }
           onChange={ (event) => { setColumnFilter(event.target.value); } }
         >
-          <option>population</option>
-          <option>orbital_period</option>
-          <option>diameter</option>
-          <option>rotation_period</option>
-          <option>surface_water</option>
+          <option id="population">population</option>
+          <option id="orbital_period">orbital_period</option>
+          <option id="diameter">diameter</option>
+          <option id="rotation_period">rotation_period</option>
+          <option id="surface_water">surface_water</option>
         </select>
 
         <select
