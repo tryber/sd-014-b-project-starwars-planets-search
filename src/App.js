@@ -1,9 +1,15 @@
 import React from 'react';
-import './App.css';
+import './styles/global.scss';
+import Header from './components/Header';
+import Table from './components/Table';
+import { PlanetsProvider } from './hooks/usePlanets';
 
 function App() {
   return (
-    <span>Hello, App!</span>
+    <PlanetsProvider>
+      <Header />
+      <Table />
+    </PlanetsProvider>
   );
 }
 

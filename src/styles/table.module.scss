@@ -1,0 +1,23 @@
+.table{
+  background: #ECC94B;
+  width: 100%;
+
+  thead {
+    background: black;
+    color: #ECC94B;
+  }
+
+  .even {
+    background: #ECC94B;
+    color: black;
+  }
+
+  .odd {
+    background: black;
+    color: #ECC94B;
+  }
+
+  table, th, td {
+    padding: 0.5rem;
+  }
+}
