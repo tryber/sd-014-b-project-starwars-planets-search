@@ -1,20 +1,13 @@
-import React, { useContext, useEffect } from 'react';
-import Table from './components/Table';
+import React from 'react';
+import PaginaInicial from './components/Table';
+import PlanetsProvieder from './context/PlanetsProvieder'
 import './App.css';
-import PlanetsContext from './context/PlanetsContext';
 
 function App() {
-  const { requestPlanets } = useContext(PlanetsContext);
-
-  useEffect(() => {
-    requestPlanets();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   return (
-    <main>
-      <Table />
-    </main>
+    <PlanetsProvieder>
+      <PaginaInicial />
+    </PlanetsProvieder>
   );
 }
 

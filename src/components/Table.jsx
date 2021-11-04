@@ -1,8 +1,14 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function PlanetContext() {
-  const { data } = useContext(PlanetsContext);
+  const { data, requestPlanets } = useContext(PlanetsContext);
+
+  useEffect(() => {
+    requestPlanets();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <table border="1">
       <thead>
