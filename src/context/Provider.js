@@ -74,8 +74,10 @@ export default function Provider({ children }) {
       },
     );
     const getPlanetName = planets
-      .filter((item) => (
-        item.name.toLowerCase().includes(filter.toLocaleLowerCase())));
+      .filter(({ name }) => (
+        name.toLowerCase().includes(filter.toLocaleLowerCase())));
+    /* Passei o getPlanetName para outra função pois além
+    de estar dando erro eu quis diminuir o tamanho da função */
     const getFilterNumber = getPlanetName.filter((planet) => {
       switch (comparison.comparison) {
       case 'menor que':

@@ -4,6 +4,7 @@ import NewContext from '../context/NewContext';
 function FilterNumbers() {
   const { filterItem, setFilterItem, setComparison } = useContext(NewContext);
   const NumericValues = filterItem.filters.filterByNumericValues;
+  const comparisonItens = ['maior que', 'menor que', 'igual a'];
 
   const [columnFilter, setColumn] = useState('population');
   const [comparisonFilter, setFilterComparison] = useState('maior que');
@@ -13,6 +14,9 @@ function FilterNumbers() {
     comparison: '',
     value: '',
   });
+  const [columnItens, setColumnItems] = useState([
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+  ]);
 
   const handleColumn = (value) => {
     setColumn(value);
@@ -49,6 +53,13 @@ function FilterNumbers() {
     });
   };
 
+  const deleteColunm = () => {
+    const newColumn = [...columnItens];
+    const indexOfColumn = columnItens.indexOf(columnFilter);
+    newColumn.splice(indexOfColumn, 1);
+    setColumnItems(newColumn);
+  };
+
   return (
     <form>
       <select
@@ -56,20 +67,18 @@ function FilterNumbers() {
         data-testid="column-filter"
         onChange={ ({ target: { value } }) => handleColumn(value) }
       >
-        <option selected value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        { columnItens.map((column, index) => (
+          <option key={ index } value={ column }>{ column }</option>
+        )) }
       </select>
       <select
         name={ comparisonFilter }
         data-testid="comparison-filter"
         onChange={ ({ target: { value } }) => handleComparison(value) }
       >
-        <option selected value="maior que">maior que</option>
-        <option value="menor que">menor que</option>
-        <option value="igual a">igual a</option>
+        { comparisonItens.map((comparison, index) => (
+          <option key={ index } value={ comparison }>{ comparison }</option>
+        ))}
       </select>
       <input
         type="number"
@@ -82,7 +91,10 @@ function FilterNumbers() {
         type="button"
         name={ allInformation }
         data-testid="button-filter"
-        onClick={ getStatesByClick }
+        onClick={ () => {
+          getStatesByClick();
+          deleteColunm();
+        } }
       >
         Filtrar
       </button>
