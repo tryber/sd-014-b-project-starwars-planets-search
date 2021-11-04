@@ -2,16 +2,25 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
-  const { data } = useContext(StarWarsContext);
+  const { data, handleChange } = useContext(StarWarsContext);
   const thContent = ['Name', 'Rotation Period', 'Orbital Period', 'Diameter',
     'Climate', 'Gravity', 'Terrain', 'Surface Water', 'Population', 'Films',
     'Create', 'Edited', 'URL'];
   return (
     <div>
-      <h1>Tabela de Planetas - Star Wars - Trybe</h1>
+      <h1>Projeto Star Wars - Trybe</h1>
+      <input
+        data-testid="name-filter"
+        type="text"
+        placeholder="Filtrar por nome"
+        onChange={ handleChange }
+      />
+      <br />
+      <br />
       { data.length > 0
         ? (
           <table>
+            { console.log(data.filter((planet) => planet.name.includes('a'))) }
             <thead>
               <tr>
                 { thContent.map((headName) => <th key={ headName }>{ headName }</th>) }

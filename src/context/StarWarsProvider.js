@@ -17,9 +17,22 @@ function StarWarsProvider({ children }) {
     })();
   }, []);
 
+  const handleChange = ({ target }) => {
+    console.log(target.value);
+    if (target.value.length === 0) {
+      (async () => {
+        const results = await fetchPlanetsAPI();
+        setData(results);
+      })();
+    }
+    const filteredPlanet = data.filter((planet) => planet.name.includes(target.value));
+    setData(filteredPlanet);
+  };
+
   const context = {
     data,
     setData,
+    handleChange,
   };
 
   return (
