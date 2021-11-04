@@ -10,6 +10,13 @@ function PlanetsProvider({ children }) {
     filterByName: {
       name: '',
     },
+    filterByNumericValues: [
+      {
+        column: 'population',
+        comparison: 'maior que',
+        value: '100000',
+      },
+    ],
   });
 
   async function requestPlanets() {
@@ -27,7 +34,12 @@ function PlanetsProvider({ children }) {
 
   return (
 
-    <PlanetsContext.Provider value={ { data, isFetching, filters, setFilters } }>
+    <PlanetsContext.Provider
+      value={ { data,
+        isFetching,
+        filters,
+        setFilters } }
+    >
       { children }
     </PlanetsContext.Provider>
 
