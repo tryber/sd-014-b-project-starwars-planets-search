@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
-import DataContext from '../context/DataContext';
+import AppContext from '../context/AppContext';
 import TableRow from './TableRow';
 
 export default function Table() {
-  const { data } = useContext(DataContext);
-
+  const { planets, filtered, searchState } = useContext(AppContext);
+  const tableArray = searchState.filters.filterByName === '' ? planets : filtered;
   return (
     <div>
       <table>
@@ -26,7 +26,7 @@ export default function Table() {
           </tr>
         </thead>
         <tbody>
-          { data && data.results
+          { tableArray && tableArray
             .map((planet, index) => <TableRow key={ index } planet={ planet } />)}
         </tbody>
       </table>

@@ -1,24 +1,33 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
-import fetchData from '../services/StarWarsApi';
-import DataContext from './DataContext';
+import fetchPlanets from '../services/StarWarsApi';
+import AppContext from './AppContext';
 
 export default function Provider({ children }) {
-  const [data, setData] = useState();
+  const [planets, setPlanets] = useState([]);
+  const [searchState, setSearchState] = useState({
+    filters: {
+      filterByName: '',
+    },
+  });
+  const [filtered, setFiltered] = useState([]);
+
   useEffect(() => {
-    const getResponse = async () => {
-      const response = await fetchData();
-      setData(response);
-      // console.log(response);
-      return response;
-    };
-    getResponse();
+    fetchPlanets().then(setPlanets);
   }, []);
 
+  const contextValues = {
+    planets,
+    searchState,
+    setSearchState,
+    filtered,
+    setFiltered,
+  };
+
   return (
-    <DataContext.Provider value={ { data } }>
+    <AppContext.Provider value={ contextValues }>
       {children}
-    </DataContext.Provider>
+    </AppContext.Provider>
   );
 }
 
