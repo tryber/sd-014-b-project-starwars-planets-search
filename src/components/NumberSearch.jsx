@@ -17,27 +17,27 @@ export default function NumberSearch() {
     setValueFilter(value);
   };
 
-  const { setFilterByNumericValues, data, setDataFilter } = useContext(MyContext);
+  const { setFilterByNumericValues, data,
+    setDataFilter, setFilterOn } = useContext(MyContext);
 
   const setFilterData = () => {
     let filtrado = [];
+
     if (comparisonFilter === 'igual a') {
       filtrado = data.filter((item) => (
         item[columnFilter] === valueFilter
       ));
-      setDataFilter(filtrado);
     } if (comparisonFilter === 'maior que') {
       filtrado = data.filter((item) => (
-        item[columnFilter] > valueFilter
+        item[columnFilter] > Number(valueFilter)
       ));
-      setDataFilter(filtrado);
+      console.log(filtrado);
     } if (comparisonFilter === 'menor que') {
       filtrado = data.filter((item) => (
-        item[columnFilter] < valueFilter
+        item[columnFilter] < Number(valueFilter)
       ));
-      setDataFilter(filtrado);
-      console.log('filtrado', filtrado);
     }
+    setDataFilter(filtrado);
   };
 
   const sendFilters = () => {
@@ -47,6 +47,7 @@ export default function NumberSearch() {
       value: valueFilter,
     });
     setFilterData();
+    setFilterOn(true);
   };
 
   return (
