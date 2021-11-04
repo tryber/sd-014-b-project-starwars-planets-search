@@ -14,7 +14,8 @@ function SearchBar() {
     handleRemoveFilter,
     handleByOrder,
     filterByNumericValues,
-    filters: { filterByName, order, filterByNumericValues: filterByNumericValuesFilter },
+    order,
+    filters: { filterByName, filterByNumericValues: filterByNumericValuesFilter },
     selectOptions: { columnOptions, comparisonOptions, columnSortOptions },
   } = useContext(PlanetsContext);
   return (

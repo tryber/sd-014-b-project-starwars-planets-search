@@ -39,7 +39,7 @@ function Table() {
           url,
         }) => (
           <tr key={ name }>
-            <td>{ name }</td>
+            <td data-testid="planet-name">{ name }</td>
             <td>{ rotationPeriod }</td>
             <td>{ orbitalPeriod }</td>
             <td>{ diameter }</td>

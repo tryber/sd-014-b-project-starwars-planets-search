@@ -39,16 +39,18 @@ function Provider({ children }) {
       name: '',
     },
     filterByNumericValues: [],
-    order: {
-      column: 'name',
-      sort: 'ASC',
-    },
+    order: {},
   });
 
   const [filterByNumericValues, setFilterByNumericValues] = useState({
     column: 'population',
     comparison: 'maior que',
     value: '',
+  });
+
+  const [order, setOrder] = useState({
+    column: 'name',
+    sort: 'ASC',
   });
 
   const fetchPlanetsApi = async () => {
@@ -78,12 +80,9 @@ function Provider({ children }) {
 
   function handleChangeByOrderValues({ target }) {
     const { value, id } = target;
-    setFilters({
-      ...filters,
-      order: {
-        ...filters.order,
-        [id]: value,
-      },
+    setOrder({
+      ...order,
+      [id]: value,
     });
   }
 
@@ -157,27 +156,21 @@ function Provider({ children }) {
   }
 
   function handleByOrder() {
-    const { column, sort } = filters.order;
-    if (sort === 'ASC') {
-      const newData = data.sort(
-        ({ [column]: a }, { [column]: b }) => Number(a) - Number(b),
-      );
-      setData(newData);
-    } else if (sort === 'DESC') {
-      const newData = data.sort(
-        ({ [column]: a }, { [column]: b }) => Number(b) - Number(a),
-      );
-      setData(newData);
-    }
+    setFilters({
+      ...filters,
+      order,
+    });
   }
 
   const CONTEXT_DEFAULT = {
     data,
+    backup,
     selectOptions,
     setData,
     fetchPlanetsApi,
     filters,
     filterByNumericValues,
+    order,
     filterData,
     handleChangeByNameValues,
     handleChangeByNumericValues,
