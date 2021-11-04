@@ -4,7 +4,13 @@ import MyContext from './MyContext';
 
 function MyProvider({ children }) {
   const [data, setData] = useState([]);
+  const [filteredPlanets, setFilteredPlanets] = useState(data);
   const [loading, setLoading] = useState(false);
+  const [filters, setFilters] = useState({
+    filterByName: {
+      name: '',
+    },
+  });
 
   useEffect(() => {
     setLoading(true);
@@ -12,15 +18,26 @@ function MyProvider({ children }) {
       .then((response) => response.json())
       .then((planets) => {
         setData(planets.results);
+        setFilteredPlanets(planets.results);
         setLoading(false);
       });
   }, []);
 
+  const { filterByName: { name } } = filters;
+
+  useEffect(() => {
+    setFilteredPlanets(data.filter((planet) => {
+      const planetName = planet.name.toLowerCase();
+      return planetName.includes(name);
+    }));
+  }, [name]);
+
   const contextValue = {
-    data,
+    filteredPlanets,
     setData,
     loading,
-    setLoading,
+    filters,
+    setFilters,
   };
 
   return (

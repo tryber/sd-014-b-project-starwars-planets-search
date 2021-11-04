@@ -2,7 +2,8 @@ import React, { useContext } from 'react';
 import MyContext from '../context/MyContext';
 
 function Table() {
-  const { data, loading } = useContext(MyContext);
+  const { filteredPlanets, loading } = useContext(MyContext);
+
   return (
     <section>
       <h2>StarWars Planets Search</h2>
@@ -26,7 +27,7 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {data.map(({
+          {filteredPlanets.map(({
             name,
             rotation_period: rotationPeriod,
             orbital_period: orbitalPeriod,
