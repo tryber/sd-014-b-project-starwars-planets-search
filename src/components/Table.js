@@ -2,16 +2,12 @@ import React, { useContext, useEffect } from 'react';
 import PlanetContext from '../context/PlanetsContex';
 import tableHeaders from './TableHeader';
 
-const ONE_SECOND = 1000;
-
 function Table() {
   const { data, requestApi } = useContext(PlanetContext);
 
   useEffect(() => {
-    setInterval(() => {
-      requestApi();
-    }, ONE_SECOND);
-  }, [requestApi]); // componentDidMount
+    requestApi();
+  }, [requestApi]);
 
   return (
     <table>
@@ -23,21 +19,21 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {data.map((planet, index) => (
+        {data.map((item, index) => (
           <tr key={ index }>
-            <td>{ planet.name }</td>
-            <td>{ planet.rotation_period }</td>
-            <td>{ planet.orbital_period }</td>
-            <td>{ planet.diameter }</td>
-            <td>{ planet.climate }</td>
-            <td>{ planet.gravity }</td>
-            <td>{ planet.terrain }</td>
-            <td>{ planet.surface_water }</td>
-            <td>{ planet.population }</td>
-            <td>{ planet.films }</td>
-            <td>{ planet.created }</td>
-            <td>{ planet.edited }</td>
-            <td>{ planet.url }</td>
+            <td>{ item.name }</td>
+            <td>{ item.rotation_period }</td>
+            <td>{ item.orbital_period }</td>
+            <td>{ item.diameter }</td>
+            <td>{ item.climate }</td>
+            <td>{ item.gravity }</td>
+            <td>{ item.terrain }</td>
+            <td>{ item.surface_water }</td>
+            <td>{ item.population }</td>
+            <td>{ item.films }</td>
+            <td>{ item.created }</td>
+            <td>{ item.edited }</td>
+            <td>{ item.url }</td>
           </tr>
         ))}
       </tbody>

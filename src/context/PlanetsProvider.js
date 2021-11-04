@@ -5,6 +5,7 @@ import getPlanets from '../services/planetsAPI';
 
 function PlanetsProvider({ children }) {
   const [data, setPlanets] = useState([]); // data é o retorno da API
+  const [isLoading, setIsLoading] = useState(false);
 
   async function requestApi() {
     const results = await getPlanets();
@@ -15,6 +16,8 @@ function PlanetsProvider({ children }) {
     data,
     setPlanets,
     requestApi,
+    isLoading,
+    setIsLoading,
   };
 
   return (
