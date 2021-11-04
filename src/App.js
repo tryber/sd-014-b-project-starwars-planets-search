@@ -1,10 +1,14 @@
 import React from 'react';
 import './App.css';
+import Filters from './components/Filters';
+import Provider from './components/Provider';
+import Table from './components/Table';
 
-function App() {
+export default function App() {
   return (
-    <span>Hello, App!</span>
+    <Provider>
+      <Filters />
+      <Table />
+    </Provider>
   );
 }
-
-export default App;
