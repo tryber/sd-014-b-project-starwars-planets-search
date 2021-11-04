@@ -6,7 +6,7 @@ const HEADER_TABLE = [
   'Terrain', 'Surface Water', 'Population', 'Films', 'Created', 'Edited', 'URL'];
 
 export default function Table() {
-  const { data } = useContext(StarWarsContext);
+  const { data, filters } = useContext(StarWarsContext);
 
   return (
     <table>
@@ -17,7 +17,9 @@ export default function Table() {
         </tr>
       </thead>
       <tbody>
-        {data.map((planet, index) => (
+        {data.filter((planet) => (
+          planet.name.includes(filters.filterByName.name)
+        )).map((planet, index) => (
           <tr key={ index }>
             <td>{ planet.name }</td>
             <td>{ planet.rotation_period }</td>

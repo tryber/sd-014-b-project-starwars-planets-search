@@ -6,6 +6,7 @@ import StarWarsFetchApi from '../services/StarWarsFetchApi';
 export default function StarWarsProvider({ children }) {
   // define o estado que será usado para armazenar as informações
   const [data, setData] = useState([]);
+  const [inputNameFilter, setInputNameFilter] = useState('');
 
   async function starWarsDataApi() {
     const resultApi = await StarWarsFetchApi();
@@ -20,6 +21,12 @@ export default function StarWarsProvider({ children }) {
   const initialContex = {
     data,
     setData,
+    filters: {
+      filterByName: {
+        name: inputNameFilter,
+      },
+    },
+    setInputNameFilter,
   };
 
   return (
