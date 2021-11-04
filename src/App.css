@@ -1,5 +1,7 @@
-.App {
-  text-align: center;
+main {
+  align-items: center;
+  display: flex;
+  justify-content: center;
 }
 
 .App-logo {
@@ -29,6 +31,20 @@
   color: #61dafb;
 }
 
+table {
+  width: 70vw;
+}
+
+thead {
+  background-color: #ccc;
+  color: black;
+}
+
+tr:nth-child( even ) {
+  background-color: #ccc;
+}
+
+
 @keyframes App-logo-spin {
 
   from {
@@ -39,3 +55,4 @@
     transform: rotate(360deg);
   }
 }
+
