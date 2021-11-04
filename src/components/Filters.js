@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
+import NumericFilter from './NumericFilter';
 
 function Filters() {
   const { setFiltersList, filtersList, filterByName } = useContext(PlanetsContext);
@@ -37,6 +38,7 @@ function Filters() {
             } }
           />
         </label>
+        <NumericFilter />
       </form>
     </div>
   );

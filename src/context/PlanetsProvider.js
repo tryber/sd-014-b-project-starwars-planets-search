@@ -11,6 +11,7 @@ function PlanetsProvider({ children }) {
       filterByName: {
         name: '',
       },
+      filterByNumericValues: [],
     },
   });
 
@@ -33,13 +34,15 @@ function PlanetsProvider({ children }) {
     allPlanetsList,
     toShowPlanetsList,
     filtersList,
+    fetchPlanets,
     setFiltersList,
     filterByName,
+    setToShowPlanetsList,
   };
 
   return (
     <PlanetsContext.Provider
-      value={ { ...contextValue, fetchPlanets } }
+      value={ { ...contextValue } }
     >
       { children }
     </PlanetsContext.Provider>
