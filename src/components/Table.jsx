@@ -12,9 +12,8 @@ const Table = () => {
     const filterNamePlanets = [...data];
     const dealWithFilterPresence = () => {
       if (name.length !== 0) {
-        filterNamePlanets
-          .filter((item) => item.name.toLowerCase().includes(name.toLowerCase()));
-        setPlanets(filterNamePlanets);
+        setPlanets(filterNamePlanets
+          .filter((item) => item.name.toLowerCase().includes(name.toLowerCase())));
       }
       if (filterByNumericValues.length !== 0) {
         filterByNumericValues
