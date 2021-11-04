@@ -58,52 +58,64 @@ function NumericFilter() {
   }
 
   return (
-    <form className="filter-form">
-      <select
-        data-testid="column-filter"
-        value={ filterColumn }
-        onChange={ ({ target: { value: targetValue } }) => setFilterColumn(targetValue) }
-      >
-        {optionCol.map((item, index) => (
-          <option
-            key={ index }
-            value={ item }
-          >
-            {item}
-          </option>
-        ))}
-      </select>
+    <section>
+      <form className="filter-form">
+        <select
+          data-testid="column-filter"
+          value={ filterColumn }
+          onChange={
+            ({ target: { value: targetValue } }) => setFilterColumn(targetValue)
+          }
+        >
+          {optionCol.map((item, index) => (
+            <option
+              key={ index }
+              value={ item }
+            >
+              {item}
+            </option>
+          ))}
+        </select>
 
-      <select
-        data-testid="comparison-filter"
-        value={ filterComparison }
-        onChange={
-          ({ target: { value: targetValue } }) => setFilterComparison(targetValue)
-        }
-      >
-        {valueRange.map((item, index) => (
-          <option
-            value={ item }
-            key={ index }
-          >
-            {item}
-          </option>
-        ))}
-      </select>
-      <input
-        data-testid="value-filter"
-        type="number"
-        value={ filterValue }
-        onChange={ ({ target: { value: targetValue } }) => setFilterValue(targetValue) }
-      />
-      <button
-        data-testid="button-filter"
-        type="button"
-        onClick={ () => handleClick() }
-      >
-        Filtrar
-      </button>
-    </form>
+        <select
+          data-testid="comparison-filter"
+          value={ filterComparison }
+          onChange={
+            ({ target: { value: targetValue } }) => setFilterComparison(targetValue)
+          }
+        >
+          {valueRange.map((item, index) => (
+            <option
+              value={ item }
+              key={ index }
+            >
+              {item}
+            </option>
+          ))}
+        </select>
+        <input
+          data-testid="value-filter"
+          type="number"
+          value={ filterValue }
+          onChange={ ({ target: { value: targetValue } }) => setFilterValue(targetValue) }
+        />
+        <button
+          data-testid="button-filter"
+          type="button"
+          onClick={ () => handleClick() }
+        >
+          Filtrar
+        </button>
+      </form>
+      <section data-testid="filter">
+        <span
+          className="clear-filter"
+        >
+          {`${filterColumn} ${filterComparison} ${filterValue}`}
+        </span>
+        <button className="clear-filter-btn" type="button">X</button>
+      </section>
+    </section>
   );
 }
 
