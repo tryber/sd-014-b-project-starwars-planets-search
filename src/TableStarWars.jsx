@@ -22,7 +22,9 @@ function TableStarWars() {
   const [comparison, setComparison] = useState('maior que');
 
   function handleName(event) {
-    setFilters({ ...filters, filtersByName: { name: event.target.value } });
+    setFilters({ ...filters,
+      filtersByName:
+      { name: event.target.value } });
   }
 
   function handleColumns(event) {
