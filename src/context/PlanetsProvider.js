@@ -6,6 +6,7 @@ import PlanetsContext from './PlanetsContext';
 function PlanetsProvider(props) {
   const [data, setData] = useState([]); // [state, setState]
   const [isLoading, setIsLoading] = useState(true);
+  const [dataFiltered, setDataFiltered] = useState();
 
   const [filters, setFilters] = useState(
     {
@@ -16,7 +17,8 @@ function PlanetsProvider(props) {
 
   async function fetchPlanets() {
     const response = await getPlanets(); // call API from services;
-    setData(response); // save data;
+    setData(response.results); // save data;
+    setDataFiltered(response.results); // save data to be changed by filters;
     setIsLoading(false); // set loading false;
   }
 
@@ -27,7 +29,11 @@ function PlanetsProvider(props) {
 
   const { children } = props;
   return (
-    <PlanetsContext.Provider value={ { data, isLoading, filters, setFilters } }>
+    <PlanetsContext.Provider
+      value={
+        { data, dataFiltered, setDataFiltered, isLoading, filters, setFilters }
+      }
+    >
       { children }
     </PlanetsContext.Provider>
   );
