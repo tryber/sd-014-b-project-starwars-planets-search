@@ -12,6 +12,7 @@ const PlanetsProvider = ({ children }) => {
     column: 'population',
     comparison: 'menor que',
     value: 0,
+    id: 0,
   });
 
   useEffect(() => {
@@ -36,6 +37,7 @@ const PlanetsProvider = ({ children }) => {
     setSelectObjects((prevState) => ({
       ...prevState,
       [name]: value,
+      id: prevState.id + 1,
     }));
   };
 
@@ -45,11 +47,15 @@ const PlanetsProvider = ({ children }) => {
       filterByNumericValues: [...prevState.filterByNumericValues,
         selectObjects],
     }));
-    setSelectObjects({
-      column: '',
-      comparison: '',
-      value: 0,
-    });
+  };
+
+  const handleDeleteClick = (id) => {
+    const newFilterByNumericValues = filters.filterByNumericValues
+      .filter((item) => item.id !== id);
+    setFilters((prevState) => ({
+      ...prevState,
+      filterByNumericValues: newFilterByNumericValues,
+    }));
   };
 
   const contextValue = {
@@ -58,6 +64,7 @@ const PlanetsProvider = ({ children }) => {
     handleChange,
     handleSelectOptions,
     handleFilterButtonClick,
+    handleDeleteClick,
     filters,
   };
 

@@ -1,34 +1,48 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 import Loading from './Loading';
 
 const Table = () => {
   const { data, filters: { filterByName: { name },
     filterByNumericValues }, isFetching } = useContext(PlanetsContext);
-  const dealWithFilterPresence = () => {
-    if (name.length !== 0) {
-      return data
-        .filter((item) => item.name.toLowerCase().includes(name.toLowerCase()));
-    }
-    if (filterByNumericValues.length !== 0) {
-      const filterWithNumericConditions = filterByNumericValues
-        .map(({ column, comparison, value }) => {
-          switch (comparison) {
-          case 'menor que':
-            return data.filter((itemTable) => Number(itemTable[column]) < Number(value));
-          case 'igual a':
-            return data.filter((itemTable) => Number(itemTable[column])
-            === Number(value));
-          case 'maior que':
-            return data.filter((itemTable) => Number(itemTable[column]) > Number(value));
-          default:
-            return data;
-          }
-        });
-      return filterWithNumericConditions[0];
-    }
-    return data;
-  };
+  const [planets, setPlanets] = useState(data);
+
+  useEffect(() => {
+    setPlanets(data);
+    const filterNamePlanets = [...data];
+    const dealWithFilterPresence = () => {
+      if (name.length !== 0) {
+        filterNamePlanets
+          .filter((item) => item.name.toLowerCase().includes(name.toLowerCase()));
+        setPlanets(filterNamePlanets);
+      }
+      if (filterByNumericValues.length !== 0) {
+        filterByNumericValues
+          .forEach(({ column, comparison, value }) => {
+            switch (comparison) {
+            case 'menor que':
+              setPlanets(filterNamePlanets
+                .filter((itemTable) => Number(itemTable[column]) < Number(value)));
+              break;
+            case 'igual a':
+              setPlanets(filterNamePlanets
+                .filter((itemTable) => Number(itemTable[column])
+                === Number(value)));
+              break;
+            case 'maior que':
+              setPlanets(filterNamePlanets
+                .filter((itemTable) => Number(itemTable[column]) > Number(value)));
+              break;
+            default:
+              return filterNamePlanets;
+            }
+          });
+      }
+      return filterNamePlanets;
+    };
+
+    dealWithFilterPresence();
+  }, [filterByNumericValues, name, data]);
 
   return (
     <table className="table-container">
@@ -51,7 +65,7 @@ const Table = () => {
       </thead>
       <tbody>
         {isFetching ? <Loading />
-          : dealWithFilterPresence()
+          : planets
             .map((planet) => (
               <tr key={ planet.name }>
                 <td>{planet.name}</td>
