@@ -48,7 +48,6 @@ const Provider = ({ children }) => {
         return false;
       });
     });
-    console.log(newSelect);
     if (newSelect.length > 0) setFiltersToSelect(newSelect);
   };
 
