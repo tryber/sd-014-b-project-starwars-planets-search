@@ -72,34 +72,21 @@ const Provider = ({ children }) => {
         filterByNumericValues,
       },
     });
-    console.log(planetList);
     let newFilter = [];
     filterByNumericValues.forEach((filtro) => {
       newFilter = planetList.filter((planet) => {
-        if (filtro.comparison === 'maior que') {
-          if (planet[filtro.column] === 'unknown') {
-            return planet;
-          }
-          if (parseInt(planet[filtro.column], 10) > filtro.value) {
-            return planet;
-          }
+        if ((filtro.comparison === 'igual a')
+        && (parseInt(planet[filtro.column], 10) === parseInt(filtro.value, 10))) {
+          return planet;
         }
-        if (filtro.comparison === 'menor que') {
-          if (planet[filtro.column] === 'unknown') {
-            return planet;
-          }
-          if (parseInt(planet[filtro.column], 10) < filtro.value) {
-            return planet;
-          }
-        }
+        if ((filtro.comparison === 'maior que')
+        && (parseInt(planet[filtro.column], 10) > filtro.value)) return planet;
+        if ((filtro.comparison === 'menor que')
+        && (parseInt(planet[filtro.column], 10) < filtro.value)) return planet;
         return false;
       });
     });
-    console.log(newFilter);
-    /*     const searchPlanet = planetList.filter((planet) => {
-      planet.filtersByNumber.column
-    }); */
-    // console.log(searchPlanet);
+    setPlanetList([...newFilter]);
   };
 
   const context = {
