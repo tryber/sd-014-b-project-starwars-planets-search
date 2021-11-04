@@ -3,30 +3,31 @@ import planetContext from '../Context/planetContext';
 
 function FilterBar() {
   const {
-    columns,
+    collumns,
     setCollumns,
     comparison,
     setComparison,
     value,
     setValue,
-    setFiltred,
+    setFiltered,
     data,
   } = useContext(planetContext);
 
   const handleClick = () => {
     const filtred = data.filter((planet) => {
       if (comparison === 'maior que') {
-        return Number(planet[columns]) > Number(value);
+        return Number(planet[collumns]) > Number(value);
       }
       if (comparison === 'menor que') {
-        return Number(planet[columns]) < Number(value);
+        return Number(planet[collumns]) < Number(value);
       }
-      if (compairson === 'igual a') {
-        return Number(planet[columns]) === Number(value);
+      if (comparison === 'igual a') {
+        return Number(planet[collumns]) === Number(value);
       }
       return null;
     });
-    setFiltred(filtred);
+    setFiltered(filtred);
+    console.log(filtred);
   };
 
   return (
@@ -46,9 +47,9 @@ function FilterBar() {
         onChange={ (event) => setComparison(event.target.value) }
         data-testid="comparison-filter"
       >
-        <option>maior que</option>
-        <option>menor que</option>
-        <option>igual a</option>
+        <option value="maior que">maior que</option>
+        <option value="menor que">menor que</option>
+        <option value="igual a">igual a</option>
       </select>
 
       <input
@@ -57,7 +58,11 @@ function FilterBar() {
         data-testid="value-filter"
       />
 
-      <button type="button" onClick={ handleClick } data-testid="button-filter">
+      <button
+        type="button"
+        onClick={ handleClick }
+        data-testid="button-filter"
+      >
         Filtrar
       </button>
     </>

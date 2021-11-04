@@ -8,7 +8,7 @@ import Filters from './Component/Filters';
 function App() {
   const [data, setData] = useState([]);
   const [filtered, setFiltered] = useState([]);
-  const [collumns, setCollumns] = useState('');
+  const [collumns, setCollumns] = useState([]);
   const [comparison, setComparison] = useState('');
   const [value, setValue] = useState('');
 
