@@ -55,7 +55,7 @@ class FilterInput extends Component {
           value={ value }
           onChange={ this.onChange }
         />
-        <button type="button">
+        <button type="button" data-testid="button-filter">
           Filtrar
         </button>
       </>

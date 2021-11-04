@@ -9,7 +9,7 @@ function compare(element, operator, value) {
     return parseInt(element, 10) < value;
   }
   if (operator === 'igual a') {
-    return parseInt(element, 10) === value;
+    return element === value;
   }
 }
 
