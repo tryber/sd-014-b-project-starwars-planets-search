@@ -33,6 +33,9 @@ function PlanetProvider({ children }) {
       .name.toLowerCase().includes(name.toLowerCase()));
   }
 
+  /* consultei o repositório do vitor Lima para fazer a função filterTable()
+  link: https://github.com/tryber/sd-014-b-project-starwars-planets-search/pull/11/commits/a137ceebb2ee05be3c285a7f60cce2638be6a9e3 */
+
   function handleChange(string) {
     setPlanetsData(filterTable(string));
     setPlanetsSearch({
