@@ -4,7 +4,7 @@ import MyContext from './MyContext';
 
 function MyProvider({ children }) {
   const [data, setData] = useState([]);
-  const [filteredPlanets, setFilteredPlanets] = useState(data);
+  const [filteredPlanets, setFilteredPlanets] = useState([]);
   const [loading, setLoading] = useState(false);
   const [filters, setFilters] = useState({
     filterByName: {
