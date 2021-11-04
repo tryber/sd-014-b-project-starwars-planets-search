@@ -11,7 +11,8 @@ function Input() {
     const filteredPlanets = data
       .filter((planet) => (planet.name.toLowerCase()).includes(inputValue));
 
-    setFilters({ filterByName: { name: filteredPlanets } });
+    // setFilters refatorado com a ajuda do Guilherme Gomes - Turma 14b
+    setFilters((prevState) => ({ ...prevState, filterByName: { name: inputValue } }));
     setPlanetsUpdated(filteredPlanets);
   }
 
