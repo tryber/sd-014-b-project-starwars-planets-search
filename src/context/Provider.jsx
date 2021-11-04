@@ -177,6 +177,7 @@ function Provider({ children }) {
   }
 
   function handleRemoveFilter(column) {
+    const { columnOptions } = selectOptions;
     const newFilters = filters.filterByNumericValues.filter(
       (filter) => filter.column !== column,
     );
@@ -184,6 +185,7 @@ function Provider({ children }) {
       ...filters,
       filterByNumericValues: newFilters,
     });
+    columnOptions.push(column);
     if (newFilters.length >= 1) {
       const newData = backup.filter((planet) => filterData(planet, newFilters));
       setData(newData);
