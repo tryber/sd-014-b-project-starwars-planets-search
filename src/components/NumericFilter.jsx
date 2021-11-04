@@ -37,41 +37,46 @@ function NumericFilter() {
   };
 
   return (
-    <form>
-      <select
-        data-testid="column-filter"
-        onChange={ ({ target: { value } }) => setInputColumn(value) }
-      >
-        {arrayOptions.map((option) => (<option key={ option }>{ option }</option>))}
-      </select>
+    <div>
 
-      <select
-        data-testid="comparison-filter"
-        onChange={ ({ target: { value } }) => setInputComparison(value) }
-      >
-        <option>maior que</option>
-        <option>menor que</option>
-        <option>igual a</option>
-      </select>
+      <form>
+        <select
+          data-testid="column-filter"
+          onChange={ ({ target: { value } }) => setInputColumn(value) }
+        >
+          {arrayOptions.map((option) => (<option key={ option }>{ option }</option>))}
+        </select>
 
-      <input
-        data-testid="value-filter"
-        type="number"
-        onChange={ ({ target: { value } }) => setInputValue(value) }
-      />
+        <select
+          data-testid="comparison-filter"
+          onChange={ ({ target: { value } }) => setInputComparison(value) }
+        >
+          <option>maior que</option>
+          <option>menor que</option>
+          <option>igual a</option>
+        </select>
 
-      <button
-        data-testid="button-filter"
-        type="button"
-        onClick={ () => {
-          filterNumeric();
-          removeOption();
-        } }
-      >
-        Filtrar
+        <input
+          data-testid="value-filter"
+          type="number"
+          onChange={ ({ target: { value } }) => setInputValue(value) }
+        />
 
-      </button>
-    </form>
+        <button
+          data-testid="button-filter"
+          type="button"
+          onClick={ () => {
+            filterNumeric();
+            removeOption();
+          } }
+        >
+          Filtrar
+
+        </button>
+      </form>
+
+    </div>
+
   );
 }
 
