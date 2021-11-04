@@ -4,9 +4,15 @@ import AppContext from './AppContext';
 
 function Provider({ children }) {
   const [data, setData] = useState([]);
+  const [filteredData, setFilteredData] = useState(data);
+  const [filters, setFilters] = useState({});
   const value = {
     data,
     setData,
+    filters,
+    setFilters,
+    filteredData,
+    setFilteredData,
   };
 
   async function fetchAPI() {
@@ -20,7 +26,8 @@ function Provider({ children }) {
       return dataPlanets.push(planet);
     });
 
-    setData(dataPlanets);
+    setData(dataPlanets); // Data Global imutável
+    setFilteredData(dataPlanets); // Data a ser utilizado pelos filtros
     console.log('Montou');
   }
 
