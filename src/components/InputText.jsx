@@ -3,10 +3,15 @@ import PlanetsContext from '../context/PlanetsContext';
 
 export default function InputText() {
   const [inputName, setInputName] = useState('');
-  const { addNameFilter } = useContext(PlanetsContext);
+  const { setNameFilter, data, nameFilter, setFilteredData } = useContext(PlanetsContext);
+
   const handleChange = ({ target: { value } }) => {
     setInputName(value);
-    addNameFilter(value);
+    setNameFilter(value);
+    const filterDataByName = data.filter(({ name }) => (
+      name.toLowerCase().includes(nameFilter.toLowerCase())
+    ));
+    setFilteredData(filterDataByName);
   };
 
   return (

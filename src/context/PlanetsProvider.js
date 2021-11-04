@@ -8,10 +8,7 @@ export default function PlanetsProvider({ children }) {
   const [filteredData, setFilteredData] = useState([]);
   const [isFetching, setIsFetching] = useState(true);
   const [nameFilter, setNameFilter] = useState('');
-
-  const addNameFilter = (newFilter) => {
-    setNameFilter(newFilter);
-  };
+  const [numericFilter, setNumericFilter] = useState({ filterByNumericValues: [] });
 
   const fetchPlanets = async () => {
     setIsFetching(true);
@@ -25,18 +22,14 @@ export default function PlanetsProvider({ children }) {
     fetchPlanets();
   }, []);
 
-  useEffect(() => {
-    const filterDataByName = data.filter(({ name }) => (
-      name.toLowerCase().includes(nameFilter.toLowerCase())
-    ));
-    setFilteredData(filterDataByName);
-  }, [nameFilter]);
-
   const store = {
     data,
     nameFilter,
-    addNameFilter,
     filteredData,
+    numericFilter,
+    setNumericFilter,
+    setNameFilter,
+    setFilteredData,
   };
 
   if (isFetching === true) {
