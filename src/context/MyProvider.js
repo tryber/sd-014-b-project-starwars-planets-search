@@ -77,10 +77,10 @@ function MyProvider({ children }) {
     option.innerText = optionText[0].id;
     option.value = optionText[0].id;
     selectColumn.appendChild(option);
-    target.parentNode.remove();
     const filterPlanets = data.filter((planet) => planet[optionText[0].id]
     > 0);
     setFilteredPlanets(filterPlanets);
+    target.parentNode.remove();
   }
 
   useEffect(() => {
