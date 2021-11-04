@@ -38,7 +38,7 @@ export default function Filters() {
     const { comparison, column, value } = filterByNumericValues;
     setData(filterData(comparison, column, value));
     setFilterColumn([...filterColumn, { column, comparison, value }]);
-    setOptions(options.filter((e) => e !== column));
+    setOptions(options.filter((item) => item !== column));
   }
 
   return (
