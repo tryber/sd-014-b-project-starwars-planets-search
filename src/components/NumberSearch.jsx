@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import MyContext from '../context/MyContext';
 
 export default function NumberSearch() {
   const [columnFilter, setColumnFilter] = useState('population');
@@ -14,6 +15,35 @@ export default function NumberSearch() {
   const [valueFilter, setValueFilter] = useState(0);
   const handleChangeValueFilter = ({ target: { value } }) => {
     setValueFilter(value);
+  };
+
+  const { setFilterByNumericValues, data, setDataFilter } = useContext(MyContext);
+
+  const sendFilters = () => {
+    setFilterByNumericValues({
+      column: columnFilter,
+      comparison: comparisonFilter,
+      value: valueFilter,
+    });
+  };
+
+  const setFilterData = () => {
+    if (comparisonFilter === 'igual a') {
+      const filtrado = data.mapa((item) => (
+        item.columnFilter === valueFilter
+      ));
+      setDataFilter(filtrado);
+    } if (comparisonFilter === 'maior que') {
+      const filtrado = data.mapa((item) => (
+        item.columnFilter > valueFilter
+      ));
+      setDataFilter(filtrado);
+    } if (comparisonFilter === 'menor que') {
+      const filtrado = data.mapa((item) => (
+        item.columnFilter < valueFilter
+      ));
+      setDataFilter(filtrado);
+    }
   };
 
   return (
@@ -38,9 +68,9 @@ export default function NumberSearch() {
         value={ comparisonFilter }
         onChange={ handleChangeComparisonFilter }
       >
-        <option selected value=">">maior que</option>
-        <option value="<">menor que</option>
-        <option value="===">igual a</option>
+        <option selected value="maior que">maior que</option>
+        <option value="menor que">menor que</option>
+        <option value="igual a">igual a</option>
       </select>
       <input
         data-testid="value-filter"
@@ -51,7 +81,13 @@ export default function NumberSearch() {
         value={ valueFilter }
         onChange={ handleChangeValueFilter }
       />
-      <button data-testid="button-filter" type="button">Add Filtro</button>
+      <button
+        data-testid="button-filter"
+        type="button"
+        onClick={ sendFilters }
+      >
+        Add Filtro
+      </button>
     </form>
   );
 }

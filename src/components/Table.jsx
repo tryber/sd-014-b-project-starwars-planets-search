@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import MyContext from '../context/MyContext';
 
 export default function Table() {
-  const { data, filterByName } = useContext(MyContext);
+  const { data, filterByName, setDataFilter, dataFilter, filterByNumericValues } = useContext(MyContext);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -33,7 +33,7 @@ export default function Table() {
         </tr>
       </thead>
       <tbody>
-        {filterByName.map((planets) => (
+        {dataFilter.map((planets) => (
           <tr key={ planets.name }>
             <td>{planets.name}</td>
             <td>{planets.climate}</td>

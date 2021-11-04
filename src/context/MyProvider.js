@@ -6,6 +6,7 @@ export default function Provider({ children }) {
   const [data, setData] = useState([]);
   const [filterByName, setFilterByName] = useState([]);
   const [filterByNumericValues, setFilterByNumericValues] = useState([]);
+  const [dataFilter, setDataFilter] = useState([]);
 
   const contextValue = {
     data,
@@ -14,6 +15,8 @@ export default function Provider({ children }) {
     setFilterByName,
     filterByNumericValues,
     setFilterByNumericValues,
+    dataFilter,
+    setDataFilter,
   };
 
   async function fecthPlanets() {
