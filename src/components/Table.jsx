@@ -26,15 +26,15 @@ export default function Table() {
         <tr>
           <th>name</th>
           <th>climate</th>
+          <th>population</th>
+          <th>surface water</th>
           <th>created</th>
           <th>diameter</th>
           <th>edited</th>
           <th>films</th>
           <th>gravity</th>
           <th>orbital period</th>
-          <th>population</th>
           <th>rotation period</th>
-          <th>surface water</th>
           <th>terrain</th>
           <th>url</th>
         </tr>
