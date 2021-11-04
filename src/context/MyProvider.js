@@ -5,11 +5,15 @@ import MyContext from './MyContext';
 export default function Provider({ children }) {
   const [data, setData] = useState([]);
   const [filterByName, setFilterByName] = useState([]);
+  const [filterByNumericValues, setFilterByNumericValues] = useState([]);
+
   const contextValue = {
     data,
     setData,
     filterByName,
     setFilterByName,
+    filterByNumericValues,
+    setFilterByNumericValues,
   };
 
   async function fecthPlanets() {
@@ -17,7 +21,6 @@ export default function Provider({ children }) {
     const { results } = await planets.json();
     setData(results);
     setFilterByName(results);
-    console.log('state do context', results);
   }
 
   useEffect(() => {

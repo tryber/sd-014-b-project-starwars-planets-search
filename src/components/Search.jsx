@@ -9,7 +9,6 @@ export default function Search() {
     const planetaFiltrado = data.filter(({ name }) => (
       name.includes(value)
     ));
-    console.log('false do if', planetaFiltrado);
     setFilterByName(planetaFiltrado);
   };
 

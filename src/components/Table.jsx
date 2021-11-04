@@ -1,13 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import MyContext from '../context/MyContext';
-import Search from './Search';
 
 export default function Table() {
   const { data, filterByName } = useContext(MyContext);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    console.log('use context dentro do table', data);
     if (data.length > 0) {
       setLoading(false);
     } else {
@@ -19,13 +17,13 @@ export default function Table() {
     <table>
       <thead>
         <tr>
+          <th>name</th>
           <th>climate</th>
           <th>created</th>
           <th>diameter</th>
           <th>edited</th>
           <th>films</th>
           <th>gravity</th>
-          <th>name</th>
           <th>orbital period</th>
           <th>population</th>
           <th>rotation period</th>
@@ -37,13 +35,13 @@ export default function Table() {
       <tbody>
         {filterByName.map((planets) => (
           <tr key={ planets.name }>
+            <td>{planets.name}</td>
             <td>{planets.climate}</td>
             <td>{planets.created}</td>
             <td>{planets.diameter}</td>
             <td>{planets.edited}</td>
             <td>{planets.films}</td>
             <td>{planets.gravity}</td>
-            <td>{planets.name}</td>
             <td>{planets.orbital_period}</td>
             <td>{planets.population}</td>
             <td>{planets.rotation_period}</td>
@@ -58,7 +56,6 @@ export default function Table() {
   return (
 
     <div>
-      <Search />
       {loading ? <p>Carregando...</p> : table }
 
     </div>
