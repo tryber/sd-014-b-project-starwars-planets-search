@@ -6,7 +6,18 @@ export const Context = createContext();
 function Provider({ children }) {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [filters, setFilters] = useState({ filterByName: { name: '' } });
+  const [filters, setFilters] = useState(
+    { filterByName: {
+      name: '',
+    },
+    filterByNumericValues: [
+      {
+        column: 'population',
+        comparision: 'maior que',
+        value: '',
+      },
+    ] },
+  );
   return (
     <Context.Provider
       value={ { data, setData, isLoading, setIsLoading, filters, setFilters } }

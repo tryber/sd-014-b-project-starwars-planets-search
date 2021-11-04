@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Context } from '../context/Provider';
 import Loading from './Loading';
+import '../App.css';
 
 function Table() {
   const { data, isLoading } = useContext(Context);
