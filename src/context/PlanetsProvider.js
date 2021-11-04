@@ -10,14 +10,11 @@ function PlanetsProvider({ children }) {
     filterByName: {
       name: '',
     },
-    filterByNumericValues: [
-      {
-        column: 'population',
-        comparison: 'maior que',
-        value: '100000',
-      },
-    ],
+    filterByNumericValues: [],
     isFiltered: false,
+    currentColumn: '',
+    currentComparison: '',
+    currentValue: 0,
   });
 
   async function requestPlanets() {

@@ -1,29 +1,29 @@
 import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
+import '../styles/index.css';
 
 function Table() {
   const { data, isFetching,
-    filters: { filterByName,
-      filterByNumericValues: [{ column,
-        comparison, value }], isFiltered } } = useContext(PlanetsContext);
+    filters: { filterByName, currentColumn,
+      currentComparison, currentValue, isFiltered } } = useContext(PlanetsContext);
 
-  const filteredPlanets = () => {
+  function filteredPlanets() {
     if (isFiltered) {
       return data.filter((key) => {
-        switch (comparison) {
+        switch (currentComparison) {
         case 'maior que':
-          return Number(key[column]) > value;
+          return Number(key[currentColumn]) > currentValue;
         case 'menor que':
-          return Number(key[column]) < value;
+          return Number(key[currentColumn]) < currentValue;
         case 'igual a':
-          return key[column] === value;
+          return key[currentColumn] === currentValue;
         default:
           return '';
         }
       });
     }
     return data;
-  };
+  }
 
   return (
     !isFetching && (
