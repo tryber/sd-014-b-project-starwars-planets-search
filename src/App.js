@@ -18,7 +18,7 @@ function App() {
     async function fetchData() {
       const { results } = await fetch(url).then((response) => response.json());
       setData(results);
-      console.log(results);
+      // console.log(results);
     }
     fetchData();
   }, [url]);
