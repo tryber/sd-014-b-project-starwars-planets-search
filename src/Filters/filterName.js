@@ -1,7 +1,7 @@
 import React from 'react';
 
-const Table = (state) => (
-  <table>
+const filterName = (data, filter) => (<table>
+  <thead>
     <tr>
       <th>Name</th>
       <th>Population</th>
@@ -17,11 +17,13 @@ const Table = (state) => (
       <th>Edited</th>
       <th>URL</th>
     </tr>
-    {state.state.map(({ name, population, rotation_period: rotationPeriod,
-      orbital_period: orbitalPeriod, diameter,
-      climate, gravity, terrain, surface_water: surfaceWater, films,
-      created, edited, url }, index) => (
-      <tr key={ index }>
+  </thead>
+  {data.filter((e) => e.name.startsWith(filter)).map(({ name, population, rotation_period: rotationPeriod,
+    orbital_period: orbitalPeriod, diameter,
+    climate, gravity, terrain, surface_water: surfaceWater, films,
+    created, edited, url }, index) => (
+    <tbody key={ index }>
+        <tr>
         <td>{name}</td>
         <td>{population}</td>
         <td>{rotationPeriod}</td>
@@ -36,8 +38,9 @@ const Table = (state) => (
         <td>{edited}</td>
         <td>{url}</td>
       </tr>
-    ))}
-  </table>
+      </tbody>
+  ))}
+</table>
 );
 
-export default Table;
+export default filterName;
