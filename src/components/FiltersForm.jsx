@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { PlanetsContext } from '../context/PlanetsProvider';
 import DefaultInput from './DefaultInput';
 import DefaultSelect from './DefaultSelect';
@@ -18,6 +18,18 @@ export default function FiltersForm() {
   const { filters, setFilters } = useContext(PlanetsContext);
   const [state, setState] = useState(INITIAL_STATE);
 
+  function filterColumnsValues() {
+    const { filterByNumericValues } = filters;
+    return filterByNumericValues.length > 0
+      ? filterByNumericValues.reduce((acc, { column }) => (acc.includes(column)
+        ? acc.filter((item) => item !== column) : acc), [...columnsValues])
+      : columnsValues;
+  }
+
+  useEffect(() => {
+    setState({ ...state, column: filterColumnsValues()[0] });
+  }, [filters.filterByNumericValues]);
+
   function handleInput({ target: { value } }) {
     setFilters({
       ...filters,
@@ -36,14 +48,6 @@ export default function FiltersForm() {
         filterByNumericValues: [...filters.filterByNumericValues, state],
       });
     }
-  }
-
-  function filterColumnsValues() {
-    const { filterByNumericValues } = filters;
-    return filterByNumericValues.length > 0
-      ? filterByNumericValues.reduce((acc, { column }) => (acc.includes(column)
-        ? acc.filter((item) => item !== column) : acc), [...columnsValues])
-      : columnsValues;
   }
 
   return (
