@@ -9,7 +9,7 @@ function Table() {
     if (searchName <= 0) {
       fetchRequestApiPlanets();
     }
-  }, [fetchRequestApiPlanets]);
+  }, []);
 
   return (
     <div>
@@ -32,7 +32,7 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {data.lengt < 0 ? <p>Carregando</p>
+          {data.length === 0 ? <p>Carregando</p>
             : data.map((planeta) => (
               <tr key={ planeta.name }>
                 <td>{planeta.name}</td>
