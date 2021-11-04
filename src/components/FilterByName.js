@@ -2,13 +2,10 @@ import React, { useContext } from 'react';
 import MyContext from '../context/MyContext';
 
 function FilterByName() {
-  const { filters: { FilterByName: name }, setFilters } = useContext(MyContext);
+  const { filters: { FilterByName: name }, setName } = useContext(MyContext);
 
   function handleChange({ target }) {
-    setFilters((prevState) => ({
-      ...prevState,
-      filterByName: { name: target.value.toLowerCase() },
-    }));
+    setName(target.value);
   }
 
   return (
