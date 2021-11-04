@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { Context } from '../context/Provider';
 import fetchPlanets from '../api/StarWars';
 
@@ -8,38 +8,58 @@ function Header() {
     setFilters,
     data,
     setData,
-    setIsLoading } = useContext(Context);
+    setIsLoading, setPlanets } = useContext(Context);
+
+  const [columnState, setColumnState] = useState('population');
+  const [comparisonState, setComparisonState] = useState('maior que');
+  const [valueState, setValueState] = useState('');
 
   useEffect(() => {
     const getPlanets = async () => {
       setIsLoading(true);
       const planets = await fetchPlanets();
       setIsLoading(false);
+      setPlanets(planets);
       setData(planets);
     };
     getPlanets();
-  }, []);
+  }, [setData, setIsLoading, setPlanets]);
+
+  useEffect(() => {
+    const { filterByNumericValues } = filters;
+    filterByNumericValues.forEach(({ column, value, comparison }) => {
+      const filteredPlanets = data.filter((planet) => {
+        if (comparison === 'maior que') {
+          return Number(planet[column]) > Number(value);
+        }
+        if (comparison === 'menor que') {
+          return Number(planet[column]) < Number(value);
+        }
+        if (comparison === 'igual a') {
+          return Number(planet[column]) === Number(value);
+        }
+        return planet;
+      });
+      setPlanets(filteredPlanets);
+    });
+  }, [data, filters, setPlanets]);
 
   const handleInput = async ({ target }) => {
     const searchedPlanet = target.value.toLowerCase();
     const filteredPlanets = data.filter((planet) => (
       planet.name.toLowerCase().includes(searchedPlanet)
     ));
-    setData(filteredPlanets);
-    setFilters({ filterByName: { name: searchedPlanet } });
-    if (searchedPlanet.length === 0) {
-      const planets = await fetchPlanets();
-      setData(planets);
-    }
+    setPlanets(filteredPlanets);
+    setFilters({ ...filters, filterByName: { name: searchedPlanet } });
   };
 
-  const handleNumericFilters = ({ target }) => {
-    const { name, value } = target;
+  const handleNumericFilters = () => {
     setFilters({
       ...filters,
-      filterByNumericValues: [{
-        ...filters.filterByNumericValues[0],
-        [name]: value,
+      filterByNumericValues: [...filters.filterByNumericValues, {
+        column: columnState,
+        comparison: comparisonState,
+        value: valueState,
       }],
     });
   };
@@ -55,34 +75,38 @@ function Header() {
           placeholder="filtar por nome"
         />
         <select
-          onChange={ handleNumericFilters }
-          data-testid="comparison-filter"
+          onChange={ ({ target }) => setColumnState(target.value) }
+          data-testid="column-filter"
           name="column"
+          value={ columnState }
         >
-          <option value="population">Population</option>
-          <option value="orbital_period">Orbital period</option>
-          <option value="diameter">Diameter</option>
-          <option value="rotation_period">Rotation period</option>
-          <option value="surface_water">Surface water</option>
+          <option value="population">population</option>
+          <option value="orbital_period">orbital_period</option>
+          <option value="diameter">diameter</option>
+          <option value="rotation_period">rotation_period</option>
+          <option value="surface_water">surface_water</option>
         </select>
         <select
           data-testid="comparison-filter"
           name="comparison"
-          onChange={ handleNumericFilters }
+          onChange={ ({ target }) => setComparisonState(target.value) }
+          value={ comparisonState }
         >
-          <option value="maior que">Maior que</option>
-          <option value="menor que">Menor que</option>
-          <option value="igual a">Igual a</option>
+          <option value="maior que">maior que</option>
+          <option value="menor que">menor que</option>
+          <option value="igual a">igual a</option>
         </select>
         <input
           data-testid="value-filter"
           type="number"
           name="value"
-          onChange={ handleNumericFilters }
+          value={ valueState }
+          onChange={ ({ target }) => setValueState(target.value) }
         />
         <button
           type="button"
           data-testid="button-filter"
+          onClick={ handleNumericFilters }
         >
           Filtrar
 

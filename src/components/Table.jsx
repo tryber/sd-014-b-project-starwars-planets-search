@@ -4,7 +4,7 @@ import Loading from './Loading';
 import '../App.css';
 
 function Table() {
-  const { data, isLoading } = useContext(Context);
+  const { planets, isLoading } = useContext(Context);
   if (isLoading) {
     return <Loading />;
   }
@@ -28,7 +28,7 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {data.map((planet) => (
+        {planets.map((planet) => (
           <tr key={ planet.name }>
             <td>{planet.name}</td>
             <td>{planet.rotation_period}</td>

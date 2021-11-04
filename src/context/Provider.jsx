@@ -5,22 +5,28 @@ export const Context = createContext();
 
 function Provider({ children }) {
   const [data, setData] = useState([]);
+  const [planets, setPlanets] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [filters, setFilters] = useState(
     { filterByName: {
       name: '',
     },
-    filterByNumericValues: [
-      {
-        column: 'population',
-        comparision: 'maior que',
-        value: '',
-      },
-    ] },
+    filterByNumericValues: [] },
   );
+
+  const context = {
+    data,
+    setData,
+    isLoading,
+    setIsLoading,
+    filters,
+    setFilters,
+    setPlanets,
+    planets };
+
   return (
     <Context.Provider
-      value={ { data, setData, isLoading, setIsLoading, filters, setFilters } }
+      value={ context }
     >
       { children }
     </Context.Provider>
