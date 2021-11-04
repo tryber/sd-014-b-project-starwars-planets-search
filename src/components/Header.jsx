@@ -91,10 +91,15 @@ export default function Header() {
           Filtrar
         </button>
       </div>
-      <div>
-        <h3>Filtros:</h3>
-        {filters.filterByNumericValues.length > 0 && renderAppliedFilters()}
-      </div>
+      {filters.filterByNumericValues.length > 0
+        && (
+          <div>
+            <h3>Filtros:</h3>
+            <div className={ styles.filtersContainer }>
+              {renderAppliedFilters()}
+            </div>
+          </div>
+        )}
     </div>
   );
 }

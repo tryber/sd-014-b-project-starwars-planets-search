@@ -1,6 +1,7 @@
 import React from 'react';
 import heads from '../data/tableHeads';
 import usePlanets from '../hooks/usePlanets';
+import styles from '../styles/table.module.scss';
 
 export default function Table() {
   const { data, filters } = usePlanets();
@@ -8,24 +9,26 @@ export default function Table() {
   // Refatorando e excluindo useEffects com ajuda do Glauco e o video https://www.youtube.com/watch?v=OlVkYnVXPl0
 
   let filteredData = data.filter(
-    (planet) => planet.name.includes(filters.filterByName.name),
+    (planet) => planet.name.toLowerCase().includes(
+      filters.filterByName.name.toLowerCase(),
+    ),
   );
 
   filters.filterByNumericValues.forEach(({ column, value, comparison }) => {
     switch (comparison) {
     case 'maior que':
       filteredData = filteredData.filter(
-        (planet) => Number(planet[`${column}`]) > Number(value),
+        (planet) => Number(planet[column]) > Number(value),
       );
       break;
     case 'menor que':
       filteredData = filteredData.filter(
-        (planet) => Number(planet[`${column}`]) < Number(value),
+        (planet) => Number(planet[column]) < Number(value),
       );
       break;
     case 'igual a':
       filteredData = filteredData.filter(
-        (planet) => Number(planet[`${column}`]) === Number(value),
+        (planet) => Number(planet[column]) === Number(value),
       );
       break;
     default:
@@ -34,15 +37,18 @@ export default function Table() {
   });
 
   return (
-    <table>
+    <table className={ styles.table }>
       <thead>
         <tr>
           {heads.map((head) => (<th key={ head }>{head}</th>))}
         </tr>
       </thead>
       <tbody>
-        {filteredData.map((planet) => (
-          <tr key={ planet.name }>
+        {filteredData.map((planet, index) => (
+          <tr
+            key={ planet.name }
+            className={ index % 2 === 0 ? styles.even : styles.odd }
+          >
             <td>{planet.name}</td>
             <td>{planet.rotation_period}</td>
             <td>{planet.orbital_period}</td>
