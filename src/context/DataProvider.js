@@ -5,6 +5,7 @@ import requestApiPlanets from '../services/requestApiPlanets';
 
 function DataProvider({ children }) {
   const [data, setData] = useState([]);
+  const [searchName, setSearchName] = useState('');
 
   async function fetchRequestApiPlanets() {
     const resposta = await requestApiPlanets();
@@ -12,7 +13,15 @@ function DataProvider({ children }) {
   }
 
   return (
-    <DataContext.Provider value={ { data, fetchRequestApiPlanets } }>
+    <DataContext.Provider
+      value={
+        {
+          data,
+          searchName,
+          setSearchName,
+          fetchRequestApiPlanets }
+      }
+    >
       { children }
     </DataContext.Provider>
   );
