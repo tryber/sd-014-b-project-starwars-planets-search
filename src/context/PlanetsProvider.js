@@ -7,11 +7,16 @@ function PlanetsProvider({ children }) {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [filters, setFilters] = useState({
-    filters: {
-      filterByName: {
-        name: '',
-      },
+    filterByName: {
+      name: '',
     },
+    filterByNumericValues: [
+      {
+        column: 'population',
+        comparison: 'maior que',
+        value: 0,
+      },
+    ],
   });
   const [planetsUpdated, setPlanetsUpdated] = useState([]);
 

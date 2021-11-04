@@ -4,7 +4,7 @@ import PlanetsContext from '../context/PlanetsContext';
 function Input() {
   const { data, setFilters, setPlanetsUpdated } = useContext(PlanetsContext);
 
-  async function filterPlanets({ target: { value } }) {
+  async function filterByText({ target: { value } }) {
     // Tanto o input digitado, quando o nome do planeta são jogados para lowercase
     const inputValue = value.toLowerCase();
 
@@ -19,7 +19,7 @@ function Input() {
     <input
       data-testid="name-filter"
       placeholder="Filtrar por nome"
-      onChange={ filterPlanets }
+      onChange={ filterByText }
     />
   );
 }
