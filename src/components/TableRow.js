@@ -14,8 +14,10 @@ export default function TableRow({ data }) {
 }
 
 TableRow.propTypes = {
-  data: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.array,
-  ]).isRequired,
+  data: PropTypes.arrayOf(
+    PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.array,
+    ]),
+  ).isRequired,
 };
