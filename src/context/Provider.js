@@ -64,23 +64,6 @@ export default function Provider({ children }) {
   useEffect(() => {
     setFilterItem(
       {
-        filters: {
-          filterByName: {
-            name: filter,
-          },
-          filterByNumericValues: [],
-        },
-      },
-    );
-    const getPlanetName = planets.filter((item) => (
-      item.name.toLowerCase().includes(filter.toLocaleLowerCase())
-    ));
-    setFilterPlanets(getPlanetName);
-  }, [filter, planets]);
-
-  useEffect(() => {
-    setFilterItem(
-      {
         filters:
           {
             filterByName: {
@@ -90,20 +73,23 @@ export default function Provider({ children }) {
           },
       },
     );
-    const getPlanetByNumbers = planets.filter((item) => {
+    const getPlanetName = planets
+      .filter((item) => (
+        item.name.toLowerCase().includes(filter.toLocaleLowerCase())));
+    const getFilterNumber = getPlanetName.filter((planet) => {
       switch (comparison.comparison) {
       case 'menor que':
-        return Number(item[comparison.column]) < comparison.value;
+        return Number(planet[comparison.column]) < comparison.value;
       case 'maior que':
-        return Number(item[comparison.column]) > comparison.value;
+        return Number(planet[comparison.column]) > comparison.value;
       case 'igual a':
-        return Number(item[comparison.column]) === Number(comparison.value);
+        return Number(planet[comparison.column]) === Number(comparison.value);
       default:
-        return item;
+        return planet;
       }
     });
-    setFilterPlanets(getPlanetByNumbers);
-  }, [comparison, filter, planets]);
+    setFilterPlanets(getFilterNumber);
+  }, [filter, planets, comparison]);
 
   return (
     <NewContext.Provider value={ context }>
