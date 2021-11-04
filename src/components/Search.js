@@ -3,11 +3,18 @@ import './table.css';
 import DataContext from '../context/DataContext';
 
 function Search() {
-  const { searchName, setSearchName } = useContext(DataContext);
+  const { searchName,
+    setFilterEnabled,
+    data, setData, setSearchName } = useContext(DataContext);
 
   function handleChange(event) {
     const nome = event.target.value;
     setSearchName(nome);
+    setFilterEnabled(true);
+    const filterPlanet = data.filter((planet) => (
+      planet.name.toLowerCase().includes(nome.toLowerCase())
+    ));
+    setData(filterPlanet);
   }
 
   return (

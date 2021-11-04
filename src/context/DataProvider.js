@@ -6,10 +6,13 @@ import requestApiPlanets from '../services/requestApiPlanets';
 function DataProvider({ children }) {
   const [data, setData] = useState([]);
   const [searchName, setSearchName] = useState('');
+  const [filterName, setFilterName] = useState();
+  const [filterEnabled, setFilterEnabled] = useState(false);
 
   async function fetchRequestApiPlanets() {
     const resposta = await requestApiPlanets();
-    setData(resposta.results);
+    const result = resposta.results;
+    setData(result);
   }
 
   return (
@@ -18,6 +21,11 @@ function DataProvider({ children }) {
         {
           data,
           searchName,
+          filterName,
+          filterEnabled,
+          setData,
+          setFilterEnabled,
+          setFilterName,
           setSearchName,
           fetchRequestApiPlanets }
       }
