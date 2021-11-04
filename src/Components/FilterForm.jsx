@@ -1,12 +1,32 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
+import TableContext from '../context/TableContext';
 
 function FilterForm() {
+  const { setFilters } = useContext(TableContext);
+  const [column, setColumn] = useState('population');
+  const [comparison, setComparison] = useState('maior que');
+  const [value, setValue] = useState(0);
+
+  function handleClickSendFilter() {
+    setFilters((prevState) => ({
+      ...prevState,
+      filterByNumericValues: [
+        {
+          column,
+          comparison,
+          value,
+        },
+      ],
+    }));
+  }
+
   return (
     <div>
       <form>
         <select
-          name="column"
           data-testid="column-filter"
+          value={ column }
+          onChange={ ({ target }) => setColumn(target.value) }
         >
           <option value="population">population</option>
           <option value="orbital_period">orbital_period</option>
@@ -15,8 +35,9 @@ function FilterForm() {
           <option value="surface_water">surface_water</option>
         </select>
         <select
-          name="comparison"
           data-testid="comparison-filter"
+          value={ comparison }
+          onChange={ ({ target }) => setComparison(target.value) }
         >
           <option value="maior que">maior que</option>
           <option value="menor que">menor que</option>
@@ -24,14 +45,15 @@ function FilterForm() {
         </select>
         <input
           type="number"
-          name="value"
           data-testid="value-filter"
+          value={ value }
+          onChange={ ({ target }) => setValue(target.value) }
         />
       </form>
       <button
         type="button"
         data-testid="button-filter"
-        name="filter"
+        onClick={ () => handleClickSendFilter() }
       >
         Filtrar
       </button>
