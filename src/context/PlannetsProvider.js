@@ -7,7 +7,7 @@ export default function PlannetsProvider({ children }) {
   const [data, setData] = useState([]);
   const [name, setName] = useState('');
   const [column, setColumn] = useState('population');
-  const [comparison, setComparison] = useState('maior que');
+  const [comparison, setComparison] = useState('maior');
   const [value, setFilterValue] = useState(0);
   const [filterData, setFilterData] = useState([]);
 
@@ -18,6 +18,27 @@ export default function PlannetsProvider({ children }) {
     }
     saveData();
   }, []);
+
+  function filterDataByNumericValues() {
+    let filter = data;
+    switch (comparison) {
+    case 'maior que':
+      filter = data.filter((element) => parseInt(element[column], 10) > value);
+      setFilterData(filter);
+      break;
+    case 'igual a':
+      filter = data.filter((element) => element[column] === value);
+      setFilterData(filter);
+      break;
+    case 'menor que':
+      filter = data.filter((element) => parseInt(element[column], 10) < value);
+      setFilterData(filter);
+      break;
+    default:
+      setFilterData(data);
+      return filter;
+    }
+  }
 
   const INITIAL_STATE = { data,
     filters: {
@@ -36,6 +57,7 @@ export default function PlannetsProvider({ children }) {
     setColumn,
     setComparison,
     setFilterValue,
+    filterDataByNumericValues,
   };
 
   return (
