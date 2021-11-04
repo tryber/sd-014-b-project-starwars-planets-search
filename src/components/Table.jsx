@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function PlanetContext() {
-  const { data, requestPlanets, text, filterData } = useContext(PlanetsContext);
+  const { data, requestPlanets, text, filterColumn } = useContext(PlanetsContext);
   useEffect(() => {
     requestPlanets();
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -32,15 +32,18 @@ function PlanetContext() {
           data
             .filter(({ name }) => name.includes(text))
             .filter((planet) => {
-              if (!filterData.value) return true;
-              if (filterData.comparison === 'maior que') {
-                return Number(planet[filterData.column]) > Number(filterData.value);
+              if (!filterColumn[filterColumn.length - 1]) return true;
+              if (filterColumn[filterColumn.length - 1].comparison === 'maior que') {
+                return Number(planet[filterColumn[filterColumn.length - 1].column])
+                > Number(filterColumn[filterColumn.length - 1].value);
               }
-              if (filterData.comparison === 'menor que') {
-                return Number(planet[filterData.column]) < Number(filterData.value);
+              if (filterColumn[filterColumn.length - 1].comparison === 'menor que') {
+                return Number(planet[filterColumn[filterColumn.length - 1].column])
+                < Number(filterColumn[filterColumn.length - 1].value);
               }
-              if (filterData.comparison === 'igual a') {
-                return planet[filterData.column] === filterData.value;
+              if (filterColumn[filterColumn.length - 1].comparison === 'igual a') {
+                return planet[filterColumn[filterColumn.length - 1].column]
+                === filterColumn[filterColumn.length - 1].value;
               }
               return true; // eslint(array-callback-return)
             })
@@ -53,7 +56,7 @@ function PlanetContext() {
                 <td>{ item.climate }</td>
                 <td>{ item.gravity }</td>
                 <td>{ item.terrain }</td>
-                <td>{ Number(item.surface_water) }</td>
+                <td>{ item.surface_water }</td>
                 <td>{ item.population }</td>
                 <td>{ item.films.map((film) => film) }</td>
                 <td>{ item.created }</td>

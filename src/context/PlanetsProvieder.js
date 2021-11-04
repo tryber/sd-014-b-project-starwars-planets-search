@@ -16,6 +16,9 @@ function PlanetsProvider({ children }) {
     setPlanets({ data: [...results] });
   };
 
+  const [optionsColumn, setOptionsColumn] = useState(['population',
+    'orbital_period', 'diameter', 'rotation_period', 'surface_water']);
+
   const context = {
     data: planets.data,
     requestPlanets,
@@ -25,6 +28,8 @@ function PlanetsProvider({ children }) {
     setFilter,
     filterColumn,
     setFilterColumn,
+    optionsColumn,
+    setOptionsColumn,
   };
 
   return (

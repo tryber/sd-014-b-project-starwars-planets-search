@@ -3,12 +3,10 @@ import PlanetsContext from '../context/PlanetsContext';
 
 function FilterNumber() {
   const [column, setColumn] = useState('population');
-  const [comparison, setComparison] = useState('>');
+  const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState(0);
-  const { setFilter, filterColumn, setFilterColumn } = useContext(PlanetsContext);
-
-  const [optionsColumn, setOptionsColumn] = useState(['population',
-    'orbital_period', 'diameter', 'rotation_period', 'surface_water']);
+  const { setFilter, filterColumn,
+    setFilterColumn, setOptionsColumn, optionsColumn } = useContext(PlanetsContext);
 
   return (
     <form>

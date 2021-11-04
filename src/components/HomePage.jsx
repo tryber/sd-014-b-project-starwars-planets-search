@@ -3,6 +3,7 @@ import Table from './Table';
 import InputSearchText from './InputSearchText';
 import PlanetsContext from '../context/PlanetsContext';
 import FilterNumber from './FilterNumber';
+import ButtonRemove from './ButtonRemove';
 
 function HomePage() {
   const { requestPlanets } = useContext(PlanetsContext);
@@ -16,6 +17,7 @@ function HomePage() {
     <main>
       <InputSearchText />
       <FilterNumber />
+      <ButtonRemove />
       <Table />
     </main>
   );
