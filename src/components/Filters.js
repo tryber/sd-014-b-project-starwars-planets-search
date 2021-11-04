@@ -68,13 +68,19 @@ function Filters() {
         <button
           type="button"
           data-testid="button-filter"
-          onClick={ () => setFilters({
-            ...filters,
-            filterByNumericValues: [
-              ...filters.filterByNumericValues,
-              filterByNumericValues,
-            ],
-          }) }
+          onClick={ () => {
+            setFilters({
+              ...filters,
+              filterByNumericValues: [
+                ...filters.filterByNumericValues,
+                filterByNumericValues,
+              ],
+            });
+            setFilterByNumericValues((prevState) => ({
+              ...prevState,
+              column: columnsFilter.find((filter) => filter !== prevState.column),
+            }));
+          } }
         >
           Filtrar
         </button>

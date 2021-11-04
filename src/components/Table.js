@@ -1,14 +1,18 @@
 import React, { useContext } from 'react';
 import { PlanetsContext } from '../contexts/PlanetsContext';
+import filterData from '../services/filterData';
 import Loading from './Loading';
 
 function Table() {
   const { data, isLoading,
     filters: { filterByName, filterByNumericValues } } = useContext(PlanetsContext);
-  const defaultValue = { column: 'population', comparison: 'maior que', value: '' };
-  const {
-    column, comparison, value,
-  } = filterByNumericValues[filterByNumericValues.length - 1] || defaultValue;
+
+  let dataFiltered = [];
+  if (filterByNumericValues.length > 0) {
+    dataFiltered = filterData(data, filterByNumericValues);
+  } else {
+    dataFiltered = data;
+  }
   return (
     isLoading ? <Loading /> : (
       <table>
@@ -30,19 +34,8 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          { data
+          { dataFiltered
             .filter(({ name }) => name.toLowerCase().includes(filterByName.toLowerCase()))
-            .filter((planet) => {
-              if (!value) return true;
-              if (comparison === 'maior que') {
-                return Number(planet[column]) > Number(value);
-              }
-              if (comparison === 'menor que') {
-                return Number(planet[column]) < Number(value);
-              }
-              if (comparison === 'igual a') return planet[column] === value;
-              return true; // eslint(array-callback-return)
-            })
             .map((planet) => (
               <tr key={ planet.name }>
                 <td>{planet.name}</td>
