@@ -6,18 +6,10 @@ export const PlanetsContext = createContext();
 const PLANETS_URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
 
 const INITIAL_FILTER = {
-  filters: {
-    filterByName: {
-      name: '',
-    },
-    filterByNumericValues: [
-      {
-        column: '',
-        comparison: '',
-        value: '',
-      },
-    ],
+  filterByName: {
+    name: '',
   },
+  filterByNumericValues: [],
 };
 
 function PlanetsProvider({ children }) {
@@ -34,22 +26,44 @@ function PlanetsProvider({ children }) {
       });
   }
 
+  function getFilterParams(filter, planet) {
+    const { column, comparison, value } = filter;
+    if (comparison !== 'igual a') {
+      return comparison === 'maior que'
+        ? +(planet[column]) > +(value) : +(planet[column]) < +(value);
+    }
+    return planet[column] === value;
+  }
+
   useEffect(() => fetchPlanets(), []);
 
   useEffect(() => {
     function filterByName() {
       return planets.filter(({ name }) => (
-        name.toLowerCase().includes(filters.filters.filterByName.name)
+        name.toLowerCase().includes(filters.filterByName.name)
       ));
     }
 
     if (planets.length > 0) setData(filterByName());
-  }, [filters, planets]);
+  }, [filters.filterByName]);
+
+  useEffect(() => {
+    function filterByQuantity() {
+      let planetsResult = planets;
+      filters.filterByNumericValues.forEach((filter) => {
+        planetsResult = planetsResult
+          .filter((planet) => getFilterParams(filter, planet));
+      });
+      return planetsResult;
+    }
+
+    if (planets.length > 0) setData(filterByQuantity());
+  }, [filters.filterByNumericValues.length]);
 
   const state = {
     data,
     setData,
-    filters: filters.filters,
+    filters,
     setFilters,
   };
 
