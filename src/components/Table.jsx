@@ -1,10 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
-import Loading from './Loading';
 
 const Table = () => {
   const { data, filters: { filterByName: { name },
-    filterByNumericValues }, isFetching } = useContext(PlanetsContext);
+    filterByNumericValues } } = useContext(PlanetsContext);
   const [planets, setPlanets] = useState(data);
 
   useEffect(() => {
@@ -35,6 +34,10 @@ const Table = () => {
             default:
               return filterNamePlanets;
             }
+            if (name.length !== 0) {
+              setPlanets(filterNamePlanets
+                .filter((item) => item.name.toLowerCase().includes(name.toLowerCase())));
+            }
           });
       }
       return filterNamePlanets;
@@ -63,25 +66,24 @@ const Table = () => {
         </tr>
       </thead>
       <tbody>
-        {isFetching ? <Loading />
-          : planets
-            .map((planet) => (
-              <tr key={ planet.name }>
-                <td>{planet.name}</td>
-                <td>{planet.rotation_period}</td>
-                <td>{planet.orbital_period}</td>
-                <td>{planet.diameter}</td>
-                <td>{planet.climate}</td>
-                <td>{planet.gravity}</td>
-                <td>{planet.terrain}</td>
-                <td>{planet.surface_water}</td>
-                <td>{planet.population}</td>
-                <td>{planet.films}</td>
-                <td>{planet.created}</td>
-                <td>{planet.edited}</td>
-                <td>{planet.url}</td>
-              </tr>
-            ))}
+        {planets
+          .map((planet) => (
+            <tr key={ planet.name }>
+              <td>{planet.name}</td>
+              <td>{planet.rotation_period}</td>
+              <td>{planet.orbital_period}</td>
+              <td>{planet.diameter}</td>
+              <td>{planet.climate}</td>
+              <td>{planet.gravity}</td>
+              <td>{planet.terrain}</td>
+              <td>{planet.surface_water}</td>
+              <td>{planet.population}</td>
+              <td>{planet.films}</td>
+              <td>{planet.created}</td>
+              <td>{planet.edited}</td>
+              <td>{planet.url}</td>
+            </tr>
+          ))}
       </tbody>
     </table>
   );
