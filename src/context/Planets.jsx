@@ -4,15 +4,19 @@ import PropTypes from 'prop-types';
 export const PlanetsContext = createContext();
 
 export const PlanetsProvider = ({ children }) => {
-  const [planets, setPlanets] = useState({ results: [] });
+  const [planets, setPlanets] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setLoading(true);
     fetch('https://swapi-trybe.herokuapp.com/api/planets/')
       .then((response) => response.json())
-      .then((planetsData) => {
-        setPlanets(planetsData);
+      .then((planetsObject) => {
+        const planetsArray = planetsObject.results.map((result) => {
+          delete result.residents;
+          return result;
+        });
+        setPlanets(planetsArray);
         setLoading(false);
       });
   }, []);
@@ -33,5 +37,5 @@ export const usePlanets = () => {
 };
 
 PlanetsProvider.propTypes = {
-  children: PropTypes.element,
+  children: PropTypes.node,
 }.isRequired;

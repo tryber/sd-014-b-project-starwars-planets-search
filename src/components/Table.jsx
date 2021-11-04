@@ -1,32 +1,37 @@
 import React from 'react';
 import Loading from './Loading';
 import { usePlanets } from '../context/Planets';
+import { useFilters } from '../context/Filters';
 
 const Table = () => {
   const { planets, loading } = usePlanets();
+  const { filters: { filterByName: { name } } } = useFilters();
 
-  if (loading || planets.results.length < 1) { return <Loading />; }
+  if (loading || planets.length < 1) { return <Loading />; }
+
+  let tablePlanets = planets;
+
+  if (name !== '') {
+    tablePlanets = planets
+      .filter((planet) => planet.name.toLowerCase().includes(name.toLowerCase()));
+  }
 
   return (
     <table>
       <thead>
         <tr>
-          { Object.keys(planets.results[0])
-            .filter((planetKey) => planetKey !== 'residents')
-            .map((filteredPlanetKey, index) => (
-              <th key={ index }>{ filteredPlanetKey }</th>))}
+          { Object.keys(planets[0])
+            .map((planetKey, index) => (<th key={ index }>{ planetKey }</th>))}
         </tr>
       </thead>
       <tbody>
-        { planets.results
-          .map((planet, planetIndex) => {
-            const planetKeys = Object.keys(planet);
-            const tableColumns = planetKeys
-              .filter((planetKey) => planetKey !== 'residents')
-              .map((filteredPlanetKey, filteredPlanetKeyIndex) => (
-                <td key={ filteredPlanetKeyIndex }>{ planet[filteredPlanetKey] }</td>));
-            return (<tr key={ planetIndex }>{ tableColumns }</tr>);
-          }) }
+        { tablePlanets.map((planet, planetIndex) => {
+          const planetKeys = Object.keys(planet);
+          const tableColumns = planetKeys
+            .map((planetKey, planetKeyIndex) => (
+              <td key={ planetKeyIndex }>{ planet[planetKey] }</td>));
+          return (<tr key={ planetIndex }>{ tableColumns }</tr>);
+        }) }
       </tbody>
     </table>
   );
