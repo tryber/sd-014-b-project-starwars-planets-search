@@ -13,7 +13,7 @@ const selectComparisonList = ['maior que', 'menor que', 'igual a'];
 
 export default function NumericFIlter() {
   const { setFilteredData,
-    setNumericFilter, data, columns, setColumns } = useContext(PlanetsContext);
+    setNumericFilter, filteredData, columns, setColumns } = useContext(PlanetsContext);
   const [columnInput, setColumnInput] = useState(columns[0]);
   const [comparisonInput, setComparisonInput] = useState(selectComparisonList[0]);
   const [valueInput, setValueInput] = useState('');
@@ -26,7 +26,7 @@ export default function NumericFIlter() {
 
     // const { value, column, comparison } = numericFilter;
 
-    const filterByNumeric = data.filter((planet) => {
+    const filterByNumeric = filteredData.filter((planet) => {
       if (comparisonInput === 'maior que') {
         return Number(planet[columnInput]) > valueInput;
       }
