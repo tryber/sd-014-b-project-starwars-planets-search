@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import MyContext from '../MyContext';
 
 export default function Filters() {
@@ -7,6 +7,12 @@ export default function Filters() {
     filterByNumericValues,
     setFilterByNumericValues,
     data, setData } = contextValue;
+
+  const [filterColumn, setFilterColumn] = useState([]);
+
+  const [options, setOptions] = useState([
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+  ]);
 
   const handleChange = ({ target }) => {
     setFilterByNumericValues({
@@ -31,6 +37,8 @@ export default function Filters() {
   function handleClick() {
     const { comparison, column, value } = filterByNumericValues;
     setData(filterData(comparison, column, value));
+    setFilterColumn([...filterColumn, { column, comparison, value }]);
+    setOptions(options.filter((e) => e !== column));
   }
 
   return (
@@ -47,11 +55,7 @@ export default function Filters() {
         name="column"
         onChange={ handleChange }
       >
-        <option value="population">population</option>
-        <option value="orbitual_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        { options.map((item, index) => <option key={ index }>{item}</option>) }
       </select>
       <select
         data-testid="comparison-filter"
