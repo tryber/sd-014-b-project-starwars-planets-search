@@ -7,6 +7,7 @@ function PlanetsProvider({ children }) {
   const [planets, setPlanets] = useState({
     data: [],
   });
+  const [text, setText] = useState('');
 
   const requestPlanets = async () => {
     const { results } = await getTablePlanets();
@@ -16,6 +17,8 @@ function PlanetsProvider({ children }) {
   const context = {
     data: planets.data,
     requestPlanets,
+    text,
+    setText,
   };
 
   return (

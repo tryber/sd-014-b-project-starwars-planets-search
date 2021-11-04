@@ -2,8 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function PlanetContext() {
-  const { data, requestPlanets } = useContext(PlanetsContext);
-
+  const { data, requestPlanets, text } = useContext(PlanetsContext);
   useEffect(() => {
     requestPlanets();
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -30,7 +29,7 @@ function PlanetContext() {
       </thead>
       <tbody>
         {
-          data.map((item, idx) => (
+          data.filter(({ name }) => name.includes(text)).map((item, idx) => (
             <tr key={ idx }>
               <td>{ item.name }</td>
               <td>{ item.rotation_period }</td>
