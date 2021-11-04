@@ -11,11 +11,7 @@ export const FILTER_TEXT = {
     },
 };
 
-function Provider({ children }) {
-  const [data, setData] = useState([]);
-  const [filteredPlanets, setFilteredPlanets] = useState([]);
-  const [isFiltering, setIsFiltering] = useState(false);
-  const [filter, setFilter] = useState(FILTER_TEXT);
+function Provider({ children })
 
   async function fetchPlanets() {
     const { results } = await fetch('https://swapi.dev/api/planets')
