@@ -9,6 +9,7 @@ function PlanetsProvider({ children }) {
   });
   const [text, setText] = useState('');
   const [filterData, setFilter] = useState('');
+  const [filterColumn, setFilterColumn] = useState([]);
 
   const requestPlanets = async () => {
     const { results } = await getTablePlanets();
@@ -22,6 +23,8 @@ function PlanetsProvider({ children }) {
     setText,
     filterData,
     setFilter,
+    filterColumn,
+    setFilterColumn,
   };
 
   return (

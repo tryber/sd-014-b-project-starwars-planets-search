@@ -5,7 +5,11 @@ function FilterNumber() {
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('>');
   const [value, setValue] = useState(0);
-  const { setFilter } = useContext(PlanetsContext);
+  const { setFilter, filterColumn, setFilterColumn } = useContext(PlanetsContext);
+
+  const [optionsColumn, setOptionsColumn] = useState(['population',
+    'orbital_period', 'diameter', 'rotation_period', 'surface_water']);
+
   return (
     <form>
       <select
@@ -13,11 +17,7 @@ function FilterNumber() {
         value={ column }
         onChange={ ({ target }) => setColumn(target.value) }
       >
-        <option>population</option>
-        <option>orbital_period</option>
-        <option>diameter</option>
-        <option>rotation_period</option>
-        <option>surface_water</option>
+        { optionsColumn.map((e, i) => <option key={ i }>{e}</option>)}
       </select>
       <select
         data-testid="comparison-filter"
@@ -37,8 +37,11 @@ function FilterNumber() {
       <button
         type="button"
         data-testid="button-filter"
-        // onClick={ () => setFilter([column, comparison, value]) }
-        onClick={ () => setFilter({ column, comparison, value }) }
+        onClick={ () => {
+          setFilter({ column, comparison, value });
+          setFilterColumn([...filterColumn, { column, comparison, value }]);
+          setOptionsColumn(optionsColumn.filter((e) => e !== column));
+        } }
       >
         Adicionar filtro
 
