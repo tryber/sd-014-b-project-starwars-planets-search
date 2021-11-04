@@ -9,6 +9,13 @@ export default function Provider({ children }) {
   const [dataFilter, setDataFilter] = useState([]);
   const [filterOn, setFilterOn] = useState(false);
 
+  const mapOptions = ['diameter',
+    'population',
+    'orbital_period',
+    'rotation_period',
+    'surface_water'];
+  const [mapOptionContext, setMapOptionContext] = useState(mapOptions);
+
   const contextValue = {
     data,
     setData,
@@ -20,6 +27,8 @@ export default function Provider({ children }) {
     setDataFilter,
     filterOn,
     setFilterOn,
+    mapOptionContext,
+    setMapOptionContext,
   };
 
   async function fecthPlanets() {

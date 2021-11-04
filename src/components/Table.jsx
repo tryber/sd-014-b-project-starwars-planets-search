@@ -27,14 +27,14 @@ export default function Table() {
           <th>name</th>
           <th>climate</th>
           <th>population</th>
-          <th>surface water</th>
           <th>created</th>
           <th>diameter</th>
+          <th>rotation period</th>
           <th>edited</th>
           <th>films</th>
           <th>gravity</th>
           <th>orbital period</th>
-          <th>rotation period</th>
+          <th>surface water</th>
           <th>terrain</th>
           <th>url</th>
         </tr>
@@ -44,14 +44,14 @@ export default function Table() {
           <tr key={ planets.name }>
             <td>{planets.name}</td>
             <td>{planets.climate}</td>
+            <td>{planets.population}</td>
             <td>{planets.created}</td>
             <td>{planets.diameter}</td>
+            <td>{planets.rotation_period}</td>
             <td>{planets.edited}</td>
             <td>{planets.films}</td>
             <td>{planets.gravity}</td>
             <td>{planets.orbital_period}</td>
-            <td>{planets.population}</td>
-            <td>{planets.rotation_period}</td>
             <td>{planets.surface_water}</td>
             <td>{planets.terrain}</td>
             <td>{planets.url}</td>

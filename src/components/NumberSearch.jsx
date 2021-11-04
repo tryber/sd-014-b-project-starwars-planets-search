@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React, { useState, useContext } from 'react';
 import MyContext from '../context/MyContext';
 
@@ -18,7 +19,8 @@ export default function NumberSearch() {
   };
 
   const { setFilterByNumericValues, data,
-    setDataFilter, setFilterOn, filterByNumericValues } = useContext(MyContext);
+    setDataFilter, setFilterOn, filterByNumericValues,
+    mapOptionContext, setMapOptionContext } = useContext(MyContext);
 
   const setFilterData = () => {
     let filtrado = [];
@@ -40,6 +42,13 @@ export default function NumberSearch() {
     setDataFilter(filtrado);
   };
 
+  const editOptionsMap = () => {
+    const newmapOptionContext = mapOptionContext.filter((item) => (
+      item !== columnFilter
+    ));
+    setMapOptionContext(newmapOptionContext);
+  };
+
   const sendFilters = () => {
     setFilterByNumericValues([...filterByNumericValues, {
       column: columnFilter,
@@ -48,6 +57,7 @@ export default function NumberSearch() {
     }]);
     setFilterData();
     setFilterOn(true);
+    editOptionsMap();
   };
 
   return (
@@ -59,11 +69,10 @@ export default function NumberSearch() {
         value={ columnFilter }
         onChange={ handleChangeColumnFilter }
       >
-        <option value="diamenter">diameter</option>
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        {mapOptionContext.map((item) => (
+          <option key={ item } value={ item }>{item}</option>
+        ))}
+
       </select>
       <select
         data-testid="comparison-filter"
