@@ -39,7 +39,7 @@ table {
 
 th {
   background: #333;
-  border: 1px solid #999;
+  border: 1px solid rgb(68, 68, 68);
   color: white;
   font-family: Poppins , sans-serif;
   font-size: 15px;
