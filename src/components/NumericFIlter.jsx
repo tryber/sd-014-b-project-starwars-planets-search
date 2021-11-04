@@ -1,14 +1,6 @@
 import React, { useContext, useState } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
-// const columnInput = [
-//   'population',
-//   'orbital_period',
-//   'diameter',
-//   'rotation_period',
-//   'surface_water',
-// ];
-
 const selectComparisonList = ['maior que', 'menor que', 'igual a'];
 
 export default function NumericFIlter() {
@@ -23,8 +15,6 @@ export default function NumericFIlter() {
       value: Number(valueInput),
       column: columnInput,
       comparison: comparisonInput });
-
-    // const { value, column, comparison } = numericFilter;
 
     const filterByNumeric = filteredData.filter((planet) => {
       if (comparisonInput === 'maior que') {

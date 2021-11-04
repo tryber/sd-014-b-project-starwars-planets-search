@@ -46,7 +46,7 @@ export default function PlanetsProvider({ children }) {
 
   if (isFetching === true) {
     return 'Loading...';
-  } return (
+  } return ( // adaptado da aula - https://github.com/tryber/sd-014-b-live-lectures/blob/lecture/17.3/iss/src/context/ISSProvider.js
     <PlanetsContext.Provider
       value={ store }
     >

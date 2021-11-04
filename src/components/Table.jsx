@@ -14,8 +14,6 @@ export default function Table() {
     setIsLoading(false);
   }, [data]);
 
-  console.log(filteredData);
-
   if (isLoading) {
     return 'Loading...';
   }
