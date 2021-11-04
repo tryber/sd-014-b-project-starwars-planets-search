@@ -24,7 +24,7 @@ function Input({
 
 Input.propTypes = {
   className: PropTypes.string.isRequired,
-  children: PropTypes.string.isRequired,
+  children: PropTypes.string,
   dataTestId: PropTypes.string.isRequired,
   id: PropTypes.string,
   inputName: PropTypes.string.isRequired,
@@ -35,6 +35,7 @@ Input.propTypes = {
 };
 
 Input.defaultProps = {
+  children: null,
   id: null,
   placeholder: null,
 };
