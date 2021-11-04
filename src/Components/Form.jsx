@@ -1,15 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 
 import PropTypes from 'prop-types';
 
 import Input from './Input';
 import Select from './Select';
 
+import { MyContext } from '../Context/MyContext';
+
 function Form({ filterByName, filterComparasionNumeric }) {
+  const listOptionsColumnSelect = [
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+  ];
+  const { setFilters, filters } = useContext(MyContext);
+
   const [textSearch, setTextSearch] = useState('');
   const [textColumnSelect, setColumnSelect] = useState('population');
   const [textComparisonSelect, setComparisonSelect] = useState('maior que');
   const [valueFilter, setValueFilter] = useState('');
+  const [optionsColumnSelect, setOptionsColumnSelect] = useState(listOptionsColumnSelect);
 
   const handleFilterByName = ({ target }) => {
     setTextSearch(target.value);
@@ -20,9 +28,25 @@ function Form({ filterByName, filterComparasionNumeric }) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [textSearch]);
 
-  const optionsColumnSelect = [
-    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
-  ];
+  const removeOption = () => {
+    const newOptions = optionsColumnSelect
+      .filter((option) => option !== textColumnSelect);
+
+    const filtersComparison = {
+      id: filters.filterByNumericValues.length,
+      column: textColumnSelect,
+      comparison: textComparisonSelect,
+      value: valueFilter,
+    };
+
+    setOptionsColumnSelect(newOptions);
+    setColumnSelect(newOptions[0]);
+    setFilters({
+      ...filters,
+      filterByNumericValues: [...filters.filterByNumericValues, filtersComparison],
+    });
+  };
+
   return (
     <form className="form">
       <Input
@@ -68,9 +92,12 @@ function Form({ filterByName, filterComparasionNumeric }) {
       <button
         data-testid="button-filter"
         type="button"
-        onClick={ () => filterComparasionNumeric(
-          textColumnSelect, textComparisonSelect, valueFilter,
-        ) }
+        onClick={ () => {
+          filterComparasionNumeric(
+            textColumnSelect, textComparisonSelect, valueFilter,
+          );
+          removeOption();
+        } }
       >
         Acionar
       </button>

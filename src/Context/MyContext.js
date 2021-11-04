@@ -6,7 +6,15 @@ import planetsRequest from '../Services/services';
 export const MyContext = createContext(1);
 
 function PlanetsContextComponent({ children }) {
+  const filter = {
+    filterByName: {
+      name: '',
+    },
+    filterByNumericValues: [],
+  };
+
   const [planets, setPlanets] = useState([]);
+  const [filters, setFilters] = useState(filter);
 
   const getPlanets = async () => {
     setPlanets(await planetsRequest());
@@ -18,6 +26,8 @@ function PlanetsContextComponent({ children }) {
 
   const context = {
     data: planets,
+    filters,
+    setFilters,
   };
 
   return (
