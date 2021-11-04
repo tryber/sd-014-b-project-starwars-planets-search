@@ -11,3 +11,20 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+table {
+  border: 1px solid;
+  width: 100% ;
+  border-collapse: collapse;
+  background: #FFFFF0;
+}
+
+table td { 
+  text-align: center;
+  border: 1px solid black;
+}
+
+table th { 
+  text-align: center;
+  border: 1px solid black;
+}
