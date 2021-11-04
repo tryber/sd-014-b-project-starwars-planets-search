@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const TableRows = ({ planet }) => {
+const TableRow = ({ planet }) => {
   const {
     name,
     rotation_period: rotationPeriod,
@@ -37,8 +37,8 @@ const TableRows = ({ planet }) => {
   );
 };
 
-export default TableRows;
+export default TableRow;
 
-TableRows.propTypes = {
+TableRow.propTypes = {
   planet: PropTypes.objectOf(PropTypes.any).isRequired,
 };

@@ -2,15 +2,10 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 import TableHeader from './TableHeader';
-import TableRows from './TableRows';
+import TableRow from './TableRow';
 
 const Table = () => {
-  const { data, filters } = useContext(StarWarsContext);
-
-  const filter = () => {
-    const { filterByName: { name } } = filters;
-    return data.filter((planet) => planet.name.includes(name));
-  };
+  const { filtered } = useContext(StarWarsContext);
 
   return (
     <table>
@@ -18,8 +13,8 @@ const Table = () => {
         <TableHeader />
       </thead>
       <tbody>
-        { filter().map((planet, index) => (
-          <TableRows key={ index } planet={ planet } />
+        { filtered.map((planet, index) => (
+          <TableRow key={ index } planet={ planet } />
         ))}
       </tbody>
     </table>

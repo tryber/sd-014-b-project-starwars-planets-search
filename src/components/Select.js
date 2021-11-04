@@ -1,32 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Input = ({ id, name, onChange, placeholder, type, value }) => (
+const Select = ({ id, name, onChange, options, value }) => (
   <label htmlFor={ id }>
-    <input
+    <select
       data-testid={ id }
       id={ id }
       name={ name }
       onChange={ onChange }
-      placeholder={ placeholder }
-      type={ type }
       value={ value }
-    />
+    >
+      {
+        options.map((option, index) => (
+          <option key={ index }>{ option }</option>
+        ))
+      }
+    </select>
   </label>
 );
 
-export default Input;
+export default Select;
 
-Input.propTypes = {
+Select.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  placeholder: PropTypes.string,
-  type: PropTypes.string.isRequired,
+  options: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   value: PropTypes.string,
 };
 
-Input.defaultProps = {
-  placeholder: '',
+Select.defaultProps = {
   value: '',
 };
