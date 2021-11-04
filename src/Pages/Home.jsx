@@ -24,24 +24,21 @@ function Home() {
     textColumnSelect, textComparisonSelect, valueFilter,
   ) => {
     if (textComparisonSelect === 'maior que') {
-      const filterBiggerThen = data.filter((planet) => (
-        Number(planet[textColumnSelect]) > Number(valueFilter)
-      ));
-      return setDataFilter(filterBiggerThen);
+      return setDataFilter(
+        data.filter((planet) => Number(planet[textColumnSelect]) > Number(valueFilter)),
+      );
     }
 
     if (textComparisonSelect === 'menor que') {
-      const filterLessThan = data.filter((planet) => (
-        Number(planet[textColumnSelect]) < Number(valueFilter)
-      ));
-      return setDataFilter(filterLessThan);
+      return setDataFilter(
+        data.filter((planet) => Number(planet[textColumnSelect]) < Number(valueFilter)),
+      );
     }
 
     if (textComparisonSelect === 'igual a') {
-      const filterEqualTo = data.filter((planet) => (
-        Number(planet[textColumnSelect]) === Number(valueFilter)
-      ));
-      return setDataFilter(filterEqualTo);
+      return setDataFilter(
+        data.filter((planet) => Number(planet[textColumnSelect]) === Number(valueFilter)),
+      );
     }
   };
 
