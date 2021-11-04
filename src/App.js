@@ -8,7 +8,6 @@ import Provider from './context/MyProvider';
 
 function App() {
   return (
-    <Filter
     <Provider>
       <div>
         <Header />
