@@ -18,8 +18,6 @@ function TablePlanets() {
   // component didupdate
   useEffect(() => {
     if (!isLoading) {
-      // console.log(data.results);
-      // console.log('dataFiltered', dataFiltered.results);
       setFilters({
         ...filters,
         filterByName: {
@@ -32,6 +30,7 @@ function TablePlanets() {
         },
       });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [textFilter, columnFilter, comparisonFilter, valueFilter]); // update qnd elemento do array alterado
 
   /*
