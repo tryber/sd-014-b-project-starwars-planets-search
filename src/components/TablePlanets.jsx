@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import MyContext from '../myContext/MyContext';
 import InputText from './InputText';
+import InputFilter from './InputFilter';
 
 export default function TablePlanets() {
   const { data, setData, inputText, setInputText } = useContext(MyContext);
@@ -22,6 +23,7 @@ export default function TablePlanets() {
   return (
     <div>
       <InputText handleChange={ handleChange } />
+      <InputFilter handleChange={ handleChange } />
       <table>
         <tr>
           <th>Name</th>
