@@ -5,8 +5,23 @@ import starWarsApi from '../Services/starWarsApi';
 
 export default function Provider({ children }) {
   const [initialPlanets, setInitialPlanets] = useState([]);
-  const [filter, setFilter] = useState({
-    filters: { filterByName: { name: '' } } });
+  const [filterObject, setFilter] = useState(
+    {
+      filters:
+    {
+      filterByName: {
+        name: '',
+      },
+      filterByNumericValues: [
+        {
+          column: 'population',
+          comparison: 'maior que',
+          value: '100000',
+        },
+      ],
+    },
+    },
+  );
 
   useEffect(() => {
     const getPlanets = async () => {
@@ -19,7 +34,7 @@ export default function Provider({ children }) {
   const value = {
     planets: initialPlanets,
     setPlanets: setInitialPlanets,
-    filter,
+    filterObject,
     setFilter,
   };
 
