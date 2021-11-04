@@ -6,6 +6,9 @@ function Table() {
   const { filters, setFilters } = useContext(MyContext);
   const [data] = useData();
   const [dataFilter, setDataFilter] = useState([]);
+  const [drop, setDrop] = useState('population');
+  const [getComp, setGetComp] = useState('maior que');
+  const [number, setNumber] = useState('');
 
   useEffect(() => {
     if (data.length !== 0) {
@@ -13,16 +16,73 @@ function Table() {
     }
   }, [data]);
 
-  console.log(dataFilter);
   const filterName = ({ target }) => {
     setFilters({ ...filters, filterByName: { name: target.value } });
     setDataFilter(data
       .filter((planet) => planet.name.toLowerCase().includes(target.value)));
   };
 
+  const dropDown = ({ target }) => {
+    setDrop(target.value);
+  };
+  // console.log(drop);
+
+  const inputNumber = ({ target }) => {
+    setNumber(target.value);
+  };
+  // console.log(number);
+
+  const comparison = ({ target }) => {
+    setGetComp(target.value);
+  };
+  // console.log(getComp);
+
+  const buttonFilter = () => {
+    setFilters({ ...filters,
+      filterByNumericValues: [
+        {
+          column: drop,
+          comparison: getComp,
+          value: number },
+      ] });
+    if (getComp === 'maior que') {
+      setDataFilter(data
+        .filter((planet) => Number(planet[drop]) > Number(number)));
+      // console.log(dataFilter);
+    } if (getComp === 'menor que') {
+      setDataFilter(data
+        .filter((planet) => Number(planet[drop]) < Number(number)));
+      // console.log(dataFilter);
+    } if (getComp === 'igual a') {
+      setDataFilter(data
+        .filter((planet) => Number(planet[drop]) === Number(number)));
+      // console.log(dataFilter);
+    }
+  };
+
   return (
     <div>
       <input data-testid="name-filter" onChange={ filterName } />
+      <label htmlFor="dropdown">
+        <select data-testid="column-filter" id="dropdown" onChange={ dropDown }>
+          <option>population</option>
+          <option>orbital_period</option>
+          <option>diameter</option>
+          <option>rotation_period</option>
+          <option>surface_water</option>
+        </select>
+      </label>
+      <label htmlFor="comparison">
+        <select data-testid="comparison-filter" id="comparison" onChange={ comparison }>
+          <option>maior que</option>
+          <option>menor que</option>
+          <option>igual a</option>
+        </select>
+      </label>
+      <input data-testid="value-filter" type="number" onChange={ inputNumber } />
+      <button type="submit" data-testid="button-filter" onClick={ buttonFilter }>
+        Filter
+      </button>
       {
         data.length === 0 ? <h1>Loading...</h1>
           : (
