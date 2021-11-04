@@ -17,6 +17,7 @@ function PlanetsProvider({ children }) {
         value: '100000',
       },
     ],
+    isFiltered: false,
   });
 
   async function requestPlanets() {

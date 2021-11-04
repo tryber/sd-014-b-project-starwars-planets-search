@@ -59,6 +59,7 @@ function Header() {
               value: valueFilter,
             },
           ],
+          isFiltered: true,
         })) }
         type="button"
         data-testid="button-filter"
