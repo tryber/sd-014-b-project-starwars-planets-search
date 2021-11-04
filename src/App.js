@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
+import SearchBar from './Component/SearchBar';
 import Table from './Component/Table';
 import planetContext from './Context/planetContext';
 
 function App() {
   const [data, setData] = useState([]);
+  const [filtered, setFiltered] = useState([]);
+
   const url = 'https://swapi-trybe.herokuapp.com/api/planets/';
 
   useEffect(() => {
@@ -19,10 +22,17 @@ function App() {
   const contextValue = {
     data,
     setData,
+    filtered,
+    setFiltered,
   };
+
+  useEffect(() => {
+    setFiltered(data);
+  }, [data]);
 
   return (
     <planetContext.Provider value={ contextValue }>
+      <SearchBar />
       <Table />
     </planetContext.Provider>
   );
