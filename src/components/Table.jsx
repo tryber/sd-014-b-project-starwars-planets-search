@@ -7,7 +7,8 @@ function Table() {
     'Climate', 'Gravity', 'Terrain', 'Surface Water', 'Population', 'Films',
     'Created', 'Edited', 'URL',
   ];
-  const { filtered, loading } = useContext(PlanetContext);
+  const { filtered, loading,
+    filters: { filterByNumericValues } } = useContext(PlanetContext);
   if (loading) {
     return (<h2>Loading...</h2>);
   }
@@ -19,7 +20,28 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {filtered.map((planet) => (
+        {filtered.filter((planet) => {
+          if (!filterByNumericValues.value) return true;
+          if (filterByNumericValues.comparison === 'maior que') {
+            return (
+              Number(planet[filterByNumericValues.column])
+                > Number(filterByNumericValues.value)
+            );
+          }
+          if (filterByNumericValues.comparison === 'menor que') {
+            return (
+              Number(planet[filterByNumericValues.column])
+                < Number(filterByNumericValues.value)
+            );
+          }
+          if (filterByNumericValues.comparison === 'igual a') {
+            return (
+              Number(planet[filterByNumericValues.column])
+                === Number(filterByNumericValues.value)
+            );
+          }
+          return true;
+        }).map((planet) => (
           <tr key={ planet.name }>
             <td>{planet.name}</td>
             <td>{planet.rotation_period}</td>

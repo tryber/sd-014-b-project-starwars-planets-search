@@ -7,6 +7,10 @@ function Provider({ children }) {
   const [loading, setLoading] = useState(true);
   const [name, setName] = useState('');
   const [filtered, setFiltered] = useState([]);
+  const [column, setColumn] = useState('population');
+  const [comparison, setComparison] = useState('maior que');
+  const [value, setValue] = useState('0');
+  const [filterByNumericValues, setFilterByNumericValues] = useState({});
 
   const contextValue = {
     data,
@@ -17,10 +21,18 @@ function Provider({ children }) {
       filterByName: {
         name,
       },
+      filterByNumericValues,
     },
+    column,
+    comparison,
+    value,
     setName,
     filtered,
     setFiltered,
+    setColumn,
+    setComparison,
+    setValue,
+    setFilterByNumericValues,
   };
 
   return (
