@@ -5,21 +5,35 @@ const FilterPlanet = () => {
   const {
     setName,
     setColumn,
-    objectNumerics,
-    setObjectNumerics,
     setComparison,
+    setObjectNumerics,
     setValueSearch,
     setFilterByNumericValues,
-    filterByNumericValues,
     setFilters,
+    setOptionsColumn,
+    objectNumerics,
+    filterByNumericValues,
     filters,
+    nameState,
+    columnState,
+    comparisonState,
+    optionsColumn,
+    valueState,
   } = useContext(StarContext);
 
-  const handleName = (value) => {
+  const optionsComparison = [
+    'maior que',
+    'igual a',
+    'menor que',
+  ];
+
+  const handleName = ({ target }) => {
+    const { value } = target;
     setName({ name: value.toLowerCase() });
   };
 
-  const handleColumn = (value) => {
+  const handleColumn = ({ target }) => {
+    const { value } = target;
     setColumn(value);
     setObjectNumerics({
       ...objectNumerics,
@@ -27,7 +41,8 @@ const FilterPlanet = () => {
     });
   };
 
-  const handleComparison = (value) => {
+  const handleComparison = ({ target }) => {
+    const { value } = target;
     setComparison(value);
     setObjectNumerics({
       ...objectNumerics,
@@ -35,7 +50,8 @@ const FilterPlanet = () => {
     });
   };
 
-  const handleValue = (value) => {
+  const handleValue = ({ target }) => {
+    const { value } = target;
     setValueSearch(value);
     setObjectNumerics({
       ...objectNumerics,
@@ -49,6 +65,9 @@ const FilterPlanet = () => {
       ...filters,
       filterByNumericValues,
     });
+    const columns = optionsColumn.filter((option) => !option
+      .includes(columnState));
+    setOptionsColumn([...columns]);
   };
 
   return (
@@ -56,37 +75,52 @@ const FilterPlanet = () => {
       <input
         data-testid="name-filter"
         type="text"
-        onChange={ ({ target: { value } }) => handleName(value) }
+        onChange={ handleName }
         placeholder="Search"
+        value={ nameState.name }
       />
       <select
         data-testid="column-filter"
-        onChange={ ({ target: { value } }) => handleColumn(value) }
+        onChange={ handleColumn }
+        value={ columnState }
       >
-        <option>population</option>
-        <option>orbital_period </option>
-        <option>diameter</option>
-        <option>rotation_period</option>
-        <option>surface_water</option>
+        { optionsColumn && optionsColumn.map((optionColmun) => (
+          <option
+            key={ optionColmun }
+            value={ optionColmun }
+          >
+            { optionColmun }
+          </option>
+        )) }
       </select>
       <select
         data-testid="comparison-filter"
-        onChange={ ({ target: { value } }) => handleComparison(value) }
+        onChange={ handleComparison }
+        value={ comparisonState }
       >
-        <option>maior que</option>
-        <option>menor que</option>
-        <option>igual a</option>
+        {
+          optionsComparison.map((comparison) => (
+            <option
+              key={ comparison }
+              value={ comparison }
+            >
+              { comparison }
+            </option>
+          ))
+        }
       </select>
       <input
         data-testid="value-filter"
         type="text"
-        onChange={ ({ target: { value } }) => handleValue(value) }
+        value={ valueState }
+        onChange={ handleValue }
         placeholder="Search"
       />
       <button
         data-testid="button-filter"
         type="button"
         onClick={ handleClick }
+
       >
         Filter
       </button>

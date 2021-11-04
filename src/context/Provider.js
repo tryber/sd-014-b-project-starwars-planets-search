@@ -20,6 +20,14 @@ const PlanetsProvider = ({ children }) => {
     filterByNumericValues,
   }); // junta o nome e o objeto
 
+  const [optionsColumn, setOptionsColumn] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ]);
+
   const fetchPlanets = async () => {
     const fetchApi = await fetch(URL);
     const response = await fetchApi.json();
@@ -59,19 +67,22 @@ const PlanetsProvider = ({ children }) => {
 
   const contextValue = {
     setName,
-    dataFiltered,
     setColumn,
-    objectNumerics,
-    setObjectNumerics,
     setComparison,
+    setObjectNumerics,
     setValueSearch,
     setFilterByNumericValues,
-    filterByNumericValues,
     setFilters,
+    setOptionsColumn,
+    objectNumerics,
+    filterByNumericValues,
     filters,
+    nameState,
     columnState,
     comparisonState,
+    optionsColumn,
     valueState,
+    dataFiltered,
   };
 
   return (

@@ -10,7 +10,7 @@ const Table = () => {
         <TrTable />
       </thead>
       <tbody>
-        {dataFiltered.map((planet, index) => (
+        {dataFiltered && dataFiltered.map((planet, index) => (
           <tr key={ index }>
             <td data-testid="planet-name">{planet.name}</td>
             <td>{planet.rotation_period}</td>
