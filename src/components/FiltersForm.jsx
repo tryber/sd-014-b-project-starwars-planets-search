@@ -38,6 +38,14 @@ export default function FiltersForm() {
     }
   }
 
+  function filterColumnsValues() {
+    const { filterByNumericValues } = filters;
+    return filterByNumericValues.length > 0
+      ? filterByNumericValues.reduce((acc, { column }) => (acc.includes(column)
+        ? acc.filter((item) => item !== column) : acc), [...columnsValues])
+      : columnsValues;
+  }
+
   return (
     <form>
       <DefaultInput
@@ -52,7 +60,7 @@ export default function FiltersForm() {
           name="column"
           value={ state.column }
           testid="column-filter"
-          contents={ columnsValues }
+          contents={ filterColumnsValues() }
           change={ handleChange }
         />
         <DefaultSelect
