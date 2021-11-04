@@ -13,16 +13,14 @@ function FilterByName() {
 
   return (
     <section>
-      <form>
-        <input
-          data-testid="name-filter"
-          name="name"
-          type="text"
-          placeholder="Pesquise por nome"
-          value={ name }
-          onChange={ handleChange }
-        />
-      </form>
+      <input
+        data-testid="name-filter"
+        name="name"
+        type="text"
+        placeholder="Pesquise por nome"
+        value={ name }
+        onChange={ handleChange }
+      />
     </section>
   );
 }
