@@ -1,29 +1,44 @@
 import React, { useContext } from 'react';
 import TableContext from '../context/TableContext';
+import tableHeads from '../data/tableHead';
 
 function Table() {
-  const { data } = useContext(TableContext);
-  console.log(data, 'aqui');
+  const { data, filters } = useContext(TableContext);
+  // refatora para evitar uso excessivo de useEffect,
+  // ideia dada pelos meus amigos Matheus silveira, Glauco Lomenha e tirada do video https://www.youtube.com/watch?v=OlVkYnVXPl0
+  let filteredPlanetsFromData = data.filter(
+    (planet) => planet.name.includes(filters.filterByName.name),
+  );
+
+  filters.filterByNumericValues.forEach((filter) => {
+    const { column, value, comparison } = filter;
+
+    if (comparison === 'maior que') {
+      filteredPlanetsFromData = filteredPlanetsFromData.filter(
+        (planet) => Number(planet[`${column}`]) > value, // passar a chave dinamicamente, ideia de Matheus silveira https://github.com/matheuspmsilveira
+      );
+    }
+    if (comparison === 'menor que') {
+      filteredPlanetsFromData = filteredPlanetsFromData.filter(
+        (planet) => Number(planet[`${column}`]) < value,
+      );
+    }
+    if (comparison === 'igual a') {
+      filteredPlanetsFromData = filteredPlanetsFromData.filter(
+        (planet) => Number(planet[`${column}`]) === Number(value),
+      );
+    }
+  });
+
   return (
     <table>
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Rotation Period</th>
-          <th>Orbital Period</th>
-          <th>Diameter</th>
-          <th>Climate</th>
-          <th>Gravity</th>
-          <th>Terrain</th>
-          <th>Surface Water</th>
-          <th>Population</th>
-          <th>Films</th>
-          <th>Created</th>
-          <th>Edited</th>
-          <th>URL</th>
+          {tableHeads.map((head) => (<th key={ head }>{head}</th>))}
+          {/* refatora para ganhar espaço criando um array com os cabeçalhos */}
         </tr>
       </thead>
-      {data.map((planet) => (
+      {filteredPlanetsFromData.map((planet) => (
         <tbody key={ planet.name }>
           <tr>
             <td>{planet.name}</td>

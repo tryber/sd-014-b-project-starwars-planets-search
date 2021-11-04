@@ -28,15 +28,6 @@ function TableProvider({ children }) {
     fetchPlanets();
   }, []);
 
-  useEffect(() => {
-    if (filters.filterByName.name === '') {
-      fetchPlanets();
-    }
-    setData((prevState) => prevState.filter(
-      ({ name }) => name.includes(filters.filterByName.name),
-    ));
-  }, [filters.filterByName]);
-
   return (
     <TableContext.Provider value={ { data, setData, filters, setFilters } }>
       {children}
