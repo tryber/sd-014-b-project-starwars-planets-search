@@ -1,9 +1,14 @@
 import React from 'react';
-import './App.css';
+import Provider from './context/Provider';
+import Principal from './pages/Principal';
 
 function App() {
   return (
-    <span>Hello, App!</span>
+    <Provider>
+      <div>
+        <Principal />
+      </div>
+    </Provider>
   );
 }
 
