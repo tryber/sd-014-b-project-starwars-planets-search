@@ -28,27 +28,28 @@ function Planets() {
     }
   }, [filters.filterByName.name]);
 
-  useEffect(() => {
-    function sortData() {
-      const { column, sort } = filters.order;
-      if (sort === 'ASC') {
-        const newData = data.sort(
-          ({ [column]: a }, { [column]: b }) => (
-            filterSort(column) ? a.localeCompare(b) : a - b
-          ),
-        );
-        setData(newData);
-      } else if (sort === 'DESC') {
-        const newData = data.sort(
-          ({ [column]: a }, { [column]: b }) => (
-            filterSort(column) ? b.localeCompare(a) : b - a
-          ),
-        );
-        setData(newData);
-      }
+  function sortData() {
+    const { column, sort } = filters.order;
+    if (sort === 'ASC') {
+      const newData = data.sort(
+        ({ [column]: a }, { [column]: b }) => (
+          filterSort(column) ? a.localeCompare(b) : a - b
+        ),
+      );
+      setData([...newData]);
+    } else if (sort === 'DESC') {
+      const newData = data.sort(
+        ({ [column]: a }, { [column]: b }) => (
+          filterSort(column) ? b.localeCompare(a) : b - a
+        ),
+      );
+      setData([...newData]);
     }
+  }
+
+  useEffect(() => {
     sortData();
-  }, [data, setData, filters.order]);
+  }, [filters]);
 
   return (
     <div>
