@@ -18,7 +18,7 @@ export default function NumberSearch() {
   };
 
   const { setFilterByNumericValues, data,
-    setDataFilter, setFilterOn } = useContext(MyContext);
+    setDataFilter, setFilterOn, filterByNumericValues } = useContext(MyContext);
 
   const setFilterData = () => {
     let filtrado = [];
@@ -41,11 +41,11 @@ export default function NumberSearch() {
   };
 
   const sendFilters = () => {
-    setFilterByNumericValues({
+    setFilterByNumericValues([...filterByNumericValues, {
       column: columnFilter,
       comparison: comparisonFilter,
       value: valueFilter,
-    });
+    }]);
     setFilterData();
     setFilterOn(true);
   };
@@ -59,7 +59,7 @@ export default function NumberSearch() {
         value={ columnFilter }
         onChange={ handleChangeColumnFilter }
       >
-        <option selected value="diameter">diameter</option>
+        <option value="diamenter">diameter</option>
         <option value="population">population</option>
         <option value="orbital_period">orbital_period</option>
         <option value="rotation_period">rotation_period</option>
