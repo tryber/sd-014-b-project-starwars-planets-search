@@ -26,6 +26,7 @@ const Provider = ({ children }) => {
   // Dados que renderizaram a tabela
   const [planetList, setPlanetList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isFiltering, setIsFiltering] = useState(false);
   const [filtersToSelect, setFiltersToSelect] = useState(initFiltersToSelect);
   // Filtros da tabela e criador do objeto
   const [tableFilters, setTableFilters] = useState(INITIAL_FILTER);
@@ -101,6 +102,7 @@ const Provider = ({ children }) => {
       });
     });
     setPlanetList([...newFilter]);
+    setIsFiltering(true);
   };
 
   const context = {
@@ -111,9 +113,11 @@ const Provider = ({ children }) => {
     filterByName,
     filtersToSelect,
     filtersByNumber,
+    tableFilters,
     setFiltersByNumber,
     auxFilterByNumber,
     setAuxFilterByNumber,
+    isFiltering,
   };
 
   useEffect(() => {
