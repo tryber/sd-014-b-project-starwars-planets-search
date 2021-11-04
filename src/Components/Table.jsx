@@ -6,6 +6,7 @@ function Table() {
   const { data, filters } = useContext(TableContext);
   // refatora para evitar uso excessivo de useEffect,
   // ideia dada pelos meus amigos Matheus silveira, Glauco Lomenha e tirada do video https://www.youtube.com/watch?v=OlVkYnVXPl0
+  // isso poupa requisicoes, consequentemente dinheiro!!
   let filteredPlanetsFromData = data.filter(
     (planet) => planet.name.includes(filters.filterByName.name),
   );
