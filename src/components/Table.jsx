@@ -5,18 +5,18 @@ import RenderTable from './RenderTable';
 function Table() {
   const APIurl = 'https://swapi-trybe.herokuapp.com/api/planets/';
   const [loading, setLoading] = useState(false);
-  const { setArray } = useContext(SearchContext);
+  const { setData } = useContext(SearchContext);
 
   useEffect(() => {
     setLoading(true);
     async function getData() {
       const { results } = await fetch(APIurl)
         .then((response) => response.json());
-      setArray(results);
+      setData(results);
     }
     getData();
     setLoading(false);
-  }, [setArray]);
+  }, [setData]);
 
   return (
     <div>

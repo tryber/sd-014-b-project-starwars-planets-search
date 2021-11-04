@@ -1,15 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { SearchContext } from '../provider/Provider';
+import compare from '../services';
 
 function RenderTable() {
-  const { filter, array } = useContext(SearchContext);
+  const { filter, data, column, value, comparison } = useContext(SearchContext);
   const [filtered, setFiltered] = useState([]);
 
   useEffect(() => {
-    const newArray = [...array].filter(({ name }) => (
-      name.toLowerCase().includes(filter.toLowerCase())));
+    const newArray = [...data]
+      .filter(({ name }) => (name.toLowerCase().includes(filter.toLowerCase())))
+      .filter((e) => compare(e[column], comparison, value));
     setFiltered(newArray);
-  }, [array, filter]);
+  }, [data, filter, column, comparison, value]);
 
   function renderRow({ name, rotation_period: rotation, orbital_period: orbital, diameter,
     climate, gravity, terrain, surface_water: water, population,

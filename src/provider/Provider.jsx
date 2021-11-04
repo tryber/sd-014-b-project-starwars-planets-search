@@ -5,19 +5,30 @@ export const SearchContext = createContext();
 
 export function Provider({ children }) {
   const [filter, setFilter] = useState('');
-  const [array, setArray] = useState([]);
+  const [data, setData] = useState([]);
+  const [column, setColumn] = useState('population');
+  const [comparison, setComparison] = useState('maior que');
+  const [value, setValue] = useState(undefined);
+
   const filters = {
     filterByName: {
       name: filter,
     },
+    filterByNumericValues: [{ column, comparison, value }],
   };
 
   const context = {
     filter,
     setFilter,
-    array,
-    setArray,
+    data,
+    setData,
     filters,
+    column,
+    setColumn,
+    comparison,
+    setComparison,
+    value,
+    setValue,
   };
 
   return (
