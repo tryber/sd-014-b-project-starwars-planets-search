@@ -1,10 +1,10 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function Header() {
   const { planetName, handleChangeName,
     handleChangeColumn, handleChangeComparison,
-    handleChangeValue, handleClick } = useContext(PlanetsContext);
+    handleChangeValue, handleClick, click } = useContext(PlanetsContext);
   const {
     filters: {
       filterByName: { name },
@@ -17,9 +17,17 @@ function Header() {
       ],
     },
   } = planetName;
-
-  const firstColumn = ['population', 'orbital_period',
+  const arrayColumn = ['population', 'orbital_period',
     'diameter', 'rotation_period', 'surface_water'];
+
+  useEffect(() => {
+    if (click) {
+      arrayColumn.map((option) => option !== column);
+    }
+
+    return arrayColumn;
+  }, [arrayColumn, click, column]);
+
   const secondColumn = ['maior que', 'menor que', 'igual a'];
 
   return (
@@ -43,7 +51,7 @@ function Header() {
             name="column"
             onChange={ handleChangeColumn }
           >
-            {firstColumn.map((each, index) => <option key={ index }>{ each }</option>)}
+            {arrayColumn.map((each, index) => <option key={ index }>{ each }</option>)}
           </select>
         </label>
         <label htmlFor="comparison-filter">

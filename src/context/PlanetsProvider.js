@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import PlanetsContext from './PlanetsContext';
 
 function PlanetsProvider({ children }) {
+  const [click, setClick] = useState(false);
   const [filteredData, setFilteredData] = useState([]);
   const [data, setData] = useState([]);
   const [planetName, setPlanetName] = useState({
@@ -211,8 +212,8 @@ function PlanetsProvider({ children }) {
     }
     if (column === 'surface_water') {
       arrayPlanets = surfaceResults();
-    }
-    setFilteredData(arrayPlanets);
+    } setFilteredData(arrayPlanets);
+    setClick(true);
   };
   useEffect(() => {
     async function fetchData() {
@@ -233,7 +234,8 @@ function PlanetsProvider({ children }) {
           handleChangeValue,
           searchPlanetByName,
           handleClick,
-          filteredData } }
+          filteredData,
+          click } }
       >
         {children}
       </PlanetsContext.Provider>
@@ -244,5 +246,4 @@ function PlanetsProvider({ children }) {
 PlanetsProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
-
 export default PlanetsProvider;
