@@ -5,9 +5,8 @@ function Table() {
   const { data, isFetch } = useContext(PlanetsContext);
 
   function mapInfoToTable() {
-    const allKeys = Object.keys(data[0]);
+    const allKeys = Object.keys(data[0] || []);
     const keys = allKeys.filter((key) => key !== 'residents');
-    console.log(keys);
     return (
       <tbody>
         { data.map((planet, index) => (
