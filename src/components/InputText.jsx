@@ -9,7 +9,7 @@ export default function InputText() {
     setInputName(value);
     setNameFilter(value);
     const filterDataByName = data.filter(({ name }) => (
-      name.toLowerCase().includes(nameFilter.toLowerCase())
+      name.toLowerCase().includes(value.toLowerCase())
     ));
     setFilteredData(filterDataByName);
   };
