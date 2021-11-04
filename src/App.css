@@ -100,3 +100,13 @@ button {
   text-transform: uppercase;
   width: 13%;
 }
+
+.clear-filter {
+  color: white;
+}
+
+.clear-filter-btn {
+  height: 1.5%;
+  margin-left: 1%;
+  width: 2.4%;
+}
