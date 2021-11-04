@@ -12,7 +12,7 @@ export default function Table() {
   useEffect(() => {
     setHeaders(data, setTableHeaders);
     setIsLoading(false);
-  }, []);
+  }, [data]);
 
   console.log(filteredData);
 
