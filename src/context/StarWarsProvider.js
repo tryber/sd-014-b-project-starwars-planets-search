@@ -13,11 +13,29 @@ const StarWarsProvider = ({ children }) => {
     },
   );
 
+  const [availableFilters, setAvailableFilters] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ]);
+
+  const [numericalFilter, setNumericalFilter] = useState({
+    column: '',
+    comparison: '',
+    value: '',
+  });
+
   const contextValue = {
     data,
     setData,
     filters,
     setFilters,
+    availableFilters,
+    setAvailableFilters,
+    numericalFilter,
+    setNumericalFilter,
   };
 
   useEffect(() => {
