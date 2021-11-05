@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFilters } from '../context/Filters';
 
 const NumericFilter = () => {
@@ -22,6 +22,22 @@ const NumericFilter = () => {
     setFilters({ ...filters, filterByNumericValues: numericFiltersArray });
   };
 
+  const columnOptions = [
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
+
+  const createValidColumnOptions = () => {
+    const usedColumnOptions = filterByNumericValues.map((filter) => filter.column);
+    const validColumnOptions = columnOptions.filter(
+      (option) => !(usedColumnOptions.includes(option)),
+    );
+    return validColumnOptions.map((validOption, index) => {
+      if (index === 0 && columnValue !== validOption) {
+        setComponentValues({ columnValue: validOption, comparisonValue, inputValue });
+      }
+      return (<option key={ index } value={ validOption }>{ validOption }</option>);
+    });
+  };
+
   return (
     <section>
       <select
@@ -31,11 +47,7 @@ const NumericFilter = () => {
           { columnValue: target.value, comparisonValue, inputValue },
         ) }
       >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        { createValidColumnOptions() }
       </select>
 
       <select
