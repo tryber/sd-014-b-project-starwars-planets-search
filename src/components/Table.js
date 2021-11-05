@@ -4,7 +4,9 @@ import PlanetContext from '../context/PlanetContext';
 function Table() {
   const { filters, planets, click } = useContext(PlanetContext);
   const { name } = filters.filterByName;
-  const [{ column, comparison, value }] = filters.filterByNumericValues;
+  const lastPlaceInArray = -1;
+  const oldArray = filters.filterByNumericValues.slice(lastPlaceInArray);
+  const { column, comparison, value } = oldArray[0];
 
   const filterFunction = (planet) => {
     if (click) {

@@ -2,8 +2,8 @@ import React, { useContext, useState } from 'react';
 import PlanetContext from '../context/PlanetContext';
 
 function Filters() {
-  const { setFilters, setClick } = useContext(PlanetContext);
-  const [columnState, setColumnState] = useState('Population');
+  const { filters, setFilters, setClick } = useContext(PlanetContext);
+  const [columnState, setColumnState] = useState('');
   const [comparisonState, setComparisonState] = useState('maior que');
   const [valueState, setValueState] = useState(0);
 
@@ -20,16 +20,36 @@ function Filters() {
 
   const handleClick = () => {
     setClick(true);
+    const oldArray = filters.filterByNumericValues;
+    oldArray.push({
+      column: columnState,
+      comparison: comparisonState,
+      value: valueState,
+    });
     setFilters(
       (prevState) => ({
         ...prevState,
-        filterByNumericValues: [{
-          column: columnState,
-          comparison: comparisonState,
-          value: valueState,
-        }],
+        filterByNumericValues: oldArray,
       }),
     );
+  };
+
+  const renderOptionValues = () => { // OBSERVAÇÃO IMPORTANTE AO FIM DA PÁGINA
+    const originalColumns = [
+      'population',
+      'orbital_period',
+      'diameter',
+      'rotation_period',
+      'surface_water',
+    ];
+    const columnsSelected = filters.filterByNumericValues.map((obj) => obj.column);
+    const newColumns = originalColumns
+      .filter((columnName) => !columnsSelected.includes(columnName));
+    return newColumns.map((column) => (
+      <option key={ column } value={ column }>
+        { column }
+      </option>
+    ));
   };
 
   return (
@@ -51,11 +71,12 @@ function Filters() {
           name="column"
           onChange={ ({ target }) => numericValueFilter(target, setColumnState) }
         >
-          <option name="column" value="population">population</option>
+          { renderOptionValues() }
+          {/* <option name="column" value="population">population</option>
           <option name="column" value="orbital_period">orbital_period</option>
           <option name="column" value="diameter">diameter</option>
           <option name="column" value="rotation_period">rotation_period</option>
-          <option name="column" value="surface_water">surface_water</option>
+          <option name="column" value="surface_water">surface_water</option> */}
         </select>
       </label>
       <label htmlFor="comparison-filter">
@@ -88,3 +109,6 @@ function Filters() {
 }
 
 export default Filters;
+
+// A lógica usada para a função renderOptionValues foi feita
+// com a ajuda do amigo Matheus Silveira, colega de turma
