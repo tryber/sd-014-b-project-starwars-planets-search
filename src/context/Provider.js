@@ -62,17 +62,6 @@ export default function Provider({ children }) {
   }, []);
 
   useEffect(() => {
-    setFilterItem(
-      {
-        filters:
-          {
-            filterByName: {
-              name: filter,
-            },
-            filterByNumericValues: [comparison],
-          },
-      },
-    );
     const getPlanetName = planets
       .filter(({ name }) => (
         name.toLowerCase().includes(filter.toLocaleLowerCase())));

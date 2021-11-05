@@ -2,18 +2,15 @@ import React, { useState, useContext } from 'react';
 import NewContext from '../context/NewContext';
 
 function FilterNumbers() {
-  const { filterItem, setFilterItem, setComparison } = useContext(NewContext);
+  const {
+    filterItem, setFilterItem, setComparison, planets, setFilterPlanets,
+  } = useContext(NewContext);
   const NumericValues = filterItem.filters.filterByNumericValues;
   const comparisonItens = ['maior que', 'menor que', 'igual a'];
 
   const [columnFilter, setColumn] = useState('population');
   const [comparisonFilter, setFilterComparison] = useState('maior que');
   const [number, setNumber] = useState(0);
-  const [allInformation, setAllInformation] = useState({
-    column: '',
-    comparison: '',
-    value: '',
-  });
   const [columnItens, setColumnItems] = useState([
     'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
   ]);
@@ -31,11 +28,6 @@ function FilterNumbers() {
   };
 
   const getStatesByClick = () => {
-    setAllInformation({
-      column: columnFilter,
-      comparison: comparisonFilter,
-      value: number,
-    });
     setComparison({
       column: columnFilter,
       comparison: comparisonFilter,
@@ -58,6 +50,12 @@ function FilterNumbers() {
     const indexOfColumn = columnItens.indexOf(columnFilter);
     newColumn.splice(indexOfColumn, 1);
     setColumnItems(newColumn);
+  };
+
+  const restoreColumn = (column) => {
+    const updateOptions = [...columnItens, column];
+    setColumnItems(updateOptions);
+    setFilterPlanets([...planets]);
   };
 
   return (
@@ -89,7 +87,7 @@ function FilterNumbers() {
       />
       <button
         type="button"
-        name={ allInformation }
+        name="allInformation"
         data-testid="button-filter"
         onClick={ () => {
           getStatesByClick();
@@ -98,6 +96,28 @@ function FilterNumbers() {
       >
         Filtrar
       </button>
+      <section>
+        {NumericValues.map(({ column, comparison, value }, index) => (
+          <div key={ index } data-testid="filter">
+            {`${column} ${comparison} ${value} `}
+            <button
+              type="button"
+              onClick={ () => {
+                setFilterItem({
+                  filters: {
+                    ...filterItem.filters,
+                    filterByNumericValues: [...NumericValues.filter((item) => item
+                      .column !== column)],
+                  },
+                });
+                restoreColumn(column);
+              } }
+            >
+              X
+            </button>
+          </div>
+        ))}
+      </section>
     </form>
   );
 }
