@@ -29,6 +29,13 @@
   color: #61dafb;
 }
 
+#table, th, td {
+  background-color: whitesmoke;
+  border: 1px solid black;
+  border-collapse: collapse;
+  text-align: center;
+}
+
 @keyframes App-logo-spin {
 
   from {
