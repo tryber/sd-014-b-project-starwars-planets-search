@@ -1,15 +1,18 @@
-/* import React from 'react';
-import FilterContext from '../Context/FilterContext';
+import React, { useContext } from 'react';
+import PlanetContext from '../Context/PlanetContext';
 
 function SearchForm() {
+  const { name, setNames } = useContext(PlanetContext);
   return (
-    <FilterContext.Consumer>
-      { (value) => (
-        <h1>{ `FilterContext - Aqui deverá haver inputs para filtrar por planetas ${value.filters.filterByName.name}` }</h1>
-      ) }
-    </FilterContext.Consumer>
+    <label htmlFor="name-filter">
+      <input
+        data-testid="name-filter"
+        type="text"
+        value={ name }
+        onChange={ (event) => setNames(event.target.value) }
+      />
+    </label>
   );
 }
 
 export default SearchForm;
- */
