@@ -2,11 +2,6 @@ import React, { useContext, useState } from 'react';
 import StarWarsContext from './context/StarWarsContext';
 import Select from './components/Select';
 
-const columns = ['population',
-  'orbital_period',
-  'diameter',
-  'rotation_period',
-  'surface_water'];
 const valueRange = ['maior que', 'menor que', 'igual a'];
 
 function TableStarWars() {
@@ -20,6 +15,11 @@ function TableStarWars() {
   const [column, setColumn] = useState('population');
   const [value, setValue] = useState(null);
   const [comparison, setComparison] = useState('maior que');
+  const [columnsArray, setColumns] = useState(['population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water']);
 
   function handleName(event) {
     setFilters({ ...filters,
@@ -39,17 +39,17 @@ function TableStarWars() {
     setValue(event.target.value);
   }
 
-  function deleteColumnFilter() {
-    const index = columns.indexOf(column);
-    columns.splice(index, 1);
-  }
-
   function onClickDelete(event) {
     const element = event.target.parentNode;
     const deletObject = event.target.id;
     console.log(deletObject);
     const split = element.innerText.split(' ');
-    columns.push(split[0]);
+    columnsArray.push(split[0]);
+  }
+
+  function filterColuns() {
+    const colunas = columnsArray.filter((element) => element !== column);
+    setColumns(colunas);
   }
 
   function handleClick() {
@@ -69,10 +69,10 @@ function TableStarWars() {
       const filtered = data.filter((planet) => Number(planet[column]) === Number(value));
       setData(filtered);
     }
-    setColumn(columns[0]);
+    setColumn(columnsArray[0]);
     setValue('');
     setComparison('maior que');
-    deleteColumnFilter();
+    filterColuns();
   }
 
   return (
@@ -84,9 +84,8 @@ function TableStarWars() {
         onChange={ handleName }
       />
       <Select
-        array={ columns }
+        array={ columnsArray }
         value={ column }
-        valueOptions={ columns.map((index) => index) }
         dataTestID="column-filter"
         onChange={ handleColumns }
       />
