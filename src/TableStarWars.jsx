@@ -86,6 +86,7 @@ function TableStarWars() {
       <Select
         array={ columns }
         value={ column }
+        valueOptions={ columns.map((index) => index) }
         dataTestID="column-filter"
         onChange={ handleColumns }
       />
