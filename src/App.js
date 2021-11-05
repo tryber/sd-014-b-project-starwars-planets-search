@@ -1,9 +1,12 @@
 import React from 'react';
+import TablePlanets from './components/TablePlanets';
 import './App.css';
 
 function App() {
   return (
-    <span>Hello, App!</span>
+    <main>
+      <TablePlanets />
+    </main>
   );
 }
 
