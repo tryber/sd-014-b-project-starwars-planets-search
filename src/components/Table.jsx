@@ -7,7 +7,7 @@ function Table() {
   return (
     <div>
       <span>Tabela</span>
-      <table>
+      <table id="table">
         <thead>
           <tr>
             <th>Name</th>

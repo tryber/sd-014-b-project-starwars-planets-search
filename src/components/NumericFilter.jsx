@@ -8,6 +8,7 @@ function NumericFilter() {
   const [inputComparison, setInputComparison] = useState('maior que');
   const [inputValue, setInputValue] = useState('');
   const { setFiltredArray, filtredArray, setFilters, filters } = useContext(MyContext);
+  const { filterByNumericValues } = filters;
 
   const filterNumeric = () => {
     const filtered = filtredArray.filter((element) => {
@@ -30,7 +31,7 @@ function NumericFilter() {
     setArrayOptions(newArrayOptions);
     setInputColumn(newArrayOptions[0]);
     setFilters({ ...filters,
-      filterByNumericValues: [
+      filterByNumericValues: [...filterByNumericValues,
         { column: inputColumn,
           comparison: inputComparison,
           value: inputValue }] });
@@ -74,7 +75,10 @@ function NumericFilter() {
 
         </button>
       </form>
-
+      {filterByNumericValues.map(({ column, comparison, value }, index) => (
+        <h4 key={ index }>
+          {`${column} ${comparison} ${value} `}
+        </h4>))}
     </div>
 
   );
