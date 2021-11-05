@@ -1,11 +1,13 @@
 import React, { useContext, useState } from 'react';
 import TableContext from '../context/TableContext';
+import options from '../data/columnOption';
 
 function FilterForm() {
   const { setFilters } = useContext(TableContext);
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState(0);
+  const [columnOptions, setColumnOptions] = useState(options);
 
   function handleClickSendFilter() {
     setFilters((prevState) => ({
@@ -18,6 +20,8 @@ function FilterForm() {
         },
       ],
     }));
+    const filteredOptions = columnOptions.filter((option) => option !== column); // Ajuda de Enzo Thomé https://github.com/EnzoThome-et
+    setColumnOptions(filteredOptions);
   }
 
   return (
@@ -28,11 +32,7 @@ function FilterForm() {
           value={ column }
           onChange={ ({ target }) => setColumn(target.value) }
         >
-          <option value="population">population</option>
-          <option value="orbital_period">orbital_period</option>
-          <option value="diameter">diameter</option>
-          <option value="rotation_period">rotation_period</option>
-          <option value="surface_water">surface_water</option>
+          {columnOptions.map((option) => (<option key={ option }>{option}</option>))}
         </select>
         <select
           data-testid="comparison-filter"

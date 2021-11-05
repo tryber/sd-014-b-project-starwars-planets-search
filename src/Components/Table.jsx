@@ -12,8 +12,6 @@ function Table() {
       .includes(filters.filterByName.name.toLowerCase()),
   );
 
-  console.log(filters);
-
   filters.filterByNumericValues.forEach((filter) => {
     const { column, value, comparison } = filter;
 
@@ -24,7 +22,7 @@ function Table() {
     }
     if (comparison === 'menor que') {
       filteredPlanetsFromData = filteredPlanetsFromData.filter(
-        (planet) => Number(planet[column]) < Number(value),
+        (planet) => Number(planet[column]) < Number(value), // column ja e uma string, desnecessario template.
       );
     }
     if (comparison === 'igual a') {
