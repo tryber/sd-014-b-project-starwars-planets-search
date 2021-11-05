@@ -1,10 +1,14 @@
 import React from 'react';
 import './App.css';
+import Provider from './context/Provider';
+import Main from './pages/main';
 
-function App() {
-  return (
-    <span>Hello, App!</span>
-  );
-}
+const App = () => (
+  <Provider>
+    <div>
+      <Main />
+    </div>
+  </Provider>
+);
 
 export default App;
