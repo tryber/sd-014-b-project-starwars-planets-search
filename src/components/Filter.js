@@ -1,12 +1,13 @@
 import React, { useContext, useState } from 'react';
 import ContextPlanets from '../context/ContextPlanets';
-import optionsCollum, { optionsComparison, removeOptionColumn } from '../helper/helper';
+import optionsCollum, { optionsComparison } from '../helper/helper';
 
 const Filter = () => {
   const { getFilterNumeric, data, setData } = useContext(ContextPlanets);
   const [column, setColumn] = useState('');
   const [comparison, setComparison] = useState('');
   const [value, setValue] = useState('0');
+  const [filterColums, setFilterColumns] = useState(optionsCollum);
 
   const handleColumn = ({ target }) => {
     setColumn(target.value);
@@ -46,9 +47,11 @@ const Filter = () => {
   };
 
   const handleClick = () => {
+    const filteredColums = filterColums
+      .filter((option) => option !== column);
     getFilterNumeric(column, comparison, value);
     filterData();
-    removeOptionColumn(optionsCollum, column);
+    setFilterColumns(filteredColums);
     resetState();
   };
 
@@ -59,8 +62,8 @@ const Filter = () => {
         onChange={ handleColumn }
         value={ column }
       >
-        { optionsCollum.map((option, index) => (
-          <option key={ index } value={ option }>{ option }</option>
+        { filterColums.map((option, index) => (
+          <option key={ index }>{ option }</option>
         ))}
       </select>
       <select
@@ -69,7 +72,7 @@ const Filter = () => {
         value={ comparison }
       >
         {optionsComparison.map((option, index) => (
-          <option key={ index } value={ option }>{ option }</option>
+          <option key={ index }>{ option }</option>
         ))}
       </select>
       <input
