@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useFilters } from '../context/Filters';
 
 const NumericFilter = () => {
