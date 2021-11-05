@@ -14,6 +14,21 @@ class FilterInput extends Component {
     setValue(value);
   }
 
+  handleClick() {
+    const { saveName, saveNumeric, removeFilter,
+      filter, column, comparison, value } = this.context;
+    const name = filter;
+    if (name !== '') {
+      saveName(name);
+    }
+    const arrayNumeric = [column, comparison, value];
+    if (value !== '') {
+      removeFilter(column);
+      saveNumeric(arrayNumeric);
+    }
+  }
+
+  // https://www.ti-enxame.com/pt/reactjs/como-permitir-apenas-numeros-na-caixa-de-texto-em-reactjs/831379815/
   onChange(e) {
     const re = /^[0-9\b]+$/;
     if (e.target.value === '' || re.test(e.target.value)) {
@@ -22,40 +37,46 @@ class FilterInput extends Component {
   }
 
   render() {
-    const { setColumn, setComparison, setFilter } = this.context;
+    const { setColumn, setComparison,
+      setFilter, toRemove } = this.context;
     const { value } = this.state;
+    const options = ['population', 'orbital_period',
+      'diameter', 'rotation_period', 'surface_water'];
+    const factors = ['maior que', 'menor que', 'igual a'];
     return (
       <>
-        <input
-          data-testid="name-filter"
-          type="text"
-          onChange={ (e) => setFilter(e.target.value) }
-          placeholder="Filtrar por nome"
-        />
+        <div>
+          <input
+            data-testid="name-filter"
+            type="text"
+            onChange={ (e) => setFilter(e.target.value) }
+            placeholder="Filtrar por nome"
+          />
+        </div>
         <select
           data-testid="column-filter"
           onChange={ (e) => setColumn(e.target.value) }
         >
-          <option>population</option>
-          <option>orbital_period</option>
-          <option>diameter</option>
-          <option>rotation_period</option>
-          <option>surface_water</option>
+          { options
+            .filter((e) => !toRemove.includes(e))
+            .map((e) => <option key={ e }>{e}</option>)}
         </select>
         <select
           data-testid="comparison-filter"
           onChange={ (e) => setComparison(e.target.value) }
         >
-          <option>maior que</option>
-          <option>menor que</option>
-          <option>igual a</option>
+          { factors.map((e) => <option key={ e }>{e}</option>)}
         </select>
         <input
           data-testid="value-filter"
           value={ value }
           onChange={ this.onChange }
         />
-        <button type="button" data-testid="button-filter">
+        <button
+          type="button"
+          data-testid="button-filter"
+          onClick={ () => this.handleClick() }
+        >
           Filtrar
         </button>
       </>

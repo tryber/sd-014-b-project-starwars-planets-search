@@ -8,12 +8,27 @@ function Provider({ children }) {
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState(undefined);
+  const [names, setNames] = useState([]);
+  const [numerics, setNumerics] = useState([]);
+  const [toRemove, setToRemove] = useState([]);
 
-  const filters = {
-    filterByName: {
-      name: filter,
+  const removeFilter = (payload) => {
+    setToRemove([...toRemove, payload]);
+  };
+
+  const saveNumeric = (payload) => {
+    setNumerics([...numerics, payload]);
+  };
+
+  const saveName = (payload) => {
+    setNames([...names, payload]);
+  };
+
+  const saved = {
+    filters: {
+      filterByName: names,
+      filterByNumericValues: [{ numerics }],
     },
-    filterByNumericValues: [{ column, comparison, value }],
   };
 
   const context = {
@@ -21,13 +36,17 @@ function Provider({ children }) {
     setFilter,
     data,
     setData,
-    filters,
     column,
     setColumn,
     comparison,
     setComparison,
     value,
     setValue,
+    saved,
+    saveNumeric,
+    saveName,
+    toRemove,
+    removeFilter,
   };
 
   return (
