@@ -4,7 +4,6 @@ import fetchPlanets from '../services/fetchPlanetsApi';
 
 function PlanetsProvider({ children }) {
   const [ data, setData ] = useState([]);
-  const [user, setUser] = useState('Icaro');
 
   const planetsData = async() => {
     const planets = await fetchPlanets();
@@ -18,7 +17,6 @@ function PlanetsProvider({ children }) {
   const contextValue = {
     data,
     planetsData,
-    user,
   }
   
   // const returnPlanets = data.map((planet) => planet.name)
