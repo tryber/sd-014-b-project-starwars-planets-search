@@ -30,10 +30,10 @@
 }
 
 #table, th, td {
+  background-color: whitesmoke;
   border: 1px solid black;
   border-collapse: collapse;
   text-align: center;
-  background-color: whitesmoke;
 }
 
 @keyframes App-logo-spin {
