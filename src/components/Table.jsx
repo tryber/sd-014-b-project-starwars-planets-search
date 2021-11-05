@@ -17,7 +17,12 @@ function Table() {
           return (
             <tr key={ `tr${ind}` }>
               { Object.values(planet)
-                .map((info, i) => <td key={ `td${ind}${i}` }>{ info }</td>) }
+                .map((info, i) => (i !== 0
+                  ? (<td key={ `td${ind}${i}` }>{ info }</td>)
+                  : (
+                    <td data-testid="planet-name" key={ `td${ind}${i}` }>{ info }</td>
+                  )
+                )) }
             </tr>);
         }) }
       </tbody>

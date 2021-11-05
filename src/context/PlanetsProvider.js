@@ -30,7 +30,6 @@ function PlanetsProvider({ children }) {
         setData(result.results);
         getPlanets(result.results);
       });
-    console.log('fetchPlnts');
   }
 
   function getFilterParams(filter, planet) {
