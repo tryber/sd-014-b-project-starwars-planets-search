@@ -9,7 +9,6 @@ function App() {
     <PlanetsProvider>
       <Header />
       <Table />
-      <Table />
     </PlanetsProvider>
   );
 }
