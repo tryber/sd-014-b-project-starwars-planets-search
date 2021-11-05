@@ -10,6 +10,10 @@ const INITIAL_FILTER = {
     name: '',
   },
   filterByNumericValues: [],
+  order: {
+    column: 'name',
+    sort: 'ASC',
+  },
 };
 
 function PlanetsProvider({ children }) {
@@ -17,13 +21,16 @@ function PlanetsProvider({ children }) {
   const [data, setData] = useState([]);
   const [filters, setFilters] = useState(INITIAL_FILTER);
 
+  const { filterByName, filterByNumericValues, order } = filters;
+
   function fetchPlanets() {
     fetch(PLANETS_URL)
       .then((response) => response.json())
       .then((result) => {
-        getPlanets(result.results);
         setData(result.results);
+        getPlanets(result.results);
       });
+    console.log('fetchPlnts');
   }
 
   function getFilterParams(filter, planet) {
@@ -35,17 +42,33 @@ function PlanetsProvider({ children }) {
     return planet[column] === value;
   }
 
+  function sortPlanets(dataArray, column, rule) {
+    const sortedData = [...dataArray].sort((a, b) => {
+      const valueA = Number.isNaN(+(a[column])) ? a[column] : +(a[column]);
+      const valueB = Number.isNaN(+(b[column])) ? b[column] : +(b[column]);
+      if (valueA < valueB) {
+        return rule === 'ASC' ? (1 - 2) : 1;
+      }
+      if (valueA > valueB) {
+        return rule !== 'ASC' ? (1 - 2) : 1;
+      }
+      return 0;
+    });
+    return sortedData;
+  }
+
   useEffect(() => fetchPlanets(), []);
 
   useEffect(() => {
-    function filterByName() {
-      return planets.filter(({ name }) => (
+    function filterByNames() {
+      const dataResult = planets.filter(({ name }) => (
         name.toLowerCase().includes(filters.filterByName.name)
       ));
+      return sortPlanets(dataResult, order.column, order.sort);
     }
 
-    if (planets.length > 0) setData(filterByName());
-  }, [filters.filterByName]);
+    if (planets.length > 0) setData(filterByNames());
+  }, [filterByName]);
 
   useEffect(() => {
     function filterByQuantity() {
@@ -54,11 +77,15 @@ function PlanetsProvider({ children }) {
         planetsResult = planetsResult
           .filter((planet) => getFilterParams(filter, planet));
       });
-      return planetsResult;
+      return sortPlanets(planetsResult, order.column, order.sort);
     }
 
     if (planets.length > 0) setData(filterByQuantity());
-  }, [filters.filterByNumericValues.length]);
+  }, [filterByNumericValues.length]);
+
+  useEffect(() => {
+    setData(sortPlanets(data, order.column, order.sort));
+  }, [order, planets]);
 
   const state = {
     data,

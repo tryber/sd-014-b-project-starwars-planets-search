@@ -2,21 +2,24 @@ import React, { useContext, useEffect, useState } from 'react';
 import { PlanetsContext } from '../context/PlanetsProvider';
 import DefaultInput from './DefaultInput';
 import DefaultSelect from './DefaultSelect';
+import { columnsValues, comparisons } from '../helper/data';
 
 const INITIAL_STATE = {
-  column: 'population',
-  comparison: 'maior que',
-  value: '',
+  filter: {
+    column: 'population',
+    comparison: 'maior que',
+    value: '',
+  },
+  order: {
+    column: 'name',
+    sort: 'ASC',
+  },
 };
 
-const columnsValues = ['population', 'orbital_period', 'diameter',
-  'rotation_period', 'surface_water'];
-
-const comparisons = ['maior que', 'igual a', 'menor que'];
-
 export default function FiltersForm() {
-  const { filters, setFilters } = useContext(PlanetsContext);
+  const { data, filters, setFilters } = useContext(PlanetsContext);
   const [state, setState] = useState(INITIAL_STATE);
+  const { filter, order } = state;
 
   function filterColumnsValues() {
     const { filterByNumericValues } = filters;
@@ -27,27 +30,45 @@ export default function FiltersForm() {
   }
 
   useEffect(() => {
-    setState({ ...state, column: filterColumnsValues()[0] });
+    setState({ ...state, filter: { ...filter, column: filterColumnsValues()[0] } });
   }, [filters.filterByNumericValues]);
 
-  function handleInput({ target: { value } }) {
+  function handleInputFilter({ target: { value } }) {
     setFilters({
       ...filters,
       filterByName: { name: value.toLowerCase() },
     });
   }
 
-  function handleChange({ target: { name, value } }) {
-    setState({ ...state, [name]: value });
+  function handleChangeFilter({ target: { name, value } }) {
+    setState({ ...state, filter: { ...filter, [name]: value } });
   }
 
-  function handleClick() {
-    if (state.value !== '') {
+  function handleChangeOrder({ target: { name, value } }) {
+    setState({ ...state, order: { ...order, [name]: value } });
+  }
+
+  function handleClickFilter() {
+    if (state.filter.value !== '') {
       setFilters({
         ...filters,
-        filterByNumericValues: [...filters.filterByNumericValues, state],
+        filterByNumericValues: [...filters.filterByNumericValues, filter],
       });
     }
+  }
+
+  function getColumnsValues() {
+    if (data.length > 0) {
+      return Object.keys(data[0]).filter((item) => item !== 'residents');
+    }
+    return [];
+  }
+
+  function orderPlanets() {
+    setFilters({
+      ...filters,
+      order,
+    });
   }
 
   return (
@@ -56,37 +77,69 @@ export default function FiltersForm() {
         type="text"
         id="name-filter"
         text="Filter by name: "
-        onChange={ handleInput }
+        onChange={ handleInputFilter }
       />
       <div>
         { 'Filter by: ' }
         <DefaultSelect
           name="column"
-          value={ state.column }
+          value={ filter.column }
           testid="column-filter"
           contents={ filterColumnsValues() }
-          change={ handleChange }
+          change={ handleChangeFilter }
         />
         <DefaultSelect
           name="comparison"
-          value={ state.comparison }
+          value={ filter.comparison }
           testid="comparison-filter"
           contents={ comparisons }
-          change={ handleChange }
+          change={ handleChangeFilter }
         />
         <DefaultInput
           type="number"
           id="value-filter"
           name="value"
-          onChange={ handleChange }
+          onChange={ handleChangeFilter }
           placeholder="Put a number"
         />
         <button
           type="button"
           data-testid="button-filter"
-          onClick={ handleClick }
+          onClick={ handleClickFilter }
         >
           Filter
+        </button>
+        <DefaultSelect
+          name="column"
+          value={ order.column }
+          testid="column-sort"
+          contents={ getColumnsValues() }
+          change={ handleChangeOrder }
+        />
+        <label htmlFor="column-sort-input-asc">
+          Ascendant:
+          <input
+            type="radio"
+            id="column-sort-input-asc"
+            name="sort"
+            data-testid="column-sort-input-asc"
+            value="ASC"
+            onChange={ handleChangeOrder }
+          />
+        </label>
+        <label htmlFor="column-sort-input-desc">
+          Descendant:
+          <input
+            type="radio"
+            id="column-sort-input-desc"
+            name="sort"
+            data-testid="column-sort-input-desc"
+            value="DESC"
+            onChange={ handleChangeOrder }
+          />
+        </label>
+        <button type="button" data-testid="column-sort-button" onClick={ orderPlanets }>
+          Order
         </button>
       </div>
     </form>

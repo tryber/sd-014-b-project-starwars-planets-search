@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import TABLE_HEAD from '../helper/data';
+import { TABLE_HEAD } from '../helper/data';
 import { PlanetsContext } from '../context/PlanetsProvider';
 
 function Table() {
