@@ -7,6 +7,9 @@ function Provider({ children }) {
   const [data, setData] = useState([]);
   const [planets, setPlanets] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [options, setOptions] = useState(
+    ['population', 'rotation_period', 'orbital_period', 'surface_water', 'diameter'],
+  );
   const [filters, setFilters] = useState(
     { filterByName: {
       name: '',
@@ -22,7 +25,10 @@ function Provider({ children }) {
     filters,
     setFilters,
     setPlanets,
-    planets };
+    planets,
+    options,
+    setOptions,
+  };
 
   return (
     <Context.Provider

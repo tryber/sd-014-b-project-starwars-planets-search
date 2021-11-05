@@ -8,7 +8,11 @@ function Header() {
     setFilters,
     data,
     setData,
-    setIsLoading, setPlanets } = useContext(Context);
+    setIsLoading,
+    setPlanets,
+    options,
+    setOptions,
+  } = useContext(Context);
 
   const [columnState, setColumnState] = useState('population');
   const [comparisonState, setComparisonState] = useState('maior que');
@@ -23,7 +27,7 @@ function Header() {
       setData(planets);
     };
     getPlanets();
-  }, [setData, setIsLoading, setPlanets]);
+  }, []);
 
   useEffect(() => {
     const { filterByNumericValues } = filters;
@@ -42,7 +46,7 @@ function Header() {
       });
       setPlanets(filteredPlanets);
     });
-  }, [data, filters, setPlanets]);
+  }, [filters]);
 
   const handleInput = async ({ target }) => {
     const searchedPlanet = target.value.toLowerCase();
@@ -62,6 +66,8 @@ function Header() {
         value: valueState,
       }],
     });
+    const newOptions = options.filter((option) => option !== columnState);
+    setOptions(newOptions);
   };
 
   return (
@@ -80,11 +86,11 @@ function Header() {
           name="column"
           value={ columnState }
         >
-          <option value="population">population</option>
-          <option value="orbital_period">orbital_period</option>
-          <option value="diameter">diameter</option>
-          <option value="rotation_period">rotation_period</option>
-          <option value="surface_water">surface_water</option>
+          { options.map((option) => (
+            <option key={ option } value={ option }>
+              { option }
+            </option>
+          )) }
         </select>
         <select
           data-testid="comparison-filter"
