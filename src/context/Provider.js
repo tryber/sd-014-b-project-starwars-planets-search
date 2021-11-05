@@ -23,15 +23,36 @@ function Provider({ children }) {
   }, []);
 
   const [filterByName, setFilterByName] = useState('');
+  const [filterByNumericValues, setNumericValue] = useState({
+    column: 'population',
+    comparison: 'maior que',
+    value: '100000',
+  });
+  const [column, setColumn] = useState('population');
+  const [comparison, setComparison] = useState('maior que');
+  const [value, setValue] = useState(0);
+  const [filterButton, setFilterButton] = useState(false);
 
   const contextValue = {
     loading,
     setLoading,
     data,
     setData,
+    filterButton,
+    setFilterButton,
     filters: {
       filterByName,
       setFilterByName,
+      filterByNumericValues,
+      setNumericValue,
+    },
+    infoFilter: {
+      column,
+      setColumn,
+      comparison,
+      setComparison,
+      value,
+      setValue,
     },
   };
 
