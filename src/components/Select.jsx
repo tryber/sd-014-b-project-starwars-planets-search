@@ -5,6 +5,8 @@ function Select() {
   const {
     data, setFilters, filters, setPlanetsUpdated,
     filters: { filterByNumericValues: [{ column, comparison, value: stateValue }] },
+    setColumnsOptions,
+    columnsOptions,
   } = useContext(PlanetsContext);
 
   const columns = ['population', 'orbital_period',
@@ -40,12 +42,16 @@ function Select() {
       }
     });
     setPlanetsUpdated(filteredPlanets);
+
+    // Filtra as novas colunas sempre que clicar no botão, excluindo a que já foi selecionada
+    const newColumns = columns.filter((columnOption) => columnOption !== column);
+    setColumnsOptions(newColumns);
   }
 
   return (
     <>
       <select onChange={ filterByNum } name="column" data-testid="column-filter">
-        { columns.map((item) => <option key={ item }>{ item }</option>) }
+        { columnsOptions.map((item) => <option key={ item }>{ item }</option>) }
       </select>
       <select onChange={ filterByNum } name="comparison" data-testid="comparison-filter">
         { comparisons.map((item) => <option key={ item }>{ item }</option>)}
