@@ -22,7 +22,7 @@ function StarWarsProvider({ children }) {
   const starWarsContext = {
     data,
     loading,
-    filters,
+    // filters,
   };
 
   return (
@@ -35,7 +35,7 @@ function StarWarsProvider({ children }) {
 }
 
 StarWarsProvider.propTypes = {
-  children: PropTypes.shape(PropTypes.element).isRequired,
+  children: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 // PropTypes.element,

@@ -10,10 +10,10 @@ function SearchArea() {
         type="text"
         data-testid="name-filter"
         placeholder="Search a especific planet"
-        value="aa"
-        onChange={ ({ target: { value } }) => {
-          setFilteredSearch(value);
-        } }
+        // value="aa"
+        // onChange={ ({ target: { value } }) => {
+        //   setFilteredSearch(value);
+        // } }
       />
     </section>
   );
