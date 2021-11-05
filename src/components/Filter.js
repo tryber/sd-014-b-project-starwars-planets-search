@@ -1,11 +1,11 @@
 import React, { useContext, useState } from 'react';
 import ContextPlanets from '../context/ContextPlanets';
-import optionsCollum from '../helper/helper';
+import optionsCollum, { optionsComparison, removeOptionColumn } from '../helper/helper';
 
 const Filter = () => {
   const { getFilterNumeric, data, setData } = useContext(ContextPlanets);
-  const [column, setColumn] = useState('population');
-  const [comparison, setComparison] = useState('maior que');
+  const [column, setColumn] = useState('');
+  const [comparison, setComparison] = useState('');
   const [value, setValue] = useState('0');
 
   const handleColumn = ({ target }) => {
@@ -20,8 +20,7 @@ const Filter = () => {
     setValue(target.value);
   };
 
-  const handleClick = () => {
-    getFilterNumeric(column, comparison, value);
+  const filterData = () => {
     if (comparison === 'maior que') {
       const dataFilter = data
         .filter((planet) => Number(planet[column]) > Number(value));
@@ -40,11 +39,25 @@ const Filter = () => {
     }
   };
 
+  const resetState = () => {
+    setColumn('');
+    setComparison('');
+    setValue('0');
+  };
+
+  const handleClick = () => {
+    getFilterNumeric(column, comparison, value);
+    filterData();
+    removeOptionColumn(optionsCollum, column);
+    resetState();
+  };
+
   return (
     <section>
       <select
         data-testid="column-filter"
         onChange={ handleColumn }
+        value={ column }
       >
         { optionsCollum.map((option, index) => (
           <option key={ index } value={ option }>{ option }</option>
@@ -53,15 +66,17 @@ const Filter = () => {
       <select
         data-testid="comparison-filter"
         onChange={ handleComparison }
+        value={ comparison }
       >
-        <option>maior que</option>
-        <option>menor que</option>
-        <option>igual a</option>
+        {optionsComparison.map((option, index) => (
+          <option key={ index } value={ option }>{ option }</option>
+        ))}
       </select>
       <input
         type="number"
         data-testid="value-filter"
         onChange={ handleInput }
+        value={ value }
       />
       <button
         type="button"
