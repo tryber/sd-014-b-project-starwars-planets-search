@@ -5,7 +5,7 @@ function FilterByNumericValues() {
   const {
     filters: { filterByNumericValues },
     column,
-    data,
+    filteredPlanets,
     comparison,
     value,
     setColumn,
@@ -21,7 +21,7 @@ function FilterByNumericValues() {
       ...filterByNumericValues,
       { column, comparison, value },
     ]);
-    const planetsFiltered = data.filter((planet) => {
+    const planetsFiltered = filteredPlanets.filter((planet) => {
       switch (comparison) {
       case 'menor que':
         return Number(planet[column]) < value;
