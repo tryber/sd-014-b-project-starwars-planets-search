@@ -38,7 +38,7 @@ function FilterByNumericValues() {
   }
 
   return (
-    <fieldset>
+    <section>
       <select
         data-testid="column-filter"
         name="column"
@@ -71,7 +71,7 @@ function FilterByNumericValues() {
       <button data-testid="button-filter" type="button" onClick={ handleClick }>
         Filtrar
       </button>
-    </fieldset>
+    </section>
   );
 }
 

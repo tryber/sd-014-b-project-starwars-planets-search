@@ -11,8 +11,8 @@ function MyProvider({ children }) {
   const [columns, setColumns] = useState(initialColumns);
   const [filterOn, setFilterOn] = useState(false);
   const [name, setName] = useState('');
-  const [column, setColumn] = useState('population');
-  const [comparison, setComparison] = useState('maior que');
+  const [column, setColumn] = useState('');
+  const [comparison, setComparison] = useState('');
   const [value, setValue] = useState('');
   const [filterByNumericValues,
     setFilterByNumericValues] = useState([]);
