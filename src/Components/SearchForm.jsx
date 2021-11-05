@@ -80,7 +80,7 @@ function SearchForm() {
       </button>
       <div>
         {filterByNumericValues.map((filter, index) => (
-          <span key={ index }>
+          <span key={ index } data-testid="filter">
             {`Mostrando filtros para:
             ${filter.column} ${filter.comparision} ${filter.value}`}
             <button

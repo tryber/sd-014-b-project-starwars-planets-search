@@ -5,6 +5,7 @@ import fetchPlanets from '../services/fetchPlanets';
 import PlanetContext from '../Context/PlanetContext';
 
 export default function PlanetProvider({ children }) {
+  const MAGIC_NUMBER = 100000;
   const allColumnOptions = [
     'population',
     'orbital_period',
@@ -17,7 +18,7 @@ export default function PlanetProvider({ children }) {
   const [filteredPlanets, setFilteredPlanets] = useState([]);
   const [column, setColumn] = useState('population');
   const [comparision, setComparision] = useState('maior que');
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(MAGIC_NUMBER);
   const [filterByNumericValues, setNumericValues] = useState([]);
   const [filteredColumnOptions, setOptions] = useState(allColumnOptions);
 
@@ -42,6 +43,29 @@ export default function PlanetProvider({ children }) {
     const filtersToBeKept = allColumnOptions
       .filter((options) => !columns.includes(options)); // arrays cujos quais não têm a coluna já filtrada
     setOptions(filtersToBeKept);
+  }, [filterByNumericValues]);
+
+  useEffect(() => {
+    let newPlanetFiltered = planets;
+    filterByNumericValues.forEach((condition) => {
+      switch (condition.comparision) {
+      case 'menor que':
+        newPlanetFiltered = newPlanetFiltered
+          .filter((planet) => parseInt(planet[condition.column], 10) < condition.value);
+        break;
+      case 'maior que':
+        newPlanetFiltered = newPlanetFiltered
+          .filter((planet) => parseInt(planet[condition.column], 10) > condition.value);
+        break;
+      case 'igual a':
+        newPlanetFiltered = newPlanetFiltered
+          .filter((planet) => planet[condition.column] === condition.value);
+        break;
+      default:
+        break;
+      }
+    });
+    setFilteredPlanets(newPlanetFiltered);
   }, [filterByNumericValues]);
 
   useEffect(() => {
