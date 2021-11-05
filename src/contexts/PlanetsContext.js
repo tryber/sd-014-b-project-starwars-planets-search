@@ -9,6 +9,10 @@ function PlanetsContextProvider({ children }) {
   const [filters, setFilters] = useState({
     filterByName: '',
     filterByNumericValues: [],
+    order: {
+      column: 'name',
+      sort: 'ASC',
+    },
   });
   const context = {
     data,

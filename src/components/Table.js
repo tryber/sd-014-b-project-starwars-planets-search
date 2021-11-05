@@ -1,11 +1,15 @@
 import React, { useContext } from 'react';
 import { PlanetsContext } from '../contexts/PlanetsContext';
 import filterData from '../services/filterData';
+import { sortNumericColumns, sortTextColumns } from '../services/sortTable';
 import Loading from './Loading';
 
 function Table() {
-  const { data, isLoading,
-    filters: { filterByName, filterByNumericValues } } = useContext(PlanetsContext);
+  const { data, isLoading, filters: {
+    filterByName,
+    filterByNumericValues,
+    order,
+  } } = useContext(PlanetsContext);
 
   let dataFiltered = [];
   if (filterByNumericValues.length > 0) {
@@ -13,6 +17,16 @@ function Table() {
   } else {
     dataFiltered = data;
   }
+
+  const numericColumns = ['population', 'orbital_period',
+    'diameter', 'rotation_period', 'surface_water'];
+
+  if (numericColumns.includes(order.column)) {
+    dataFiltered = sortNumericColumns(order, dataFiltered);
+  } else {
+    dataFiltered = sortTextColumns(order, dataFiltered);
+  }
+
   return (
     isLoading ? <Loading /> : (
       <table>
@@ -38,7 +52,7 @@ function Table() {
             .filter(({ name }) => name.toLowerCase().includes(filterByName.toLowerCase()))
             .map((planet) => (
               <tr key={ planet.name }>
-                <td>{planet.name}</td>
+                <td data-testid="planet-name">{planet.name}</td>
                 <td>{planet.rotation_period}</td>
                 <td>{planet.orbital_period}</td>
                 <td>{planet.diameter}</td>

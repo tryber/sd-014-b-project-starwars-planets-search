@@ -14,7 +14,7 @@ function Header() {
       setIsLoading(false);
     };
     fetchPlanets();
-  }, []);
+  }, [setData, setIsLoading]);
 
   return (
     <header>
