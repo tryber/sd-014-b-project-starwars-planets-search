@@ -4,6 +4,7 @@ import Loading from '../components/Loading';
 import Header from '../components/Header';
 import SearchBar from '../components/SearchBar';
 import Table from '../components/Table';
+import Filters from '../components/Filters';
 
 function Site() {
   const { data } = useContext(AppContext);
@@ -21,6 +22,7 @@ function Site() {
       <main>
         <Header />
         <SearchBar />
+        <Filters />
         <Table />
       </main>
     );
