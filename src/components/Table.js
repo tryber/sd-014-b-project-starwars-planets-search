@@ -3,8 +3,8 @@ import AppContext from '../context/AppContext';
 import TableRow from './TableRow';
 
 export default function Table() {
-  const { planets, filtered, searchState } = useContext(AppContext);
-  const tableArray = searchState.filters.filterByName === '' ? planets : filtered;
+  const { tableArray } = useContext(AppContext);
+
   return (
     <div>
       <table>

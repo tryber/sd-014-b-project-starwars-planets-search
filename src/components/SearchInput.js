@@ -3,7 +3,7 @@ import AppContext from '../context/AppContext';
 
 export default function SearchInput() {
   const [query, setQuery] = useState('');
-  const { searchState, setSearchState, planets, setFiltered } = useContext(AppContext);
+  const { searchState, setSearchState, planets, setTableArray } = useContext(AppContext);
 
   const handleChange = ({ target: { value } }) => {
     setQuery(value);
@@ -15,12 +15,12 @@ export default function SearchInput() {
     const { filterByName } = searchState.filters;
     const filteredResults = planets
       .filter(({ name }) => name.toLowerCase().includes(filterByName.toLowerCase()));
-    setFiltered(filteredResults);
+    setTableArray(filteredResults);
   };
 
   useEffect(() => {
     const { filterByName } = searchState.filters;
-    if (filterByName !== '') filterPlanetsByName(); else setFiltered(planets);
+    if (filterByName !== '') filterPlanetsByName(); else setTableArray(planets);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchState.filters.filterByName]);
 

@@ -8,20 +8,24 @@ export default function Provider({ children }) {
   const [searchState, setSearchState] = useState({
     filters: {
       filterByName: '',
+      filterByNumericValues: {},
     },
   });
-  const [filtered, setFiltered] = useState([]);
+  const [tableArray, setTableArray] = useState(planets);
 
   useEffect(() => {
-    fetchPlanets().then(setPlanets);
+    fetchPlanets().then((response) => {
+      setPlanets(response);
+      setTableArray(response);
+    });
   }, []);
 
   const contextValues = {
     planets,
     searchState,
     setSearchState,
-    filtered,
-    setFiltered,
+    tableArray,
+    setTableArray,
   };
 
   return (
@@ -32,5 +36,5 @@ export default function Provider({ children }) {
 }
 
 Provider.propTypes = {
-  children: PropTypes.objectOf(PropTypes.any).isRequired,
+  children: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
