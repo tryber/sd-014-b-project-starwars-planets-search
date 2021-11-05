@@ -1,0 +1,16 @@
+.table {
+  border: 1px solid black;
+  border-collapse: collapse;
+  font-family: Segoe UI , Roboto , sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+}
+
+td, th {
+  border: 1px solid grey;
+  padding: 5px;
+}
+
+td {
+  text-align: center;
+}

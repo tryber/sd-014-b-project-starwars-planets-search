@@ -68,11 +68,11 @@ Este repositório já contém um _template_ de uma aplicação React criado e co
 
 ## Data de entrega
 
-  - Projeto individual.
+  - Projeto individual;
 
-  - Serão `2` dias de projeto.
+  - Serão `2` dias de projeto;
   
-  - Data de entrega para avaliação final do projeto: `11/11/2021 - 14:00h`.
+  - Data de entrega para avaliação final do projeto: `11/11/2021 - 14:00h`;
 
 ---
 
