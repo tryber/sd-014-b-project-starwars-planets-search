@@ -10,18 +10,19 @@ function Search() {
       (planet) => (planet.name.toLowerCase().includes(inputName)),
     );
     setFilter(filteredPlanets);
-    console.log(filteredPlanets);
   };
 
   return (
-    <form>
-      <input
-        type="text"
-        data-testid="name-filter"
-        onChange={ handleChange }
-        placeholder="Seach a planet"
-      />
-    </form>
+    <main>
+      <form>
+        <input
+          type="text"
+          data-testid="name-filter"
+          onChange={ handleChange }
+          placeholder="Procure um planeta"
+        />
+      </form>
+    </main>
   );
 }
 

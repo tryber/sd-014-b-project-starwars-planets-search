@@ -1,14 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import DataContext from './DataContext';
 import Table from '../components/Table';
-import Search from '../components/Search';
+import Header from '../components/Header';
 
 const API = 'https://swapi-trybe.herokuapp.com/api/planets/';
 
 function Provider() {
+  const INITIAL_STATE = [
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ];
+
   const [data, setData] = useState([]);
   const [keys, setKeys] = useState([]);
   const [filter, setFilter] = useState([]);
+  const [columns, setColumns] = useState('population');
+  const [compairsonFilter, setCompairsonFilter] = useState('maior que');
+  const [value, setValue] = useState('');
+  const [initialColumns, setInitialColumns] = useState(INITIAL_STATE);
 
   const fetchApiPlanets = async () => {
     const response = await fetch(API);
@@ -29,12 +41,25 @@ function Provider() {
   }, [data]);
 
   const state = {
-    data, setData, keys, setKeys, filter, setFilter,
+    data,
+    setData,
+    keys,
+    setKeys,
+    filter,
+    setFilter,
+    columns,
+    setColumns,
+    compairsonFilter,
+    setCompairsonFilter,
+    value,
+    setValue,
+    initialColumns,
+    setInitialColumns,
   };
 
   return (
     <DataContext.Provider value={ state }>
-      <Search />
+      <Header />
       <Table />
     </DataContext.Provider>
   );

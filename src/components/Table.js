@@ -7,13 +7,7 @@ function Table() {
     <table>
       <thead>
         <tr>
-          { keys.map(
-            (key, index) => (
-              <th key={ index }>
-                {key[0].toUpperCase() + key.substr(1) }
-              </th>
-            ),
-          )}
+          {keys.map((key, index) => (<th key={ index }>{key}</th>))}
         </tr>
       </thead>
       <tbody>
