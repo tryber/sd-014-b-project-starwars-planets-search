@@ -19,14 +19,18 @@ function Header() {
   } = planetName;
   const arrayColumn = ['population', 'orbital_period',
     'diameter', 'rotation_period', 'surface_water'];
+  const indexColumn = arrayColumn.indexOf(column);
+  if (click) {
+    arrayColumn.slice(indexColumn, indexColumn);
+  }
+  console.log(arrayColumn);
 
-  useEffect(() => {
+  /*   useEffect(() => {
     if (click) {
-      arrayColumn.map((option) => option !== column);
+      const mapColumn = arrayColumn.map((option) => option !== column);
+      return mapColumn;
     }
-
-    return arrayColumn;
-  }, [arrayColumn, click, column]);
+  }); */
 
   const secondColumn = ['maior que', 'menor que', 'igual a'];
 
