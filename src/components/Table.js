@@ -3,16 +3,24 @@ import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
   const [nameHeader, setNameHeader] = useState([]);
-  const { data } = useContext(StarWarsContext);
+  const { data, inputSearch } = useContext(StarWarsContext);
+  const { filters: { filterByName: { name: filterName } } } = inputSearch;
 
   useEffect(() => {
     if (data.length > 0) {
-      const Nove = 9;
+      const indexNine = 9;
       const names = Object.keys(data[0]);
-      names.splice(Nove, 1);
+      names.splice(indexNine, 1);
       setNameHeader(names);
     }
   }, [data]);
+
+  function dataFiltered() {
+    const dataFilter = data.filter((planet) => (
+      planet.name.toLowerCase().includes(filterName.toLowerCase())
+    ));
+    return dataFilter;
+  }
 
   return (
     <table>
@@ -22,7 +30,7 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        { data.map((value, index) => (
+        { dataFiltered().map((value, index) => (
           <tr key={ index }>
             <td key={ value.name }>{ value.name }</td>
             <td key={ value.rotation_period }>{ value.rotation_period }</td>

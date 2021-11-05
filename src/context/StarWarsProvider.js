@@ -5,6 +5,13 @@ import getAPI from '../services/getAPI';
 
 function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
+  const [inputSearch, setInputSearch] = useState({
+    filters: {
+      filterByName: {
+        name: '',
+      },
+    },
+  });
 
   useEffect(() => {
     async function initialState() {
@@ -15,7 +22,7 @@ function StarWarsProvider({ children }) {
   }, []);
 
   return (
-    <StarWarsContext.Provider value={ { data } }>
+    <StarWarsContext.Provider value={ { data, inputSearch, setInputSearch } }>
       { children }
     </StarWarsContext.Provider>
   );

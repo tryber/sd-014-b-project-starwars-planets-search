@@ -1,16 +1,17 @@
 import React from 'react';
 import StarWarsProvider from './context/StarWarsProvider';
 import './App.css';
+import Input from './components/Input';
 import Table from './components/Table';
 
 function App() {
   return (
-    <StarWarsProvider>
-      <main>
-        <span>Hello, App!</span>
+    <main className="main">
+      <StarWarsProvider>
+        <Input />
         <Table />
-      </main>
-    </StarWarsProvider>
+      </StarWarsProvider>
+    </main>
   );
 }
 
