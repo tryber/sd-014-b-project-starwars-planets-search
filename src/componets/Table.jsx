@@ -21,8 +21,8 @@ function Table() {
       <th>URL</th>
     </tr>);
 
-  const tbody = (planet, index) => (
-    <tr key={ index }>
+  const tbody = (planet, url) => (
+    <tr key={ url }>
       <td>{planet.name}</td>
       <td>{planet.rotation_period}</td>
       <td>{planet.orbital_period}</td>
@@ -45,8 +45,8 @@ function Table() {
       </thead>
       <tbody>
         {!isFiltering
-          ? data.map((planet) => tbody(planet, index))
-          : filteredPlanets.map((planet) => tbody(planet, index))}
+          ? data.map((planet) => tbody(planet, planet.url))
+          : filteredPlanets.map((planet) => tbody(planet, planet.url))}
       </tbody>
     </table>
   );
