@@ -22,16 +22,23 @@ function Provider({ children }) {
     fetchData();
   }, []);
 
+  const arrayColumn = ['population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water'];
+
   const [filterByName, setFilterByName] = useState('');
   const [filterByNumericValues, setNumericValue] = useState({
-    column: 'population',
-    comparison: 'maior que',
-    value: '100000',
+    column: '',
+    comparison: '',
+    value: '',
   });
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState(0);
   const [filterButton, setFilterButton] = useState(false);
+  const [columnState, setColumnState] = useState(arrayColumn);
 
   const contextValue = {
     loading,
@@ -40,6 +47,8 @@ function Provider({ children }) {
     setData,
     filterButton,
     setFilterButton,
+    columnState,
+    setColumnState,
     filters: {
       filterByName,
       setFilterByName,

@@ -4,7 +4,7 @@ const filterBiggenThen = (data, method) => {
   const { column, value } = method;
 
   const dataFilter = () => {
-    if (column === 'orbital_period') {
+    if (column === 'population') {
       return data
         .filter((e) => Number(e.population) > value && e.population !== 'unknown');
     }

@@ -2,18 +2,23 @@ import React, { useContext } from 'react';
 import MyContext from '../context/MyContext';
 
 const Header = () => {
-  const { setData, data, setFilterButton, filters:
-    { filterByName,
+  const { setData,
+    data,
+    setFilterButton,
+    columnState,
+    setColumnState,
+    filters: {
+      filterByName,
       setFilterByName,
       setNumericValue },
-  infoFilter: {
-    column,
-    setColumn,
-    setComparison,
-    comparison,
-    setValue,
-    value,
-  } } = useContext(MyContext);
+    infoFilter: {
+      column,
+      setColumn,
+      comparison,
+      setComparison,
+      value,
+      setValue,
+    } } = useContext(MyContext);
   const handleClick = () => {
     setFilterButton(true);
     setNumericValue({
@@ -22,6 +27,7 @@ const Header = () => {
       value,
     });
     setData(data);
+    setColumnState(columnState.filter((e) => e !== column));
   };
   return (
     <header>
@@ -35,11 +41,7 @@ const Header = () => {
         onChange={ ({ target }) => setColumn(target.value) }
         data-testid="column-filter"
       >
-        <option>population</option>
-        <option>orbital_period</option>
-        <option>diameter</option>
-        <option>rotation_period</option>
-        <option>surface_water</option>
+        {columnState.map((e) => <option key={ e }>{e}</option>)}
       </select>
       <select
         value={ comparison }
