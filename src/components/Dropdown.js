@@ -27,6 +27,5 @@ export default function Dropdown({ testId, options, onSelectedChange }) {
 Dropdown.propTypes = {
   options: PropTypes.arrayOf(PropTypes.string).isRequired,
   testId: PropTypes.string.isRequired,
-  label: PropTypes.arrayOf(PropTypes.string).isRequired,
   onSelectedChange: PropTypes.func.isRequired,
 };
