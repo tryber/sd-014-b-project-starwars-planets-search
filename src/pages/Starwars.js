@@ -1,10 +1,11 @@
 import React, { useContext, useState } from 'react';
 import Table from '../components/Table';
+import NumericFilter from '../components/NumericFilter';
 import PlanetsContext from '../context/PlanetsContext';
 
 function Starwars() {
   const [inputText, setInputText] = useState('');
-  const { setFilters, setData, backup } = useContext(PlanetsContext);
+  const { filters, setFilters, setData, backup } = useContext(PlanetsContext);
 
   function filterByName(value) {
     const filteredPlanets = backup.filter(
@@ -15,10 +16,11 @@ function Starwars() {
     return filteredPlanets;
   }
 
-  function handleChange(event) {
+  function handleTextChange(event) {
     const { value } = event.target;
     setInputText(value);
     setFilters({
+      ...filters,
       filterByName: {
         name: value,
       },
@@ -34,11 +36,14 @@ function Starwars() {
   return (
     <main>
       <h1>Projeto Star Wars - Trybe</h1>
-      <input
-        data-testid="name-filter"
-        onChange={ handleChange }
-        value={ inputText }
-      />
+      <section>
+        <input
+          data-testid="name-filter"
+          onChange={ handleTextChange }
+          value={ inputText }
+        />
+        <NumericFilter />
+      </section>
       <Table />
     </main>
   );
