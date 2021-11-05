@@ -8,6 +8,7 @@ export const FiltersProvider = ({ children }) => {
     filterByName: {
       name: '',
     },
+    filterByNumericValues: [],
   });
 
   return (

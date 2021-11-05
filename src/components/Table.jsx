@@ -5,7 +5,7 @@ import { useFilters } from '../context/Filters';
 
 const Table = () => {
   const { planets, loading } = usePlanets();
-  const { filters: { filterByName: { name } } } = useFilters();
+  const { filters: { filterByName: { name }, filterByNumericValues } } = useFilters();
 
   if (loading || planets.length < 1) { return <Loading />; }
 
@@ -14,6 +14,27 @@ const Table = () => {
   if (name !== '') {
     tablePlanets = planets
       .filter((planet) => planet.name.toLowerCase().includes(name.toLowerCase()));
+  }
+
+  if (filterByNumericValues.length > 0) {
+    filterByNumericValues.forEach((filter) => {
+      if (filter.comparison === 'maior que') {
+        tablePlanets = tablePlanets
+          .filter((object) => {
+            const objectValue = object[filter.column];
+            return parseInt(objectValue, 10) > filter.value;
+          });
+      } else if (filter.comparison === 'menor que') {
+        tablePlanets = tablePlanets
+          .filter((object) => {
+            const objectValue = object[filter.column];
+            return parseInt(objectValue, 10) < filter.value;
+          });
+      } else {
+        tablePlanets = tablePlanets
+          .filter((object) => object[filter.column] === filter.value);
+      }
+    });
   }
 
   return (
