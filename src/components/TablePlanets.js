@@ -2,18 +2,21 @@ import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function TablePlanets() {
-  const tableHeaders = ['Name', 'Rotation Period', 'Orbital Period', 'Diameter', 'Climate',
-  'Gravity', 'Terrain', 'Surface Water',
-  'Population', 'Films', 'Created', 'Edited', 'URL'];
+  const tableHeaders = [
+    'Name', 'Rotation Period',
+    'Orbital Period', 'Diameter', 'Climate',
+    'Gravity', 'Terrain', 'Surface Water',
+    'Population', 'Films', 'Created', 'Edited', 'URL',
+  ];
 
   const { data } = useContext(PlanetsContext);
 
-  return(
+  return (
     <div>
       <table>
         <thead>
           <tr>
-            { tableHeaders.map((header) => <th key={header}>{header}</th>) }
+            { tableHeaders.map((header) => <th key={ header }>{ header }</th>) }
           </tr>
         </thead>
         <tbody>

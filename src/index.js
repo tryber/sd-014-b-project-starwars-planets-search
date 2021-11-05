@@ -7,5 +7,5 @@ ReactDOM.render(
   <PlanetsProvider>
     <App />
   </PlanetsProvider>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );
