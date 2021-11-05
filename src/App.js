@@ -1,16 +1,14 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import Provider from './contexts/Provider';
 import Table from './components/Table';
 import './App.css';
-import PlanetsContext from './contexts/PlanetsContext';
 
 function App() {
-  const { planets } = useContext(PlanetsContext);
-  // console.log(planets);
-
   return (
     <main>
-      <span>Hello, App!</span>
-      <Table />
+      <Provider>
+        <Table />
+      </Provider>
     </main>
   );
 }
