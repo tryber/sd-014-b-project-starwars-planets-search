@@ -4,6 +4,7 @@ import StarWarsContext from './StarWarsContext';
 
 function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
+  // const [filteredSearch, setFilteredSearch] = useState([]);
   // Dica do Matheus Gonzaga - 14B, decidi colocar também no meu
   const [loading, setLoading] = useState([]);
 
@@ -21,6 +22,7 @@ function StarWarsProvider({ children }) {
   const starWarsContext = {
     data,
     loading,
+    filters,
   };
 
   return (
@@ -33,7 +35,9 @@ function StarWarsProvider({ children }) {
 }
 
 StarWarsProvider.propTypes = {
-  children: PropTypes.shape(PropTypes.func).isRequired,
+  children: PropTypes.shape(PropTypes.element).isRequired,
 };
+
+// PropTypes.element,
 
 export default StarWarsProvider;

@@ -26,9 +26,10 @@ function Table() {
               </tr>
             </thead>
             <tbody>
-              { data.map((eachPlanet) => (
+              { data.sort((a, b) => a.name - b.name).map((eachPlanet) => (
                 <tr key={ eachPlanet.name }>
                   <td>{ eachPlanet.name }</td>
+                  <td>{ eachPlanet.rotation_period }</td>
                   <td>{ eachPlanet.orbital_period }</td>
                   <td>{ eachPlanet.diameter }</td>
                   <td>{ eachPlanet.climate }</td>
@@ -36,7 +37,6 @@ function Table() {
                   <td>{ eachPlanet.terrain }</td>
                   <td>{ eachPlanet.surface_water }</td>
                   <td>{ eachPlanet.population }</td>
-                  <td>{ eachPlanet.residents }</td>
                   <td>{ eachPlanet.films }</td>
                   <td>{ eachPlanet.created }</td>
                   <td>{ eachPlanet.edited }</td>

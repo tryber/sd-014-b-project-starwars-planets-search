@@ -1,12 +1,17 @@
 main {
   align-items: center;
   display: flex;
+  flex-direction: column;
   justify-content: center;
 }
 
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+}
+
+section {
+  padding: 30px;
 }
 
 @media ( prefers-reduced-motion : no-preference ) {
@@ -32,6 +37,7 @@ main {
 }
 
 table {
+  height: 70vh;
   width: 70vw;
 }
 
@@ -40,8 +46,12 @@ thead {
   color: black;
 }
 
+td {
+  padding: 10px;
+}
+
 tr:nth-child( even ) {
-  background-color: #ccc;
+  background-color: rgb(228, 228, 228);
 }
 
 
