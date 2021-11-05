@@ -20,6 +20,7 @@ function Filters() {
 
   function setFilter() {
     const { column, comparison, value } = filterByNumericValues;
+    const element = document.getElementById(column);
     const filter = data.filter((planet) => {
       switch (comparison) {
       case 'maior que':
@@ -33,6 +34,7 @@ function Filters() {
       }
     });
     setFilteredData(filter);
+    element.remove();
   }
 
   return (
@@ -42,7 +44,7 @@ function Filters() {
         data-testid="column-filter"
         onChange={ handleFilters }
       >
-        {dropdown.map((item, i) => <option key={ i }>{item}</option>)}
+        {dropdown.map((item, i) => <option key={ i } id={ item }>{item}</option>)}
       </select>
       <select
         id="comparison"
