@@ -8,7 +8,6 @@ function TablePlanets() {
     'Gravity', 'Terrain', 'Surface Water',
     'Population', 'Films', 'Created', 'Edited', 'URL',
   ];
-
   const { data } = useContext(PlanetsContext);
 
   return (
