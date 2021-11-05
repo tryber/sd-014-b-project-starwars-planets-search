@@ -1,9 +1,17 @@
 import React from 'react';
-import './App.css';
+import Input from './components/Input';
+import Select from './components/Select';
+import Table from './components/Table';
+import PlanetsProvider from './context/PlanetsProvider';
 
 function App() {
   return (
-    <span>Hello, App!</span>
+    <PlanetsProvider>
+      <h1>Star Wars Planet</h1>
+      <Input />
+      <Select />
+      <Table />
+    </PlanetsProvider>
   );
 }
 
