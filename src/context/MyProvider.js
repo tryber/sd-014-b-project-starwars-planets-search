@@ -28,46 +28,6 @@ function MyProvider({ children }) {
       });
   }, []);
 
-  useEffect(() => {
-    setFilteredPlanets(data.filter((planet) => {
-      const planetName = planet.name.toLowerCase();
-      return planetName.includes(name);
-    }));
-  }, [name]);
-
-  /* useEffect(() => {
-    if (filterOn) {
-      setFilteredPlanets(data.filter((planet) => {
-        switch (comparison) {
-        case 'menor que':
-          return Number(planet[column]) < value;
-        case 'maior que':
-          return Number(planet[column]) > value;
-        case 'igual a':
-          return Number(planet[column]) === Number(value);
-        default:
-          return planet;
-        }
-      }));
-    }
-  }, [filterOn]); */
-
-  /* useEffect(() => {
-    setFilteredPlanets(data.filter((planet) => filterByNumericValues.map((filter) => {
-      console.log(filterByNumericValues);
-      switch (filter.comparison) {
-      case 'menor que':
-        return Number(planet[column]) < filter.value;
-      case 'maior que':
-        return Number(planet[column]) > filter.value;
-      case 'igual a':
-        return Number(planet[column]) === Number(filter.value);
-      default:
-        return planet;
-      }
-    })));
-  }, [filterByNumericValues]); */
-
   const contextValue = {
     filteredPlanets,
     column,
