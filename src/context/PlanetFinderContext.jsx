@@ -62,22 +62,19 @@ export default function PlanetFinderProvider({ children }) {
     filterByNumericValues.forEach((element) => {
       switch (element.comparison) {
       case 'maior que':
-        planets = planets
-          .filter(
-            (planet) => parseInt(planet[element.column], 10) > element.value,
-          );
+        planets = planets.filter(
+          (planet) => parseInt(planet[element.column], 10) > element.value,
+        );
         break;
       case 'menor que':
-        planets = planets
-          .filter(
-            (planet) => parseInt(planet[element.column], 10) < element.value,
-          );
+        planets = planets.filter(
+          (planet) => parseInt(planet[element.column], 10) < element.value,
+        );
         break;
       case 'igual a':
-        planets = planets
-          .filter(
-            (planet) => planet[element.column] === element.value,
-          );
+        planets = planets.filter(
+          (planet) => planet[element.column] === element.value,
+        );
         break;
       default:
         break;
