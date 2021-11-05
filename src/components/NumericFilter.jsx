@@ -6,13 +6,39 @@ const NumericFilter = () => {
 
   const { filterByNumericValues } = filters;
 
+  const columnOptions = [
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
+
+  const firstColumnOptionsDisplayed = columnOptions.map((option, index) => (
+    <option key={ index } value={ option }>{ option }</option>
+  ));
+
   const [componentValues, setComponentValues] = useState({
     columnValue: 'population',
     comparisonValue: 'bigger-than',
     inputValue: '0',
+    columnOptionsDisplayed: firstColumnOptionsDisplayed,
   });
 
-  const { columnValue, comparisonValue, inputValue } = componentValues;
+  const {
+    columnValue, comparisonValue, inputValue, columnOptionsDisplayed,
+  } = componentValues;
+
+  const createValidColumnOptions = () => {
+    const usedColumnOptions = filterByNumericValues.map((filter) => filter.column);
+    const validColumnOptions = columnOptions.filter(
+      (option) => !(usedColumnOptions.includes(option)),
+    );
+    const newColumnOptionsDisplayed = validColumnOptions.map((validOption, index) => {
+      if (index === 0 && columnValue !== validOption) {
+        setComponentValues({ ...componentValues, columnValue: validOption });
+      }
+      return (<option key={ index } value={ validOption }>{ validOption }</option>);
+    });
+    setComponentValues({
+      ...componentValues, columnOptionsDisplayed: newColumnOptionsDisplayed,
+    });
+  };
 
   const addFilter = () => {
     const numericFiltersArray = filterByNumericValues;
@@ -20,22 +46,7 @@ const NumericFilter = () => {
       column: columnValue, comparison: comparisonValue, value: inputValue };
     numericFiltersArray.push(newNumericFilter);
     setFilters({ ...filters, filterByNumericValues: numericFiltersArray });
-  };
-
-  const columnOptions = [
-    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
-
-  const createValidColumnOptions = () => {
-    const usedColumnOptions = filterByNumericValues.map((filter) => filter.column);
-    const validColumnOptions = columnOptions.filter(
-      (option) => !(usedColumnOptions.includes(option)),
-    );
-    return validColumnOptions.map((validOption, index) => {
-      if (index === 0 && columnValue !== validOption) {
-        setComponentValues({ columnValue: validOption, comparisonValue, inputValue });
-      }
-      return (<option key={ index } value={ validOption }>{ validOption }</option>);
-    });
+    createValidColumnOptions();
   };
 
   return (
@@ -44,17 +55,17 @@ const NumericFilter = () => {
         data-testid="column-filter"
         value={ columnValue }
         onChange={ ({ target }) => setComponentValues(
-          { columnValue: target.value, comparisonValue, inputValue },
+          { ...componentValues, columnValue: target.value },
         ) }
       >
-        { createValidColumnOptions() }
+        { columnOptionsDisplayed }
       </select>
 
       <select
         data-testid="comparison-filter"
         value={ comparisonValue }
         onChange={ ({ target }) => setComponentValues(
-          { columnValue, comparisonValue: target.value, inputValue },
+          { ...componentValues, comparisonValue: target.value },
         ) }
       >
         <option value="maior que">maior que</option>
@@ -67,7 +78,7 @@ const NumericFilter = () => {
         data-testid="value-filter"
         value={ inputValue }
         onChange={ ({ target }) => setComponentValues(
-          { columnValue, comparisonValue, inputValue: target.value },
+          { ...componentValues, inputValue: target.value },
         ) }
       />
 
