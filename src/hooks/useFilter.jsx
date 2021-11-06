@@ -9,13 +9,15 @@ const INITIAL_FILTER = {
 };
 
 export default function useFilter() {
-  const [filter, setFilter] = useState(INITIAL_FILTER);
+  const [filterObject, setFilter] = useState(INITIAL_FILTER);
 
-  const addName = (value) => {
+  const addNameFilter = (value) => {
     setFilter({
       filters: {
-        filterByName: { name: value },
-        ...filter.filters,
+        ...filterObject.filters,
+        filterByName: {
+          name: value,
+        },
       },
     });
   };
@@ -23,14 +25,14 @@ export default function useFilter() {
   const addFilterNumeric = (value) => {
     setFilter({
       filters: {
-        ...filter.filters,
+        ...filterObject.filters,
         filterByNumericValues: [
-          ...filter.filters.filterByNumericValues,
+          ...filterObject.filters.filterByNumericValues,
           { ...value },
         ],
       },
     });
   };
 
-  return [filter, addName, addFilterNumeric];
+  return [filterObject, addNameFilter, addFilterNumeric];
 }

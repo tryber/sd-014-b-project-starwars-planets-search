@@ -3,20 +3,13 @@ import PlanetsContext from '../context/PlanetsContext';
 
 export default function Search() {
   const {
-    setFilter, filterObject, setPlanetsFilter, allPlanets,
+    addNameFilter, setPlanetsFilter, allPlanets,
   } = useContext(PlanetsContext);
   const [searchValue, setSearchValue] = useState('');
 
   const handleFilter = (value) => {
     setSearchValue(value);
-    setFilter({
-      filters: {
-        ...filterObject.filters,
-        filterByName: {
-          name: value,
-        },
-      },
-    });
+    addNameFilter(value);
     const filterDataByName = allPlanets.filter(({ name: nameData }) => (
       nameData.toLowerCase().includes(value.toLowerCase())
     ));
