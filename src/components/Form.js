@@ -38,12 +38,16 @@ export default function Form() {
       </div>
     ));
   }
+  console.log(`options = ${options}`);
+
+  const utilizedOptions = filters.filterByNumericValues.map((filter) => filter.column);
+  const optionsFilter = options.filter((col) => !utilizedOptions.includes(col));
 
   return (
     <>
       <Dropdown
         label={ label }
-        options={ options }
+        options={ optionsFilter }
         testId="column-filter"
         selected={ column }
         onSelectedChange={ setColumn }
