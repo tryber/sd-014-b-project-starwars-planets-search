@@ -9,48 +9,88 @@ function Provider({ children }) {
       name: '',
     },
     filterByNumericValues: [],
+    order: {
+      column: 'name',
+      sort: 'ASC',
+    },
   };
 
-  const [
-    planets,
-    filterDataForName,
-    filterPlanetsForValues,
-    resetPlanets,
-  ] = useFetchPlanets();
+  const [data] = useFetchPlanets();
+  const [planets, setPlanets] = useState();
   const [filters, setFilters] = useState(initialFilters);
 
-  const handleFilterName = ({ target }) => {
-    setFilters({
-      ...filters,
-      filterByName: { name: target.value },
-    });
-    filterDataForName(target.value);
+  const filterPlanetsForName = (name) => {
+    if (planets && name !== '') {
+      const filtered = planets.filter((item) => item.name.includes(name));
+      setPlanets(filtered);
+    } else {
+      setPlanets(data.results);
+    }
   };
 
-  const handleFilterValues = (filterValue) => {
-    setFilters({
-      ...filters,
-      filterByNumericValues: filters.filterByNumericValues.concat(filterValue),
-    });
+  const filterPlanetsForValues = (valuesFilters, planetsData) => {
+    if (valuesFilters.length !== 0) {
+      valuesFilters.forEach((filter) => {
+        const filtered = planetsData.filter((item) => {
+          const columnValue = Number(item[filter.column]);
+          const filterValue = Number(filter.value);
+          if (filter.comparison === 'maior que') {
+            return columnValue > filterValue;
+          }
+          if (filter.comparison === 'menor que') {
+            return columnValue < filterValue;
+          }
+          return columnValue === filterValue;
+        });
+        setPlanets(filtered);
+      });
+    }
+  };
+
+  const resetPlanets = () => {
+    setPlanets(data.results);
   };
 
   const deleteFilterNumeric = (column) => {
     const updateFilterNumeric = filters.filterByNumericValues
       .filter((item) => item.column !== column);
-    resetPlanets();
+    if (updateFilterNumeric.length > 0) {
+      filterPlanetsForValues(updateFilterNumeric, data.results);
+    } else {
+      resetPlanets();
+    }
     setFilters({
       ...filters,
       filterByNumericValues: updateFilterNumeric,
     });
   };
 
+  const handleFilterName = ({ target }) => {
+    setFilters({
+      ...filters,
+      filterByName: { name: target.value },
+    });
+    filterPlanetsForName(target.value);
+  };
+
+  const handleFilterValues = (filterValue) => {
+    const updateFilterValues = filters.filterByNumericValues.concat(filterValue);
+    setFilters({
+      ...filters,
+      filterByNumericValues: updateFilterValues,
+    });
+    filterPlanetsForValues(updateFilterValues, planets);
+  };
+
   useEffect(() => {
-    filterPlanetsForValues(filters.filterByNumericValues);
-  }, [filters.filterByNumericValues]); // eslint-disable-line react-hooks/exhaustive-deps
+    if (data) {
+      setPlanets(data.results);
+    }
+  }, [data]);
 
   const context = {
     planets,
-    filters,
+    filterByNumericValues: filters.filterByNumericValues,
     handleFilterName,
     handleFilterValues,
     deleteFilterNumeric,
@@ -58,7 +98,7 @@ function Provider({ children }) {
 
   return (
     <Context.Provider value={ context }>
-      { children }
+      {children}
     </Context.Provider>
   );
 }

@@ -13,7 +13,7 @@ function FilterNumeric() {
   const {
     handleFilterValues,
     deleteFilterNumeric,
-    filters: { filterByNumericValues },
+    filterByNumericValues,
   } = useContext(Context);
 
   const [filterNumeric, setFilterNumeric] = useState(initialFilter);
