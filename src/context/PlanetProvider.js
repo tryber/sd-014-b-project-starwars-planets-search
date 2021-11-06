@@ -12,7 +12,7 @@ function PlanetApiProvider({ children }) {
     const setPlanets = async () => setState({
       ...state,
       planets: await fetchApi(),
-      filteredPlanets: response.results,
+      filteredPlanets: await fetchApi(),
     });
 
     // const setPlanets = () => setState({
