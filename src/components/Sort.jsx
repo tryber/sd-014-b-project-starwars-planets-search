@@ -4,7 +4,7 @@ import { usePlanets } from '../context/Planets';
 
 const Sort = () => {
   const [sortState, setSortState] = useState({
-    columnValue: 'population',
+    columnValue: 'name',
     radioValue: 'ASC',
   });
 
