@@ -72,7 +72,6 @@ export default function FiltersBar() {
         });
       });
       setSearchState(searchState);
-      console.log(newTableArray)
       setTableArray(newTableArray);
     }
   };
