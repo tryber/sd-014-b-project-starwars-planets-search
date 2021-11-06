@@ -6,6 +6,7 @@ import Header from './components/Header';
 
 function App() {
   const [data, setData] = useState([]);
+  const [filterBy, setFilterBy] = useState([]);
   const url = 'https://swapi-trybe.herokuapp.com/api/planets/';
   const [search, setSearch] = useState([]);
 
@@ -22,10 +23,16 @@ function App() {
     setData,
     search,
     setSearch,
+    filterBy,
+    setFilterBy,
   };
 
   useEffect(() => {
     setSearch(data);
+  }, [data]);
+
+  useEffect(() => {
+    setFilterBy(data);
   }, [data]);
   // ajuda do Diogo Fiuza
   // consultei também o site https://pt-br.reactjs.org/docs/hooks-reference.html
