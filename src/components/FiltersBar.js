@@ -2,28 +2,57 @@ import React, { useState, useContext } from 'react';
 import AppContext from '../context/AppContext';
 
 export default function FiltersBar() {
-  const [columnfilter, setColumnFilter] = useState('population');
-  const [comparison, setComparison] = useState('maior');
+  const [column, setColumn] = useState('population');
+  const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState(0);
-  const { planets, setTableArray } = useContext(AppContext);
+  const { planets, setTableArray, searchState, setSearchState } = useContext(AppContext);
+  const [columnOptions, setColumnOptions] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ]);
+
+  const someFilter = (filter) => {
+    const { filterByNumericValues } = searchState.filters;
+    if (filterByNumericValues.length) {
+      return filterByNumericValues.some((current) => {
+        const isEqual = current.column === filter.column
+        && current.comparison === filter.comparison
+        && current.value === filter.value;
+        return isEqual;
+      });
+    }
+    return false;
+  };
 
   const onClickFilter = () => {
-    const filtered = planets.filter((planet) => {
-      const column = planet[columnfilter];
-      if (column === 'unknown') return false;
-      switch (comparison) {
-      case 'menor que':
-        return +column < +value;
-      case 'maior que':
-        return +column > +value;
-      case 'igual a':
-        return +column === +value;
-      default:
-        return false;
-      }
-    });
+    const newFilter = { column, comparison, value };
+    if (!someFilter(newFilter)) {
+      const index = columnOptions.findIndex((option) => option === column);
+      columnOptions.splice(index, 1); // remove a option que foi selecionada
+      setColumnOptions(columnOptions);
 
-    setTableArray(filtered);
+      searchState.filters.filterByNumericValues.push(newFilter);
+      setSearchState(searchState); // faz o push do novo filtro
+
+      const filtered = planets.filter((planet) => {
+        if (planet[column] === 'unknown') return false;
+        switch (comparison) {
+        case 'menor que':
+          return +planet[column] < +value;
+        case 'maior que':
+          return +planet[column] > +value;
+        case 'igual a':
+          return +planet[column] === +value;
+        default:
+          return false;
+        }
+      });
+
+      setTableArray(filtered);
+    }
   };
 
   return (
@@ -31,13 +60,10 @@ export default function FiltersBar() {
       <select
         data-testid="column-filter"
         name="column-filter"
-        onChange={ ({ target }) => { setColumnFilter(target.value); } }
+        onChange={ ({ target }) => { setColumn(target.value); } }
       >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        { columnOptions
+          .map((option) => <option key={ option } value={ option }>{ option }</option>) }
       </select>
       <select
         data-testid="comparison-filter"

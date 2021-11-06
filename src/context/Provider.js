@@ -8,7 +8,7 @@ export default function Provider({ children }) {
   const [searchState, setSearchState] = useState({
     filters: {
       filterByName: '',
-      filterByNumericValues: {},
+      filterByNumericValues: [],
     },
   });
   const [tableArray, setTableArray] = useState(planets);
