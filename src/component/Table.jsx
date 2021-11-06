@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import PlanetApiContext from '../constext/PlanetApiContext';
+import PlanetApiContext from '../context/PlanetContext';
 
 function Table() {
   const { state: { planets } } = useContext(PlanetApiContext);

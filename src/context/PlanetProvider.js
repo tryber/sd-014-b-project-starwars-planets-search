@@ -1,15 +1,25 @@
 import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
-import PlanetApiContext from './PlanetApiContext';
+import PlanetApiContext from './PlanetContext';
+import globalState from '../state';
 import fetchApi from '../api/planetsApi';
 // import response from '../testData';
 
 function PlanetApiProvider({ children }) {
-  const [state, setState] = useState({ planets: [], test: 'nao mudou' });
+  const [state, setState] = useState(globalState);
 
   useEffect(() => {
-    const setPlanets = async () => setState({ ...state, planets: await fetchApi() });
-    // const setPlanets = () => setState({ ...state, planets: response.results });
+    const setPlanets = async () => setState({
+      ...state,
+      planets: await fetchApi(),
+      filteredPlanets: response.results,
+    });
+
+    // const setPlanets = () => setState({
+    //   ...state,
+    //   planets: response.results,
+    //   filteredPlanets: response.results,
+    // });
 
     setPlanets();
   // eslint-disable-next-line react-hooks/exhaustive-deps
