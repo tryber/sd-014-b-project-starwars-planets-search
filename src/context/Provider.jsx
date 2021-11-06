@@ -5,16 +5,6 @@ import useFetch from '../hooks/useFetch';
 
 const URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
 
-const INITIAL_STATE = {
-  filters:
-  {
-    filterByName: {
-      name: '',
-    },
-    filterByNumericValues: [],
-  },
-};
-
 const selectColumnList = [
   'population',
   'orbital_period',
