@@ -1,10 +1,9 @@
 import React from 'react';
 import './App.css';
+import Content from './componentes/Content';
 
-function App() {
-  return (
-    <span>Hello, App!</span>
-  );
-}
+const App = () => (
+  <Content />
+);
 
 export default App;
