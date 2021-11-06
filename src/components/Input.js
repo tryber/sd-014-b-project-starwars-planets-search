@@ -11,6 +11,7 @@ export default function Input({ labelText, type, name, id, placeholder, onChange
         id={ id }
         placeholder={ placeholder }
         onChange={ onChange }
+        data-testid={ id }
       />
     </label>
   );
