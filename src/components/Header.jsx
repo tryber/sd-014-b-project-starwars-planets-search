@@ -7,7 +7,7 @@ function Header() {
     const { value } = event.target;
     if (value !== '') {
       const findElement = data.filter((name) => (
-        name.name.includes(value[0].toUpperCase())
+        name.name.includes(value)
       ));
       return setSearch(findElement);
     }
