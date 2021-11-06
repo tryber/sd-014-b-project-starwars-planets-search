@@ -1,41 +1,33 @@
-.App {
-  text-align: center;
+.header {
+  background: url('https://i.imgur.com/59SyQyl.jpeg');
+  display: flex;
+  flex-direction: column;
+  height: 35vh;
+  justify-content: space-evenly;
+  padding: 1rem;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.table {
+  font-size: 13px;
+  margin-bottom: 0;
 }
 
-@media ( prefers-reduced-motion : no-preference ) {
-
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
+.search-and-title {
   align-items: center;
-  background-color: #282c34;
   color: white;
   display: flex;
   flex-direction: column;
-  font-size: calc(10px + 2vmin);
-  justify-content: center;
-  min-height: 100vh;
 }
 
-.App-link {
-  color: #61dafb;
+.search-and-title input {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  margin-bottom: 10px;
+  padding: 10px;
+  width: 35rem;
 }
 
-@keyframes App-logo-spin {
-
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
+.filter-numeric-form {
+  display: flex;
 }
