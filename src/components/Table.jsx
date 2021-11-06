@@ -7,7 +7,7 @@ const namesHeader = [
   'Population', 'Films', 'Created', 'Edited', 'URL'];
 
 function Table() {
-  const { data } = useContext(Context);
+  const { search } = useContext(Context);
 
   return (
     <table>
@@ -19,7 +19,7 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        { data.map((item) => (
+        { search.map((item) => (
           <tr key={ item.url }>
             <td>{ item.name }</td>
             <td>{ item.rotation_period }</td>
