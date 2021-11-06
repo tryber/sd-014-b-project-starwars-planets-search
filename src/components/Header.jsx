@@ -2,6 +2,7 @@ import React from 'react';
 import { useFilters } from '../context/Filters';
 import NumericFilter from './NumericFilter';
 import NumericFilterTags from './NumericFilterTags';
+import Sort from './Sort';
 
 const Header = () => {
   const { filters, setFilters } = useFilters();
@@ -22,6 +23,7 @@ const Header = () => {
       />
       <NumericFilter />
       <NumericFilterTags />
+      <Sort />
     </header>
   );
 };
