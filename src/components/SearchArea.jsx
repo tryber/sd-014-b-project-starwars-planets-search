@@ -1,19 +1,18 @@
-import React from 'react';
-// import StarWarsContext from '../context/StarWarsContext';
+import React, { useContext } from 'react';
+import StarWarsContext from '../context/StarWarsContext';
 
 function SearchArea() {
   // const { filters } = useContext(StarWarsContext);
-  // const [filteredSearch, setFilteredSearch] = useState('');
+  const { filteredSearch, setFilteredSearch } = useContext(StarWarsContext);
+
   return (
     <section>
       <input
         type="text"
         data-testid="name-filter"
         placeholder="Search a especific planet"
-        // value="aa"
-        // onChange={ ({ target: { value } }) => {
-        //   setFilteredSearch(value);
-        // } }
+        value={ filteredSearch }
+        onChange={ ({ target: { value } }) => setFilteredSearch(value) }
       />
     </section>
   );

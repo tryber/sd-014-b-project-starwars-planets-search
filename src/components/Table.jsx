@@ -2,7 +2,31 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
-  const { data, loading } = useContext(StarWarsContext);
+  const { data, loading, filteredSearch } = useContext(StarWarsContext);
+
+  // Vi no código do Glauco Lomenha e achei organizado, decidi implementar no meu, da minha forma
+
+  const filteredData = data
+    .filter((eachPlanet) => eachPlanet.name.includes(filteredSearch));
+
+  const planets = () => filteredData.map((eachPlanet, index) => (
+    <tr key={ index }>
+      <td>{ eachPlanet.name }</td>
+      <td>{ eachPlanet.rotation_period }</td>
+      <td>{ eachPlanet.orbital_period }</td>
+      <td>{ eachPlanet.diameter }</td>
+      <td>{ eachPlanet.climate }</td>
+      <td>{ eachPlanet.gravity }</td>
+      <td>{ eachPlanet.terrain }</td>
+      <td>{ eachPlanet.surface_water }</td>
+      <td>{ eachPlanet.population }</td>
+      <td>{ eachPlanet.films }</td>
+      <td>{ eachPlanet.created }</td>
+      <td>{ eachPlanet.edited }</td>
+      <td>{ eachPlanet.url }</td>
+    </tr>
+  ));
+
   return (
     <section>
       {!loading
@@ -26,23 +50,7 @@ function Table() {
               </tr>
             </thead>
             <tbody>
-              { data.sort((a, b) => a.name - b.name).map((eachPlanet) => (
-                <tr key={ eachPlanet.name }>
-                  <td>{ eachPlanet.name }</td>
-                  <td>{ eachPlanet.rotation_period }</td>
-                  <td>{ eachPlanet.orbital_period }</td>
-                  <td>{ eachPlanet.diameter }</td>
-                  <td>{ eachPlanet.climate }</td>
-                  <td>{ eachPlanet.gravity }</td>
-                  <td>{ eachPlanet.terrain }</td>
-                  <td>{ eachPlanet.surface_water }</td>
-                  <td>{ eachPlanet.population }</td>
-                  <td>{ eachPlanet.films }</td>
-                  <td>{ eachPlanet.created }</td>
-                  <td>{ eachPlanet.edited }</td>
-                  <td>{ eachPlanet.url }</td>
-                </tr>
-              )) }
+              { planets() }
             </tbody>
           </table>) : (<span>Carregando...</span>)}
     </section>
