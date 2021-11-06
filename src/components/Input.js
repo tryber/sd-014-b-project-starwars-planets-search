@@ -5,7 +5,7 @@ export default function Input({ labelText, type, name, id, placeholder, onChange
   return (
     <label htmlFor={ name }>
       { labelText }
-      <Input
+      <input
         type={ type }
         name={ name }
         id={ id }
@@ -18,9 +18,14 @@ export default function Input({ labelText, type, name, id, placeholder, onChange
 
 Input.propTypes = {
   id: PropTypes.string.isRequired,
-  labelText: string.isRequired,
-  name: string.isRequired,
+  labelText: PropTypes.string,
+  name: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  placeholder: string.isRequired,
-  type: string.isRequired,
+  placeholder: PropTypes.string,
+  type: PropTypes.string.isRequired,
+};
+
+Input.defaultProps = {
+  labelText: '',
+  placeholder: '',
 };
