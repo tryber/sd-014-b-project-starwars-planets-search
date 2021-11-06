@@ -4,10 +4,21 @@ import PlanetsContext from '../contexts/PlanetsContext';
 function Table() {
   const {
     filteredPlanets,
-    filters: {
+    filters:
+    {
       filterByName: { name },
+      filterByNumericValues,
     },
-    setName } = useContext(PlanetsContext);
+    column,
+    usedColumnOptions,
+    comparison,
+    value,
+    setName,
+    setColumn,
+    setComparison,
+    setValue,
+    createNewNumericFilter,
+    removeNumericFilter } = useContext(PlanetsContext);
 
   return (
     <section>
@@ -18,6 +29,55 @@ function Table() {
         value={ name }
         onChange={ ({ target }) => setName(target.value) }
       />
+      <select
+        data-testid="column-filter"
+        value={ column }
+        onChange={ ({ target }) => setColumn(target.value) }
+      >
+        { usedColumnOptions.map((col, k) => (
+          <option value={ col } key={ k }>{col}</option>
+        ))}
+      </select>
+
+      <select
+        data-testid="comparison-filter"
+        value={ comparison }
+        onChange={ ({ target }) => setComparison(target.value) }
+      >
+        <option value="maior que">maior que</option>
+        <option value="menor que">menor que</option>
+        <option value="igual a">igual a</option>
+      </select>
+
+      <input
+        type="number"
+        data-testid="value-filter"
+        placeholder="Insira um número"
+        value={ value }
+        onChange={ ({ target }) => setValue(target.value) }
+      />
+
+      <button
+        type="button"
+        data-testid="button-filter"
+        onClick={ () => createNewNumericFilter(column, comparison, value) }
+      >
+        Filtrar
+      </button>
+
+      <div>
+        { filterByNumericValues.map((filter, k) => (
+          <p key={ k } data-testid="filter">
+            { `${filter.column} ${filter.comparison} ${filter.value}` }
+            <button
+              type="button"
+              onClick={ () => removeNumericFilter(filter.column, k) }
+            >
+              x
+            </button>
+          </p>
+        ))}
+      </div>
 
       <table>
         <thead>
