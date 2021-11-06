@@ -3,28 +3,28 @@ import PropTypes from 'prop-types';
 
 export default function Select({ labelText, name, id, onChange, value, options }) {
   return (
-    <label>
+    <label htmlFor={ name }>
       { labelText }
       <select
         name={ name }
         id={ id }
-        onChange={ onChange}
+        onChange={ onChange }
         value={ value }
         data-testid={ id }
       >
-       {
-         options.map((option, index) => (
-          <option key={ option }>
-            {option}
-          </option>
-         ))
-       } 
+        {
+          options.map((option, index) => (
+            <option key={ index }>
+              {option}
+            </option>
+          ))
+        }
       </select>
     </label>
   );
 }
 
-Input.propTypes = {
+Select.propTypes = {
   id: PropTypes.string.isRequired,
   labelText: PropTypes.string,
   name: PropTypes.string.isRequired,
@@ -33,8 +33,7 @@ Input.propTypes = {
   options: PropTypes.arrayOf(PropTypes.string),
 };
 
-Input.defaultProps = {
+Select.defaultProps = {
   labelText: '',
   options: [''],
 };
-
