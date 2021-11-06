@@ -2,14 +2,35 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
-  const { data, loading, filteredSearch } = useContext(StarWarsContext);
+  const { data, loading, filteredSearch, comparisonValue, filters, columnValue, valueFilter } = useContext(StarWarsContext);
 
   // Vi no código do Glauco Lomenha e achei organizado, decidi implementar no meu, da minha forma
 
   // filtro em tempo real, ignorando maiusculas e minusculas
-  const filteredData = data
+  let filteredData = data
     .filter((eachPlanet) => eachPlanet.name.toLowerCase()
       .includes(filteredSearch.toLowerCase()));
+
+  filters.filterByNumericValues.forEach((eachFilter) => {
+    const { column, comparison, value } = eachFilter;
+    switch (comparison) {
+    case 'maior que':
+      // operador '+' anterior o valor do tipo string converte em número, igual a um sustenido. Dica do Glauco Lomenha, 14B
+      filteredData = filteredData
+        .filter((eachPlanet) => +eachPlanet[`${column}`] > +value);
+      break;
+    case 'menor que':
+      filteredData = filteredData
+        .filter((eachPlanet) => +eachPlanet[`${column}`] < +value);
+      break;
+    case 'igual a':
+      filteredData = filteredData
+        .filter((eachPlanet) => +eachPlanet[`${column}`] === +value);
+      break;
+    default:
+      break;
+    }
+  });
 
   const planets = () => filteredData.map((eachPlanet, index) => (
     <tr key={ index }>
