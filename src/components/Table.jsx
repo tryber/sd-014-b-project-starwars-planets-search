@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import MyContext from '../context/MyContext';
 
 export default function Table() {
-  const { data } = useContext(MyContext);
+  const { dataFilter } = useContext(MyContext);
 
   const tableHead = ['Name', 'Rotation Period', 'Orbital Period',
     'Diameter', 'Climate', 'Gravity', 'Terrain', 'Surface Water',
@@ -16,7 +16,7 @@ export default function Table() {
             <th key={ i }>{ val }</th>
           ))}
         </tr>
-        {data.map((val, i) => (
+        {dataFilter.map((val, i) => (
           <tr key={ i }>
             <td>{ val.name }</td>
             <td>{ val.rotation_period }</td>
