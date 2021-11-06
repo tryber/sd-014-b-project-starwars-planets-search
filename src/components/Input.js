@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function Input({ labelText, type, name, id, placeholder, onChange }) {
+export default function Input({ labelText, type, name, id, placeholder, onChange, value }) {
   return (
     <label htmlFor={ name }>
       { labelText }
@@ -12,6 +12,7 @@ export default function Input({ labelText, type, name, id, placeholder, onChange
         placeholder={ placeholder }
         onChange={ onChange }
         data-testid={ id }
+        value={value}
       />
     </label>
   );
@@ -24,6 +25,7 @@ Input.propTypes = {
   onChange: PropTypes.func.isRequired,
   placeholder: PropTypes.string,
   type: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
 };
 
 Input.defaultProps = {
