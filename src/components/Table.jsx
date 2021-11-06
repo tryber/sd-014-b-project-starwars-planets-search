@@ -6,8 +6,10 @@ function Table() {
 
   // Vi no código do Glauco Lomenha e achei organizado, decidi implementar no meu, da minha forma
 
+  // filtro em tempo real, ignorando maiusculas e minusculas
   const filteredData = data
-    .filter((eachPlanet) => eachPlanet.name.includes(filteredSearch));
+    .filter((eachPlanet) => eachPlanet.name.toLowerCase()
+      .includes(filteredSearch.toLowerCase()));
 
   const planets = () => filteredData.map((eachPlanet, index) => (
     <tr key={ index }>
