@@ -9,6 +9,7 @@ function NumberFilter() {
   const condicao = ['maior que', 'menor que', 'igual a'];
   const options = ['population', 'orbital_period', 'diameter',
     'rotation_period', 'surface_water'];
+  const [optionsSearched, setOptionsSearched] = useState([...options]);
   const getFilter = () => {
     const filtro = filterBy.filter((plan) => {
       if (comparison === 'maior que') return Number(plan[columnState]) > Number(number);
@@ -17,14 +18,18 @@ function NumberFilter() {
       return null;
     });
     setSearch(filtro);
+    const newOptions = options.filter((op) => (op !== columnState));
+    console.log(newOptions);
+    setOptionsSearched(newOptions);
   };
+
   return (
     <>
       <select
         onChange={ ({ target }) => setColumnState(target.value) }
         data-testid="column-filter"
       >
-        {options.map((opt) => (
+        {optionsSearched.map((opt) => (
           <option
             key={ opt }
             value={ opt }
