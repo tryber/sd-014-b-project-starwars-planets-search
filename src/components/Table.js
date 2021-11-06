@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import PlanetApiContext from '../context/PlanetContext';
 import HeaderTable from './HeaderTable';
 import Header from './Header';
@@ -6,22 +6,15 @@ import TableBody from './TableBody';
 import FilterSelect from './FilterSelect';
 
 function Table() {
-  const { dataPlanet } = useContext(PlanetApiContext);
-  const [isLoading, setIsLoading] = useState(false);
-  const [values, setValues] = useState('');
-
-  useEffect(() => {
-    if (dataPlanet.length > 0) {
-      setIsLoading(true);
-    }
-  }, [dataPlanet]);
+  const { dataPlanet, newFilterArray, isNewFilter,
+    values, setValues } = useContext(PlanetApiContext);
 
   function handleChange({ target }) {
     const { name, value } = target;
     setValues({ ...values, filters: { [name]: value } });
   }
 
-  console.log(isLoading);
+  console.log(newFilterArray);
 
   return (
     <div>
@@ -44,9 +37,11 @@ function Table() {
           <HeaderTable />
         </thead>
         <tbody>
-          {!values && dataPlanet
+          {isNewFilter && newFilterArray
             .map((planet, index) => <TableBody key={ index } planet={ planet } />)}
-          {values && dataPlanet
+          {!values && !isNewFilter && dataPlanet
+            .map((planet, index) => <TableBody key={ index } planet={ planet } />)}
+          {values && !isNewFilter && dataPlanet
             .filter((planet) => planet.name.includes(values.filters.filterByName))
             .map((planet, index) => <TableBody key={ index } planet={ planet } />)}
         </tbody>

@@ -5,6 +5,9 @@ import PlanetApiContext from './PlanetContext';
 
 function PlanetProvider({ children }) {
   const [dataPlanet, setDataPlanet] = useState([]);
+  const [values, setValues] = useState('');
+  const [isNewFilter, setIsNewFilter] = useState(false);
+  const [newFilterArray, setNewFilterArray] = useState([]);
   useEffect(() => { // https://stackoverflow.com/questions/63570597/typeerror-func-apply-is-not-a-function
     (async () => {
       const result = await requestPlanetAPI();
@@ -12,8 +15,18 @@ function PlanetProvider({ children }) {
     })();
   }, []);
 
+  const valueContext = {
+    dataPlanet,
+    isNewFilter,
+    setIsNewFilter,
+    newFilterArray,
+    setNewFilterArray,
+    values,
+    setValues,
+  };
+
   return (
-    <PlanetApiContext.Provider value={ { dataPlanet } }>
+    <PlanetApiContext.Provider value={ valueContext }>
       {children}
     </PlanetApiContext.Provider>
   );

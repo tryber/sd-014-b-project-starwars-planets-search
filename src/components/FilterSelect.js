@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import PlanetApiContext from '../context/PlanetContext';
 
 function FilterSelect() {
+  const { dataPlanet, setNewFilterArray,
+    setIsNewFilter, setValues } = useContext(PlanetApiContext);
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [inputValue, setInputValue] = useState('100000');
@@ -20,9 +23,34 @@ function FilterSelect() {
     setInputValue(value);
   }
 
+  // console.log('column', column);
+
+  function filterNewArray() {
+    let newArray = [];
+    if (comparison === 'igual a') {
+      console.log('dataPlanet', column);
+      newArray = dataPlanet.filter((item) => item[column] === inputValue);
+    }
+    if (comparison === 'maior que') {
+      console.log('dataPlanet', column);
+      newArray = dataPlanet.filter((item) => item[column] > Number(inputValue));
+    }
+    if (comparison === 'menor que') {
+      console.log('dataPlanet', column);
+      newArray = dataPlanet.filter((item) => item[column] < Number(inputValue));
+    }
+    setNewFilterArray(newArray);
+    setIsNewFilter(true);
+    setValues('');
+  }
+
   return (
     <div>
-      <select value={ column } onChange={ handleChangeColumn } testid="column-filter">
+      <select
+        value={ column }
+        onChange={ handleChangeColumn }
+        data-testid="column-filter"
+      >
         <option>population</option>
         <option>orbital_period</option>
         <option>diameter</option>
@@ -32,7 +60,7 @@ function FilterSelect() {
       <select
         value={ comparison }
         onChange={ handleChangeComparison }
-        testid="comparison-filter"
+        data-testid="comparison-filter"
       >
         <option>maior que</option>
         <option>menor que</option>
@@ -49,7 +77,13 @@ function FilterSelect() {
           name="value"
           type="number"
         />
-        <button data-testid="button-filter" type="button">Filtrar</button>
+        <button
+          data-testid="button-filter"
+          onClick={ filterNewArray }
+          type="button"
+        >
+          Filtrar
+        </button>
       </label>
     </div>
   );
