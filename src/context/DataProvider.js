@@ -7,63 +7,75 @@ const filtersKeys = {
     filterByName: {
       name: '',
     },
-    filterByNumericValues: {
-      column: 'population',
-      comparison: 'maior que',
-      value: '100000',
-    },
+    filterByNumericValues: [],
   },
 };
 
-const DataProvider = (props) => {
+const DataProvider = ({ children }) => {
   const [data, setData] = useState();
+  const [originalData, setOrigData] = useState();
   const [filters, setFilters] = useState(filtersKeys);
-  const { children } = props;
+  const { filters: { filterByNumericValues } } = filters;
+
+  const handleFilterByNumericValues = () => {
+    filterByNumericValues.forEach((filter) => {
+      const { column, comparison, value } = filter;
+      if (comparison === 'maior que') {
+        const filteredData = data
+          .filter((planet) => Number(planet[column]) > Number(value));
+        return setData(filteredData);
+      }
+      if (comparison === 'menor que') {
+        const filteredData = data
+          .filter((planet) => Number(planet[column]) < Number(value));
+        return setData(filteredData);
+      }
+      const filteredData = data
+        .filter((planet) => Number(planet[column]) === Number(value));
+      return setData(filteredData);
+    });
+  };
+
   const fetchData = () => {
     fetch('https://swapi-trybe.herokuapp.com/api/planets/')
       .then((response) => response.json())
-      .then((d) => setData(d.results));
+      .then((d) => {
+        setOrigData(d.results);
+        setData(d.results);
+      });
   };
 
-  const handleFilterByNumericValues = () => {
-    const { filters: { filterByNumericValues: { column, comparison, value } } } = filters;
-    if (comparison === 'maior que') {
-      const filteredData = data
-        .filter((planet) => Number(planet[column]) > Number(value));
-      return setData(filteredData);
-    }
-    if (comparison === 'menor que') {
-      const filteredData = data
-        .filter((planet) => Number(planet[column]) < Number(value));
-      return setData(filteredData);
-    }
-    const filteredData = data
-      .filter((planet) => Number(planet[column]) === Number(value));
-    return setData(filteredData);
+  const handleFilterByName = ({ target: { value } }) => (
+    setFilters({
+      filters: {
+        ...filters.filters,
+        filterByName: { name: value },
+      },
+    })
+  );
+  const pushOnFilters = (obj) => {
+    console.log(obj);
+    const newFilterByNumericValues = filterByNumericValues;
+    newFilterByNumericValues.push(obj);
+    setFilters({
+      filters: {
+        ...filters.filters,
+        filterByNumericValues: newFilterByNumericValues,
+      },
+    });
+    handleFilterByNumericValues();
   };
 
-  const handleFilters = ({ target: { value, name } }) => {
-    if (name === 'name') {
-      return (
-        setFilters({
-          filters: {
-            ...filters.filters,
-            filterByName: { name: value },
-          },
-        })
-      );
-    }
-    return (
-      setFilters({
-        filters: {
-          ...filters.filters,
-          filterByNumericValues: {
-            ...filters.filters.filterByNumericValues,
-            [name]: value,
-          },
-        },
-      })
-    );
+  const handleRemoveFilters = (id) => {
+    const newFiltersByNumericValues = filterByNumericValues
+      .filter((filter) => filter.column !== id);
+    setFilters({
+      filters: {
+        ...filters.filters,
+        filterByNumericValues: newFiltersByNumericValues,
+      },
+    });
+    handleFilterByNumericValues();
   };
 
   useEffect(() => {
@@ -73,8 +85,13 @@ const DataProvider = (props) => {
   const valueOBJ = {
     data,
     filters,
-    handleFilters,
+    handleFilterByName,
+    pushOnFilters,
     handleFilterByNumericValues,
+    handleRemoveFilters,
+    fetchData,
+    setData,
+    originalData,
   };
 
   return (

@@ -1,16 +1,50 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import DataContext from '../context/DataContext';
 
+const COLUMNS_STATE = [
+  'population',
+  'orbital_period',
+  'diameter',
+  'rotation_period',
+  'surface_water',
+];
+
+const LOCAL_FILTERS_STATE = {
+  column: 'population',
+  comparison: 'maior que',
+  value: '100000',
+};
+
 const Filters = () => {
-  const { filters: {
-    filters: {
-      filterByNumericValues: {
-        column,
-        comparison,
-        value,
-      },
-    },
-  }, handleFilters, handleFilterByNumericValues } = useContext(DataContext);
+  const [columns, setColumns] = useState(COLUMNS_STATE);
+  const [localFilters, setLocalFilters] = useState(LOCAL_FILTERS_STATE);
+  const { pushOnFilters } = useContext(DataContext);
+
+  const handleLocalFilters = ({ target: { name, value } }) => {
+    setLocalFilters({
+      ...localFilters,
+      [name]: value,
+    });
+  };
+
+  const { column, comparison, value } = localFilters;
+
+  const options = () => {
+    const noRepetedColumn = columns
+      .filter((c) => c !== column);
+    setColumns(noRepetedColumn);
+  };
+
+  const filterBtn = () => {
+    const newFilter = {
+      column,
+      comparison,
+      value,
+    };
+    pushOnFilters(newFilter);
+    options();
+  };
+
   return (
     <div>
       <form>
@@ -18,14 +52,10 @@ const Filters = () => {
           <select
             name="column"
             data-testid="column-filter"
-            defaultValue={ column }
-            onChange={ handleFilters }
+            defaultValue={ columns[0] }
+            onChange={ handleLocalFilters }
           >
-            <option value="population">population</option>
-            <option value="orbital_period">orbital_period</option>
-            <option value="diameter">diameter</option>
-            <option value="rotation_period">rotation_period</option>
-            <option value="surface_water">surface_water</option>
+            { columns.map((col) => (<option key={ col } value={ col }>{ col }</option>)) }
           </select>
         </label>
         <label htmlFor="comparison">
@@ -33,7 +63,7 @@ const Filters = () => {
             name="comparison"
             data-testid="comparison-filter"
             defaultValue={ comparison }
-            onChange={ handleFilters }
+            onChange={ handleLocalFilters }
           >
             <option value="maior que">maior que</option>
             <option value="menor que">menor que</option>
@@ -45,14 +75,14 @@ const Filters = () => {
             name="value"
             type="number"
             value={ value }
-            onChange={ handleFilters }
+            onChange={ handleLocalFilters }
             data-testid="value-filter"
           />
         </label>
       </form>
       <button
         type="button"
-        onClick={ handleFilterByNumericValues }
+        onClick={ filterBtn }
         data-testid="button-filter"
       >
         Filtrar

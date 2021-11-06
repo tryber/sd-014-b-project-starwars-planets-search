@@ -3,13 +3,8 @@ import DataContext from '../context/DataContext';
 import Filters from './Filters';
 
 const Header = () => {
-  const { filters: {
-    filters: {
-      filterByName: {
-        name,
-      },
-    },
-  }, handleFilters } = useContext(DataContext);
+  const { filters: { filters: { filterByName: { name } } },
+    handleFilterByName } = useContext(DataContext);
 
   return (
     <div>
@@ -21,7 +16,7 @@ const Header = () => {
             name="name"
             type="text"
             value={ name }
-            onChange={ handleFilters }
+            onChange={ handleFilterByName }
           />
         </label>
       </form>

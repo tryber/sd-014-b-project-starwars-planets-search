@@ -1,14 +1,16 @@
 import React, { useContext } from 'react';
 import DataContext from '../context/DataContext';
+import FilterCard from './FilterCard';
 
 const Table = () => {
   const {
     data,
-    filters: { filters: { filterByName: { name } } } } = useContext(DataContext);
+    filters: {
+      filters: {
+        filterByName: { name }, filterByNumericValues } } } = useContext(DataContext);
   let tBody = [];
   if (data) {
     const filters = data.filter((palanet) => palanet.name.includes(name));
-    console.log(filters);
     tBody = filters.map((row) => (
       <tr key={ row.name }>
         <td>{ row.name }</td>
@@ -29,29 +31,31 @@ const Table = () => {
   }
 
   return (
-    <table border="1">
-      <thead>
-        <caption>Star Wars Planets</caption>
-        <tr>
-          <th>Name</th>
-          <th>Rotation Period</th>
-          <th>Orbital Period</th>
-          <th>Diameter</th>
-          <th>Climete</th>
-          <th>Gravity</th>
-          <th>Terrain</th>
-          <th>Surface Water</th>
-          <th>Population</th>
-          <th>Films</th>
-          <th>Created</th>
-          <th>Edited</th>
-          <th>URL</th>
-        </tr>
-      </thead>
-      <tbody>
-        { data && tBody }
-      </tbody>
-    </table>
+    <>
+      { filterByNumericValues.length >= 1 && <FilterCard />}
+      <table border="1">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Rotation Period</th>
+            <th>Orbital Period</th>
+            <th>Diameter</th>
+            <th>Climete</th>
+            <th>Gravity</th>
+            <th>Terrain</th>
+            <th>Surface Water</th>
+            <th>Population</th>
+            <th>Films</th>
+            <th>Created</th>
+            <th>Edited</th>
+            <th>URL</th>
+          </tr>
+        </thead>
+        <tbody>
+          { data && tBody }
+        </tbody>
+      </table>
+    </>
   );
 };
 
