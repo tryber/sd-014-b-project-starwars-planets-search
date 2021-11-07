@@ -13,7 +13,7 @@ const SearchBar = () => {
 
   useEffect(() => {
     setFilter({ filters: { ...filter.filters, filterByName: { name } } });
-  }, [filter.filters, name, setFilter]);
+  }, [name, setFilter]);
 
   useEffect(() => {
     if (filter.filters.filterByNumericValues.length > 0) {
