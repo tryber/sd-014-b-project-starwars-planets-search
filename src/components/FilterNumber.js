@@ -1,12 +1,27 @@
 import React, { useContext } from 'react';
 import './table.css';
 import DataContext from '../context/DataContext';
+import response from '../testData';
 
 function FilterNumber() {
   const {
-    setColumn, setComparison, setValor } = useContext(DataContext);
+    setColumn, comparison,
+    column, valor, setComparison, setData, setValor } = useContext(DataContext);
 
   function filterList() {
+    const filterNumber = response.results.filter((planet) => {
+      if (comparison === 'maior que') {
+        return Number(planet[column]) > Number(valor);
+      }
+      if (comparison === 'menor que') {
+        return Number(planet[column]) < Number(valor);
+      }
+      if (comparison === 'igual a') {
+        return planet[column] === valor;
+      }
+      return planet;
+    });
+    setData(filterNumber);
   }
 
   return (
@@ -45,7 +60,7 @@ function FilterNumber() {
       <button
         type="button"
         data-testid="button-filter"
-        onClick={ () => filterList() }
+        onClick={ filterList }
       >
         Filtrar
       </button>
