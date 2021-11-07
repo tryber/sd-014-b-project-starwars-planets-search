@@ -11,7 +11,8 @@ const Provider = ({ children }) => {
       filterByName: { name: '' },
       filterByNumericValues: [],
     } });
-  const { filters: { filterByName: { name }, filterByNumericValues } } = filter;
+  const { filters: { filterByName, filterByNumericValues } } = filter;
+  const { name } = filterByName;
 
   const getDataApi = async () => {
     setData(await fetchApi());
@@ -29,14 +30,13 @@ const Provider = ({ children }) => {
   }, [name]);
 
   const getPlanetName = (value) => {
-    setFilters({ filters: { filterByName: { name: value } } });
+    setFilters({ filters: { filterByName: { name: value }, filterByNumericValues } });
   };
 
   const getFilterNumeric = (column, comparison, value) => {
     setFilters({ filters: { filterByName: { name },
       filterByNumericValues: [...filterByNumericValues,
         { column, comparison, value }] } });
-    // setFilters(filterByNumericValues.concat({ column, comparison, value }));
   };
 
   const contextValue = {
