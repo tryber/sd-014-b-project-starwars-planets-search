@@ -19,6 +19,24 @@ function Provider({ children }) {
   const [planets, setPlanets] = useState();
   const [filters, setFilters] = useState(initialFilters);
 
+  const orderPlanetsForString = (planetsData, column, sort) => {
+    const NUM_MIN = -1;
+    if (sort === 'ASC') {
+      return planetsData.sort((a, b) => (a[column] > b[column] ? 1 : NUM_MIN));
+    }
+    return planetsData.sort((a, b) => (a[column] < b[column] ? 1 : NUM_MIN));
+  };
+
+  const orderPlanetsForValue = (planetsData, column, sort) => {
+    const NUM_MIN = -1;
+    if (sort === 'ASC') {
+      return planetsData.sort((a, b) => (Number(a[column]) > Number(b[column])
+        ? 1 : NUM_MIN));
+    }
+    return planetsData.sort((a, b) => (Number(a[column]) < Number(b[column])
+      ? 1 : NUM_MIN));
+  };
+
   const filterPlanetsForName = (name) => {
     if (planets && name !== '') {
       const filtered = planets.filter((item) => item.name.includes(name));
@@ -82,18 +100,32 @@ function Provider({ children }) {
     filterPlanetsForValues(updateFilterValues, planets);
   };
 
+  const handleOrderColumns = (order) => {
+    setFilters({
+      ...filters,
+      order,
+    });
+    if (order.column === 'name') {
+      setPlanets(orderPlanetsForString(planets, order.column, order.sort));
+    } else {
+      setPlanets(orderPlanetsForValue(planets, order.column, order.sort));
+    }
+  };
+
   useEffect(() => {
     if (data) {
-      setPlanets(data.results);
+      setPlanets(orderPlanetsForString(data.results, 'name', 'ASC'));
     }
   }, [data]);
 
   const context = {
     planets,
     filterByNumericValues: filters.filterByNumericValues,
+    order: filters.order,
     handleFilterName,
     handleFilterValues,
     deleteFilterNumeric,
+    handleOrderColumns,
   };
 
   return (

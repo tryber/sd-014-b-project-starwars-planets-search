@@ -31,7 +31,7 @@ function Table() {
         {
           planets.map((item, i) => (
             <tr key={ i }>
-              <td>{ item.name }</td>
+              <td data-testid="planet-name">{ item.name }</td>
               <td>{ item.rotation_period }</td>
               <td>{ item.orbital_period }</td>
               <td>{ item.diameter }</td>
