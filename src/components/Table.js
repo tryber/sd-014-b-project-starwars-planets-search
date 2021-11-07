@@ -1,12 +1,8 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import DataContext from '../context/DataContext';
 
 function Table() {
-  const { data, requestApiPlanets } = useContext(DataContext);
-  useEffect(() => {
-    requestApiPlanets();
-    console.log(data);
-  }, []);
+  const { data } = useContext(DataContext);
 
   return (
     <section className="table">

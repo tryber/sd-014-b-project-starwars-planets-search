@@ -1,25 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import DataContext from './DataContext';
-import fetchApiPlanets from '../services/requestAPI';
 
 function Provider({ children }) {
   const [data, setData] = useState([]);
 
-  async function requestApiPlanets() {
-    const resp = await fetchApiPlanets();
-    setData(resp.results);
-  }
+  useEffect(() => {
+    async function fetchApiPlanets() {
+      const response = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
+      const respJson = await response.json();
+      setData(respJson.results);
+    }
+
+    fetchApiPlanets();
+  }, []);
 
   return (
-    <DataContext.Provider value={ { data, requestApiPlanets } }>
+    <DataContext.Provider value={ { data } }>
       { children }
     </DataContext.Provider>
   );
 }
 
-export default Provider;
-
 Provider.propTypes = {
   children: PropTypes.node.isRequired,
 };
+
+export default Provider;
