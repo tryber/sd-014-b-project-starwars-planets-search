@@ -7,7 +7,7 @@ function SWPlanetsProvider({ children }) {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    const search = async () =>{
+    const search = async () => {
       const { results } = await fetchAPI();
       setData(results);
     };
