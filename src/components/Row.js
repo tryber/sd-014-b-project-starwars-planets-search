@@ -5,14 +5,41 @@ const Row = () => {
   const [filteredPlanets, setFilteredPlanets] = useState(null);
   const { filter, planets } = useContext(GlobalContext);
   const { name } = filter.filters.filterByName;
-  const { filterByNumericValues: filterNum } = filter.filters;
+  const { filterByNumericValues: filterNum, order } = filter.filters;
+
+  useEffect(() => {
+    if (filter) {
+      if (order.sort === 'ASC') {
+        if (order.column === 'name') {
+          setFilteredPlanets(
+            planets.sort((a, b) => a[order.column].localeCompare(b[order.column])),
+          );
+        } else {
+          setFilteredPlanets(
+            planets.sort((a, b) => a[order.column] - b[order.column]),
+          );
+        }
+      }
+      if (order.sort === 'DESC') {
+        if (order.column === 'name') {
+          setFilteredPlanets(
+            planets.sort((a, b) => b[order.column].localeCompare(a[order.column])),
+          );
+        } else {
+          setFilteredPlanets(
+            planets.sort((a, b) => b[order.column] - a[order.column]),
+          );
+        }
+      }
+    }
+  }, [filter, planets]);
 
   useEffect(() => {
     if (planets) {
       const aux = planets.filter((planet) => planet.name.includes(name));
       setFilteredPlanets(aux);
     }
-  }, [planets, name]);
+  }, [planets, name, filterNum]);
 
   useEffect(() => {
     if (filterNum.length > 0) {
@@ -60,7 +87,7 @@ const Row = () => {
         } = planet;
         return (
           <tr key={ index }>
-            <td>{planetName}</td>
+            <td data-testid="planet-name">{planetName}</td>
             <td>{rotationPeriod}</td>
             <td>{orbitalPeriod}</td>
             <td>{diameter}</td>
@@ -69,9 +96,9 @@ const Row = () => {
             <td>{terrain}</td>
             <td>{surfaceWater}</td>
             <td>{population}</td>
+            <td>films</td>
             <td>created</td>
             <td>edited</td>
-            <td><a href={ url } target="_blank" rel="noreferrer">API</a></td>
             <td><a href={ url } target="_blank" rel="noopener noreferrer">API</a></td>
           </tr>
         );
