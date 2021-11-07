@@ -3,10 +3,12 @@ import PlanetApiContext from '../context/PlanetContext';
 
 function FilterSelect() {
   const { dataPlanet, setNewFilterArray,
-    setIsNewFilter, setValues } = useContext(PlanetApiContext);
+    setIsNewFilter, arrayColomnFilter,
+    filteredItem, setFilteredItem } = useContext(PlanetApiContext);
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [inputValue, setInputValue] = useState('100000');
+  const [newFilter, setNewFilter] = useState(arrayColomnFilter);
 
   function handleChangeColumn({ target }) {
     const { value } = target;
@@ -24,24 +26,30 @@ function FilterSelect() {
   }
 
   // console.log('column', column);
+  const editFilter = () => {
+    const filterItem = newFilter.filter((item) => item !== column);
+    setNewFilter(filterItem);
+  };
 
   function filterNewArray() {
     let newArray = [];
     if (comparison === 'igual a') {
-      console.log('dataPlanet', column);
       newArray = dataPlanet.filter((item) => item[column] === inputValue);
     }
     if (comparison === 'maior que') {
-      console.log('dataPlanet', column);
       newArray = dataPlanet.filter((item) => item[column] > Number(inputValue));
     }
     if (comparison === 'menor que') {
-      console.log('dataPlanet', column);
       newArray = dataPlanet.filter((item) => item[column] < Number(inputValue));
     }
+    setFilteredItem([...filteredItem, {
+      newColumn: column,
+      newComparison: comparison,
+      newInputValue: inputValue,
+    }]);
     setNewFilterArray(newArray);
     setIsNewFilter(true);
-    setValues('');
+    editFilter();
   }
 
   return (
@@ -51,11 +59,8 @@ function FilterSelect() {
         onChange={ handleChangeColumn }
         data-testid="column-filter"
       >
-        <option>population</option>
-        <option>orbital_period</option>
-        <option>diameter</option>
-        <option>rotation_period</option>
-        <option>surface_water</option>
+        {newFilter
+          .map((item, index) => <option key={ index }>{item}</option>)}
       </select>
       <select
         value={ comparison }
@@ -85,6 +90,11 @@ function FilterSelect() {
           Filtrar
         </button>
       </label>
+      {/* <div>
+        {newArrayColomnFilter && newArrayColomnFilter
+          .map((item, index) => <div key={ index }>{item}</div>)}
+
+      </div> */}
     </div>
   );
 }

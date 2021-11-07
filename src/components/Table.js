@@ -14,8 +14,6 @@ function Table() {
     setValues({ ...values, filters: { [name]: value } });
   }
 
-  console.log(newFilterArray);
-
   return (
     <div>
       <Header />

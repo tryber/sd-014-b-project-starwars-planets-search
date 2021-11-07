@@ -8,12 +8,21 @@ function PlanetProvider({ children }) {
   const [values, setValues] = useState('');
   const [isNewFilter, setIsNewFilter] = useState(false);
   const [newFilterArray, setNewFilterArray] = useState([]);
+  const [filteredItem, setFilteredItem] = useState([]);
   useEffect(() => { // https://stackoverflow.com/questions/63570597/typeerror-func-apply-is-not-a-function
     (async () => {
       const result = await requestPlanetAPI();
       setDataPlanet(result.results);
     })();
   }, []);
+
+  const arrayColomnFilter = [
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ];
 
   const valueContext = {
     dataPlanet,
@@ -23,6 +32,9 @@ function PlanetProvider({ children }) {
     setNewFilterArray,
     values,
     setValues,
+    arrayColomnFilter,
+    filteredItem,
+    setFilteredItem,
   };
 
   return (
