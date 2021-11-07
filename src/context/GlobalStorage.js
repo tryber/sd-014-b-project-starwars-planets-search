@@ -6,6 +6,14 @@ export const GlobalContext = React.createContext();
 
 const GlobalStorage = ({ children }) => {
   const [planets, setPlanets] = useState([]);
+  const [filter, setFilter] = useState({
+    filters: {
+      filterByName: {
+        name: '',
+      },
+      filterByNumericValues: [],
+    },
+  });
   const { request, data } = useFetch();
 
   useEffect(() => {
@@ -20,6 +28,8 @@ const GlobalStorage = ({ children }) => {
 
   const value = {
     planets,
+    filter,
+    setFilter,
   };
 
   return (

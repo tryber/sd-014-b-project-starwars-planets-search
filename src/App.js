@@ -1,6 +1,7 @@
 import React from 'react';
 import GlobalStorage from './context/GlobalStorage';
 import Table from './components/Table';
+import SearchBar from './components/SearchBar';
 import './App.css';
 
 function App() {
@@ -8,6 +9,7 @@ function App() {
     <div>
       <GlobalStorage>
         <Table />
+        <SearchBar />
       </GlobalStorage>
     </div>
   );
