@@ -8,6 +8,7 @@ function App() {
     <Provider>
       <section>
         <span>Star Wars Planets</span>
+
         <Table />
       </section>
     </Provider>

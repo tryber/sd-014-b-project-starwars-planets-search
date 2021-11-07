@@ -1,11 +1,14 @@
 import React, { useContext } from 'react';
 import DataContext from '../context/DataContext';
+import Input from './Input';
 
 function Table() {
-  const { data } = useContext(DataContext);
+  const { data, filterByName } = useContext(DataContext);
 
   return (
     <section className="table">
+      <Input />
+
       <table>
         <thead>
           <tr>
@@ -25,23 +28,26 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          { data.length <= 0 ? <p> Carregando... </p> : data.map((planet) => (
-            <tr key={ planet.name }>
-              <td>{ planet.name }</td>
-              <td>{ planet.rotation_period }</td>
-              <td>{ planet.orbital_period }</td>
-              <td>{ planet.diameter }</td>
-              <td>{ planet.climate }</td>
-              <td>{ planet.gravity }</td>
-              <td>{ planet.terrain }</td>
-              <td>{ planet.surface_water }</td>
-              <td>{ planet.population }</td>
-              <td>{ planet.films }</td>
-              <td>{ planet.created }</td>
-              <td>{ planet.edited }</td>
-              <td>{planet.url }</td>
-            </tr>
-          )) }
+          { data.length <= 0 ? <p> Carregando... </p> : data
+            .filter((planet) => planet.name
+              .includes(filterByName))
+            .map((planet) => (
+              <tr key={ planet.name }>
+                <td>{ planet.name }</td>
+                <td>{ planet.rotation_period }</td>
+                <td>{ planet.orbital_period }</td>
+                <td>{ planet.diameter }</td>
+                <td>{ planet.climate }</td>
+                <td>{ planet.gravity }</td>
+                <td>{ planet.terrain }</td>
+                <td>{ planet.surface_water }</td>
+                <td>{ planet.population }</td>
+                <td>{ planet.films }</td>
+                <td>{ planet.created }</td>
+                <td>{ planet.edited }</td>
+                <td>{planet.url }</td>
+              </tr>
+            )) }
         </tbody>
       </table>
     </section>

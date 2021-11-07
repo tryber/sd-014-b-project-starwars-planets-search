@@ -4,6 +4,7 @@ import DataContext from './DataContext';
 
 function Provider({ children }) {
   const [data, setData] = useState([]);
+  const [filterByName, setFilterByName] = useState('');
 
   useEffect(() => {
     async function fetchApiPlanets() {
@@ -16,7 +17,12 @@ function Provider({ children }) {
   }, []);
 
   return (
-    <DataContext.Provider value={ { data } }>
+    <DataContext.Provider
+      value={
+        {
+          data, filterByName, setFilterByName }
+      }
+    >
       { children }
     </DataContext.Provider>
   );
