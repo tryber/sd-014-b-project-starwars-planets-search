@@ -23,6 +23,13 @@ function InputNumerics() {
     });
   }
 
+  function renderColumn() {
+    const arr = filterByNumericValues.map((filt) => filt.column);
+    const filteredColumns = columns.filter((column) => !arr.includes(column));
+
+    return filteredColumns.map((each, index) => <option key={ index }>{ each }</option>);
+  }
+
   return (
     <div>
       <label htmlFor="select-column">
@@ -33,7 +40,7 @@ function InputNumerics() {
           onChange={ handleChange }
           data-testid="column-filter"
         >
-          { columns.map((each, index) => <option key={ index }>{ each }</option>) }
+          { renderColumn() }
         </select>
       </label>
       <label htmlFor="select-comparison">
