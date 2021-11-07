@@ -9,6 +9,9 @@ function DataProvider({ children }) {
   const [searchName, setSearchName] = useState('');
   const [filterName, setFilterName] = useState();
   const [filterEnabled, setFilterEnabled] = useState(false);
+  const [column, setColumn] = useState('population');
+  const [comparison, setComparison] = useState('maior que');
+  const [valor, setValor] = useState('');
 
   async function fetchRequestApiPlanets() {
     // const resposta = await requestApiPlanets();
@@ -26,6 +29,12 @@ function DataProvider({ children }) {
           searchName,
           filterName,
           filterEnabled,
+          column,
+          setColumn,
+          comparison,
+          setComparison,
+          valor,
+          setValor,
           setData,
           setFilterEnabled,
           setFilterName,

@@ -3,6 +3,7 @@ import './App.css';
 import Table from './components/Table';
 import DataProvider from './context/DataProvider';
 import Search from './components/Search';
+import FilterNumber from './components/FilterNumber';
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <div>
         <span>Star wars - Planets</span>
         <Search />
+        <FilterNumber />
         <Table />
       </div>
     </DataProvider>
