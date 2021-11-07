@@ -1,41 +1,36 @@
-.App {
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Dongle&display=swap') ;
+
+body {
+  background-color: #e4e4e4;
+  font-family: Dongle , sans-serif;
+  font-size: 23px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+code {
+  font-family: source-code-pro , Menlo , Monaco , Consolas , Courier New , monospace;
 }
 
-@media ( prefers-reduced-motion : no-preference ) {
-
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  align-items: center;
-  background-color: #282c34;
-  color: white;
+.app {
   display: flex;
-  flex-direction: column;
-  font-size: calc(10px + 2vmin);
+  flex-flow: column wrap;
+}
+
+.form-container {
+  align-items: center;
+  background-color: rgb(25, 16, 51);
+  display: flex;
+  flex-flow: row wrap;
+  height: 100%;
   justify-content: center;
-  min-height: 100vh;
+  padding: 10px;
+  width: 100%;
 }
 
-.App-link {
-  color: #61dafb;
+input, select, textarea, button {
+  border-radius: 9px;
+  padding: 10px;
 }
 
-@keyframes App-logo-spin {
-
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
-}
