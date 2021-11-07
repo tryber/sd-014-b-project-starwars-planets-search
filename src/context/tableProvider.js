@@ -5,7 +5,11 @@ import requestPlanets from '../services/api';
 
 export default function Provider({ children }) {
   const [data, setData] = useState({ results: [{ name: '' }] });
-  const [filters, setFilter] = useState({ filterByName: { name: '' } });
+  const [filters, setFilter] = useState(
+    { filterByName: { name: '' },
+      filterByNumericValues: [{ column: '', comparison: '', value: 0 }],
+    },
+  );
 
   useEffect(() => {
     async function fetchDatasetData() {
