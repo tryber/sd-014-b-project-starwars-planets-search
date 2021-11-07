@@ -2,7 +2,19 @@ import React, { useState, useContext } from 'react';
 import PlanetContext from '../context/PlanetContext';
 
 function FilterValue() {
+  // const colums = {
+  //   values: ['population', 'orbital_period',
+  //     'diameter', 'rotation_period', 'surface_water'],
+  // };
+
   const [form, setform] = useState({});
+  const [colums] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ]);
   const { state, setState } = useContext(PlanetContext);
 
   function handleChange({ target: { id, value } }) {
@@ -13,39 +25,44 @@ function FilterValue() {
   }
 
   function handleSubmit() {
-    setState({
-      ...state,
-      filters: { ...state.filters, filterByNumericValues: [form] },
-    });
-
     const { comparison, column, value } = form;
-    const { filteredPlanets } = state;
+    const { filteredPlanets, filters: { filterByNumericValues } } = state;
+
+    const newValue = [...filterByNumericValues, form];
 
     switch (comparison) {
     case 'maior que':
       setState({ ...state,
-        planets: filteredPlanets.filter((a) => Number(a[column]) > value) });
+        planets: filteredPlanets.filter((a) => Number(a[column]) > value),
+        filters: { ...state.filters, filterByNumericValues: newValue },
+      });
       break;
     case 'menor que':
-      setState({ ...state, planets: filteredPlanets.filter((a) => a[column] <= value) });
+      setState({ ...state,
+        planets: filteredPlanets.filter((a) => a[column] <= value),
+        filters: { ...state.filters, filterByNumericValues: newValue },
+      });
       break;
     case 'igual a':
-      setState({ ...state, planets: filteredPlanets.filter((a) => a[column] === value) });
+      setState({ ...state,
+        planets: filteredPlanets.filter((a) => a[column] === value),
+        filters: { ...state.filters, filterByNumericValues: newValue },
+      });
       break;
     default:
       return 'erro';
     }
+
+    colums.splice(colums.indexOf(column), 1);
+    // removendo um elemento de um array https://www.mundojs.com.br/2018/09/06/removendo-elementos-de-uma-lista-array-javascript/
   }
 
   return (
     <form>
       <label htmlFor="column">
         <select id="column" onChange={ handleChange } data-testid="column-filter">
-          <option value="population">population</option>
-          <option value="orbital_period">orbital_period</option>
-          <option value="diameter">diameter</option>
-          <option value="rotation_period">rotation_period</option>
-          <option value="surface_water">surface_water</option>
+          {colums.map((value) => (
+            <option key={ value } value={ value }>{value}</option>))}
         </select>
       </label>
       <label htmlFor="comparison">
