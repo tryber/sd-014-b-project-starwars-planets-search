@@ -1,32 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, createContext, useContext } from 'react';
 import PropTypes from 'prop-types';
-import PlanetsContext from './PlanetsContext';
 import { options, comparisons } from '../utils';
 
-const PLANETS_URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
+const PlanetsContext = createContext({});
 
-export default function PlanetsProvider({ children }) {
+export function PlanetsProvider({ children }) {
   const [data, setData] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [value, setValue] = useState('');
   const [column, setColumn] = useState(options[0]);
   const [comparison, setComparison] = useState(comparisons[0]);
-  const [isFiltered, setIsFiltered] = useState(false);
   const [filters, setFilters] = useState({
     filterByName: { name: '' },
     filterByNumericValues: [],
   });
 
+  const PLANETS_URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
+  const fetchPlanets = async () => {
+    const response = await fetch(PLANETS_URL);
+    const { results } = await response.json();
+    setData(results);
+  };
+
   useEffect(() => {
-    const fetchPlanets = async () => {
-      try {
-        const response = await fetch(PLANETS_URL);
-        const { results } = await response.json();
-        setData(results);
-      } catch (error) {
-        return error;
-      }
-    };
     fetchPlanets();
   }, []);
 
@@ -45,8 +41,6 @@ export default function PlanetsProvider({ children }) {
         setColumn,
         comparison,
         setComparison,
-        isFiltered,
-        setIsFiltered,
       } }
     >
       {children}
@@ -57,3 +51,8 @@ export default function PlanetsProvider({ children }) {
 PlanetsProvider.propTypes = {
   children: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
+
+export default function usePlanets() {
+  const context = useContext(PlanetsContext);
+  return context;
+}

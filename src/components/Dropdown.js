@@ -3,9 +3,6 @@ import PropTypes from 'prop-types';
 
 export default function Dropdown({ testId, options, onSelectedChange }) {
   const renderedOptions = options.map((option) => (
-    // if (filters.filterByNumericValues) {
-
-    // }
     <option
       key={ option }
       value={ option }

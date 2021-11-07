@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
-import PlanetsContext from '../context/PlanetsContext';
+import React from 'react';
+import usePlanets from '../effects/usePlanets';
 
 export default function Input() {
-  const { value, setValue } = useContext(PlanetsContext);
+  const { value, setValue } = usePlanets();
 
   return (
     <div>

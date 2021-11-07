@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
-import PlanetsContext from '../context/PlanetsContext';
+import React from 'react';
+import usePlanets from '../effects/usePlanets';
 
 export default function Input() {
-  const { searchTerm, filters, setFilters, setSearchTerm } = useContext(PlanetsContext);
+  const { searchTerm, filters, setFilters, setSearchTerm } = usePlanets();
 
   return (
     <div>

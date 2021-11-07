@@ -1,53 +1,31 @@
-import React, { useContext } from 'react';
-import PlanetsContext from '../context/PlanetsContext';
+import React from 'react';
+import usePlanets from '../effects/usePlanets';
+import { categories } from '../utils';
 
 export default function Table() {
-  const {
-    searchTerm,
-    data,
-    filters,
-  } = useContext(PlanetsContext);
-
-  const categories = [
-    'Name',
-    'Rotation Period',
-    'Orbital Period',
-    'Diameter',
-    'Climate',
-    'Gravity',
-    'Terrain',
-    'Surface Water',
-    'Population',
-    'Films',
-    'Created',
-    'Edited',
-    'Url',
-  ];
+  const { searchTerm, data, filters } = usePlanets();
+  console.log(data);
 
   // https://www.youtube.com/watch?v=OlVkYnVXPl0 <- Insane Filter
 
   let filteredData = data.filter((planet) => planet.name
-    .toLowerCase()
-    .includes(searchTerm.toLowerCase()));
+    .toLowerCase().includes(searchTerm.toLowerCase()));
 
   filters.filterByNumericValues.forEach((filter) => {
     const { column, value, comparison } = filter;
 
     switch (comparison) {
     case 'maior que':
-      filteredData = filteredData.filter(
-        (planet) => Number(planet[`${column}`]) > Number(value),
-      );
+      filteredData = filteredData
+        .filter((planet) => Number(planet[`${column}`]) > Number(value));
       break;
     case 'menor que':
-      filteredData = filteredData.filter(
-        (planet) => Number(planet[`${column}`]) < Number(value),
-      );
+      filteredData = filteredData
+        .filter((planet) => Number(planet[`${column}`]) < Number(value));
       break;
     case 'igual a':
-      filteredData = filteredData.filter(
-        (planet) => Number(planet[`${column}`]) === Number(value),
-      );
+      filteredData = filteredData
+        .filter((planet) => Number(planet[`${column}`]) === Number(value));
       break;
     default:
       break;

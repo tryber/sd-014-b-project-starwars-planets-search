@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
-import PlanetsContext from '../context/PlanetsContext';
+import React from 'react';
 import Dropdown from './Dropdown';
 import InputNumber from './InputNumber';
 import { options, label, comparisons } from '../utils';
+import usePlanets from '../effects/usePlanets';
 
 export default function Form() {
   const { column,
@@ -12,7 +12,7 @@ export default function Form() {
     value,
     filters,
     setFilters,
-  } = useContext(PlanetsContext);
+  } = usePlanets();
 
   function handleClickDeleteFilter(index) {
     const allFilters = filters.filterByNumericValues;
@@ -38,10 +38,11 @@ export default function Form() {
       </div>
     ));
   }
-  console.log(`options = ${options}`);
 
-  const utilizedOptions = filters.filterByNumericValues.map((filter) => filter.column);
-  const optionsFilter = options.filter((col) => !utilizedOptions.includes(col));
+  const utilizedOptions = filters && filters.filterByNumericValues
+    .map((filter) => filter.column);
+  const optionsFilter = filters && options.filter((col) => !utilizedOptions
+    .includes(col));
 
   return (
     <>
