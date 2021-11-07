@@ -1,10 +1,17 @@
 import React from 'react';
+import GlobalStorage from './context/GlobalStorage';
+import Table from './components/Table';
+import SearchBar from './components/SearchBar';
 import './App.css';
 
 function App() {
   return (
-    <span>Hello, App!</span>
+    <div>
+      <GlobalStorage>
+        <SearchBar />
+        <Table />
+      </GlobalStorage>
+    </div>
   );
 }
-
 export default App;
