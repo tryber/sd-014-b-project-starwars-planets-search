@@ -32,7 +32,7 @@ const Row = () => {
         }
       }
     }
-  }, [filter, planets]);
+  }, [filter, order.column, order.sort, planets]);
 
   useEffect(() => {
     if (planets) {
