@@ -4,7 +4,8 @@ import PlanetContext from './PlanetContext';
 import fetchingPlanets from '../services/planetAPI';
 
 const INITIAL_STATE = {
-  filterByName: {},
+  filterByName: '',
+  filterByNumericValues: [],
 };
 
 function PlanetProvider({ children }) {
