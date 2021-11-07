@@ -1,12 +1,20 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import PlanetContext from '../../context/PlanetContext';
 import Header from './Header';
 import Body from './Body';
+import FilteredBody from './FilteredBody';
 
 function Table() {
+  const { filters: { filterByName } } = useContext(PlanetContext);
+
   return (
     <table>
       <Header />
-      <Body />
+      {
+        filterByName.length
+          ? <FilteredBody />
+          : <Body />
+      }
     </table>
   );
 }

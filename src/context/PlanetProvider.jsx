@@ -3,8 +3,13 @@ import PropTypes from 'prop-types';
 import PlanetContext from './PlanetContext';
 import fetchingPlanets from '../services/planetAPI';
 
+const INITIAL_STATE = {
+  filterByName: {},
+};
+
 function PlanetProvider({ children }) {
   const [data, setData] = useState([]);
+  const [filters, setFilters] = useState(INITIAL_STATE);
 
   useEffect(() => {
     const takePlanets = async () => {
@@ -17,6 +22,8 @@ function PlanetProvider({ children }) {
 
   const contextValue = {
     data,
+    filters,
+    setFilters,
   };
 
   return (
