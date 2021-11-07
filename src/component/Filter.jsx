@@ -9,7 +9,7 @@ function Filter() {
 
     setState({
       ...state,
-      filters: { filterByName: { name: value } },
+      filters: { ...state.filters, filterByName: { name: value } },
       planets: filteredPlanets.filter((a) => a.name.toLowerCase()
         .includes(value.toLowerCase())),
     });
