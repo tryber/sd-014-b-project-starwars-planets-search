@@ -1,9 +1,16 @@
 import React from 'react';
 import './App.css';
+import Provider from './context/Provider';
+import Table from './components/Table';
 
 function App() {
   return (
-    <span>New Project with Trybe :rocket: !</span>
+    <Provider>
+      <section>
+        <span>Star Wars Planets</span>
+        <Table />
+      </section>
+    </Provider>
   );
 }
 
