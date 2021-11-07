@@ -8,10 +8,12 @@ export default function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
   const [inputNameFilter, setInputNameFilter] = useState('');
   const [filterNumericValues, setFilterNumericValues] = useState([]);
+  const [filteredStarWars, setFilteredStarWars] = useState([]);
 
   async function starWarsDataApi() {
     const resultApi = await StarWarsFetchApi();
     setData(resultApi.results);
+    setFilteredStarWars(resultApi.results);
     // console.log(resultApi.results);
   }
 
@@ -30,6 +32,8 @@ export default function StarWarsProvider({ children }) {
     },
     setInputNameFilter,
     setFilterNumericValues,
+    filteredStarWars,
+    setFilteredStarWars,
   };
 
   return (
