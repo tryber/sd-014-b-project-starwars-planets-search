@@ -1,9 +1,13 @@
 import React from 'react';
 import './App.css';
+import Table from './components/Table';
+import SWPlanetsProvider from './context/SWPlanetsProvider'
 
 function App() {
   return (
-    <span>May the force be with you</span>
+    <SWPlanetsProvider>
+      <Table />
+    </SWPlanetsProvider>
   );
 }
 
