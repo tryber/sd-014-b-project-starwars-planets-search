@@ -8,7 +8,7 @@ function Table() {
 
   const tableHead = () => (Object.keys(planetsData[0]).map((header, index) => (
     <th key={ index }>
-      { header }
+      {header}
     </th>
   )));
 
@@ -17,7 +17,7 @@ function Table() {
       <tr key={ index }>
         {Object.values(planet).map((value, idx) => (
           <td key={ idx }>
-            { value }
+            {value}
           </td>
         ))}
       </tr>
@@ -25,14 +25,8 @@ function Table() {
 
   );
 
-  if (planetsData.length === 0) return (<span> Carregando ... </span>);
-  /* Consultei o repositório do Rafael Perches para realizar a lógica  do tableHead e tableBody
-  link: https://github.com/tryber/sd-014-b-project-starwars-planets-search/pull/10/commits/f0c8ad8b373f0ab69d556818afcea2075fc12e77 */
-
-  return (
-    <section>
-      <SearchInput />
-      <Filters />
+  function table() {
+    return (
       <table>
         <thead>
           <tr>
@@ -41,9 +35,26 @@ function Table() {
         </thead>
 
         <tbody>
-          {tableBody()}
+          {planetsData.length > 0
+            ? tableBody()
+            : <tr><td>Planeta não encontrado.</td></tr>}
         </tbody>
       </table>
+    );
+  }
+
+  /* Consultei o repositório do Rafael Perches para realizar a lógica  do tableHead e tableBody
+  link: https://github.com/tryber/sd-014-b-project-starwars-planets-search/pull/10/commits/f0c8ad8b373f0ab69d556818afcea2075fc12e77 */
+
+  return (
+    <section>
+      <SearchInput />
+      <Filters />
+      {
+        planetsData.length === 0
+          ? <span> Carregando ... </span>
+          : table()
+      }
     </section>
   );
 }

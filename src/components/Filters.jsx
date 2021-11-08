@@ -6,7 +6,7 @@ function Filters() {
   const [comparisonFilter, setComparisonFilter] = useState('maior que');
   const [valueFilter, setValueFilter] = useState('');
   const {
-    planetsSearch, setPlanetsSearch, planetsData, setPlanetsData,
+    planetsSearch, setPlanetsSearch, planetsFilter, setPlanetsData,
   } = useContext(PlanetContext);
 
   function handleClick() {
@@ -24,7 +24,7 @@ function Filters() {
       },
     });
 
-    const filterPlanets = planetsData.filter((planet) => {
+    const filterPlanets = planetsFilter.filter((planet) => {
       if (comparisonFilter === 'maior que') {
         return Number(planet[columnFilter]) > Number(valueFilter);
       }
@@ -38,6 +38,7 @@ function Filters() {
     });
     setPlanetsData(filterPlanets);
   }
+  /* consultei o repositório do Levi Manoel para fazer a função  */
 
   return (
 
