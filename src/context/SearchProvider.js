@@ -13,7 +13,7 @@ function SearchProvider({ children }) {
 }
 
 SearchProvider.propTypes = {
-  children: PropTypes.objectOf(PropTypes.any).isRequired,
+  children: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 export default SearchProvider;
