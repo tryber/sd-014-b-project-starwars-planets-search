@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import PlanetsContext from './PlanetsContext';
 
 function PlanetsProvider({ children }) {
-  const [click, setClick] = useState(false);
   const [filteredData, setFilteredData] = useState([]);
   const [data, setData] = useState([]);
   const [planetName, setPlanetName] = useState({
@@ -33,40 +32,6 @@ function PlanetsProvider({ children }) {
       ],
     },
   } = planetName;
-
-  const handleChangeName = ({ target }) => {
-    setPlanetName({
-      filters: {
-        filterByName: {
-          name: target.value,
-        },
-        filterByNumericValues: [
-          {
-            column,
-            comparison,
-            value,
-          },
-        ],
-      },
-    });
-  };
-
-  const handleChangeValue = ({ target }) => {
-    setPlanetName({
-      filters: {
-        filterByName: {
-          name,
-        },
-        filterByNumericValues: [
-          {
-            column,
-            comparison,
-            value: target.value,
-          },
-        ],
-      },
-    });
-  };
 
   const searchPlanetByName = (arrayPlanets) => {
     const filteredPlanets = arrayPlanets.length === 0 && comparison !== 'igual a'
@@ -162,25 +127,6 @@ function PlanetsProvider({ children }) {
     return arrayPlanets;
   };
 
-  const handleClick = () => {
-    let arrayPlanets = [];
-    if (column === 'population') {
-      arrayPlanets = populationResults();
-    }
-    if (column === 'orbital_period') {
-      arrayPlanets = orbitalResults();
-    }
-    if (column === 'diameter') {
-      arrayPlanets = diameterResults();
-    }
-    if (column === 'rotation_period') {
-      arrayPlanets = rotationResults();
-    }
-    if (column === 'surface_water') {
-      arrayPlanets = surfaceResults();
-    } setFilteredData(arrayPlanets);
-    setClick(true);
-  };
   useEffect(() => {
     async function fetchData() {
       const { results } = await fetch('https://swapi-trybe.herokuapp.com/api/planets/').then((response) => response.json());
@@ -194,14 +140,15 @@ function PlanetsProvider({ children }) {
       <PlanetsContext.Provider
         value={ { data,
           planetName,
-          handleChangeName,
           setPlanetName,
-          handleChangeValue,
           searchPlanetByName,
-          handleClick,
+          setFilteredData,
           filteredData,
-          click,
-          setClick } }
+          populationResults,
+          orbitalResults,
+          diameterResults,
+          rotationResults,
+          surfaceResults } }
       >
         {children}
       </PlanetsContext.Provider>
