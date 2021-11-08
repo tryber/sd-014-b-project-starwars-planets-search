@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import PlanetsContext from '../context/Context';
 
 function NumericFilter() {
@@ -14,6 +14,11 @@ function NumericFilter() {
     comparison,
     setComparison,
   } = useContext(PlanetsContext);
+  const [filterColumn, setFilterColumn] = useState([]);
+
+  const [options, setOptions] = useState([
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+  ]);
 
   const numberFilter = () => {
     let responseFilter;
@@ -40,6 +45,8 @@ function NumericFilter() {
         },
       ],
     });
+    setFilterColumn([...filterColumn, { column, comparison, value }]);
+    setOptions(options.filter((index) => index !== column));
     await numberFilter();
   };
   return (
@@ -51,11 +58,7 @@ function NumericFilter() {
           value={ column }
           onChange={ (index) => setColumn(index.target.value) }
         >
-          <option value="population">population</option>
-          <option value="orbital_period">orbital_period</option>
-          <option value="diameter">diameter</option>
-          <option value="rotation_period">rotation_period</option>
-          <option value="surface_water">surface_water</option>
+          { options.map((item, index) => <option key={ index }>{item}</option>) }
         </select>
         <select
           data-testid="comparison-filter"
