@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import MyContext from '../context/MyContext';
 
 export default function Table() {
-  const { data, filters } = useContext(MyContext);
+  const { filteredData, filters } = useContext(MyContext);
   const { filterByName } = filters;
 
   const TH = ['Name', 'Rotation Period', 'Orbital Period',
@@ -10,8 +10,7 @@ export default function Table() {
     'Population', 'Films', 'Create', 'Edited', 'Url'];
 
   function filterPlanets() {
-    console.log(filterByName.name);
-    const filterName = data.filter((planet) => planet.name.toLowerCase().includes(
+    const filterName = filteredData.filter((planet) => planet.name.toLowerCase().includes(
       filterByName.name,
     ));
     return filterName;
