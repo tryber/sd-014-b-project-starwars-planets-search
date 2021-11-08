@@ -1,24 +1,27 @@
 import React, { useContext } from 'react';
 import TableContext from '../context/TableContext';
+import FilterValue from './FilterValue';
 
 function Table() {
   const { data, search, setSearch } = useContext(TableContext);
   // lógica de filter aplicada a partir deste video https://www.youtube.com/watch?v=OlVkYnVXPl0
   // e da ajuda do meu colega Gabriel Sampaio
   const filterData = data.filter(
-    (e) => e.name.toLowerCase().includes(search.toLowerCase()),
+    (e) => e.name.toLowerCase().includes(search.filterByName.name.toLowerCase()),
   );
   return (
     <div>
+      <FilterValue />
       <label htmlFor="search">
         <input
           data-testid="name-filter"
           placeholder="Filtrar Por Nome"
           id="search"
           type="text"
-          value={ search }
+          value={ search.filterByName.name }
           // mesma coisa que o handleChange para mudar o estado
-          onChange={ (event) => setSearch(event.target.value) }
+          onChange={ (event) => setSearch({
+            ...search, filterByName: { name: event.target.value } }) }
         />
       </label>
       <table>

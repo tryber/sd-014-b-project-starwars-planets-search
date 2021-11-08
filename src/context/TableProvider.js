@@ -4,7 +4,18 @@ import TableContext from './TableContext';
 
 function TableProvider({ children }) {
   const [data, setData] = useState([]);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState({
+    filterByName: {
+      name: '',
+    },
+    filterByNumericValues: [
+      {
+        column: '',
+        comparison: '',
+        value: '',
+      },
+    ],
+  });
 
   // componentDidMount useEffect (() => {funct}, []);
   // componentDidUpdate useEffect (() => {funct}, [esperando att de estado]);
@@ -16,7 +27,24 @@ function TableProvider({ children }) {
       setData(results);
     };
     fetchApi();
-  }, [search]);
+  }, []);
+
+  useEffect(() => {
+    let planets = [...data];
+    search.filterByNumericValues.forEach(({ column, comparison, value }) => {
+      if (comparison === 'maior que') {
+        planets = (data.filter((planet) => Number(planet[column]) > Number(value)));
+      }
+      if (comparison === 'menor que') {
+        planets = (data.filter((planet) => Number(planet[column]) < Number(value)));
+      }
+      if (comparison === 'igual a') {
+        planets = (data.filter((planet) => Number(planet[column]) === Number(value)));
+      }
+    });
+    setData(planets);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [search.filterByNumericValues.length]);
 
   return (
     <TableContext.Provider value={ { data, setData, search, setSearch } }>
