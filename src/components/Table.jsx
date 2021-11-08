@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import PlanetContext from '../context/PlanetContext';
 import SearchInput from './SearchInput';
+import Filters from './Filters';
 
 function Table() {
   const { planetsData } = useContext(PlanetContext);
@@ -31,19 +32,17 @@ function Table() {
   return (
     <section>
       <SearchInput />
+      <Filters />
       <table>
         <thead>
           <tr>
             {tableHead()}
           </tr>
-
         </thead>
+
         <tbody>
-          <td>
-            {tableBody()}
-          </td>
+          {tableBody()}
         </tbody>
-        <td />
       </table>
     </section>
   );

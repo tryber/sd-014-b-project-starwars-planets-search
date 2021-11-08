@@ -11,6 +11,7 @@ function PlanetProvider({ children }) {
       filterByName: {
         name: '',
       },
+      filterByNumericValues: [],
     },
   });
 
@@ -49,8 +50,12 @@ function PlanetProvider({ children }) {
 
   const contextObject = {
     planetsData,
+    setPlanetsData,
     handleChange,
     planetsSearch,
+    planetsFilter,
+    setPlanetsFilter,
+    setPlanetsSearch,
   };
 
   return (
