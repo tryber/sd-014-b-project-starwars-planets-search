@@ -2,10 +2,19 @@ import React, { useState, useContext } from 'react';
 import TableContext from '../context/TableContext';
 
 function FilterValue() {
-  const [column, setColumn] = useState('population');
+  const optionsList = ['population',
+    'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
+
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState('');
+  const [options, setOptions] = useState(optionsList);
+  const [column, setColumn] = useState('population');
+
   const { search, setSearch } = useContext(TableContext);
+
+  function removeOption() {
+    setOptions(options.filter((option) => option !== column));
+  }
 
   function handleClick() {
     setSearch({
@@ -18,6 +27,8 @@ function FilterValue() {
           value,
         },
       ] });
+    removeOption();
+    setColumn(options[0]);
   }
 
   return (
@@ -27,21 +38,7 @@ function FilterValue() {
           onChange={ (event) => setColumn(event.target.value) }
           data-testid="column-filter"
         >
-          <option>
-            population
-          </option>
-          <option>
-            orbital_period
-          </option>
-          <option>
-            diameter
-          </option>
-          <option>
-            rotation_period
-          </option>
-          <option>
-            surface_water
-          </option>
+          {options.map((option, index) => <option key={ index }>{option}</option>)}
         </select>
 
         <select

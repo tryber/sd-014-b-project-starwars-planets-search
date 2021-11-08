@@ -30,6 +30,9 @@ function TableProvider({ children }) {
   }, []);
 
   useEffect(() => {
+    // utilizei o let planets para armazenar a resposta do if e só no final dar setData
+    // fiz desse jeito com a instrução do meu colega Gustavo Santanna e Matheus Laurindo por conta de asincrosinidade
+    // pois a função com setData em todos os ifs deixava a aplicação lenta, requisitando muitas vezes o setData
     let planets = [...data];
     search.filterByNumericValues.forEach(({ column, comparison, value }) => {
       if (comparison === 'maior que') {
