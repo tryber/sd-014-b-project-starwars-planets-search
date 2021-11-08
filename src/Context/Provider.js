@@ -4,19 +4,35 @@ import PropTypes from 'prop-types';
 export const TableContext = createContext();
 
 export function Provider({ children }) {
-  const [allPlanets, setPlanets] = useState([]);
+  const [data, setData] = useState([]);
+  const [filters, setFilters] = useState({
+    filterByName: { name: '' },
+    filterByNumericValues: [],
+  });
   useEffect(() => {
     async function getPlanets() {
       const url = 'https://swapi-trybe.herokuapp.com/api/planets/';
       const response = await fetch(url);
-      const data = await response.json();
-      setPlanets(data.results);
+      const apiData = await response.json();
+      setData(apiData.results);
     }
     getPlanets();
-  }, []);
+  }, [data.results]);
+
+  function handleClickDeleteFilter(index) {
+    const allFilters = filters.filterByNumericValues;
+    allFilters.splice(index, 1);
+    setFilters((prevState) => ({
+      ...prevState,
+      filterByNumericValues: allFilters,
+    }));
+  }
   return (
     <main>
-      <TableContext.Provider value={ { allPlanets } }>
+      <TableContext.Provider
+        value={ {
+          data, setData, filters, setFilters, handleClickDeleteFilter } }
+      >
         {children}
       </TableContext.Provider>
     </main>
