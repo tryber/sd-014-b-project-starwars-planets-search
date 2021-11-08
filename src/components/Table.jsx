@@ -7,7 +7,7 @@ const HEADER_TABLE = [
 
 export default function Table() {
   const { filters: { filterByName }, filteredStarWars } = useContext(StarWarsContext);
-  console.log(filteredStarWars);
+  // console.log(filteredStarWars);s
 
   return (
     <table>

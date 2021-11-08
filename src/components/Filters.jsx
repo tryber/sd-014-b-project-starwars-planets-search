@@ -25,10 +25,10 @@ export default function Filters() {
       if (filterByNumericValues.length > 0) {
         const filteredOptions = COLUMN_OPTIONS
           .filter((option) => !filterByNumericValues.find((filter) => (
-            option === filter.column
+            filter.column === option
           )));
         setColumnOptions(filteredOptions);
-        console.log(filteredOptions);
+        // console.log(filteredOptions);
       } else {
         setColumnOptions(COLUMN_OPTIONS);
       }
@@ -67,7 +67,7 @@ export default function Filters() {
   function buttonDeleteX(filter) {
     const removeItemFiltered = filterByNumericValues.filter((item) => (
       // console.log(item.column)
-      item.column !== filter
+      filter !== item.column
 
     ));
     if (removeItemFiltered.length > 0) {
@@ -84,7 +84,7 @@ export default function Filters() {
         <select
           name="column-filter"
           data-testid="column-filter"
-          onChange={ handleFilterColumn }
+          onChange={ (target) => handleFilterColumn(target) }
         >
           {columnOptions.map((columnOption) => (
             <option key={ columnOption }>{columnOption}</option>
@@ -110,7 +110,7 @@ export default function Filters() {
           min="0"
           name="value-filter"
           data-testid="value-filter"
-          onChange={ handleFilterValue }
+          onChange={ (target) => handleFilterValue(target) }
         />
       </label>
 
@@ -127,7 +127,7 @@ export default function Filters() {
             <h2>{`${filter.column} ${filter.comparison} ${filter.value}`}</h2>
             <button
               type="button"
-              onClick={ buttonDeleteX }
+              onClick={ () => buttonDeleteX(filter.column) }
             >
               X
             </button>
