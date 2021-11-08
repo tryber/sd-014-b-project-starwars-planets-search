@@ -2,9 +2,21 @@ import React, { useContext } from 'react';
 import TableContext from '../context/TableContext';
 
 function Table() {
-  const { data } = useContext(TableContext);
+  const { data, search, setSearch } = useContext(TableContext);
+  const filterData = data.filter((e) => e.name.toLowerCase().includes(search.toLowerCase()));
   return (
     <div>
+      <label htmlFor="search">
+        <input
+          data-testid="name-filter"
+          placeholder="Filtrar Por Nome"
+          id="search"
+          type="text"
+          value={ search }
+          // mesma coisa que o handleChange para mudar o estado
+          onChange={ (event) => setSearch(event.target.value) }
+        />
+      </label>
       <table>
         <thead>
           <tr>
@@ -23,7 +35,7 @@ function Table() {
             <th>URL</th>
           </tr>
         </thead>
-        {data.map((planet) => (
+        {filterData.map((planet) => (
           <tbody key={ planet.name }>
             <tr>
               <td>{planet.name}</td>
