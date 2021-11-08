@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
-import Context from '../context/Context';
+import PlanetsContext from '../context/Context';
 
-const names = [
+const planetsName = [
   'Name',
   'Rotation Period',
   'Orbital Period',
@@ -18,33 +18,37 @@ const names = [
 ];
 
 function Table() {
-  const { response } = useContext(Context);
+  const { response, nameFilter: { filters } } = useContext(PlanetsContext);
+  const { filterByName: { name } } = filters;
   return (
     <div>
       <table border="1">
         <thead>
           <tr>
-            { names.map((name) => <th key={ name }>{name}</th>) }
+            { planetsName.map((index) => <th key={ index }>{index}</th>) }
           </tr>
         </thead>
         <tbody>
-          { response.map((index) => (
-            <tr key={ index.url }>
-              <td>{ index.name }</td>
-              <td>{ index.rotation_period }</td>
-              <td>{ index.orbital_period }</td>
-              <td>{ index.diameter }</td>
-              <td>{ index.climate }</td>
-              <td>{ index.gravity }</td>
-              <td>{ index.terrain }</td>
-              <td>{ index.surface_water }</td>
-              <td>{ index.population }</td>
-              <td>{ index.residents.length }</td>
-              <td>{ index.films.length }</td>
-              <td>{ index.created }</td>
-              <td>{ index.edited }</td>
-            </tr>
-          )) }
+          { response.filter((
+            value,
+          ) => value.name.toLowerCase().includes(name.toLowerCase()))
+            .map((index, planet) => (
+              <tr key={ planet }>
+                <td>{ index.name }</td>
+                <td>{ index.rotation_period }</td>
+                <td>{ index.orbital_period }</td>
+                <td>{ index.diameter }</td>
+                <td>{ index.climate }</td>
+                <td>{ index.gravity }</td>
+                <td>{ index.terrain }</td>
+                <td>{ index.surface_water }</td>
+                <td>{ index.population }</td>
+                <td>{ index.residents.length }</td>
+                <td>{ index.films.length }</td>
+                <td>{ index.created }</td>
+                <td>{ index.edited }</td>
+              </tr>
+            )) }
         </tbody>
       </table>
     </div>
