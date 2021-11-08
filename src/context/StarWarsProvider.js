@@ -4,7 +4,11 @@ import fetchPlanetsAPI from '../services/PlanetsAPI';
 import StarWarsContext from './StarWarsContext';
 
 function StarWarsProvider({ children }) {
+  const [counter, setCounter] = useState(0);
+  const [columnOptions, setColumnOptions] = useState(['population',
+    'orbital_period', 'diameter', 'rotation_period', 'surface_water']);
   const [data, setData] = useState([]);
+  const [showFilters, setShowFilters] = useState([]);
   const [filters, setFilter] = useState([{
     filters: {
       filtersByName: {
@@ -48,6 +52,16 @@ function StarWarsProvider({ children }) {
     setData(filteredPlanets);
   }, [filters.filtersByName]);
 
+  useEffect(() => {
+    if (showFilters.length > 0) {
+      const newColumnOptions = columnOptions.filter(
+        (option) => option !== showFilters[counter].showColumn,
+      );
+      setColumnOptions(newColumnOptions);
+      setCounter(+1);
+    }
+  }, [showFilters]);
+
   const handleNameChange = ({ target }) => {
     if (target.value.length === 0) {
       (async () => {
@@ -89,11 +103,21 @@ function StarWarsProvider({ children }) {
       ));
       setData(filteredPlanets);
     }
+    setShowFilters([
+      ...showFilters,
+      {
+        showColumn: filterColumn,
+        showComparison: filterComparison,
+        showValue: filterValue,
+      },
+    ]);
   };
 
   const context = {
+    columnOptions,
     data,
     filters,
+    showFilters,
     setData,
     handleNameChange,
     handleClick,

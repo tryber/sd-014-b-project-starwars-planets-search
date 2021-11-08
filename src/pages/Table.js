@@ -2,8 +2,8 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
-  const { data, handleNameChange, handleFiltersChange,
-    handleClick } = useContext(StarWarsContext);
+  const { columnOptions, data, showFilters, handleNameChange,
+    handleFiltersChange, handleClick } = useContext(StarWarsContext);
   const thContent = ['Name', 'Rotation Period', 'Orbital Period', 'Diameter',
     'Climate', 'Gravity', 'Terrain', 'Surface Water', 'Population', 'Films',
     'Create', 'Edited', 'URL'];
@@ -23,11 +23,8 @@ function Table() {
         onChange={ handleFiltersChange }
         data-testid="column-filter"
       >
-        <option>population</option>
-        <option>orbital_period</option>
-        <option>diameter</option>
-        <option>rotation_period</option>
-        <option>surface_water</option>
+        { columnOptions.map((selectOption) => (
+          <option key={ selectOption }>{selectOption}</option>)) }
       </select>
       <select
         name="comparison"
@@ -52,9 +49,23 @@ function Table() {
       >
         Filtrar
       </button>
+      <br />
+      <br />
+      { showFilters.length > 0
+        ? (
+          showFilters.map((filter, index) => (
+            <div key={ index }>
+              <span>
+                {`${filter.showColumn} | ${filter.showComparison} | ${filter.showValue}`}
+              </span>
+              <br />
+            </div>))) : '' }
+      <br />
+      <br />
       { data.length > 0
         ? (
           <table>
+            { console.log(columnOptions)}
             <thead>
               <tr>
                 { thContent.map((headName) => <th key={ headName }>{ headName }</th>) }
