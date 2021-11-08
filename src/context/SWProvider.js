@@ -1,24 +1,32 @@
-import PropTypes from "prop-types"
-import React from 'react';
+import PropTypes from 'prop-types';
+import React, { useState, useEffect } from 'react';
 import SWContext from './SWContext';
+import mockData from '../testData';
 
 function SWProvider({ children }) {
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const API = 'https://swapi-trybe.herokuapp.com/api/planets/';
 
   async function fetchAPI() {
     setIsLoading(true);
-    const apiData = await fetch(API);
-    setData(apiData);
-    setIsLoading(false);
+    try {
+      const apiData = await fetch(API).json();
+      setData(apiData.results);
+      setIsLoading(false);
+    } catch (e) {
+      setError(e);
+      setData(mockData.results);
+      setIsLoading(false);
+    }
   }
 
-  useEffect(fetchAPI);
+  useEffect(() => { fetchAPI(); }, []);
 
   return (
-    <SWContext.Provider value={ { data, isLoading } }>
+    <SWContext.Provider value={ { data, isLoading, error } }>
       { children }
     </SWContext.Provider>
   );
