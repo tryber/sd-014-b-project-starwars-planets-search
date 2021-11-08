@@ -2,7 +2,15 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
-  const { data, loading, filteredSearch, comparisonValue, filters, columnValue, valueFilter } = useContext(StarWarsContext);
+  const {
+    data,
+    loading,
+    filteredSearch,
+    // comparisonValue,
+    filters,
+    // columnValue,
+    // valueFilter
+  } = useContext(StarWarsContext);
 
   // Vi no código do Glauco Lomenha e achei organizado, decidi implementar no meu, da minha forma
 
