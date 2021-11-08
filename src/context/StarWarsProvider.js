@@ -38,9 +38,42 @@ const StarWarsProvider = ({ children }) => {
 
   useEffect(() => {
     const { filterByName: { name } } = filters;
-    const filter = data.filter((planet) => planet.name.includes(name));
-    setFiltered(filter);
+    const nameFilter = data.filter(
+      (planet) => planet.name.toLowerCase().includes(name.toLowerCase()),
+    );
+    setFiltered(nameFilter);
   }, [data, filters, filters.filterByName.name]);
+
+  useEffect(() => {
+    const { filterByNumericValues } = filters;
+    let numericFilter = data;
+    filterByNumericValues.forEach((filter) => {
+      const { column, comparison, value } = filter;
+      switch (comparison) {
+      case 'maior que': {
+        numericFilter = numericFilter.filter(
+          (planet) => parseInt(planet[column], 10) > value,
+        );
+        break;
+      }
+      case 'menor que': {
+        numericFilter = numericFilter.filter(
+          (planet) => parseInt(planet[column], 10) < value,
+        );
+        break;
+      }
+      case 'igual a': {
+        numericFilter = numericFilter.filter(
+          (planet) => planet[column] === value,
+        );
+        break;
+      }
+      default:
+        break;
+      }
+    });
+    setFiltered(numericFilter);
+  }, [filters.filterByNumericValues]);
 
   const setFilterByNumericValues = (object) => {
     setFilters({
@@ -54,7 +87,9 @@ const StarWarsProvider = ({ children }) => {
 
   const removeFilter = (id) => {
     const toBeRemoved = filters.filterByNumericValues[id];
-    const update = filters.filterByNumericValues.filter((filter) => filter !== toBeRemoved);
+    const update = filters.filterByNumericValues.filter(
+      (filter) => filter !== toBeRemoved,
+    );
     setFilters({
       ...filters,
       filterByNumericValues:
@@ -64,7 +99,15 @@ const StarWarsProvider = ({ children }) => {
 
   return (
     <StarWarsContext.Provider
-      value={ { data, isFetching, filtered, filters, setFilterByName, setFilterByNumericValues, removeFilter } }
+      value={ {
+        data,
+        isFetching,
+        filtered,
+        filters,
+        setFilterByName,
+        setFilterByNumericValues,
+        removeFilter,
+      } }
     >
       { children }
     </StarWarsContext.Provider>

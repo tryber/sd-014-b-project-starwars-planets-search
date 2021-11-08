@@ -3,7 +3,10 @@ import StarWarsContext from '../context/StarWarsContext';
 import Button from './Button';
 
 const Filter = () => {
-  const { filters: { filterByNumericValues }, removeFilter } = useContext(StarWarsContext);
+  const {
+    filters: { filterByNumericValues },
+    removeFilter,
+  } = useContext(StarWarsContext);
   return (
     <div>
       {
