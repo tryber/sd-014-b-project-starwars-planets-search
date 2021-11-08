@@ -3,7 +3,11 @@ import TableContext from '../context/TableContext';
 
 function Table() {
   const { data, search, setSearch } = useContext(TableContext);
-  const filterData = data.filter((e) => e.name.toLowerCase().includes(search.toLowerCase()));
+  // lógica de filter aplicada a partir deste video https://www.youtube.com/watch?v=OlVkYnVXPl0
+  // e da ajuda do meu colega Gabriel Sampaio
+  const filterData = data.filter(
+    (e) => e.name.toLowerCase().includes(search.toLowerCase()),
+  );
   return (
     <div>
       <label htmlFor="search">
