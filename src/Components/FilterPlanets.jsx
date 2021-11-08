@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
-import PlanetsContext from '../context/PlanetsContext';
+import React from 'react';
+import { usePlanets } from '../context/usePlanets';
 
 function FilterPlanets() {
-  const { filters: { name }, handleFilterName } = useContext(PlanetsContext);
+  const { filters: { name }, setFilterName } = usePlanets();
 
   return (
     <section>
@@ -10,7 +10,7 @@ function FilterPlanets() {
         type="text"
         data-testid="name-filter"
         value={ name }
-        onChange={ handleFilterName }
+        onChange={ (e) => setFilterName(e.target.value) }
       />
     </section>
   );

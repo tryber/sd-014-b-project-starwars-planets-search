@@ -1,50 +1,62 @@
-import React, { useContext } from 'react';
-import PlanetsContext from '../context/PlanetsContext';
+import React from 'react';
+import { usePlanets } from '../context/usePlanets';
 
 function Table() {
-  const { data, loading, filters } = useContext(PlanetsContext);
+  const {
+    filters: {
+      filterByName,
+    },
+    planets,
+  } = usePlanets();
 
-  if (loading) return <h1>Loading...</h1>;
-
-  const RESIDENTSINDEX = 9;
-
-  const headers = Object.keys(data[0]).filter((item, index) => index !== RESIDENTSINDEX);
-
-  const planetsContent = () => {
-    const { byName: { name } } = filters;
-    return data.filter((planet) => planet.name.toLowerCase().includes(name));
-  };
-
-  const planets = planetsContent();
+  function renderData() {
+    return (
+      planets
+        .filter(({ name }) => (
+          name.includes(filterByName.name)
+        )).map((planet, index) => (
+          <tr key={ index }>
+            <td>{ planet.name }</td>
+            <td>{ planet.rotation_period }</td>
+            <td>{ planet.orbital_period }</td>
+            <td>{ planet.diameter }</td>
+            <td>{ planet.climate }</td>
+            <td>{ planet.gravity }</td>
+            <td>{ planet.terrain }</td>
+            <td>{ planet.surface_water }</td>
+            <td>{ planet.population }</td>
+            <td>{ planet.films[0] }</td>
+            <td>{ planet.created }</td>
+            <td>{ planet.edited }</td>
+            <td>{ planet.url }</td>
+          </tr>
+        ))
+    );
+  }
 
   return (
     <table>
       <thead>
         <tr>
-          { headers.map((header, index) => <th key={ index }>{ header }</th>) }
+          <th>Name</th>
+          <th>Rotation Period</th>
+          <th>Orbital Period</th>
+          <th>Diameter</th>
+          <th>Climate</th>
+          <th>Gravity</th>
+          <th>Terrain</th>
+          <th>Surface Water</th>
+          <th>Population</th>
+          <th>Films</th>
+          <th>Created</th>
+          <th>Edited</th>
+          <th>URL</th>
         </tr>
       </thead>
       <tbody>
-        { planets.map((planet) => (
-          <tr key={ planet.name }>
-            <td>{planet.name}</td>
-            <td>{planet.rotation_period}</td>
-            <td>{planet.orbital_period}</td>
-            <td>{planet.diameter}</td>
-            <td>{planet.climate}</td>
-            <td>{planet.gravity}</td>
-            <td>{planet.terrain}</td>
-            <td>{planet.surface_water}</td>
-            <td>{planet.population}</td>
-            <td>{planet.films}</td>
-            <td>{planet.created}</td>
-            <td>{planet.edited}</td>
-            <td>{planet.url}</td>
-          </tr>
-        )) }
+        {renderData()}
       </tbody>
     </table>
   );
 }
-
 export default Table;
