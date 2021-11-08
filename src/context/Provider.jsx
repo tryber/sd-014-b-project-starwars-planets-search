@@ -3,7 +3,12 @@ import PropTypes from 'prop-types';
 import MyContext from './MyContext';
 
 function Provider({ children }) {
+  const INITIAL_FILTERS = { filterByName: {
+    name: '',
+  },
+  };
   const [API, setAPI] = useState([]);
+  const [filters, setFilters] = useState(INITIAL_FILTERS);
 
   useEffect(() => {
     fetch('https://swapi-trybe.herokuapp.com/api/planets/')
@@ -12,12 +17,9 @@ function Provider({ children }) {
   }, []);
 
   const context = {
-    filters: {
-      filterByName: {
-        name: '',
-      },
-    },
+    filters,
     API,
+    setFilters,
   };
 
   return (
