@@ -6,6 +6,8 @@ function Table() {
   let dataKeys = [];
   if (data.length > 0) {
     dataKeys = Object.keys(data[0]);
+    const deleteIndex = 9;
+    dataKeys.splice(deleteIndex, 1);
   }
 
   return (
@@ -28,7 +30,6 @@ function Table() {
               <td>{ planet.terrain }</td>
               <td>{ planet.surface_water }</td>
               <td>{ planet.population }</td>
-              <td>{ planet.residents }</td>
               <td>{ planet.films }</td>
               <td>{ planet.created }</td>
               <td>{ planet.edited }</td>
