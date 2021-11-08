@@ -7,6 +7,7 @@ function Filters() {
   const [valueFilter, setValueFilter] = useState('');
   const {
     planetsSearch, setPlanetsSearch, planetsFilter, setPlanetsData,
+    columnFilterValue, setColumnFilterValue,
   } = useContext(PlanetContext);
 
   function handleClick() {
@@ -36,9 +37,11 @@ function Filters() {
       }
       return null;
     });
+    setColumnFilterValue(columnFilterValue.filter((column) => column !== columnFilter));
     setPlanetsData(filterPlanets);
   }
-  /* consultei o repositório do Levi Manoel para fazer a função  */
+  /* consultei o repositório do Levi Manoel para fazer a função handleClick
+  link: https://github.com/tryber/sd-014-b-project-starwars-planets-search/pull/86/commits/c163ddcd6203b6dff254649517fd0afef0e637de */
 
   return (
 
@@ -51,11 +54,9 @@ function Filters() {
           setColumnFilter(value);
         } }
       >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        { columnFilterValue.map((column, key) => (
+          <option key={ key } value={ column }>{ column }</option>
+        )) }
 
       </select>
 
