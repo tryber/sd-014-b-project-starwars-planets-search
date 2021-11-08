@@ -73,7 +73,7 @@ const StarWarsProvider = ({ children }) => {
       }
     });
     setFiltered(numericFilter);
-  }, [filters.filterByNumericValues]);
+  }, [data, filters, filters.filterByNumericValues]);
 
   const setFilterByNumericValues = (object) => {
     setFilters({
