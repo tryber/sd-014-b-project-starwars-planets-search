@@ -15,8 +15,8 @@ export default function Table() {
 
   const filterByNumericValues = (ItemValue) => {
     switch (comparison) {
-    case 'maior que': return (ItemValue > value);
-    case 'menor que': return (ItemValue < value);
+    case 'maior que': return (parseInt(ItemValue, 10) > value);
+    case 'menor que': return (parseInt(ItemValue, 10) < value);
     case 'igual a': return (ItemValue === value);
     default: return true;
     }
@@ -26,7 +26,7 @@ export default function Table() {
     const newTable = results.map((item, index) => {
       if (filterByName(item.name) && filterByNumericValues(item[column])) {
         return <TableLine key={ index } item={ item } />;
-      } return <span key={ index } />;
+      } return null;
     });
     changeTable(newTable);
   }, [results, name, comparison, column, value]);
