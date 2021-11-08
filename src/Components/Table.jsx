@@ -2,11 +2,20 @@ import React, { useContext } from 'react';
 import MyContext from '../context/MyContext';
 
 export default function Table() {
-  const { data } = useContext(MyContext);
+  const { data, filters } = useContext(MyContext);
+  const { filterByName } = filters;
 
   const TH = ['Name', 'Rotation Period', 'Orbital Period',
     'Diameter', 'Climate', 'Gravity', 'Terrain', 'Surface Water',
     'Population', 'Films', 'Create', 'Edited', 'Url'];
+
+  function filterPlanets() {
+    console.log(filterByName.name);
+    const filterName = data.filter((planet) => planet.name.toLowerCase().includes(
+      filterByName.name,
+    ));
+    return filterName;
+  }
 
   return (
     <table>
@@ -18,7 +27,7 @@ export default function Table() {
         </tr>
       </thead>
       <tbody>
-        {data.map((planet, i) => (
+        {filterPlanets().map((planet, i) => (
           <tr key={ i } index={ i }>
             <td>{ planet.name }</td>
             <td>{ planet.rotation_period }</td>
