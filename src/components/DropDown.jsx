@@ -1,8 +1,10 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useContext } from 'react';
+import tableContext from '../context/tableContext';
 
 export default function DropDown(props) {
   const { array, name, dataTest, handleChange } = props;
+  const { filters: { filterByNumericValues } } = useContext(tableContext);
 
   return (
     <label name={ name } htmlFor={ name }>
@@ -11,7 +13,9 @@ export default function DropDown(props) {
         name={ name }
         onChange={ ({ target: { value } }) => handleChange(value) }
       >
-        {array.map((item, index) => <option key={ index }>{item}</option>)}
+        {array.map((item, index) => (
+          filterByNumericValues[0].column !== item
+            ? <option key={ index }>{item}</option> : null))}
       </select>
     </label>
   );
