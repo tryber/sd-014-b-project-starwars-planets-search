@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import PlanetContext from '../context/PlanetContext';
+import Filters from './Filters';
 
 function SearchInput() {
   const { handleChange } = useContext(PlanetContext);
@@ -14,6 +15,7 @@ function SearchInput() {
           handleChange(event.target.value);
         } }
       />
+      <Filters />
 
     </section>
   );
