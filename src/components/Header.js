@@ -1,10 +1,10 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function Header() {
   const { planetName, handleChangeName,
-    handleChangeColumn, handleChangeComparison,
-    handleChangeValue, handleClick, click } = useContext(PlanetsContext);
+    setPlanetName, handleChangeValue, handleClick,
+    click, setClick } = useContext(PlanetsContext);
   const {
     filters: {
       filterByName: { name },
@@ -17,20 +17,55 @@ function Header() {
       ],
     },
   } = planetName;
-  const arrayColumn = ['population', 'orbital_period',
-    'diameter', 'rotation_period', 'surface_water'];
-  const indexColumn = arrayColumn.indexOf(column);
+
+  const [arrayColumn, setArrayColumn] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ]);
+
+  const handleChangeColumn = ({ target }) => {
+    setPlanetName({
+      filters: {
+        filterByName: {
+          name,
+        },
+        filterByNumericValues: [
+          {
+            column: click ? arrayColumn[0] : target.value,
+            comparison,
+            value,
+          },
+        ],
+      },
+    });
+  };
+
+  const handleChangeComparison = ({ target }) => {
+    setPlanetName({
+      filters: {
+        filterByName: {
+          name,
+        },
+        filterByNumericValues: [
+          {
+            column,
+            comparison: target.value,
+            value,
+          },
+        ],
+      },
+    });
+  };
+
   if (click) {
-    arrayColumn.slice(indexColumn, indexColumn);
+    setClick(false);
+    arrayColumn.splice(arrayColumn.indexOf(column), 1);
+    setArrayColumn(arrayColumn);
   }
   console.log(arrayColumn);
-
-  /*   useEffect(() => {
-    if (click) {
-      const mapColumn = arrayColumn.map((option) => option !== column);
-      return mapColumn;
-    }
-  }); */
 
   const secondColumn = ['maior que', 'menor que', 'igual a'];
 

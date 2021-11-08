@@ -51,40 +51,6 @@ function PlanetsProvider({ children }) {
     });
   };
 
-  const handleChangeColumn = ({ target }) => {
-    setPlanetName({
-      filters: {
-        filterByName: {
-          name,
-        },
-        filterByNumericValues: [
-          {
-            column: target.value,
-            comparison,
-            value,
-          },
-        ],
-      },
-    });
-  };
-
-  const handleChangeComparison = ({ target }) => {
-    setPlanetName({
-      filters: {
-        filterByName: {
-          name,
-        },
-        filterByNumericValues: [
-          {
-            column,
-            comparison: target.value,
-            value,
-          },
-        ],
-      },
-    });
-  };
-
   const handleChangeValue = ({ target }) => {
     setPlanetName({
       filters: {
@@ -229,13 +195,13 @@ function PlanetsProvider({ children }) {
         value={ { data,
           planetName,
           handleChangeName,
-          handleChangeColumn,
-          handleChangeComparison,
+          setPlanetName,
           handleChangeValue,
           searchPlanetByName,
           handleClick,
           filteredData,
-          click } }
+          click,
+          setClick } }
       >
         {children}
       </PlanetsContext.Provider>
