@@ -18,6 +18,7 @@ function SWProvider({ children }) {
       setIsLoading(false);
     } catch (e) {
       setError(e);
+      console.log(error);
       setData(mockData.results);
       setIsLoading(false);
     }

@@ -1,8 +1,18 @@
 import React, { useContext } from 'react';
+import SearchContext from '../context/SearchContext';
 import SWContext from '../context/SWContext';
 
 function Table() {
   const { isLoading, data } = useContext(SWContext);
+  const { nameFilter } = useContext(SearchContext);
+
+  let filteredData = data;
+
+  if (nameFilter !== '') {
+    filteredData = data.filter((d) => (
+      d.name.toLowerCase().includes(nameFilter.toLowerCase())
+    ));
+  }
 
   const headers = ['Name', 'Rotation Period', 'Orbital Period', 'Diameter', 'Climate',
     'Gravity', 'Terrain', 'Surface Water',
@@ -17,7 +27,7 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          { data.map((item) => (
+          { filteredData.map((item) => (
             <tr key={ item.name }>
               <td>{ item.name }</td>
               <td>{ item.rotation_period }</td>
@@ -33,7 +43,7 @@ function Table() {
               <td>{ item.edited }</td>
               <td>{ item.url }</td>
             </tr>
-          ))}
+          )) }
         </tbody>
       </table>
     ));
