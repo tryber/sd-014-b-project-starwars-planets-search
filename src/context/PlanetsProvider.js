@@ -16,11 +16,26 @@ function PlanetsProvider({ children }) {
       }],
     } },
   );
+  const [columnOptions, setColumnOptions] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ]);
 
+  function deleteColumn(previousColumn) {
+    const newColumn = [...columnOptions];
+    // Source: https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array/splice
+    newColumn.splice(newColumn.indexOf(previousColumn), 1);
+    setColumnOptions(newColumn);
+  }
   const contextValue = {
     data,
     filter,
     setFilter,
+    columnOptions,
+    deleteColumn,
   };
 
   useEffect(() => {
