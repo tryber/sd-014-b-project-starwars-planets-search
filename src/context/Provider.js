@@ -39,3 +39,7 @@ Provider.propTypes = {
 };
 
 export default Provider;
+
+// Referências: https://github.com/tryber/sd-014-b-project-starwars-planets-search/pull/43/files
+// https://github.com/tryber/sd-014-b-project-starwars-planets-search/pull/1/files
+// https://github.com/tryber/sd-014-b-project-starwars-planets-search/pull/110/files
