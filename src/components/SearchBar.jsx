@@ -19,11 +19,6 @@ export default function SearchBar() {
         data-testid="name-filter"
         onChange={ filterByName }
       />
-      {/* <button
-        type="button"
-      >
-        Buscar:
-      </button> */}
     </div>
   );
 }
