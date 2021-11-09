@@ -57,12 +57,13 @@ function Search() {
         value={ numberInput }
         onChange={ ({ target: { value } }) => setNumberInput(value) }
       />
-      <input
+      <button
         type="button"
         data-testid="button-filter"
-        value="Filtrar"
         onClick={ handleClick }
-      />
+      >
+        Filtrar
+      </button>
     </>
   );
 }
