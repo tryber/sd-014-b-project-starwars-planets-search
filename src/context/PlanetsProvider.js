@@ -46,7 +46,6 @@ function PlanetsProvider({ children }) {
         ...prev,
         filters: {
           filterByNumericValues: [
-            // ...filters.filters.filterByNumericValues,
             filtersCoparison,
           ],
         },

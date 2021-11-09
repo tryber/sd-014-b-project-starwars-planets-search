@@ -51,10 +51,17 @@ function FilterBar() {
     'surface_water',
   ];
 
-  const selected = (listOfoptions) => {
-    listOfoptions.filter((elem) => elem !== takeColumns);
+  const selected = () => {
+    const newlistOfOptions = options.filter((elem) => elem !== takeColumns);
+    if (takeValue !== 0) {
+      return (
+        newlistOfOptions.map((option, index) => (
+          <option key={ index }>{option}</option>
+        ))
+      );
+    }
     return (
-      listOfoptions.map((option, index) => (
+      options.map((option, index) => (
         <option key={ index }>{option}</option>
       ))
     );
@@ -68,19 +75,22 @@ function FilterBar() {
     };
     apllyFilter(filtersCoparison);
     listed();
-    selected(options);
+  };
+
+  const deleteAll = () => {
+    const newState = {
+      column: '',
+      comparison: '',
+      value: null,
+    };
+    apllyFilter(newState);
   };
 
   return (
     <div>
       <form>
         <select name="column" data-testid="column-filter" onChange={ handleColumns }>
-          {selected(options)}
-          {/* <option name="population">population</option>
-          <option name="orbital_period">orbital_period</option>
-          <option name="diameter">diameter</option>
-          <option name="rotation_period">rotation_period</option>
-          <option name="surface_water">surface_water</option> */}
+          {selected()}
         </select>
         <select
           name="comparison"
@@ -103,7 +113,7 @@ function FilterBar() {
       </form>
       <div>
         { `${takeColumns} ${takeComparison} ${takeValue} `}
-        <button type="button">
+        <button type="button" onClick={ deleteAll }>
           X
         </button>
       </div>
