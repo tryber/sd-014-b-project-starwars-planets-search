@@ -9,14 +9,59 @@ function PlanetsProvider({ children }) {
     columns: [],
   });
 
+  const [deleteOption, setDelete] = useState({
+    columnsMuted: planets.columns,
+  });
+
+  const deleted = (colName) => {
+    delete deleteOption[colName];
+    setDelete({
+      columnsMuted: deleteOption,
+    });
+  };
+
   const [search, setSearch] = useState({
     resultSearch: [],
-    filter: {
+  });
+
+  const [filters, setFilters] = useState({
+    filters: {
       filterByName: {
         name: '',
       },
+      filterByNumericValues: [
+        {
+          column: '',
+          comparison: '',
+          value: null,
+        },
+      ],
     },
+
   });
+
+  const apllyFilter = (filtersCoparison) => {
+    if (filters.filters.filterByNumericValues.value === 0) {
+      setFilters((prev) => ({
+        ...prev,
+        filters: {
+          filterByNumericValues: [
+            // ...filters.filters.filterByNumericValues,
+            filtersCoparison,
+          ],
+        },
+      }));
+    }
+    setFilters((prev) => ({
+      ...prev,
+      filters: {
+        filterByNumericValues: [
+          ...filters.filters.filterByNumericValues,
+          filtersCoparison,
+        ],
+      },
+    }));
+  };
 
   const settingPlanets = async () => {
     const { results } = await dataPlanets();
@@ -34,8 +79,8 @@ function PlanetsProvider({ children }) {
   };
 
   const findPlanet = (find) => {
-    setSearch(() => ({
-      filter: {
+    setFilters(() => ({
+      filters: {
         filterByName: {
           name: find,
         },
@@ -53,10 +98,14 @@ function PlanetsProvider({ children }) {
     data: planets.data,
     columns: planets.columns,
     resultSearch: search.resultSearch,
-    filter: search.filter,
+    filters: filters.filters,
+    columnsMuted: deleteOption.columnsMuted,
     settingPlanets,
     findPlanet,
     newList,
+    setFilters,
+    apllyFilter,
+    deleted,
   };
 
   return (

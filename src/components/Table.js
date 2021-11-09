@@ -7,13 +7,6 @@ const Table = () => {
     settingPlanets();
   }, []);
 
-  // const newData = data;
-  // useEffect(() => {
-  //   if (resultSearch.length > 0) {
-  //     const newData = resultSearch;
-  //   }
-  // }, []);
-  console.log(columns);
   return (
     <table border="1">
       <thead>
