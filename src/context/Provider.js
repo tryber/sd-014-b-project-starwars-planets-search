@@ -4,8 +4,12 @@ import DataContext from './DataContext';
 
 function Provider({ children }) {
   const [data, setData] = useState([]);
+  const [filteredPlanets, setFilteredPlanets] = useState([]);
   const value = {
-    data, setData,
+    data,
+    setData,
+    filteredPlanets,
+    setFilteredPlanets,
   };
 
   async function fetchData() {
@@ -26,6 +30,10 @@ function Provider({ children }) {
   useEffect(() => {
     fetchData();
   }, []);
+
+  useEffect(() => {
+    setFilteredPlanets(filteredPlanets);
+  }, [filteredPlanets]);
 
   return (
     <DataContext.Provider value={ value }>
