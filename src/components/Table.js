@@ -3,7 +3,8 @@ import './table.css';
 import DataContext from '../context/DataContext';
 
 function Table() {
-  const { data, searchName, fetchRequestApiPlanets } = useContext(DataContext);
+  const { data, searchName,
+    fetchRequestApiPlanets } = useContext(DataContext);
 
   useEffect(() => {
     if (searchName <= 0) {

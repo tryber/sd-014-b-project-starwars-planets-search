@@ -1,11 +1,10 @@
 import React, { useContext } from 'react';
 import './table.css';
 import DataContext from '../context/DataContext';
-import response from '../testData';
 
 function Search() {
   const { searchName,
-    setFilterEnabled, setData, setSearchName } = useContext(DataContext);
+    setFilterEnabled, data, setData, setSearchName } = useContext(DataContext);
 
   function handleChange(event) {
     const nome = event.target.value;
@@ -15,8 +14,7 @@ function Search() {
     //   planet.name.toLowerCase().includes(nome.toLowerCase())
     // ));
     // setData(filterPlanet);
-    const resposta = response;
-    const filterPlanet = resposta.results.filter((planet) => (
+    const filterPlanet = data.results.filter((planet) => (
       planet.name.toLowerCase().includes(nome.toLowerCase())
     ));
     setData(filterPlanet);

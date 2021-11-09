@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import './table.css';
 import DataContext from '../context/DataContext';
 import response from '../testData';
@@ -6,7 +6,16 @@ import response from '../testData';
 function FilterNumber() {
   const {
     setColumn, comparison,
-    column, valor, setComparison, setData, setValor } = useContext(DataContext);
+    column, valor, setComparison, setData,
+    setValor, selectedFilter,
+    filters, filtroNumero } = useContext(DataContext);
+
+  const [filtroNovo, setFiltroNovo] = useState(filtroNumero);
+
+  function alteraColuna() {
+    const filtrarColuna = filtroNovo.filter((coluna) => coluna !== column);
+    setFiltroNovo(filtrarColuna);
+  }
 
   function filterList() {
     const filterNumber = response.results.filter((planet) => {
@@ -22,6 +31,7 @@ function FilterNumber() {
       return planet;
     });
     setData(filterNumber);
+    alteraColuna();
   }
 
   return (
@@ -32,11 +42,7 @@ function FilterNumber() {
           data-testid="column-filter"
           onChange={ (event) => setColumn(event.target.value) }
         >
-          <option>population</option>
-          <option>orbital_period</option>
-          <option>diameter</option>
-          <option>rotation_period</option>
-          <option>surface_water</option>
+          {filtroNovo.map((colunas, index) => <option key={ index }>{colunas}</option>)}
         </select>
       </label>
       <label htmlFor="comparisonFilter">
@@ -60,10 +66,12 @@ function FilterNumber() {
       <button
         type="button"
         data-testid="button-filter"
-        onClick={ filterList }
+        onClick={ () => filterList() }
       >
         Filtrar
       </button>
+      {filters === true && selectedFilter.map((filtro, index) => (
+        <p key={ index }>{ filtro }</p>))}
     </div>
   );
 }
