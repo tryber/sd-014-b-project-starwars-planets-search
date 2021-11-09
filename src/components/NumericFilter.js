@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 import Select from './Select';
 import Input from './Input';
@@ -8,14 +8,21 @@ const NumericFilter = () => {
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState('100000');
-  const { setFilterByNumericValues } = useContext(StarWarsContext);
-  const columnOptions = [
-    'population',
-    'orbital_period',
-    'diameter',
-    'rotation_period',
-    'surface_water',
-  ];
+  const {
+    filters: { filterByNumericValues },
+    setFilterByNumericValues,
+    columnOptions,
+    setColumnOptions,
+  } = useContext(StarWarsContext);
+
+  useEffect(() => {
+    filterByNumericValues.forEach((filter) => {
+      const filtered = columnOptions.filter((option) => option !== filter.column);
+      setColumnOptions(filtered);
+    });
+    setColumn(columnOptions[0]);
+  }, [columnOptions, filterByNumericValues, setColumnOptions]);
+
   const comparisonOptions = ['maior que', 'menor que', 'igual a'];
   return (
     <form>

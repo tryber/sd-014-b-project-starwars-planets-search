@@ -7,6 +7,13 @@ const StarWarsProvider = ({ children }) => {
   const [data, setData] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
   const [filtered, setFiltered] = useState(data);
+  const [columnOptions, setColumnOptions] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ]);
   const [filters, setFilters] = useState({
     filterByName: {
       name: '',
@@ -39,10 +46,10 @@ const StarWarsProvider = ({ children }) => {
   useEffect(() => {
     const { filterByName: { name } } = filters;
     const nameFilter = data.filter(
-      (planet) => planet.name.toLowerCase().includes(name.toLowerCase()),
+      (planet) => planet.name.includes(name),
     );
     setFiltered(nameFilter);
-  }, [data, filters, filters.filterByName.name]);
+  }, [filters, data, filters.filterByName.name]);
 
   useEffect(() => {
     const { filterByNumericValues } = filters;
@@ -107,6 +114,8 @@ const StarWarsProvider = ({ children }) => {
         setFilterByName,
         setFilterByNumericValues,
         removeFilter,
+        columnOptions,
+        setColumnOptions,
       } }
     >
       { children }
