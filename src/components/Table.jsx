@@ -23,6 +23,7 @@ function Table() {
             return +(planet[column]) < +(value);
           }
           if (comparison === 'igual a') return +(planet[column]) === +(value);
+          return null;
         });
       });
     }
