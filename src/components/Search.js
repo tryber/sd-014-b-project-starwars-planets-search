@@ -4,7 +4,7 @@ import DataContext from '../context/DataContext';
 
 function Search() {
   const { searchName,
-    setFilterEnabled, data, setData, setSearchName } = useContext(DataContext);
+    setFilterEnabled, setSearchName } = useContext(DataContext);
 
   function handleChange(event) {
     const nome = event.target.value;
