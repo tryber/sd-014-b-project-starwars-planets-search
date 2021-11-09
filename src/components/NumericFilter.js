@@ -21,7 +21,7 @@ const NumericFilter = () => {
       setColumnOptions(filtered);
     });
     setColumn(columnOptions[0]);
-  }, [columnOptions, filterByNumericValues, setColumnOptions]);
+  }, [filterByNumericValues]);
 
   const comparisonOptions = ['maior que', 'menor que', 'igual a'];
   return (
