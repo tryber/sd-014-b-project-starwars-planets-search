@@ -14,10 +14,10 @@ function Search() {
     //   planet.name.toLowerCase().includes(nome.toLowerCase())
     // ));
     // setData(filterPlanet);
-    const filterPlanet = data.results.filter((planet) => (
-      planet.name.toLowerCase().includes(nome.toLowerCase())
-    ));
-    setData(filterPlanet);
+    // const filterPlanet = data.results.filter((planet) => (
+    //   planet.name.toLowerCase().includes(nome.toLowerCase())
+    // ));
+    // setData(filterPlanet);
   }
 
   return (

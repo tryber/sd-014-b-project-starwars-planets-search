@@ -7,10 +7,9 @@ function Table() {
     fetchRequestApiPlanets } = useContext(DataContext);
 
   useEffect(() => {
-    if (searchName <= 0) {
-      fetchRequestApiPlanets();
-    }
-  }, []);
+    // if (searchName <= 0) {
+    fetchRequestApiPlanets();
+  }, [fetchRequestApiPlanets]);
 
   return (
     <div>
@@ -33,8 +32,25 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {data.length === 0 ? <p>Carregando</p>
-            : data.map((planeta) => (
+          {!searchName && data.map((planeta) => (
+            <tr key={ planeta.name }>
+              <td>{planeta.name}</td>
+              <td>{planeta.rotation_period}</td>
+              <td>{planeta.orbital_period}</td>
+              <td>{planeta.diameter}</td>
+              <td>{planeta.climate}</td>
+              <td>{planeta.gravity}</td>
+              <td>{planeta.terrain}</td>
+              <td>{planeta.surface_water}</td>
+              <td>{planeta.population}</td>
+              <td>{planeta.films}</td>
+              <td>{planeta.created}</td>
+              <td>{planeta.edited}</td>
+              <td>{planeta.url}</td>
+            </tr>))}
+          {searchName && data.filter((planet) => (
+            planet.name.toLowerCase().includes(searchName.toLowerCase())))
+            .map((planeta) => (
               <tr key={ planeta.name }>
                 <td>{planeta.name}</td>
                 <td>{planeta.rotation_period}</td>
@@ -49,7 +65,24 @@ function Table() {
                 <td>{planeta.created}</td>
                 <td>{planeta.edited}</td>
                 <td>{planeta.url}</td>
-              </tr>))}
+              </tr>
+            )) }
+          {/* {searchName && data.map((planeta) => (
+            <tr key={ planeta.name }>
+              <td>{planeta.name}</td>
+              <td>{planeta.rotation_period}</td>
+              <td>{planeta.orbital_period}</td>
+              <td>{planeta.diameter}</td>
+              <td>{planeta.climate}</td>
+              <td>{planeta.gravity}</td>
+              <td>{planeta.terrain}</td>
+              <td>{planeta.surface_water}</td>
+              <td>{planeta.population}</td>
+              <td>{planeta.films}</td>
+              <td>{planeta.created}</td>
+              <td>{planeta.edited}</td>
+              <td>{planeta.url}</td>
+            </tr>))} */}
         </tbody>
       </table>
     </div>

@@ -33,7 +33,6 @@ function DataProvider({ children }) {
     // const resposta = response;
     // setData(resposta.results);
     setData(result.results);
-    console.log(result.results);
   }
 
   return (
