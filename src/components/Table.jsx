@@ -1,11 +1,37 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import MyContext from '../context/MyContext';
 import Filters from './Filters';
 
 function Table() {
-  const { API, filters: { filterByName: { name } } } = useContext(MyContext);
+  const {
+    API, filters: {
+      filterByName: { name }, filterByNumericValues,
+    },
+  } = useContext(MyContext);
 
-  const filteredAPI = API.filter((planet) => planet.name.toLowerCase().includes(name));
+  const [state, setState] = useState([]);
+
+  let filteredColumn = [...API];
+
+  useEffect(() => {
+    if (filterByNumericValues > 0) {
+      filterByNumericValues.forEach(({ column, comparison, value }) => {
+        filteredColumn = API.filter((planet) => {
+          if (comparison === 'maior que') {
+            return +(planet[column]) > +(value);
+          } if (comparison === 'menor que') {
+            return +(planet[column]) < +(value);
+          }
+          if (comparison === 'igual a') return +(planet[column]) === +(value);
+        });
+      });
+    }
+    setState(filteredColumn);
+  }, [filterByNumericValues.length]);
+
+  useEffect(() => {
+    setState(filteredColumn.filter((planet) => planet.name.toLowerCase().includes(name)));
+  }, [API]);
 
   return (
     <>
@@ -29,7 +55,7 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {API.length > 0 && filteredAPI.map((planet) => (
+          {API.length > 0 && state.map((planet) => (
             <tr key={ planet.name }>
               <td>{planet.name}</td>
               <td>{planet.rotation_period}</td>

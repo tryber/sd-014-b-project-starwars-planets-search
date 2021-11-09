@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 import MyContext from './MyContext';
 
 function Provider({ children }) {
-  const INITIAL_FILTERS = { filterByName: {
-    name: '',
-  },
+  const INITIAL_FILTERS = {
+    filterByName: {
+      name: '',
+    },
+    filterByNumericValues: [],
   };
   const [API, setAPI] = useState([]);
   const [filters, setFilters] = useState(INITIAL_FILTERS);
