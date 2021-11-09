@@ -5,6 +5,7 @@ import SWContext from '../context/SWContext';
 function Table() {
   const { isLoading, data } = useContext(SWContext);
   const { nameFilter } = useContext(SearchContext);
+  const { typeFilter } = useContext(SearchContext);
 
   let filteredData = data;
 
@@ -12,6 +13,18 @@ function Table() {
     filteredData = data.filter((d) => (
       d.name.toLowerCase().includes(nameFilter.toLowerCase())
     ));
+  }
+
+  switch (typeFilter.columnFilter) {
+  case 'population':
+    if (typeFilter.comparison === 'bigger') {
+      filteredData = data.filter((d) => (
+        d.population > typeFilter.numberInput
+      ));
+    }
+    break;
+  default:
+    break;
   }
 
   const headers = ['Name', 'Rotation Period', 'Orbital Period', 'Diameter', 'Climate',

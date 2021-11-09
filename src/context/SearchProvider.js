@@ -4,9 +4,17 @@ import SearchContext from './SearchContext';
 
 function SearchProvider({ children }) {
   const [nameFilter, setNameFilter] = useState('');
+  const [typeFilter, setTypeFilter] = useState({});
+
+  const context = {
+    nameFilter,
+    setNameFilter,
+    typeFilter,
+    setTypeFilter,
+  };
 
   return (
-    <SearchContext.Provider value={ { nameFilter, setNameFilter } }>
+    <SearchContext.Provider value={ context }>
       { children }
     </SearchContext.Provider>
   );
