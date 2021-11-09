@@ -9,22 +9,32 @@ function Table() {
 
   let filteredData = data;
 
-  if (nameFilter !== '') {
-    filteredData = data.filter((d) => (
-      d.name.toLowerCase().includes(nameFilter.toLowerCase())
-    ));
-  }
-
   switch (typeFilter.columnFilter) {
   case 'population':
-    if (typeFilter.comparison === 'bigger') {
+    if (!typeFilter.numberInput || typeFilter.numberInput <= 0) {
+      filteredData = data;
+    } else if (typeFilter.comparison === 'bigger') {
       filteredData = data.filter((d) => (
-        d.population > typeFilter.numberInput
+        Number(d.population) > typeFilter.numberInput
+      ));
+    } else if (typeFilter.comparison === 'smaller') {
+      filteredData = data.filter((d) => (
+        Number(d.population) < typeFilter.numberInput
+      ));
+    } else if (typeFilter.comparison === 'equals') {
+      filteredData = data.filter((d) => (
+        Number(d.population) === typeFilter.numberInput
       ));
     }
     break;
   default:
     break;
+  }
+
+  if (nameFilter !== '') {
+    filteredData = data.filter((d) => (
+      d.name.toLowerCase().includes(nameFilter.toLowerCase())
+    ));
   }
 
   const headers = ['Name', 'Rotation Period', 'Orbital Period', 'Diameter', 'Climate',
