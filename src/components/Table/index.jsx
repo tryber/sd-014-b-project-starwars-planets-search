@@ -3,7 +3,7 @@ import StarwarsContext from '../../context/Context';
 import './style.css';
 
 export default function Table() {
-  const { data } = useContext(StarwarsContext);
+  const { planets } = useContext(StarwarsContext);
   return (
     <div>
       <table>
@@ -25,7 +25,7 @@ export default function Table() {
           </tr>
         </thead>
         <tbody>
-          { data.map((planet) => (
+          { planets.map((planet) => (
             <tr key={ planet.name }>
               <td>{ planet.name }</td>
               <td>{ planet.rotation_period }</td>
