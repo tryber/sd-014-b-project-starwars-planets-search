@@ -3,11 +3,11 @@ import Context from '../context/Context';
 import TableItem from './TableItem';
 
 function Table() {
-  const { renderPlanetList, Planets } = useContext(Context);
+  const { toShowPlanetsList, fetchPlanets } = useContext(Context);
 
   useEffect(() => {
-    Planets();
-  }, [Planets]);
+    fetchPlanets();
+  }, [fetchPlanets]);
 
   return (
     <table>
@@ -29,7 +29,7 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        { renderPlanetList.map((planet, index) => (
+        { toShowPlanetsList.map((planet, index) => (
           <TableItem key={ index } planet={ planet } />
         )) }
       </tbody>

@@ -1,58 +1,61 @@
 import React, { useState } from 'react';
-import ProptTypes from 'prop-types';
+import PropTypes from 'prop-types';
+
 import Context from './Context';
 
 function Provider({ children }) {
-  const [planetList, setPlanetList] = useState([]);
-  const [renderPlanetList, setRenderPlanetList] = useState([]);
-  const [columns, setColumns] = useState([
+  const [allPlanetsList, setAllPlanetsList] = useState([]);
+  const [toShowPlanetsList, setToShowPlanetsList] = useState([]);
+  const [columnsList, setColumnsList] = useState([
     'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
   ]);
-  const [filter, setFilter] = useState({
+  const [filtersList, setFiltersList] = useState({
     filters: {
-      filterName: {
+      filterByName: {
         name: '',
       },
-      filterNumeric: [],
+      filterByNumericValues: [],
     },
   });
 
-  function Planets() {
+  function fetchPlanets() {
     fetch('https://swapi-trybe.herokuapp.com/api/planets/')
       .then((response) => response.json()
         .then((results) => {
-          setPlanetList(results.results);
-          setRenderPlanetList(results.results);
+          setAllPlanetsList(results.results);
+          setToShowPlanetsList(results.results);
         }));
   }
 
-  function filterName(value) {
-    setRenderPlanetList(planetList.filter((planet) => (
-      planet.name.toLowerCase().includes(value.toLowerCase())
+  function filterByName(searchValue) {
+    setToShowPlanetsList(allPlanetsList.filter((planet) => (
+      planet.name.toLowerCase().includes(searchValue.toLowerCase())
     )));
   }
 
   const contextValue = {
-    planetList,
-    renderPlanetList,
-    columns,
-    filter,
-    Planets,
-    setFilter,
-    filterName,
-    setColumns,
-    setRenderPlanetList,
+    allPlanetsList,
+    toShowPlanetsList,
+    filtersList,
+    columnsList,
+    fetchPlanets,
+    setFiltersList,
+    filterByName,
+    setColumnsList,
+    setToShowPlanetsList,
   };
 
   return (
-    <Context.Provider value={ { ...contextValue } }>
+    <Context.Provider
+      value={ { ...contextValue } }
+    >
       { children }
     </Context.Provider>
   );
 }
 
 Provider.propTypes = {
-  children: ProptTypes.node.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default Provider;
