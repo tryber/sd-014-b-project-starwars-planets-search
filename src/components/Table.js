@@ -10,15 +10,21 @@ function Table() {
   let filteredData = data;
 
   const filterSmaller = (columnFilter, index) => {
-    filteredData = filteredData.filter((d) => Number(d[columnFilter]) < typeFilter[index].numberInput);
+    filteredData = filteredData.filter(
+      (d) => Number(d[columnFilter]) < typeFilter[index].numberInput,
+    );
   };
 
   const filterBigger = (columnFilter, index) => {
-    filteredData = filteredData.filter((d) => Number(d[columnFilter]) > typeFilter[index].numberInput);
+    filteredData = filteredData.filter(
+      (d) => Number(d[columnFilter]) > typeFilter[index].numberInput,
+    );
   };
 
   const filterEqual = (columnFilter, index) => {
-    filteredData = filteredData.filter((d) => Number(d[columnFilter]) === typeFilter[index].numberInput);
+    filteredData = filteredData.filter(
+      (d) => Number(d[columnFilter]) === typeFilter[index].numberInput,
+    );
   };
 
   typeFilter.forEach((type, index) => {
@@ -34,7 +40,8 @@ function Table() {
       break;
     default:
       break;
-    }});
+    }
+  });
 
   if (nameFilter !== '') {
     filteredData = data.filter((d) => (
