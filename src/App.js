@@ -1,6 +1,6 @@
 import React from 'react';
 import Table from './Components/Table';
-import Provider from './context/Provider';
+import { Provider } from './context/Provider';
 import Filters from './Components/Filters';
 
 function App() {

@@ -1,95 +1,136 @@
-import React, { useContext, useState } from 'react';
-import Context from '../context/Context';
+import React, { useEffect, useState } from 'react';
+import { usePlanets } from '../context/Provider';
 
 function NumericFilter() {
-  const [columnFilterValue, setColumnFilterValue] = useState('population');
-  const [comparisonFilterValue, setComparisonFilterValue] = useState('more-than');
-  const [valueFilterValue, setValueFilterValue] = useState('');
-
   const {
-    filtersList, setFiltersList, setToShowPlanetsList, allPlanetsList,
-    columnsList, setColumnsList,
-  } = useContext(Context);
+    filters: { filterByNumericValues },
+    setFilterNumeric,
+    data,
+    setPlanets,
+    planets } = usePlanets();
 
-  function addFilter() {
-    setFiltersList({
-      filters: {
-        ...filtersList.filters,
-        filterByNumericValues: [
-          ...filtersList.filters.filterByNumericValues,
-          {
-            column: columnFilterValue,
-            comparison: comparisonFilterValue,
-            value: valueFilterValue,
-          },
-        ],
-      },
-    });
+  const [column, setColumn] = useState('population');
+  const [comparison, setComparison] = useState('maior que');
+  const [value, setValue] = useState('0');
+  const [options, setOptions] = useState([]);
+  function handleColumn(target) {
+    setColumn(target.value);
+  }
+  function handleComparison(target) {
+    setComparison(target.value);
+  }
+  function handleValue(target) {
+    setValue(target.value);
+  }
 
-    const filteredPlanets = allPlanetsList.filter((planet) => {
-      if (comparisonFilterValue === 'maior que') {
-        return Number(planet[columnFilterValue]) > Number(valueFilterValue);
+  function handleFilter() {
+    setFilterNumeric([...filterByNumericValues, { column, comparison, value }]);
+
+    const filteredPlanets = planets.filter((planet) => {
+      if (comparison === 'maior que') {
+        return Number(planet[column]) > Number(value);
+      } if (comparison === 'menor que') {
+        return Number(planet[column]) < Number(value);
       }
-      if (comparisonFilterValue === 'menor que') {
-        return Number(planet[columnFilterValue]) < Number(valueFilterValue);
-      }
-      if (comparisonFilterValue === 'igual a') {
-        return Number(planet[columnFilterValue]) === Number(valueFilterValue);
-      }
-      return null;
+      return Number(planet[column]) === Number(value);
     });
-    setColumnsList(columnsList.filter((column) => column !== columnFilterValue));
-    setToShowPlanetsList(filteredPlanets);
+    setPlanets(filteredPlanets);
+  }
+
+  useEffect(() => {
+    const selectOptions = [
+      'population',
+      'orbital_period',
+      'diameter',
+      'rotation_period',
+      'surface_water',
+    ];
+
+    const createNewOptions = () => {
+      if (filterByNumericValues.length > 0) {
+        const filteredOptions = selectOptions
+          .filter((option) => !filterByNumericValues.find((filter) => (
+            filter.column === option
+          )));
+        setOptions(filteredOptions);
+      } else {
+        setOptions(selectOptions);
+      }
+    };
+    createNewOptions();
+  }, [filterByNumericValues, filterByNumericValues.length, data]);
+
+  function handleOnClick(filter) {
+    const removeFilter = filterByNumericValues.filter((NumericValue) => (
+      NumericValue.column !== filter
+    ));
+    if (removeFilter.length > 0) {
+      setFilterNumeric([removeFilter]);
+    } else {
+      setFilterNumeric([]);
+      setPlanets(data);
+    }
   }
 
   return (
-    <>
-      <label htmlFor="column-filter">
+    <div>
+      <label htmlFor="column_filter">
         <select
-          id="column-filter"
+          name="column_filter"
+          id="column_filter"
+          onChange={ ({ target }) => handleColumn(target) }
           data-testid="column-filter"
-          value={ columnFilterValue }
-          onChange={ ({ target: { value } }) => {
-            setColumnFilterValue(value);
-          } }
         >
-          { columnsList.map((column, key) => (
-            <option key={ key } value={ column }>{ column }</option>
-          )) }
+          {options.map((option) => (
+            <option key={ option }>{option}</option>
+          ))}
         </select>
       </label>
       <label htmlFor="comparison-filter">
         <select
+          name="comparison-filter"
           id="comparison-filter"
+          onChange={ ({ target }) => handleComparison(target) }
           data-testid="comparison-filter"
-          value={ comparisonFilterValue }
-          onChange={ ({ target: { value } }) => {
-            setComparisonFilterValue(value);
-          } }
         >
           <option value="maior que">maior que</option>
-          <option value="igual a">igual a</option>
           <option value="menor que">menor que</option>
+          <option value="igual a">igual a</option>
         </select>
       </label>
       <label htmlFor="value-filter">
         <input
+          name="value-filter"
           id="value-filter"
+          onChange={ ({ target }) => handleValue(target) }
           data-testid="value-filter"
-          value={ valueFilterValue }
-          onChange={ ({ target: { value } }) => {
-            setValueFilterValue(value);
-          } }
+          type="number"
+          min="0"
         />
       </label>
       <button
-        type="button"
+        onClick={ handleFilter }
         data-testid="button-filter"
-        onClick={ addFilter }
+        type="button"
       >
-        Add filter
+        Filtrar
       </button>
-    </>
+      <div>
+        {filterByNumericValues.length > 0 ? (
+          filterByNumericValues.map((filter, index) => (
+            <div data-testid="filter" key={ index }>
+              <p>{ filter.column }</p>
+              <button
+                onClick={ () => handleOnClick(filter.column) }
+                type="button"
+              >
+                X
+              </button>
+            </div>
+          ))
+        ) : null}
+      </div>
+    </div>
   );
 }
 

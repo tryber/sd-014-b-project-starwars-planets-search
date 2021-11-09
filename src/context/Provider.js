@@ -1,61 +1,63 @@
-import React, { useState } from 'react';
+import React, { createContext, useEffect, useState, useContext } from 'react';
 import PropTypes from 'prop-types';
+import mockData from '../testData';
 
-import Context from './Context';
+const PlanetsContext = createContext();
 
-function Provider({ children }) {
-  const [allPlanetsList, setAllPlanetsList] = useState([]);
-  const [toShowPlanetsList, setToShowPlanetsList] = useState([]);
-  const [columnsList, setColumnsList] = useState([
-    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
-  ]);
-  const [filtersList, setFiltersList] = useState({
+const URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
+
+export const Provider = ({ children }) => {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [serverError, setServerError] = useState(null);
+  const [filterName, setFilterName] = useState([]);
+  const [filterNumeric, setFilterNumeric] = useState([]);
+  const [planets, setPlanets] = useState([]);
+
+  useEffect(() => {
+    const getPlanets = async () => {
+      try {
+        const results = await fetch(URL).then((response) => response.json());
+        setData(results.results);
+        setPlanets(results.results);
+      } catch (error) {
+        setServerError(error);
+        setData(mockData.results);
+        setPlanets(mockData.results);
+      }
+      setLoading(false);
+    };
+    getPlanets();
+  }, []);
+
+  const context = {
+    data,
+    loading,
+    serverError,
+    setData,
     filters: {
-      filterByName: {
-        name: '',
-      },
-      filterByNumericValues: [],
+      filterByName: { name: filterName },
+      filterByNumericValues: filterNumeric,
     },
-  });
-
-  function fetchPlanets() {
-    fetch('https://swapi-trybe.herokuapp.com/api/planets/')
-      .then((response) => response.json()
-        .then((results) => {
-          setAllPlanetsList(results.results);
-          setToShowPlanetsList(results.results);
-        }));
-  }
-
-  function filterByName(searchValue) {
-    setToShowPlanetsList(allPlanetsList.filter((planet) => (
-      planet.name.toLowerCase().includes(searchValue.toLowerCase())
-    )));
-  }
-
-  const contextValue = {
-    allPlanetsList,
-    toShowPlanetsList,
-    filtersList,
-    columnsList,
-    fetchPlanets,
-    setFiltersList,
-    filterByName,
-    setColumnsList,
-    setToShowPlanetsList,
+    setFilterName,
+    setFilterNumeric,
+    planets,
+    setPlanets,
   };
 
   return (
-    <Context.Provider
-      value={ { ...contextValue } }
-    >
+    <PlanetsContext.Provider value={ context }>
       { children }
-    </Context.Provider>
+    </PlanetsContext.Provider>
   );
-}
+};
+
+export const usePlanets = () => {
+  const context = useContext(PlanetsContext);
+
+  return context;
+};
 
 Provider.propTypes = {
   children: PropTypes.node.isRequired,
 };
-
-export default Provider;
