@@ -9,32 +9,32 @@ function Table() {
 
   let filteredData = data;
 
-  const filterSmaller = (columnFilter) => {
-    filteredData = data.filter((d) => Number(d[columnFilter]) < typeFilter.numberInput);
+  const filterSmaller = (columnFilter, index) => {
+    filteredData = filteredData.filter((d) => Number(d[columnFilter]) < typeFilter[index].numberInput);
   };
 
-  const filterBigger = (columnFilter) => {
-    filteredData = data.filter((d) => Number(d[columnFilter]) > typeFilter.numberInput);
+  const filterBigger = (columnFilter, index) => {
+    filteredData = filteredData.filter((d) => Number(d[columnFilter]) > typeFilter[index].numberInput);
   };
 
-  const filterEqual = (columnFilter) => {
-    filteredData = data.filter((d) => Number(d[columnFilter]) === typeFilter.numberInput);
+  const filterEqual = (columnFilter, index) => {
+    filteredData = filteredData.filter((d) => Number(d[columnFilter]) === typeFilter[index].numberInput);
   };
 
-  switch (typeFilter.comparison) {
-  case 'menor que':
-    filterSmaller(typeFilter.columnFilter);
-    break;
-  case 'maior que':
-    filterBigger(typeFilter.columnFilter);
-    break;
-  case 'igual a':
-    filterEqual(typeFilter.columnFilter);
-    break;
-  default:
-    filteredData = data;
-    break;
-  }
+  typeFilter.forEach((type, index) => {
+    switch (type.comparison) {
+    case 'menor que':
+      filterSmaller(type.columnFilter, index);
+      break;
+    case 'maior que':
+      filterBigger(type.columnFilter, index);
+      break;
+    case 'igual a':
+      filterEqual(type.columnFilter, index);
+      break;
+    default:
+      break;
+    }});
 
   if (nameFilter !== '') {
     filteredData = data.filter((d) => (
