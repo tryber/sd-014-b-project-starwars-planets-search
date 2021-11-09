@@ -6,13 +6,13 @@ function Search() {
     setNameFilter,
     setTypeFilter } = useContext(SearchContext);
 
-  const [numberInput, setNumberInput] = useState();
+  const [numberInput, setNumberInput] = useState(0);
   const [columnFilter, setColumnFilter] = useState('population');
   const [comparison, setComparison] = useState('bigger');
 
   const handleClick = () => {
     const filter = {
-      numberInput,
+      numberInput: Number(numberInput),
       columnFilter,
       comparison,
     };

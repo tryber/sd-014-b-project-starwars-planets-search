@@ -9,25 +9,30 @@ function Table() {
 
   let filteredData = data;
 
-  switch (typeFilter.columnFilter) {
-  case 'population':
-    if (!typeFilter.numberInput || typeFilter.numberInput <= 0) {
-      filteredData = data;
-    } else if (typeFilter.comparison === 'bigger') {
-      filteredData = data.filter((d) => (
-        Number(d.population) > typeFilter.numberInput
-      ));
-    } else if (typeFilter.comparison === 'smaller') {
-      filteredData = data.filter((d) => (
-        Number(d.population) < typeFilter.numberInput
-      ));
-    } else if (typeFilter.comparison === 'equals') {
-      filteredData = data.filter((d) => (
-        Number(d.population) === typeFilter.numberInput
-      ));
-    }
+  const filterSmaller = (columnFilter) => {
+    filteredData = data.filter((d) => d[columnFilter] < typeFilter.numberInput);
+  };
+
+  const filterBigger = (columnFilter) => {
+    filteredData = data.filter((d) => d[columnFilter] > typeFilter.numberInput);
+  };
+
+  const filterEqual = (columnFilter) => {
+    filteredData = data.filter((d) => d[columnFilter] === typeFilter.numberInput);
+  };
+
+  switch (typeFilter.comparison) {
+  case 'smaller':
+    filterSmaller(typeFilter.columnFilter);
+    break;
+  case 'bigger':
+    filterBigger(typeFilter.columnFilter);
+    break;
+  case 'equals':
+    filterEqual(typeFilter.columnFilter);
     break;
   default:
+    filteredData = data;
     break;
   }
 
