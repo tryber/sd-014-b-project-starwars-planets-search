@@ -6,6 +6,10 @@ import fetchingPlanets from '../services/planetAPI';
 const INITIAL_STATE = {
   filterByName: '',
   filterByNumericValues: [],
+  order: {
+    column: 'Name',
+    sort: 'ASC',
+  },
 };
 
 function PlanetProvider({ children }) {
@@ -15,7 +19,8 @@ function PlanetProvider({ children }) {
   useEffect(() => {
     const takePlanets = async () => {
       const result = await fetchingPlanets();
-      setData(result);
+      const num = -1;
+      setData(result.sort((a, b) => (a.name > b.name ? 1 : num)));
     };
 
     takePlanets();
@@ -23,6 +28,7 @@ function PlanetProvider({ children }) {
 
   const contextValue = {
     data,
+    setData,
     filters,
     setFilters,
   };
