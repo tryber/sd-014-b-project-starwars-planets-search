@@ -47,9 +47,9 @@ function Search() {
         data-testid="comparison-filter"
         onChange={ ({ target: { value } }) => { setComparison(value); } }
       >
-        <option value="bigger">maior que</option>
-        <option value="smaller">menor que</option>
-        <option value="equals">igual a</option>
+        <option value="menor que">menor que</option>
+        <option value="maior que">maior que</option>
+        <option value="igual a">igual a</option>
       </select>
       <input
         type="number"
