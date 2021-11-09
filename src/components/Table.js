@@ -3,7 +3,7 @@ import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
   const [nameHeader, setNameHeader] = useState([]);
-  const { data, inputSearch } = useContext(StarWarsContext);
+  const { data, inputSearch, searchByNumerics } = useContext(StarWarsContext);
   const { filters: { filterByName: { name: filterName } } } = inputSearch;
 
   useEffect(() => {
@@ -15,7 +15,28 @@ function Table() {
     }
   }, [data]);
 
+  function searchButton() {
+    const { filters: { filterByNumericValues } } = inputSearch;
+    const { column, comparison, value } = filterByNumericValues[0];
+    if (comparison === 'maior que') {
+      const dataFilter = data.filter((planet) => Number(planet[column]) > Number(value));
+      return dataFilter;
+    }
+    if (comparison === 'menor que') {
+      const dataFilter = data.filter((planet) => Number(planet[column]) < Number(value));
+      return dataFilter;
+    }
+    if (comparison === 'igual a') {
+      const dataFilter = data.filter((planet) => (
+        Number(planet[column]) === Number(value)));
+      return dataFilter;
+    }
+  }
+
   function dataFiltered() {
+    if (searchByNumerics) {
+      return searchButton();
+    }
     const dataFilter = data.filter((planet) => (
       planet.name.toLowerCase().includes(filterName.toLowerCase())
     ));

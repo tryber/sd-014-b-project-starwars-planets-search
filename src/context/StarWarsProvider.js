@@ -5,11 +5,19 @@ import getAPI from '../services/getAPI';
 
 function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
+  const [searchByNumerics, setSearchByNumerics] = useState(false);
   const [inputSearch, setInputSearch] = useState({
     filters: {
       filterByName: {
         name: '',
       },
+      filterByNumericValues: [
+        {
+          column: 'population',
+          comparison: 'maior que',
+          value: '100000',
+        },
+      ],
     },
   });
 
@@ -21,8 +29,12 @@ function StarWarsProvider({ children }) {
     initialState();
   }, []);
 
+  const stateObject = {
+    data, inputSearch, setInputSearch, searchByNumerics, setSearchByNumerics,
+  };
+
   return (
-    <StarWarsContext.Provider value={ { data, inputSearch, setInputSearch } }>
+    <StarWarsContext.Provider value={ stateObject }>
       { children }
     </StarWarsContext.Provider>
   );

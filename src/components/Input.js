@@ -2,9 +2,10 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Input() {
-  const { setInputSearch } = useContext(StarWarsContext);
+  const { setInputSearch, setSearchByNumerics } = useContext(StarWarsContext);
 
   function handleChange({ target }) {
+    setSearchByNumerics(false);
     const inputValue = target.value;
     setInputSearch({
       filters: {
