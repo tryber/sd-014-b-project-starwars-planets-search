@@ -1,0 +1,64 @@
+@import url('//db.onlinewebfonts.com/c/0c724f6aa457310440cf8949c615cbd7?family=Star+Jedi') ;
+
+* {
+  background-color: rgba(214, 213, 213, 0.781);
+}
+
+.table {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+.table th {
+  background-color: black;
+  border: 1px solid white;
+  border-collapse: collapse;
+  color: rgb(185, 177, 177);
+  padding: 5px;
+}
+
+.table td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  padding: 5px;
+}
+
+.header {
+  display: flex;
+  font-family: Star Jedi , sans-serif;
+  font-size: 1.5em;
+  justify-content: center;
+}
+
+.name-filter {
+  background: black;
+  border: 1px solid black;
+  border-radius: 4px;
+  box-shadow: 1px 1px 2px #333;
+  color: white;
+  display: block;
+  font-weight: 700;
+  margin: 10px auto;
+  width: 150px;
+}
+
+.filter {
+  background: #8f8f8f;
+  border: 1px solid black;
+  border-radius: 4px;
+  box-shadow: 1px 1px 2px #333;
+  color: black;
+  font-weight: 700;
+  margin: 5px;
+  padding: 3px 6px;
+  width: 150px;
+}
+
+.filter-btn {
+  background: black;
+  border-radius: 4px;
+  box-shadow: 1px 1px 2px #333;
+  color: rgb(185, 177, 177);
+  font-weight: 700;
+  padding: 3px 6px;
+}
