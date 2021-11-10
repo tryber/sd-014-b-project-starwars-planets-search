@@ -57,6 +57,10 @@ function NumericFilter() {
     setBoolean(true);
   }
 
+  function resetSearch() {
+    setPlanet(inicialPlanet);
+  }
+
   return (
     <section>
       <form className="filter-form">
@@ -113,6 +117,13 @@ function NumericFilter() {
         >
           {`${filterColumn} ${filterComparison} ${filterValue}`}
         </span>
+        <button
+          className="clear-filter-btn"
+          type="button"
+          onClick={ resetSearch }
+        >
+          X
+        </button>
       </section>
     </section>
   );
