@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import PlanetsContext from './PlanetsContext';
@@ -58,6 +59,30 @@ function Provider({ children }) {
     setNumericFilters(newNumericFilterArray);
     setUsedColumnOptions([...usedColumnOptions, col]);
   };
+
+  useEffect(() => {
+    let newData = data;
+    filterByNumericValues.forEach(({ column: col, comparison: comp, value: val }) => {
+      switch (comp) {
+      case 'maior que':
+        newData = newData.filter((planet) => parseInt(planet[col], 10) > val);
+        break;
+      case 'menor que':
+        newData = newData.filter((planet) => parseInt(planet[col], 10) < val);
+        break;
+      case 'igual a':
+        newData = newData.filter((planet) => planet[col] === val);
+        break;
+      default:
+        break;
+      }
+    });
+    setFilteredPlanets(newData);
+  }, [filterByNumericValues]);
+
+  useEffect(() => {
+    setColumn(usedColumnOptions[0]);
+  }, [usedColumnOptions]);
 
   const contextValue = {
     data,
