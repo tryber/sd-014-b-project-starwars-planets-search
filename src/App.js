@@ -19,3 +19,8 @@ function App() {
 }
 
 export default App;
+// Planet Provider é onde iremos declarar as açoes que alteram
+// os estados globais inseridos no contexto geral
+// o Provider pode ir no src/index.js tb para
+// prover toda a app mas para passar no teste tem que ser aqui
+// duvida tirada no slack*

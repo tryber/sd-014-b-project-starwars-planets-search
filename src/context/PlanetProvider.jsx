@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import PlanetContext from './PlanetContext';
-import getPlanet from '../services/planetApi';
+import fetchPlanets from '../services/planetApi';
 
 function PlanetProvider({ children }) {
-  const [planet, setPlanet] = useState([]);
-  const [inicialPlanet, setInicialPlanet] = useState([]); // Referência: Albuquerque Bel, 2021
+  const [planets, setPlanets] = useState([]); // esta variavel e função vao armazenar
+  // o retorno da API e usar para exibir os planetas
   const [filterName, setFilterName] = useState('');
   const [filterColumn, setFilterColumn] = useState('population');
   const [filterComparison, setFilterComparison] = useState('maior que');
@@ -27,9 +27,9 @@ function PlanetProvider({ children }) {
   });
 
   async function requestApiPlanet() {
-    const results = await getPlanet();
-    setPlanet(results);
-    setInicialPlanet(results);
+    const results = await fetchPlanets();
+    setPlanets(results); // a função que define o armazenamento dos planetas(dados da api)
+    // como estado inicial da const "planets"
   }
 
   useEffect(() => {
@@ -37,14 +37,12 @@ function PlanetProvider({ children }) {
   }, []);
 
   const contextValue = {
-    planet,
-    setPlanet,
+    planets,
+    setPlanets,
     filterName,
     setFilterName,
     filter,
     setFilter,
-    inicialPlanet,
-    setInicialPlanet,
     filterColumn,
     setFilterColumn,
     filterComparison,
@@ -65,3 +63,7 @@ PlanetProvider.propTypes = {
 };
 
 export default PlanetProvider;
+// Context é o lugar de armazenamento, é simples e curto (atalho de memória?)
+// o provider fornece as informaçoes pro context que vai repassar as informaçoes
+// dos estados definidos para os components que invocarem os estados e funçoes
+// do context, fornecidas pelo provider

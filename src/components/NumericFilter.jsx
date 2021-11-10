@@ -11,29 +11,29 @@ function NumericFilter() {
     filterColumn, setFilterColumn, filterComparison,
     setFilterComparison, filterValue,
     setFilterValue, setFilter,
-    setPlanet, inicialPlanet, filter } = useContext(PlanetContext);
+    setPlanets, filter, planets } = useContext(PlanetContext);
 
-  const [boolean, setBoolean] = useState(false);
-  const [optionCol, setOptionCol] = useState(options);
+  const [boolean, setBoolean] = useState(false); // estado local
+  const [optionCol, setOptionCol] = useState(options); // estado local
 
   useEffect(() => {
     if (boolean) {
       if (filterComparison === 'maior que') {
-        return setPlanet(
-          (inicialPlanet.filter(
+        return setPlanets(
+          (planets.filter(
             (item) => Number(item[filterColumn]) > Number(filterValue),
           )),
         );
       } if (filterComparison === 'menor que') {
-        return setPlanet(
-          (inicialPlanet.filter(
+        return setPlanets(
+          (planets.filter(
             (item) => Number(item[filterColumn]) < Number(filterValue),
           )),
         );
       }
       if (filterComparison === 'igual a') {
-        return setPlanet(
-          (inicialPlanet.filter(
+        return setPlanets(
+          (planets.filter(
             (item) => Number(item[filterColumn]) === Number(filterValue),
           )
           ),
@@ -55,10 +55,6 @@ function NumericFilter() {
     const newOptions = options.filter((item) => item !== filterColumn);
     setOptionCol(newOptions);
     setBoolean(true);
-  }
-
-  function resetSearch() {
-    setPlanet(inicialPlanet);
   }
 
   return (
@@ -111,20 +107,6 @@ function NumericFilter() {
           Filtrar
         </button>
       </form>
-      <section data-testid="filter">
-        <span
-          className="clear-filter"
-        >
-          {`${filterColumn} ${filterComparison} ${filterValue}`}
-        </span>
-        <button
-          className="clear-filter-btn"
-          type="button"
-          onClick={ resetSearch }
-        >
-          X
-        </button>
-      </section>
     </section>
   );
 }
