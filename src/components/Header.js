@@ -9,7 +9,12 @@ const selectComparison = [
 ];
 
 export default function Header() {
-  const { filters, setFilters, handleNumericFilter, selectCategory } = useContext(AppContext);
+  const {
+    filters,
+    setFilters,
+    handleNumericFilter,
+    selectCategory 
+  } = useContext(AppContext);
   const { filterByName } = filters.filters;
 
   const selectNumericFilterType = (event) => {
