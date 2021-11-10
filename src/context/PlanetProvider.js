@@ -5,6 +5,17 @@ import getPlanet from '../services/planetApi';
 
 function PlanetProvider({ children }) {
   const [planet, setPlanet] = useState([]);
+  const [inicialPlanet, setInicialPlanet] = useState([]); // Referência: Albuquerque Bel, 2021
+  const [filterName, setFilterName] = useState('');
+  const [filterColumn, setFilterColumn] = useState('population');
+
+  const [filter, setFilter] = useState({
+    filters: {
+      filterByName: {
+        name: filterName,
+      },
+    },
+  });
 
   async function requestApiPlanet() {
     const results = await getPlanet();
@@ -18,6 +29,14 @@ function PlanetProvider({ children }) {
   const contextValue = {
     planet,
     setPlanet,
+    filterName,
+    setFilterName,
+    filter,
+    setFilter,
+    inicialPlanet,
+    setInicialPlanet,
+    filterColumn,
+    setFilterColumn,
   };
 
   return (
