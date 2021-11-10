@@ -20,6 +20,10 @@ export default function FilterBar() {
       return null;
     });
     setDataFilter(orderFilter);
+    const optionFather = document.getElementById('optionFather');
+    const removeOption = document.getElementById(qntFilter);
+    optionFather.removeChild(removeOption);
+    // removeOption.setAttribute('disabled', '');
   };
 
   return (
@@ -27,12 +31,13 @@ export default function FilterBar() {
       <select
         data-testid="column-filter"
         onChange={ (event) => setQntFilter(event.target.value) }
+        id="optionFather"
       >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        <option id="population" value="population">population</option>
+        <option id="orbital_period" value="orbital_period">orbital_period</option>
+        <option id="diameter" value="diameter">diameter</option>
+        <option id="rotation_period" value="rotation_period">rotation_period</option>
+        <option id="surface_water" value="surface_water">surface_water</option>
       </select>
 
       <select
