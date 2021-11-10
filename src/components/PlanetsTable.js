@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import DataContext from '../context/DataContext';
-import SearchBar from './SearchBar';
 
 function PlanetsTable() {
   const { data, filteredPlanets } = useContext(DataContext);
@@ -10,7 +9,6 @@ function PlanetsTable() {
 
   return (
     <main>
-      <SearchBar />
       <table>
         <thead>
           <tr>

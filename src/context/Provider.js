@@ -5,11 +5,20 @@ import DataContext from './DataContext';
 function Provider({ children }) {
   const [data, setData] = useState([]);
   const [filteredPlanets, setFilteredPlanets] = useState([]);
+  const [column, setColumn] = useState('population');
+  const [comparator, setComparator] = useState('maior que');
+  const [comparisonNum, setComparisonNum] = useState('');
   const value = {
     data,
     setData,
     filteredPlanets,
     setFilteredPlanets,
+    column,
+    setColumn,
+    comparator,
+    setComparator,
+    comparisonNum,
+    setComparisonNum,
   };
 
   async function fetchData() {
@@ -32,7 +41,7 @@ function Provider({ children }) {
   }, []);
 
   useEffect(() => {
-    setFilteredPlanets(filteredPlanets);
+    setData(filteredPlanets);
   }, [filteredPlanets]);
 
   return (
