@@ -1,35 +1,60 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import SearchBar from './Component/SearchBar';
-import Table from './Component/Table';
-import planetContext from './Context/planetContext';
+import AppContext from './Context/AppContext';
+import FilterBar from './FilterBar';
+import SearchBar from './SearchBar';
+import Table from './Table';
 
 function App() {
+  const columnsArray = [
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ];
   const [data, setData] = useState([]);
-  const [filtered, setFiltered] = useState([]);
-  const url = 'https://swapi-trybe.herokuapp.com/api/planets/';
+  const [filtred, setFiltred] = useState([]);
+  const [columnFilter, setColumnFilter] = useState('population');
+  const [column, setColumn] = useState([...columnsArray]);
+  const [comparisonFilter, setComparisonFilter] = useState('');
+  const [value, setValue] = useState('');
 
-  useEffect(() => {
-    async function fetchData() {
-      const { results } = await fetch(url).then((response) => response.json());
-      setData(results);
-      console.log(results);
-    }
-    fetchData();
-  }, [url]);
-
+  const api = async () => {
+    const response = await fetch(
+      'https://swapi-trybe.herokuapp.com/api/planets/',
+    );
+    const obj = await response.json();
+    const result = obj.results;
+    setData(result);
+    return result;
+  };
   const contextValue = {
     data,
     setData,
-    filtered,
-    setFiltered,
+    filtred,
+    setFiltred,
+    columnFilter,
+    setColumnFilter,
+    column,
+    setColumn,
+    comparisonFilter,
+    setComparisonFilter,
+    value,
+    setValue,
   };
-
+  useEffect(() => {
+    setFiltred(data);
+  }, [data]);
+  useEffect(() => {
+    api();
+  }, []);
   return (
-    <planetContext.Provider value={ contextValue }>
+    <AppContext.Provider value={ contextValue }>
       <SearchBar />
+      <FilterBar />
       <Table />
-    </planetContext.Provider>
+    </AppContext.Provider>
   );
 }
 

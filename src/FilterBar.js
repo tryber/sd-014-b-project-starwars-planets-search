@@ -1,36 +1,36 @@
 import React, { useContext } from 'react';
-import planetContext from '../Context/planetContext';
+import AppContext from './Context/AppContext';
 
 function FilterBar() {
   const {
     columnFilter,
     setColumnFilter,
-    collumns,
-    setCollumns,
-    comparison,
-    setComparison,
+    column,
+    setColumn,
+    comparisonFilter,
+    setComparisonFilter,
     value,
     setValue,
-    setFiltered,
+    setFiltred,
     data,
-  } = useContext(planetContext);
+  } = useContext(AppContext);
 
   const handleClick = () => {
     const filtred = data.filter((planet) => {
-      if (comparison === 'maior que') {
-        return Number(planet[collumns]) > Number(value);
+      if (comparisonFilter === 'maior que') {
+        return Number(planet[columnFilter]) > Number(value);
       }
-      if (comparison === 'menor que') {
-        return Number(planet[collumns]) < Number(value);
+      if (comparisonFilter === 'menor que') {
+        return Number(planet[columnFilter]) < Number(value);
       }
-      if (comparison === 'igual a') {
-        return Number(planet[collumns]) === Number(value);
+      if (comparisonFilter === 'igual a') {
+        return Number(planet[columnFilter]) === Number(value);
       }
       return null;
     });
-    const newColumn = columnFilter((option) => (option !== columnFilter));
-    setFiltered(filtred);
-    setCollumns(newColumn);
+    const newColumn = column.filter((option) => option !== columnFilter);
+    setFiltred(filtred);
+    setColumn(newColumn);
   };
 
   return (
@@ -39,12 +39,12 @@ function FilterBar() {
         onChange={ (event) => setColumnFilter(event.target.value) }
         data-testid="column-filter"
       >
-        {collumns.map((element) => (
+        {column.map((element) => (
           <option key={ element }>{element}</option>
         ))}
       </select>
       <select
-        onChange={ (event) => setComparison(event.target.value) }
+        onChange={ (event) => setComparisonFilter(event.target.value) }
         data-testid="comparison-filter"
       >
         <option key="maior que">maior que</option>
@@ -57,15 +57,10 @@ function FilterBar() {
         type="number"
         data-testid="value-filter"
       />
-      <button
-        type="button"
-        data-testid="button-filter"
-        onClick={ handleClick }
-      >
+      <button type="button" data-testid="button-filter" onClick={ handleClick }>
         Filtrar
       </button>
     </>
   );
 }
-
 export default FilterBar;
