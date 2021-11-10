@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import planetContext from '../Context/planetContext';
 
 function Table() {
-  const { data } = useContext(planetContext);
+  const { filtered } = useContext(planetContext);
   return (
     <table className="table">
       <thead>
@@ -25,7 +25,7 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {data.map((planet, index) => (
+        {filtered.map((planet, index) => (
           <tr key={ index }>
             {/* <td>{index + 1}</td> */}
             <td>{planet.name}</td>
