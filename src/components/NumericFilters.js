@@ -22,6 +22,10 @@ export default function NumericFilters() {
     setComparison,
     valueComparison,
     setValueComparison,
+    newColumns,
+    setNewColumns,
+    isToCompare,
+    setIsToCompare,
   } = useContext(PlanetsContext);
 
   // ref: https://github.com/tryber/sd-014-b-project-starwars-planets-search/pull/117/commits/83308585ed4778f5e3ee7bdaa698bd33fa7cd256
@@ -38,17 +42,38 @@ export default function NumericFilters() {
       }
       return data;
     });
+    const updateColumns = newColumns.filter((current) => current !== column);
+    setNewColumns(updateColumns);
+    setIsToCompare(true);
     setData(filteredByValue);
   };
 
   return (
     <form>
-      <Select
+      {
+        isToCompare
+        && <Select
+          name="column-filter"
+          id="column-filter"
+          options={ newColumns }
+          onChange={ ({ target }) => setColumn(target.value) }
+        />
+      }
+      {
+        !isToCompare
+        && <Select
+          name="column-filter"
+          id="column-filter"
+          options={ columnsOptions }
+          onChange={ ({ target }) => setColumn(target.value) }
+        />
+      }
+      {/* <Select
         name="column-filter"
         id="column-filter"
         options={ columnsOptions }
         onChange={ ({ target }) => setColumn(target.value) }
-      />
+      /> */}
       <Select
         name="comparison-filter"
         id="comparison-filter"

@@ -4,10 +4,20 @@ import PlanetsContext from './PlanetsContext';
 import fetchPlanets from '../services/fetchPlanetsApi';
 
 function PlanetsProvider({ children }) {
+  const columnsOptions = [
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ];
+
   const [data, setData] = useState([]);
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [valueComparison, setValueComparison] = useState();
+  const [newColumns, setNewColumns] = useState(columnsOptions);
+  const [isToCompare, setIsToCompare] = useState(false);
   const [filters, setFilters] = useState({
     filterByName: {
       name: '',
@@ -54,6 +64,10 @@ function PlanetsProvider({ children }) {
     setComparison,
     valueComparison,
     setValueComparison,
+    newColumns,
+    setNewColumns,
+    isToCompare,
+    setIsToCompare,
   };
 
   return (
