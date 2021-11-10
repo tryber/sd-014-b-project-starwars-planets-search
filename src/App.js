@@ -6,9 +6,17 @@ import planetContext from './Context/planetContext';
 import Filters from './Component/Filters';
 
 function App() {
+  const columnsArray = [
+    ' population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ];
   const [data, setData] = useState([]);
   const [filtered, setFiltered] = useState([]);
-  const [collumns, setCollumns] = useState([]);
+  const [columnFilter, setColumnFilter] = useState(['population']);
+  const [collumns, setCollumns] = useState([...columnsArray]);
   const [comparison, setComparison] = useState('');
   const [value, setValue] = useState('');
 
@@ -30,6 +38,8 @@ function App() {
     setFiltered,
     collumns,
     setCollumns,
+    columnFilter,
+    setColumnFilter,
     comparison,
     setComparison,
     value,

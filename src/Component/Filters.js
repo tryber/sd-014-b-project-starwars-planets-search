@@ -3,6 +3,8 @@ import planetContext from '../Context/planetContext';
 
 function FilterBar() {
   const {
+    columnFilter,
+    setColumnFilter,
     collumns,
     setCollumns,
     comparison,
@@ -26,46 +28,44 @@ function FilterBar() {
       }
       return null;
     });
+    const newColumn = columnFilter((option) => (option !== columnFilter));
     setFiltered(filtred);
-    console.log(filtred);
+    setCollumns(newColumn);
   };
 
   return (
     <>
       <select
-        onChange={ (event) => setCollumns(event.target.value) }
+        onChange={ (event) => setColumnFilter(event.target.value) }
         data-testid="column-filter"
       >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        {collumns.map((element) => (
+          <option key={ element }>{element}</option>
+        ))}
       </select>
-
       <select
         onChange={ (event) => setComparison(event.target.value) }
         data-testid="comparison-filter"
       >
-        <option value="maior que">maior que</option>
-        <option value="menor que">menor que</option>
-        <option value="igual a">igual a</option>
+        <option key="maior que">maior que</option>
+        <option key="menor que">menor que</option>
+        <option key="igual a">igual a</option>
       </select>
-
       <input
         onChange={ (event) => setValue(event.target.value) }
+        value={ value }
         type="number"
         data-testid="value-filter"
       />
-
       <button
         type="button"
-        onClick={ handleClick }
         data-testid="button-filter"
+        onClick={ handleClick }
       >
         Filtrar
       </button>
     </>
   );
 }
+
 export default FilterBar;
