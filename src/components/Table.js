@@ -1,12 +1,32 @@
 import React, { useContext } from 'react';
-import SWPlanetsContext from '../context/SWPlanetsContext';
+import Context from '../context/Context';
 
 export default function Table() {
-  const { data, inputFilter } = useContext(SWPlanetsContext);
+  const { data, inputFilter, filters } = useContext(Context);
 
-  const filteredData = data.filter((planets) => planets
+  let filteredData = data.filter((planets) => planets
     .name.toLowerCase().includes(inputFilter.toLowerCase()));
   // com o auxílio do mestre Riba Jr.
+
+  filters.filterByNumericValues.forEach((filter) => {
+    const { column, comparison, value } = filter;
+    switch (comparison) {
+    case 'maior que':
+      filteredData = filteredData
+        .filter((planet) => +planet[`${column}`] > +value);
+      break;
+    case 'menor que':
+      filteredData = filteredData
+        .filter((planet) => +planet[`${column}`] < +value);
+      break;
+    case 'igual a':
+      filteredData = filteredData
+        .filter((planet) => +planet[`${column}`] === +value);
+      break;
+    default:
+      break;
+    }
+  });
 
   const planets = () => filteredData.map((planet, index) => (
     <tr key={ index }>

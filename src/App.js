@@ -3,15 +3,15 @@ import './App.css';
 import Header from './components/Header';
 import Search from './components/Search';
 import Table from './components/Table';
-import SWPlanetsProvider from './context/SWPlanetsProvider';
+import Provider from './context/Provider';
 
 function App() {
   return (
-    <SWPlanetsProvider>
+    <Provider>
       <Header />
       <Search />
       <Table />
-    </SWPlanetsProvider>
+    </Provider>
   );
 }
 

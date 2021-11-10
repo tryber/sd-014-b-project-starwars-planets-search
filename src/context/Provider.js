@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import SWPlanetsContext from './SWPlanetsContext';
+import Context from './Context';
 import fetchAPI from '../services/fetchAPI';
 
-function SWPlanetsProvider({ children }) {
+function Provider({ children }) {
   const [data, setData] = useState([]);
   const [inputFilter, setInputFilter] = useState('');
+  const [selectOption, setSelectOption] = useState('population');
+  const [comparisonOption, setComparisonOption] = useState('maior que');
+  const [numericFilter, setNumericFilter] = useState(0);
   const [filters, setFilters] = useState({
     filterByName: { name: '' },
     filterByNumericValues: [],
@@ -25,17 +28,23 @@ function SWPlanetsProvider({ children }) {
     setFilters,
     inputFilter,
     setInputFilter,
+    selectOption,
+    setSelectOption,
+    comparisonOption,
+    setComparisonOption,
+    numericFilter,
+    setNumericFilter,
   };
 
   return (
-    <SWPlanetsContext.Provider value={ contextValue }>
+    <Context.Provider value={ contextValue }>
       { children }
-    </SWPlanetsContext.Provider>
+    </Context.Provider>
   );
 }
 
-SWPlanetsProvider.propTypes = {
+Provider.propTypes = {
   children: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
-export default SWPlanetsProvider;
+export default Provider;
