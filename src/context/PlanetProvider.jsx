@@ -10,6 +10,7 @@ function PlanetProvider({ children }) {
   const [filterColumn, setFilterColumn] = useState('population');
   const [filterComparison, setFilterComparison] = useState('maior que');
   const [filterValue, setFilterValue] = useState('100000');
+  const [inicialPlanet, setInicialPlanet] = useState([]);
 
   const [filter, setFilter] = useState({
     filters: {
@@ -30,6 +31,7 @@ function PlanetProvider({ children }) {
     const results = await fetchPlanets();
     setPlanets(results); // a função que define o armazenamento dos planetas(dados da api)
     // como estado inicial da const "planets"
+    setInicialPlanet(results);
   }
 
   useEffect(() => {
@@ -49,6 +51,8 @@ function PlanetProvider({ children }) {
     setFilterComparison,
     filterValue,
     setFilterValue,
+    inicialPlanet,
+    setInicialPlanet,
   };
 
   return (
