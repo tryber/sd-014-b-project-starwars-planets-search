@@ -3,9 +3,18 @@ import PropTypes from 'prop-types';
 import AppContext from './AppContext';
 import useFetch from '../hooks/useFetch';
 
+const selectCategory = [
+  'population',
+  'orbital_period',
+  'diameter',
+  'rotation_period',
+  'surface_water',
+];
+
 export default function Provider({ children }) {
   const [data, loading] = useFetch('https://swapi-trybe.herokuapp.com/api/planets/');
   const [planetsToRender, setPlanetsToRender] = useState([]);
+  const [categoryList, setCategoryList] = useState(selectCategory);
   const [filters, setFilters] = useState({
     filters: {
       filterByName: {
@@ -45,6 +54,8 @@ export default function Provider({ children }) {
     const { column, comparison, value } = filterByNumericValues[0];
     const result = data.filter((planet) => compare(planet, column, comparison, value));
     setPlanetsToRender(result);
+    const newCategoryList = categoryList.filter((category) => category !== column);
+    setCategoryList(newCategoryList);
   };
 
   const contextValue = {
@@ -54,6 +65,8 @@ export default function Provider({ children }) {
     filters,
     setFilters,
     handleNumericFilter,
+    selectCategory: categoryList,
+    setCategoryList,
   };
 
   return (

@@ -8,16 +8,8 @@ const selectComparison = [
   'igual a',
 ];
 
-const selectCategory = [
-  'population',
-  'orbital_period',
-  'diameter',
-  'rotation_period',
-  'surface_water',
-];
-
 export default function Header() {
-  const { filters, setFilters, handleNumericFilter } = useContext(AppContext);
+  const { filters, setFilters, handleNumericFilter, selectCategory } = useContext(AppContext);
   const { filterByName } = filters.filters;
 
   const selectNumericFilterType = (event) => {
