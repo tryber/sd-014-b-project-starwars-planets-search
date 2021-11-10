@@ -1,5 +1,3 @@
-
-  
 import React from 'react';
 import './App.css';
 import NumericFilter from './components/NumericFilter';
