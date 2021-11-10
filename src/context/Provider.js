@@ -11,6 +11,13 @@ export default function Provider({ children }) {
       filterByName: {
         name: '',
       },
+      filterByNumericValues: [
+        {
+          column: 'population',
+          comparison: 'maior que',
+          value: '',
+        },
+      ],
     },
   });
 
@@ -20,12 +27,33 @@ export default function Provider({ children }) {
     setPlanetsToRender(data.filter((planet) => planet.name.includes(name)));
   }, [data, filters]);
 
+  const compare = (element, column, comparison, value) => {
+    switch (comparison) {
+    case 'maior que':
+      return Number(element[column]) > Number(value);
+    case 'menor que':
+      return Number(element[column]) < Number(value);
+    case 'igual a':
+      return Number(element[column]) === Number(value);
+    default:
+      break;
+    }
+  };
+
+  const handleNumericFilter = () => {
+    const { filterByNumericValues } = filters.filters;
+    const { column, comparison, value } = filterByNumericValues[0];
+    const result = data.filter((planet) => compare(planet, column, comparison, value));
+    setPlanetsToRender(result);
+  };
+
   const contextValue = {
     data,
     loading,
     planets: planetsToRender,
     filters,
     setFilters,
+    handleNumericFilter,
   };
 
   return (

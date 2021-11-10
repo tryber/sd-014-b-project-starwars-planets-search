@@ -1,10 +1,36 @@
 import React, { useContext } from 'react';
 import AppContext from '../context/AppContext';
+import Select from './Select';
+
+const selectComparison = [
+  'maior que',
+  'menor que',
+  'igual a',
+];
+
+const selectCategory = [
+  'population',
+  'orbital_period',
+  'diameter',
+  'rotation_period',
+  'surface_water',
+];
 
 export default function Header() {
-  const { filters, setFilters } = useContext(AppContext);
+  const { filters, setFilters, handleNumericFilter } = useContext(AppContext);
   const { filterByName } = filters.filters;
-  const { name } = filterByName;
+
+  const selectNumericFilterType = (event) => {
+    const { name, value } = event.target;
+    setFilters({
+      filters: { ...filters.filters,
+        filterByNumericValues: [{
+          ...filters.filters.filterByNumericValues[0],
+          [name]: value,
+        }],
+      },
+    });
+  };
 
   return (
     <header>
@@ -14,7 +40,7 @@ export default function Header() {
         name="name"
         data-testid="name-filter"
         placeholder="Buscar Planeta"
-        value={ name }
+        value={ filterByName.name }
         onChange={ ({ target: { value } }) => {
           setFilters({
             filters: { ...filters.filters,
@@ -25,6 +51,34 @@ export default function Header() {
           });
         } }
       />
+      <Select
+        name="column"
+        id="column-filter"
+        handleChange={ selectNumericFilterType }
+        value={ filters.filters.filterByNumericValues[0].column }
+        options={ selectCategory }
+      />
+      <Select
+        name="comparison"
+        id="comparison-filter"
+        handleChange={ selectNumericFilterType }
+        value={ filters.filters.filterByNumericValues[0].comparison }
+        options={ selectComparison }
+      />
+      <input
+        type="text"
+        name="value"
+        data-testid="value-filter"
+        placeholder="Insert number"
+        onChange={ selectNumericFilterType }
+      />
+      <button
+        type="button"
+        data-testid="button-filter"
+        onClick={ handleNumericFilter }
+      >
+        Filtrar
+      </button>
     </header>
   );
 }
