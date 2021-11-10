@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import DataContext from '../context/DataContext';
 
 function SearchBar() {
-  const { filteredPlanets, setFilteredPlanets, } = useContext(DataContext);
+  const { filteredPlanets, setFilteredPlanets } = useContext(DataContext);
 
   function handleChange({ target }) {
     const name = target.value;
