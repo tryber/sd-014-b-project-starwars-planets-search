@@ -16,6 +16,7 @@ function PlanetsProvider({ children }) {
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [valueComparison, setValueComparison] = useState();
+  // Aqui contei com a ajuda de Bruno Trindade e Beatriz Ribeiro
   const [newColumns, setNewColumns] = useState(columnsOptions);
   const [isToCompare, setIsToCompare] = useState(false);
   const [filters, setFilters] = useState({
