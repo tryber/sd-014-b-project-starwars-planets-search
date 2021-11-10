@@ -2,8 +2,13 @@ import React, { useContext } from 'react';
 import SWPlanetsContext from '../context/SWPlanetsContext';
 
 export default function Table() {
-  const { data } = useContext(SWPlanetsContext);
-  const planets = () => data.map((planet, index) => (
+  const { data, inputFilter } = useContext(SWPlanetsContext);
+
+  const filteredData = data.filter((planets) => planets
+    .name.toLowerCase().includes(inputFilter.toLowerCase()));
+  // com o auxílio do mestre Riba Jr.
+
+  const planets = () => filteredData.map((planet, index) => (
     <tr key={ index }>
       <td>{ planet.name }</td>
       <td>{ planet.rotation_period }</td>
@@ -22,7 +27,6 @@ export default function Table() {
   ));
   return (
     <main>
-      <h2>Star Wars Planet Search</h2>
       <table>
         <thead>
           <tr>

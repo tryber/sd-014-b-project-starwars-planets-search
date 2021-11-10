@@ -5,17 +5,26 @@ import fetchAPI from '../services/fetchAPI';
 
 function SWPlanetsProvider({ children }) {
   const [data, setData] = useState([]);
+  const [inputFilter, setInputFilter] = useState('');
+  const [filters, setFilters] = useState({
+    filterByName: { name: '' },
+    filterByNumericValues: [],
+  });
+  const search = async () => {
+    const { results } = await fetchAPI();
+    setData(results);
+  };
 
   useEffect(() => {
-    const search = async () => {
-      const { results } = await fetchAPI();
-      setData(results);
-    };
     search();
   }, []); // useEffect c/ função e um array vazio: a função será executada similarmente ao `componentDidMount`, rodando apenas uma vez e na montagem do componente.
 
   const contextValue = {
     data,
+    filters,
+    setFilters,
+    inputFilter,
+    setInputFilter,
   };
 
   return (
