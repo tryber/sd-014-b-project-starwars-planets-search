@@ -3,19 +3,19 @@ import MyContext from '../context/MyContext';
 
 export default function FilterBar() {
   const { setQntFilter, setColumFilter, setDataFilter,
-    dataFilter, columFilter, valueFilter, setValueFilter,
+    dataFilter, columFilter, valueFilter, setValueFilter, qntFilter,
   } = useContext(MyContext);
 
   const filterClick = () => {
     const orderFilter = dataFilter.filter((val) => {
       if (columFilter === 'maior que') {
-        return Number(val[columFilter]) > Number(valueFilter);
+        return Number(val[qntFilter]) > Number(valueFilter);
       }
       if (columFilter === 'menor que') {
-        return Number(val[columFilter]) < Number(valueFilter);
+        return Number(val[qntFilter]) < Number(valueFilter);
       }
       if (columFilter === 'igual a') {
-        return Number(val[columFilter]) === Number(valueFilter);
+        return Number(val[qntFilter]) === Number(valueFilter);
       }
       return null;
     });
@@ -41,7 +41,7 @@ export default function FilterBar() {
       >
         <option value="maior que">maior que</option>
         <option value="menor que">menor que</option>
-        <option value="igual a">maior que</option>
+        <option value="igual a">igual a</option>
       </select>
 
       <input
