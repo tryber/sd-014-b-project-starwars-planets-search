@@ -19,7 +19,7 @@ export default function TableRow({ planet }) {
   } = planet;
   return (
     <tr>
-      <td>{ name }</td>
+      <td className="planet-name">{ name }</td>
       <td>{ rotationPeriod }</td>
       <td>{ orbitalPeriod }</td>
       <td>{ diameter }</td>

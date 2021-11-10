@@ -34,31 +34,12 @@ export default function FiltersBar() {
     return false;
   };
 
-  const removeFilter = (filter) => {
-    const index = searchState.filters.filterByNumericValues
-      .findIndex((current) => filtersAreEqual(current, filter));
-
-    searchState.filters.filterByNumericValues.splice(index, 1);
-    setSearchState(searchState);
-
-    columnOptions.push(filter.column);
-    setColumnOptions(columnOptions);
-  };
-
-  const onClickFilter = () => {
-    const newFilter = { column, comparison, value };
-    if (!someFilter(newFilter)) {
-      const index = columnOptions.findIndex((option) => option === column);
-      columnOptions.splice(index, 1); // remove a option que foi selecionada
-      setColumnOptions(columnOptions);
-      setColumn(columnOptions[0]);
-
-      searchState.filters.filterByNumericValues.push(newFilter);
-
-      let newTableArray;
-      searchState.filters.filterByNumericValues.forEach((filter) => {
-        newTableArray = planets.filter((planet) => {
-          if (planet[filter.column] === 'unknown') return false;
+  const updateTableArray = () => {
+    const newTableArray = searchState.filters.filterByNumericValues
+      .reduce((array, filter) => {
+        return array.filter((planet) => {
+          // console.log(array, filter);
+          if (planet[filter.column] === 'unknown') return true;
           switch (comparison) {
           case 'menor que':
             return +planet[filter.column] < +filter.value;
@@ -70,9 +51,33 @@ export default function FiltersBar() {
             return false;
           }
         });
-      });
+      }, planets);
+    setTableArray(newTableArray);
+  };
+
+  const removeFilter = (filter) => {
+    const index = searchState.filters.filterByNumericValues
+      .findIndex((current) => filtersAreEqual(current, filter));
+
+    searchState.filters.filterByNumericValues.splice(index, 1);
+    setSearchState(searchState);
+
+    columnOptions.push(filter.column);
+    setColumnOptions(columnOptions);
+    updateTableArray();
+  };
+
+  const onClickFilter = () => {
+    const newFilter = { column, comparison, value };
+    if (!someFilter(newFilter)) {
+      const index = columnOptions.findIndex((option) => option === column);
+      columnOptions.splice(index, 1); // remove a option que foi selecionada
+      setColumnOptions(columnOptions);
+      setColumn(columnOptions[0]);
+
+      searchState.filters.filterByNumericValues.push(newFilter);
       setSearchState(searchState);
-      setTableArray(newTableArray);
+      updateTableArray();
     }
   };
 
@@ -112,11 +117,10 @@ export default function FiltersBar() {
       </form>
       <div className="filters-section">
         { searchState.filters.filterByNumericValues.map((filter, index) => (
-          <div key={ index }>
+          <div key={ index } data-testid="filter">
             {`${filter.column} ${filter.comparison} ${filter.value}`}
             <button
               type="button"
-              data-testid="filter"
               onClick={ () => removeFilter(filter) }
             >
               X
