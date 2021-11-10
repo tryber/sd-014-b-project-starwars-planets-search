@@ -36,22 +36,20 @@ export default function FiltersBar() {
 
   const updateTableArray = () => {
     const newTableArray = searchState.filters.filterByNumericValues
-      .reduce((array, filter) => {
-        return array.filter((planet) => {
-          // console.log(array, filter);
-          if (planet[filter.column] === 'unknown') return true;
-          switch (comparison) {
-          case 'menor que':
-            return +planet[filter.column] < +filter.value;
-          case 'maior que':
-            return +planet[filter.column] > +filter.value;
-          case 'igual a':
-            return +planet[filter.column] === +filter.value;
-          default:
-            return false;
-          }
-        });
-      }, planets);
+      .reduce((array, filter) => array.filter((planet) => {
+        // console.log(array, filter);
+        if (planet[filter.column] === 'unknown') return false;
+        switch (filter.comparison) {
+        case 'menor que':
+          return +planet[filter.column] < +filter.value;
+        case 'maior que':
+          return +planet[filter.column] > +filter.value;
+        case 'igual a':
+          return +planet[filter.column] === +filter.value;
+        default:
+          return false;
+        }
+      }), planets);
     setTableArray(newTableArray);
   };
 
