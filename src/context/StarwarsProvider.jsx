@@ -5,6 +5,7 @@ import fetchPlanets from '../services';
 
 const INITIAL_FILTER = {
   filterByName: { name: '' },
+  filterByNumericValues: [],
 };
 
 function StarwarsProvider({ children }) {
@@ -28,11 +29,27 @@ function StarwarsProvider({ children }) {
 
   useEffect(() => {
     if (data) {
-      const filterName = data.filter(({ name }) => (
+      let arrayFilter = data.filter(({ name }) => (
         name.includes(filter.filterByName.name)
       ));
 
-      setPlanets(filterName);
+      filter.filterByNumericValues.forEach(({ column, comparison, value }) => {
+        switch (comparison) {
+        case 'maior que':
+          arrayFilter = arrayFilter.filter((planet) => (
+            Number(planet[column]) > Number(value)));
+          break;
+        case 'menor que':
+          arrayFilter = arrayFilter.filter((planet) => (
+            Number(planet[column]) < Number(value)));
+          break;
+        default:
+          arrayFilter = arrayFilter.filter((planet) => (
+            Number(planet[column]) === Number(value)));
+        }
+      });
+
+      setPlanets(arrayFilter);
     }
   }, [data, filter]);
 
