@@ -3,6 +3,7 @@ import TablePlanets from './components/TablePlanets';
 import PlanetsProvider from './context/PlanetsProvider';
 import FormsPlanets from './components/FormsPlanets';
 import './App.css';
+import NumericFilters from './components/NumericFilters';
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
     <PlanetsProvider>
       <main>
         <FormsPlanets />
+        <NumericFilters />
         <TablePlanets />
       </main>
     </PlanetsProvider>

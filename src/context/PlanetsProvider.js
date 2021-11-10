@@ -5,16 +5,30 @@ import fetchPlanets from '../services/fetchPlanetsApi';
 
 function PlanetsProvider({ children }) {
   const [data, setData] = useState([]);
+  const [column, setColumn] = useState('population');
+  const [comparison, setComparison] = useState('maior que');
+  const [valueComparison, setValueComparison] = useState();
   const [filters, setFilters] = useState({
     filterByName: {
       name: '',
     },
+    filterByNumericValues: [
+      {
+        column: '',
+        comparison: 'maior que',
+        value: '',
+      },
+    ],
   });
 
   const planetsData = async () => {
     const planets = await fetchPlanets();
     setData(planets);
   };
+
+  useEffect(() => {
+    planetsData();
+  }, []);
 
   // ref: https://github.com/tryber/sd-014-b-project-starwars-planets-search/pull/81/commits/d03e3e3aab542b3ba0af1bd5a1ca67a776a0cf29
   const filterByNamePlanets = (value) => {
@@ -27,15 +41,19 @@ function PlanetsProvider({ children }) {
     });
   };
 
-  useEffect(() => {
-    planetsData();
-  }, []);
-
   const contextValue = {
     data,
+    setData,
     filters,
+    setFilters,
     planetsData,
     filterByNamePlanets,
+    column,
+    setColumn,
+    comparison,
+    setComparison,
+    valueComparison,
+    setValueComparison,
   };
 
   return (
