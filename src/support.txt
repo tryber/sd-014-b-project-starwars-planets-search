@@ -1,0 +1,5 @@
+  useEffect(() => {
+    setInterval(() => {
+      requestApi();
+    }, ONE_SECOND);
+  }, [requestApi]); // componentDidMount
