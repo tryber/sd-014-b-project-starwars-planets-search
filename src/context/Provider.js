@@ -38,6 +38,35 @@ function Provider({ children }) {
     setIsFiltering(true);
   }
 
+  function handleClick(select1, select2, number) {
+    setIsFiltering(false);
+    const newFilter = {
+      column: select1,
+      comparison: select2,
+      value: number,
+    };
+    FILTER_TEXT.filters.filterByNumericValues.push(newFilter);
+    setFilter(FILTER_TEXT);
+    if (select2 === 'maior que') {
+      const filterPlanets = data.filter((planet) => Number(planet[select1])
+      > Number(number));
+      setFilteredPlanets(filterPlanets);
+      setIsFiltering(true);
+    } else if (select2 === 'menor que') {
+      const filterPlanets = data.filter((planet) => Number(planet[select1])
+    < Number(number));
+      setFilteredPlanets(filterPlanets);
+      setIsFiltering(true);
+    } else if (select2 === 'igual a') {
+      const filterPlanets = data.filter((planet) => Number(planet[select1])
+      === Number(number));
+      setFilteredPlanets(filterPlanets);
+      setIsFiltering(true);
+    }
+    const deleteOption = document.getElementById(select1);
+    deleteOption.parentNode.removeChild(deleteOption);
+  }
+
   const contextValue = {
     data,
     filter,
@@ -45,6 +74,7 @@ function Provider({ children }) {
     filteredPlanets,
     fetchData,
     handlechange,
+    handleClick,
   };
 
   return (
