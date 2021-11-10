@@ -1,15 +1,16 @@
 import React from 'react';
 import './App.css';
 import Table from './components/Table';
+import PlanetProvider from './context/PlanetProvider';
 
 function App() {
   return (
-    <main>
-      <h1>StarWars Planets Search</h1>
-      <Table />
-    </main>
+    <PlanetProvider>
+      <main>
+        <Table />
+      </main>
+    </PlanetProvider>
   );
 }
 
 export default App;
-// o provider está no index.js

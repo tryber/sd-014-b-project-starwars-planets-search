@@ -1,14 +1,12 @@
-import React, { useContext, useEffect } from 'react';
-import PlanetContext from '../context/PlanetsContex';
-import tableHeaders from './TableHeader';
+import React, { useContext } from 'react';
+import PlanetContext from '../context/PlanetContext';
+
+const tableHeaders = ['Name', 'Rotation Period', 'Orbital Period',
+  'Diameter', 'Climate', 'Gravity', 'Terrain', 'Surface Water',
+  'Population', 'Films', 'Created', 'Edited', 'URL'];
 
 function Table() {
-  const { data, requestApi } = useContext(PlanetContext);
-
-  useEffect(() => {
-    requestApi();
-  }, [requestApi]);
-
+  const { planet } = useContext(PlanetContext);
   return (
     <table>
       <thead>
@@ -19,7 +17,7 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {data.map((item, index) => (
+        {planet.map((item, index) => (
           <tr key={ index }>
             <td>{ item.name }</td>
             <td>{ item.rotation_period }</td>
