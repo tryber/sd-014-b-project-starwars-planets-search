@@ -13,7 +13,7 @@ export default function Header() {
     filters,
     setFilters,
     handleNumericFilter,
-    selectCategory 
+    selectCategory,
   } = useContext(AppContext);
   const { filterByName } = filters.filters;
 
