@@ -21,6 +21,8 @@ const StarWarsProvider = ({ children }) => {
     'surface_water',
   ]);
 
+  const [numericalFilters, setNumericalFilters] = useState([]);
+
   const [numericalFilter, setNumericalFilter] = useState({
     column: '',
     comparison: '',
@@ -30,18 +32,29 @@ const StarWarsProvider = ({ children }) => {
   const contextValue = {
     data,
     setData,
+
     filters,
     setFilters,
+
     availableFilters,
     setAvailableFilters,
+
     numericalFilter,
     setNumericalFilter,
+
+    numericalFilters,
+    setNumericalFilters,
   };
 
+  // useEffect abaixo para fazer a requisição a API
   useEffect(() => {
     fetchApi()
       .then((response) => setData(response));
   }, []);
+
+  // useEffect(() => {
+  //   set
+  // })
 
   return (
     <StarWarsContext.Provider value={ contextValue }>
