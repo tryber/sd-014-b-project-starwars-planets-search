@@ -6,8 +6,8 @@ import fetchAPI from '../services/fetchAPI';
 function Provider({ children }) {
   const [data, setData] = useState([]);
   const [inputFilter, setInputFilter] = useState('');
-  const [selectOption, setSelectOption] = useState('population');
-  const [comparisonOption, setComparisonOption] = useState('maior que');
+  const [column, setColumn] = useState('population');
+  const [comparison, setComparison] = useState('maior que');
   const [numericFilter, setNumericFilter] = useState(0);
   const [filters, setFilters] = useState({
     filterByName: { name: '' },
@@ -28,10 +28,10 @@ function Provider({ children }) {
     setFilters,
     inputFilter,
     setInputFilter,
-    selectOption,
-    setSelectOption,
-    comparisonOption,
-    setComparisonOption,
+    column,
+    setColumn,
+    comparison,
+    setComparison,
     numericFilter,
     setNumericFilter,
   };

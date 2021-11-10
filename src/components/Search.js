@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import Context from '../context/Context';
 
 export default function Search() {
@@ -7,26 +7,37 @@ export default function Search() {
     setFilters,
     inputFilter,
     setInputFilter,
-    selectOption,
-    setSelectOption,
-    comparisonOption,
-    setComparisonOption,
+    column,
+    setColumn,
+    comparison,
+    setComparison,
     numericFilter,
     setNumericFilter,
   } = useContext(Context);
 
+  const columnOptions = ['population',
+    'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
+
+  const [options, setOptions] = useState(columnOptions);
+  // Vi no código do Felipe Martins, entendi e achei uma solução simples e prática. fonte: https://github.com/tryber/sd-014-b-project-starwars-planets-search/tree/felipe-martins-starwars-planets
+
+  function removeOption() {
+    setOptions(options.filter((option) => option !== column));
+  }
   const handleClick = () => {
     setFilters({
       ...filters,
       filterByNumericValues: [
         ...filters.filterByNumericValues,
         {
-          column: selectOption,
-          comparison: comparisonOption,
+          column,
+          comparison,
           value: numericFilter,
         },
       ],
     });
+    removeOption();
+    setColumn(options[0]);
   };
     // Lógica de filtros numéricos com o auxílio do Riba Jr
   return (
@@ -39,17 +50,13 @@ export default function Search() {
       />
       <select
         data-testid="column-filter"
-        onChange={ ({ target: { value } }) => setSelectOption(value) }
+        onChange={ ({ target: { value } }) => setColumn(value) }
       >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        {options.map((option, index) => <option key={ index }>{option}</option>)}
       </select>
       <select
         data-testid="comparison-filter"
-        onChange={ ({ target: { value } }) => setComparisonOption(value) }
+        onChange={ ({ target: { value } }) => setComparison(value) }
       >
         <option value="maior que">maior que</option>
         <option value="menor que">menor que</option>
