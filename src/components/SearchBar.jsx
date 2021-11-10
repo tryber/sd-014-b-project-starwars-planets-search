@@ -2,13 +2,13 @@ import React, { useState, useContext } from 'react';
 import PlanetContext from '../context/PlanetContext';
 
 function SearchBar() {
-  const { setFilterName, inicialPlanet, setPlanets } = useContext(PlanetContext);
+  const { setFilterName, planets, setPlanets } = useContext(PlanetContext);
   const [searchValue, setSearchValue] = useState('');
 
   function handleChange(value) {
     setSearchValue(value);
     setFilterName(value);
-    const filterPlanetByName = inicialPlanet.filter(({ name }) => (
+    const filterPlanetByName = planets.filter(({ name }) => (
       name.toLowerCase().includes(value.toLowerCase())
     ));
     setPlanets(filterPlanetByName);
