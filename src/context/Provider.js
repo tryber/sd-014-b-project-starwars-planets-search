@@ -3,11 +3,20 @@ import PropTypes from 'prop-types';
 import DataContext from './DataContext';
 
 function Provider({ children }) {
+  const columnsOptions = [
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ];
+
   const [data, setData] = useState([]);
   const [filteredPlanets, setFilteredPlanets] = useState([]);
   const [column, setColumn] = useState('population');
   const [comparator, setComparator] = useState('maior que');
   const [comparisonNum, setComparisonNum] = useState('');
+  const [searchColumns, setSearchColumns] = useState(columnsOptions);
   const value = {
     data,
     setData,
@@ -19,6 +28,8 @@ function Provider({ children }) {
     setComparator,
     comparisonNum,
     setComparisonNum,
+    searchColumns,
+    setSearchColumns,
   };
 
   async function fetchData() {
@@ -41,7 +52,7 @@ function Provider({ children }) {
   }, []);
 
   useEffect(() => {
-    setData(filteredPlanets);
+    setFilteredPlanets(filteredPlanets);
   }, [filteredPlanets]);
 
   return (

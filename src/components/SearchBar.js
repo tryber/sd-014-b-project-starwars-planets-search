@@ -2,13 +2,11 @@ import React, { useContext } from 'react';
 import DataContext from '../context/DataContext';
 
 function SearchBar() {
-  const { filteredPlanets, setFilteredPlanets, setData, data } = useContext(DataContext);
+  const { filteredPlanets, setFilteredPlanets, } = useContext(DataContext);
 
   function handleChange({ target }) {
     const name = target.value;
     setFilteredPlanets(name);
-    setData(data.filter((planet) => planet.name
-      .includes(filteredPlanets)));
   }
 
   return (
