@@ -11,17 +11,20 @@ function ColumnFilter() {
   } = useContext(StarWarsContext);
 
   const [radioValue, setRadioValue] = useState('');
-  const [selectValue, setSelectValue] = useState('');
+  const [selectValue, setSelectValue] = useState('Name');
 
   const orderFunction = () => {
+    console.log(selectValue);
     switch (radioValue) {
     case 'DESC':
       console.log('descendente');
-      setData(data.sort((a, b) => a[`${selectValue}`] - b[`${selectValue}`]));
+      setData(data
+        .sort((a, b) => a[`${selectValue.toLowerCase()}`] - b[`${selectValue}`]));
       break;
     default:
-      console.log('ascendente');
-      setData(data.sort((a, b) => a[`${selectValue}`] + b[`${selectValue}`]));
+      console.log(`'ascendente'${selectValue}`);
+      setData(data
+        .sort((a, b) => a[`${selectValue.toLowerCase()}`] + b[`${selectValue}`]));
       break;
     }
     console.log('Ordenar');

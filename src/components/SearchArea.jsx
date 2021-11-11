@@ -31,13 +31,13 @@ function SearchArea() {
     const { filterByNumericValues } = filters;
     setColumnFiltersIndex([
       ...columnFiltersIndex,
-      parameter
+      parameter,
     ]);
     // Função escrita com a ajuda do Luiz Gustavo - 14B
     setFilters({
       ...filters,
-      filterByNumericValues: filterByNumericValues.filter((eachFilter)=>
-      eachFilter.column !== parameter ),
+      filterByNumericValues: filterByNumericValues
+        .filter((eachFilter) => eachFilter.column !== parameter),
     });
   };
 
