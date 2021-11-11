@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import DataContext from '../context/DataContext';
 
 function Input() {
-  const { filterByName, setFilterName } = useContext(DataContext);
+  const { filterName, setFilterName } = useContext(DataContext);
 
   function handleChange({ target }) {
     const name = target.value;
@@ -13,10 +13,10 @@ function Input() {
     <input
       type="text"
       data-testid="name-filter"
-      value={ filterByName }
+      value={ filterName }
       onChange={ handleChange }
-      id="filterByName"
-      name="filterByName"
+      id="filterName"
+      name="filterName"
     />
   );
 }

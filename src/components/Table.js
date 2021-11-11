@@ -1,22 +1,28 @@
 import React, { useContext, useState } from 'react';
 import DataContext from '../context/DataContext';
-import Input from './Input';
 
 function Table() {
-  const { data, filter, setFilter, columnList, removeColumn } = useContext(DataContext);
+  const { data, filter, setFilter, optionList, removeColumn } = useContext(DataContext);
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
-  const [value, setValue] = useState('0');
-  const [filterName] = useState('');
+  const [value, setValue] = useState('');
+  const [filterName, setFilterName] = useState('');
 
   return (
     <section className="table">
-      <Input />
+      <input
+        type="text"
+        data-testid="name-filter"
+        value={ filterName }
+        onChange={ (event) => setFilterName(event.target.value) }
+        id="filterName"
+        name="filterName"
+      />
       <select
         data-testid="column-filter"
         onChange={ (event) => setColumn(event.target.value) }
       >
-        { columnList.map((option, index) => (
+        { optionList.map((option, index) => (
           <option key={ index } value={ option }>{ option }</option>
         ))}
 
@@ -70,23 +76,22 @@ function Table() {
         </thead>
         <tbody>
           {/* Utilizei o Repo https://github.com/tryber/sd-014-b-project-starwars-planets-search/pull/36 de referência */}
-          { data.length <= 0 ? <p> Carregando... </p> : data
-            .filter((planet) => {
-              const numFilter = filter.filters.filterByNumericValues[0];
-              let numFiltered = [];
+          { data.filter((planet) => {
+            const numFilter = filter.filters.filterByNumericValues[0];
+            let numFiltered = [];
 
-              if (numFilter.comparison === 'menor que') {
-                numFiltered = Number(planet[numFilter.column])
+            if (numFilter.comparison === 'menor que') {
+              numFiltered = Number(planet[numFilter.column])
                 < Number(numFilter.value);
-              } else if (numFilter.comparison === 'maior que') {
-                numFiltered = Number(planet[numFilter.column])
+            } else if (numFilter.comparison === 'maior que') {
+              numFiltered = Number(planet[numFilter.column])
                 > Number(numFilter.value);
-              } else if (numFilter.comparison === 'igual a') {
-                numFiltered = Number(planet[numFilter.column])
+            } else if (numFilter.comparison === 'igual a') {
+              numFiltered = Number(planet[numFilter.column])
                 === Number(numFilter.value);
-              } return numFiltered;
-            }).filter((planet) => planet.name
-              .includes(filterName))
+            } return numFiltered;
+          }).filter((planet) => planet.name
+            .includes(filterName))
             .map((planet) => (
               <tr key={ planet.name }>
                 <td>{ planet.name }</td>

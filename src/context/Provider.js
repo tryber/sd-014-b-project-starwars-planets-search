@@ -4,7 +4,7 @@ import DataContext from './DataContext';
 
 function Provider({ children }) {
   const [data, setData] = useState([]);
-  const [columnList, setColumnList] = useState(
+  const [optionList, setColumnList] = useState(
     [
       'population',
       'orbital_period',
@@ -22,21 +22,14 @@ function Provider({ children }) {
           },
           filterByNumericValues: [
             {
-              column: 'population',
-              comparison: 'maior que',
-              value: '100000',
+              column: '',
+              comparison: '',
+              value: '',
             },
           ],
         },
     },
   );
-
-  function removeColumn(prev) {
-    const newColumn = [...columnList];
-    // Source: https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array/splice
-    newColumn.splice(newColumn.indexOf(prev), 1);
-    setColumnList(newColumn);
-  }
 
   useEffect(() => {
     async function fetchApiPlanets() {
@@ -48,11 +41,18 @@ function Provider({ children }) {
     fetchApiPlanets();
   }, []);
 
+  function removeColumn(prev) {
+    const newColumn = [...optionList];
+    // Source: https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array/splice
+    newColumn.splice(newColumn.indexOf(prev), 1);
+    setColumnList(newColumn);
+  }
+
   return (
     <DataContext.Provider
       value={
         {
-          data, filter, setFilter, columnList, removeColumn }
+          data, filter, setFilter, optionList, removeColumn }
       }
     >
       { children }
