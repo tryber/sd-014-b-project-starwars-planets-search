@@ -1,10 +1,23 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import planetsContext from '../context/PlanetsContext';
 
 function Filters() {
-  const { handleChange,
-    handleColumnFilter,
-    handleComparisonFilter } = useContext(planetsContext);
+  const initialState = {
+    column: 'population',
+    comparison: 'maior que',
+    value: 0,
+  };
+
+  const [filterNumericValues, setHandleFilter] = useState(initialState);
+
+  const handleFilter = ({ target }) => (
+    setHandleFilter({
+      ...filterNumericValues,
+      [target.name]: target.value,
+    })
+  );
+
+  const { handleChange, handleFilterClick } = useContext(planetsContext);
   return (
     <main>
       <label htmlFor="input-filter">
@@ -20,24 +33,38 @@ function Filters() {
       <section>
         <select
           data-testid="column-filter"
-          onChange={ (event) => handleColumnFilter(event) }
+          name="column"
+          onChange={ (event) => handleFilter(event) }
+
         >
-          <option>Population</option>
-          <option>Orbital Period</option>
-          <option>Diameter</option>
-          <option>Rotation Period</option>
-          <option>Surface Water</option>
+          <option>population</option>
+          <option>orbital_period</option>
+          <option>diameter</option>
+          <option>rotation_period</option>
+          <option>surface_water</option>
         </select>
         <select
           data-testid="comparison-filter"
-          onChange={ (event) => handleComparisonFilter(event) }
+          name="comparison"
+          onChange={ (event) => handleFilter(event) }
         >
-          <option>Larger than</option>
-          <option>Smaller than</option>
-          <option>Equals to</option>
+          <option>maior que</option>
+          <option>menor que</option>
+          <option>igual a</option>
         </select>
-        <input data-testid="value-filter" type="number" />
-        <button data-testid="button-filter" type="submit">Filter</button>
+        <input
+          data-testid="value-filter"
+          type="number"
+          name="value"
+          onChange={ (event) => handleFilter(event) }
+        />
+        <button
+          data-testid="button-filter"
+          type="submit"
+          onClick={ () => handleFilterClick(filterNumericValues) }
+        >
+          Filter
+        </button>
       </section>
     </main>
   );

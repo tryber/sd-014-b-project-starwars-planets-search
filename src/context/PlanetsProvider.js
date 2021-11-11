@@ -8,6 +8,7 @@ class PlanetsProvider extends React.Component {
     super();
     this.state = {
       planets: [],
+      buttonClick: false,
       filters: {
         filterByName: {
           name: '',
@@ -24,8 +25,7 @@ class PlanetsProvider extends React.Component {
 
     this.requestApi = this.requestApi.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.handleColumnFilter = this.handleColumnFilter.bind(this);
-    this.handleComparisonFilter = this.handleComparisonFilter.bind(this);
+    this.handleFilterClick = this.handleFilterClick.bind(this);
   }
 
   componentDidMount() {
@@ -51,33 +51,11 @@ class PlanetsProvider extends React.Component {
     });
   }
 
-  handleColumnFilter({ target }) {
-    const { filters: { filterByName: { name } },
-      filters:
-      { filterByNumericValues:
-        { comparison, value } } } = this.state;
+  handleFilterClick(objFilter) {
+    const { comparison, column, value } = objFilter;
+    const { filters: { filterByName: { name } } } = this.state;
     this.setState({
-      filters: {
-        filterByName: {
-          name,
-        },
-        filterByNumericValues: [
-          {
-            column: target.value,
-            comparison,
-            value,
-          },
-        ],
-      },
-    });
-  }
-
-  handleComparisonFilter({ target }) {
-    const { filters: { filterByName: { name } },
-      filters:
-      { filterByNumericValues:
-        { column, value } } } = this.state;
-    this.setState({
+      buttonClick: true,
       filters: {
         filterByName: {
           name,
@@ -85,7 +63,7 @@ class PlanetsProvider extends React.Component {
         filterByNumericValues: [
           {
             column,
-            comparison: target.value,
+            comparison,
             value,
           },
         ],
@@ -102,17 +80,19 @@ class PlanetsProvider extends React.Component {
 
   render() {
     const { children } = this.props;
-    const { planets, filters: { filterByName, filterByNumericValues } } = this.state;
-    console.log(planets);
+    const {
+      planets,
+      filters: { filterByName, filterByNumericValues },
+      buttonClick } = this.state;
     return (
       <PlanetsContext.Provider
         value={
           { planets,
+            buttonClick,
             filterByName,
             filterByNumericValues,
             handleChange: this.handleChange,
-            handleColumnFilter: this.handleColumnFilter,
-            handleComparisonFilter: this.handleComparisonFilter }
+            handleFilterClick: this.handleFilterClick }
         }
       >
         { children }
