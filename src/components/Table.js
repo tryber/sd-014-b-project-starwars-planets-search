@@ -3,7 +3,7 @@ import DataContext from '../context/DataContext';
 import Input from './Input';
 
 function Table() {
-  const { data, filter, setFilter } = useContext(DataContext);
+  const { data, filter, setFilter, columnList, removeColumn } = useContext(DataContext);
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState('0');
@@ -16,11 +16,10 @@ function Table() {
         data-testid="column-filter"
         onChange={ (event) => setColumn(event.target.value) }
       >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        { columnList.map((option, index) => (
+          <option key={ index } value={ option }>{ option }</option>
+        ))}
+
       </select>
       <select
         data-testid="comparison-filter"
@@ -38,12 +37,16 @@ function Table() {
       <button
         type="button"
         data-testid="button-filter"
-        onClick={ () => setFilter({
-          ...filter,
-          filters: {
-            filterByNumericValues: [{ column, comparison, value }],
-          },
-        }) }
+        onClick={ () => {
+          setFilter({
+            ...filter,
+            filters: {
+              filterByNumericValues:
+              [{ column, comparison, value }],
+            },
+          });
+          removeColumn(column);
+        } }
       >
         Filtrar
       </button>
