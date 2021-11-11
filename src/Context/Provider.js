@@ -4,7 +4,7 @@ import Context from './Context';
 import fetchApi from '../Services/fetchApi';
 
 function Provider({ children }) {
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     const findPlanetsFromApi = async () => {
@@ -26,7 +26,7 @@ function Provider({ children }) {
 }
 
 Provider.propTypes = {
-  children: PropTypes.arrayOf(PropTypes.object).isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default Provider;
