@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import fetchApi from '../services/fetchApi';
 import StarWarsContext from './StarWarsContext';
@@ -12,6 +12,9 @@ const StarWarsProvider = ({ children }) => {
       },
     },
   );
+  const [filteredData, setFilteredData] = useState([]);
+  const [currentData, setCurrentData] = useState([]);
+  const originalData = useRef([]);
 
   const [availableFilters, setAvailableFilters] = useState([
     'population',
@@ -36,6 +39,9 @@ const StarWarsProvider = ({ children }) => {
     filters,
     setFilters,
 
+    filteredData,
+    setFilteredData,
+
     availableFilters,
     setAvailableFilters,
 
@@ -49,12 +55,32 @@ const StarWarsProvider = ({ children }) => {
   // useEffect abaixo para fazer a requisição a API
   useEffect(() => {
     fetchApi()
-      .then((response) => setData(response));
+      .then((response) => {
+        setData(response);
+        setCurrentData(response);
+        originalData.current = response;
+      });
   }, []);
 
-  // useEffect(() => {
-  //   set
-  // })
+  useEffect(() => {
+    const { filterByName: { name } } = filters;
+    setFilteredData(currentData
+      .filter((planet) => planet.name.toLowerCase()
+        .includes(name.toLowerCase())));
+  }, [currentData, filters]);
+
+  useEffect(() => {
+    setCurrentData(originalData.current);
+    const comparisons = {
+      'maior que': (col, val) => Number(col) > Number(val),
+      'menor que': (col, val) => Number(col) < Number(val),
+      'igual a': (col, val) => Number(col) === Number(val),
+    };
+    numericalFilters.forEach(({ column, comparison, value }) => {
+      setCurrentData((prevCurrData) => prevCurrData
+        .filter((planet) => comparisons[comparison](planet[column], value)));
+    });
+  }, [numericalFilters]);
 
   return (
     <StarWarsContext.Provider value={ contextValue }>

@@ -7,21 +7,23 @@ import SelectColumn from './SelectColumn';
 
 const FilterNumerical = () => {
   const {
-    NumericalFilter,
-    setNumericalFilter,
+    numericalFilter,
+
     availableFilters,
     setAvailableFilters,
-    NumericalFilters,
+
+    numericalFilters,
+    setNumericalFilters,
   } = useContext(StarWarsContext);
 
   const handleFilters = () => {
-    setNumericalFilter([
-      ...NumericalFilters,
-      NumericalFilter,
+    setNumericalFilters([
+      ...numericalFilters,
+      numericalFilter,
     ]);
 
     setAvailableFilters(availableFilters
-      .filter((filter) => filter !== NumericalFilter.column));
+      .filter((filter) => filter !== numericalFilter.column));
   };
 
   const handleSubmit = (event) => {
