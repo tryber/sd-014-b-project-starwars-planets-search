@@ -5,17 +5,24 @@ import fetchApi from '../Services/fetchApi';
 
 function Provider({ children }) {
   const [data, setData] = useState([]);
+  const [inputFilter, setInputFilter] = useState(''); // Peguei a logica com o Nasser
+  const [filters, setFilters] = useState({ filterByName: { name: '' } });
+
+  const findPlanetsFromApi = async () => {
+    const planets = await fetchApi();
+    setData(planets);
+  };
 
   useEffect(() => {
-    const findPlanetsFromApi = async () => {
-      const planets = await fetchApi();
-      setData(planets);
-    };
     findPlanetsFromApi();
   }, []);
 
   const contextValue = {
     data,
+    filters,
+    setFilters,
+    inputFilter,
+    setInputFilter,
   };
 
   return (

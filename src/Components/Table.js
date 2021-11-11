@@ -2,9 +2,12 @@ import React, { useContext } from 'react';
 import Context from '../Context/Context';
 
 export default function Table() {
-  const { data } = useContext(Context);
+  const { data, inputFilter } = useContext(Context);
 
-  const planets = () => data.map((planet, index) => (
+  const filteredPlanets = data.filter((planets) => planets
+    .name.toLowerCase().includes(inputFilter.toLowerCase()));
+
+  const planets = () => filteredPlanets.map((planet, index) => (
     <tr key={ index }>
       <td>{ planet.name }</td>
       <td>{ planet.rotation_period }</td>
