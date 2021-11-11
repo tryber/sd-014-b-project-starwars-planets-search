@@ -2,10 +2,30 @@ import React, { useContext } from 'react';
 import Context from '../Context/Context';
 
 export default function Table() {
-  const { data, inputFilter } = useContext(Context);
+  const { data, inputFilter, filters } = useContext(Context);
 
-  const filteredPlanets = data.filter((planets) => planets
+  let filteredPlanets = data.filter((planets) => planets
     .name.toLowerCase().includes(inputFilter.toLowerCase()));
+
+  filters.filterByNumericValues.forEach((filter) => {
+    const { column, comparison, value } = filter;
+    switch (comparison) {
+    case 'maior que':
+      filteredPlanets = filteredPlanets
+        .filter((planet) => Number(planet[column]) > Number(value));
+      return filteredPlanets;
+    case 'menor que':
+      filteredPlanets = filteredPlanets
+        .filter((planet) => Number(planet[column]) < Number(value));
+      return filteredPlanets;
+    case 'igual a':
+      filteredPlanets = filteredPlanets
+        .filter((planet) => Number(planet[column]) === Number(value));
+      return filteredPlanets;
+    default:
+      break;
+    }
+  });
 
   const planets = () => filteredPlanets.map((planet, index) => (
     <tr key={ index }>

@@ -6,7 +6,13 @@ import fetchApi from '../Services/fetchApi';
 function Provider({ children }) {
   const [data, setData] = useState([]);
   const [inputFilter, setInputFilter] = useState(''); // Peguei a logica com o Nasser
-  const [filters, setFilters] = useState({ filterByName: { name: '' } });
+  const [selectOption, setSelectOption] = useState('population');
+  const [comparisonOption, setComparisonOption] = useState('maior que');
+  const [numericFilter, setNumericFilter] = useState(0);
+  const [filters, setFilters] = useState({
+    filterByName: { name: '' },
+    filterByNumericValues: [],
+  });
 
   const findPlanetsFromApi = async () => {
     const planets = await fetchApi();
@@ -23,6 +29,12 @@ function Provider({ children }) {
     setFilters,
     inputFilter,
     setInputFilter,
+    selectOption,
+    setSelectOption,
+    comparisonOption,
+    setComparisonOption,
+    numericFilter,
+    setNumericFilter,
   };
 
   return (
