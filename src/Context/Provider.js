@@ -1,8 +1,10 @@
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
 import MyContext from './MyContext';
 
-export default function Provider({ children }) {
+const URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
+
+const Provider = ({ children }) => {
   const [data, setData] = useState([]);
   const [dataFiltered, setDataFiltered] = useState([]);
 
@@ -16,7 +18,8 @@ export default function Provider({ children }) {
   const [filters, setFilters] = useState({
     nameState,
     filterByNumericValues,
-  });
+  }); // junta o nome e o objeto
+
   const [optionsColumn, setOptionsColumn] = useState([
     'population',
     'orbital_period',
@@ -25,36 +28,16 @@ export default function Provider({ children }) {
     'surface_water',
   ]);
 
-  const contextValue = {
-    setName,
-    setColumn,
-    setComparison,
-    setObjectNumerics,
-    setValueSearch,
-    setFilterByNumericValues,
-    filterByNumericValues,
-    setFilters,
-    setOptionsColumn,
-    objectNumerics,
-    filters,
-    nameState,
-    columnState,
-    comparisonState,
-    optionsColumn,
-    valueState,
-    dataFiltered,
-  };
-
-  const URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
-
-  const requestApiPlanets = async () => {
-    const { results } = await fetch(URL).then((response) => response.json());
-    setData(results);
-    setDataFiltered(results);
+  const fetchPlanets = async () => {
+    const fetchApi = await fetch(URL);
+    const response = await fetchApi.json();
+    const result = response.results;
+    setData(result);
+    setDataFiltered(result);
   };
 
   useEffect(() => {
-    requestApiPlanets();
+    fetchPlanets();
   }, []);
 
   useEffect(() => {
@@ -82,13 +65,35 @@ export default function Provider({ children }) {
     });
   }, [filterByNumericValues, data]);
 
+  const contextValue = {
+    setName,
+    setColumn,
+    setComparison,
+    setObjectNumerics,
+    setValueSearch,
+    setFilterByNumericValues,
+    setFilters,
+    setOptionsColumn,
+    objectNumerics,
+    filterByNumericValues,
+    filters,
+    nameState,
+    columnState,
+    comparisonState,
+    optionsColumn,
+    valueState,
+    dataFiltered,
+  };
+
   return (
     <MyContext.Provider value={ contextValue }>
       {children}
     </MyContext.Provider>
   );
-}
+};
 
 Provider.propTypes = {
   children: PropTypes.node.isRequired,
 };
+
+export default Provider;

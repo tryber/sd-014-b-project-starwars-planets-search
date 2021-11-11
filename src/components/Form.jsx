@@ -9,10 +9,10 @@ const FilterPlanet = () => {
     setObjectNumerics,
     setValueSearch,
     setFilterByNumericValues,
-    filterByNumericValues,
     setFilters,
     setOptionsColumn,
     objectNumerics,
+    filterByNumericValues,
     filters,
     nameState,
     columnState,
@@ -58,6 +58,7 @@ const FilterPlanet = () => {
       value,
     });
   };
+
   const handleClick = () => {
     setFilterByNumericValues([...filterByNumericValues, objectNumerics]);
     setFilters({
@@ -97,14 +98,16 @@ const FilterPlanet = () => {
         onChange={ handleComparison }
         value={ comparisonState }
       >
-        {optionsComparison.map((comparison) => (
-          <option
-            key={ comparison }
-            value={ comparison }
-          >
-            { comparison }
-          </option>
-        ))}
+        {
+          optionsComparison.map((comparison) => (
+            <option
+              key={ comparison }
+              value={ comparison }
+            >
+              { comparison }
+            </option>
+          ))
+        }
       </select>
       <input
         data-testid="value-filter"
