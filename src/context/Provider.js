@@ -4,7 +4,23 @@ import DataContext from './DataContext';
 
 function Provider({ children }) {
   const [data, setData] = useState([]);
-  const [filterByName, setFilterByName] = useState('');
+  const [filter, setFilter] = useState(
+    {
+      filters:
+        {
+          filterByName: {
+            name: '',
+          },
+          filterByNumericValues: [
+            {
+              column: 'population',
+              comparison: 'maior que',
+              value: '100000',
+            },
+          ],
+        },
+    },
+  );
 
   useEffect(() => {
     async function fetchApiPlanets() {
@@ -20,7 +36,7 @@ function Provider({ children }) {
     <DataContext.Provider
       value={
         {
-          data, filterByName, setFilterByName }
+          data, filter, setFilter }
       }
     >
       { children }

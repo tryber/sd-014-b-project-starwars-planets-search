@@ -2,11 +2,11 @@ import React, { useContext } from 'react';
 import DataContext from '../context/DataContext';
 
 function Input() {
-  const { filterByName, setFilterByName } = useContext(DataContext);
+  const { filterByName, setFilterName } = useContext(DataContext);
 
   function handleChange({ target }) {
     const name = target.value;
-    setFilterByName(name);
+    setFilterName(name);
   }
 
   return (
