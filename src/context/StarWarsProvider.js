@@ -10,8 +10,7 @@ function StarWarsProvider({ children }) {
   const [columnValue, setColumnValue] = useState('population');
   const [comparisonValue, setComparisonValue] = useState('maior que');
   const [valueFilter, setValueFilter] = useState(0);
-  const [columnFiltersIndex, setColumnFiltersIndex] = useState([
-    'population',
+  const [columnFiltersIndex, setColumnFiltersIndex] = useState(['population',
     'orbital_period',
     'diameter',
     'rotation_period',

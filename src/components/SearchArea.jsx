@@ -17,10 +17,6 @@ function SearchArea() {
     setColumnFiltersIndex,
   } = useContext(StarWarsContext);
 
-  useEffect(() => {
-    //
-  }, [columnFiltersIndex]);
-
   const columnFilterExclude = (selectedIndex) => {
     const excludedColumnIndex = columnFiltersIndex
       .filter((remainingIndex) => remainingIndex !== selectedIndex);
