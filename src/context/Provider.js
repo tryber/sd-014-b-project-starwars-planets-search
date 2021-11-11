@@ -1,42 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Context from './Context';
+import fetchURL from '../components/API';
 
 function Provider({ children }) {
-  const [data, setData] = useState([]);
-  const [fetching, setFetching] = useState(true);
-  const [filter, setFilter] = useState({
-    filters: {
-      filterByName: {
-        name: '',
-      },
-    },
-  });
-  const fetchStarWars = () => {
-    try {
-      fetch('https://swapi-trybe.herokuapp.com/api/planets')
-        .then((req) => req.json())
-        .then((res) => setData(res.results));
-    } catch (error) {
-      return console.error(error);
-    }
-  };
+  const inititalSelectState = ['population',
+    'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
 
-  useEffect(() => {
-    if (fetching) {
-      fetchStarWars();
-      setFetching(false);
-    } else {
-      return undefined;
-    }
-  }, [fetching]);
+  const [data, setData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+  const [columnFilter, setColumnFilter] = useState('population');
+  const [comparisonFilter, setComparisonFilter] = useState('maior que');
+  const [valueFilter, setValueFilter] = useState(0);
+  const [selectColumn, setSelectColumn] = useState(inititalSelectState);
 
   const contextValue = {
     data,
+    columnFilter,
+    comparisonFilter,
+    valueFilter,
+    filteredData,
+    selectColumn,
     setData,
-    filter,
-    setFilter,
+    setColumnFilter,
+    setComparisonFilter,
+    setValueFilter,
+    setFilteredData,
+    setSelectColumn,
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setData(await fetchURL());
+    };
+    fetchData();
+  }, []);
 
   return (
     <Context.Provider value={ contextValue }>
