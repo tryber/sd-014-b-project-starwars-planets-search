@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from 'react';
+import ColumnFilter from './ColumnFilter';
 import StarWarsContext from '../context/StarWarsContext';
 
 function SearchArea() {
@@ -17,7 +18,7 @@ function SearchArea() {
   } = useContext(StarWarsContext);
 
   useEffect(() => {
-    
+    //
   }, [columnFiltersIndex]);
 
   const columnFilterExclude = (selectedIndex) => {
@@ -26,8 +27,18 @@ function SearchArea() {
     setColumnFiltersIndex(excludedColumnIndex);
   };
 
-  const excludeSearchPreset = () => {
-    console.log('excluir');
+  const excludeSearchPreset = (parameter) => {
+    const { filterByNumericValues } = filters;
+    setColumnFiltersIndex([
+      ...columnFiltersIndex,
+      parameter
+    ]);
+    // Função escrita com a ajuda do Luiz Gustavo - 14B
+    setFilters({
+      ...filters,
+      filterByNumericValues: filterByNumericValues.filter((eachFilter)=>
+      eachFilter.column !== parameter ),
+    });
   };
 
   const handleClick = () => {
@@ -58,7 +69,7 @@ function SearchArea() {
         data-testid="column-filter"
         onChange={ ({ target: { value } }) => setColumnValue(value) }
       >
-        { columnFiltersIndex
+        { columnFiltersIndex.sort()
           .map((eachFilterIndex, index) => (
             <option key={ index } value={ eachFilterIndex }>{eachFilterIndex}</option>)) }
       </select>
@@ -98,13 +109,16 @@ function SearchArea() {
             <button
               type="button"
               data-testid="filter"
-              onClick={ () => excludeSearchPreset() }
+              onClick={ () => excludeSearchPreset(column) }
             >
               X
             </button>
           </span>
         )) }
       </div>
+      <section>
+        <ColumnFilter />
+      </section>
     </section>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
@@ -6,12 +6,16 @@ function Table() {
     data,
     loading,
     filteredSearch,
+    tableIndexes,
     // comparisonValue,
     filters,
     // columnValue,
     // valueFilter
   } = useContext(StarWarsContext);
 
+  useEffect(() => {
+    console.log('useEffect rodou');
+  }, [data]);
   // Vi no código do Glauco Lomenha e achei organizado, decidi implementar no meu, da minha forma
 
   // filtro em tempo real, ignorando maiusculas e minusculas
@@ -43,7 +47,7 @@ function Table() {
 
   const planets = () => filteredData.map((eachPlanet, index) => (
     <tr key={ index }>
-      <td>{ eachPlanet.name }</td>
+      <td data-testid="planet-name">{ eachPlanet.name }</td>
       <td>{ eachPlanet.rotation_period }</td>
       <td>{ eachPlanet.orbital_period }</td>
       <td>{ eachPlanet.diameter }</td>
@@ -66,25 +70,14 @@ function Table() {
           <table>
             <thead>
               <tr>
-                <th>Name</th>
-                <th>Rotation Period</th>
-                <th>Orbital Period</th>
-                <th>Diameter</th>
-                <th>Climate</th>
-                <th>Gravity</th>
-                <th>Terrain</th>
-                <th>Surface Water</th>
-                <th>Population</th>
-                <th>Films</th>
-                <th>Created</th>
-                <th>Edited</th>
-                <th>URL</th>
+                {tableIndexes.map((eachIndex, id) => (
+                  <th key={ id }>{eachIndex}</th>))}
               </tr>
             </thead>
             <tbody>
               { planets() }
             </tbody>
-          </table>) : (<span>Carregando...</span>)}
+          </table>) : (<span>Aguarde enquanto carrega...</span>)}
     </section>
   );
 }

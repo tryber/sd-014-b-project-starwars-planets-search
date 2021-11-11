@@ -10,13 +10,18 @@ function StarWarsProvider({ children }) {
   const [columnValue, setColumnValue] = useState('population');
   const [comparisonValue, setComparisonValue] = useState('maior que');
   const [valueFilter, setValueFilter] = useState(0);
-  const [ columnFiltersIndex, setColumnFiltersIndex ] = useState([
+  const [columnFiltersIndex, setColumnFiltersIndex] = useState([
     'population',
     'orbital_period',
     'diameter',
     'rotation_period',
     'surface_water',
   ]);
+
+  const tableIndexes = ['Name', 'Rotation', 'Orbital', 'Diameter',
+    'Climate', 'Gravity', 'Terrain', 'Surface', 'Population', 'Films',
+    'Created', 'Edited', 'URL'];
+
   const [filters, setFilters] = useState({
     filterByName: { name: '' },
     filterByNumericValues: [],
@@ -41,6 +46,7 @@ function StarWarsProvider({ children }) {
   // Declaration of an object, to provider context
   const starWarsContext = {
     data,
+    setData,
     loading,
     filteredSearch,
     setFilteredSearch,
@@ -54,6 +60,7 @@ function StarWarsProvider({ children }) {
     setFilters,
     columnFiltersIndex,
     setColumnFiltersIndex,
+    tableIndexes,
   };
 
   return (
