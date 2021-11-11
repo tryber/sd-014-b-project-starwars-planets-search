@@ -1,10 +1,17 @@
-.App {
-  text-align: center;
+main {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+}
+
+section {
+  padding: 30px;
 }
 
 @media ( prefers-reduced-motion : no-preference ) {
@@ -29,6 +36,25 @@
   color: #61dafb;
 }
 
+table {
+  height: 70vh;
+  width: 70vw;
+}
+
+thead {
+  background-color: #ccc;
+  color: black;
+}
+
+td {
+  padding: 10px;
+}
+
+tr:nth-child( even ) {
+  background-color: rgb(228, 228, 228);
+}
+
+
 @keyframes App-logo-spin {
 
   from {
@@ -39,3 +65,4 @@
     transform: rotate(360deg);
   }
 }
+
