@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
@@ -13,9 +13,6 @@ function Table() {
     // valueFilter
   } = useContext(StarWarsContext);
 
-  useEffect(() => {
-    console.log('useEffect rodou');
-  }, [data]);
   // Vi no código do Glauco Lomenha e achei organizado, decidi implementar no meu, da minha forma
 
   // filtro em tempo real, ignorando maiusculas e minusculas

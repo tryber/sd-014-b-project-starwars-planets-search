@@ -24,6 +24,7 @@ function StarWarsProvider({ children }) {
   const [filters, setFilters] = useState({
     filterByName: { name: '' },
     filterByNumericValues: [],
+    order: { column: 'name', sort: 'ASC'}
   });
 
   // Dica do Matheus Gonzaga - 14B, decidi colocar também no meu

@@ -8,6 +8,11 @@ function ColumnFilter() {
     data,
     setData,
     tableIndexes,
+    filters,
+    setFilters,
+    columnValue,
+    comparisonValue,
+    valueFilter,
   } = useContext(StarWarsContext);
 
   const [radioValue, setRadioValue] = useState('');
@@ -22,12 +27,22 @@ function ColumnFilter() {
         .sort((a, b) => a[`${selectValue.toLowerCase()}`] - b[`${selectValue}`]));
       break;
     default:
-      console.log(`'ascendente'${selectValue}`);
+      console.log(`'ascendente'${selectValue.toLowerCase()}`);
       setData(data
         .sort((a, b) => a[`${selectValue.toLowerCase()}`] + b[`${selectValue}`]));
       break;
     }
-    console.log('Ordenar');
+    setFilters({
+      ...filters,
+      filterByNumericValues: [
+        ...filters.filterByNumericValues,
+      ],
+      order: {
+        column: selectValue,
+        sort: radioValue,
+      },
+    });
+    console.log(filters);
   };
 
   return (

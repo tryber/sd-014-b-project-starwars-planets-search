@@ -93,7 +93,7 @@ function SearchArea() {
       </button>
       <div>
         { filters.filterByNumericValues.map(({ column, comparison, value }, index) => (
-          <span key={ index }>
+          <span key={ index } data-testid="filter">
             <strong>
               { column }
               {'\b'}
@@ -104,7 +104,6 @@ function SearchArea() {
             {'\b'}
             <button
               type="button"
-              data-testid="filter"
               onClick={ () => excludeSearchPreset(column) }
             >
               X
