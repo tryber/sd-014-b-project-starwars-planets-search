@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import ColumnFilter from './ColumnFilter';
 import StarWarsContext from '../context/StarWarsContext';
 
