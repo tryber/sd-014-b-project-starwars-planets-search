@@ -24,6 +24,7 @@ function Table() {
     switch (comparison) {
     case 'maior que':
       // operador '+' anterior o valor do tipo string converte em número, igual a um sustenido. Dica do Glauco Lomenha, 14B
+      // only with string literals this switch will function
       filteredData = filteredData
         .filter((eachPlanet) => +eachPlanet[`${column}`] > +value);
       break;

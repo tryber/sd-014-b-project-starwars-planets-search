@@ -12,7 +12,15 @@ function SearchArea() {
     setValueFilter,
     filters,
     setFilters,
+    columnFiltersIndex,
+    setColumnFiltersIndex,
   } = useContext(StarWarsContext);
+
+  const columnFilterExclude = (selectedIndex) => {
+    const excludedColumnIndex = columnFiltersIndex
+      .filter((remainingIndex) => remainingIndex !== selectedIndex);
+    setColumnFiltersIndex(excludedColumnIndex);
+  };
 
   const handleClick = () => {
     setFilters({
@@ -26,6 +34,7 @@ function SearchArea() {
         },
       ],
     });
+    columnFilterExclude(columnValue);
   };
 
   return (
@@ -41,11 +50,9 @@ function SearchArea() {
         data-testid="column-filter"
         onChange={ ({ target: { value } }) => setColumnValue(value) }
       >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        { columnFiltersIndex
+          .map((eachFilterIndex, index) => (
+            <option key={ index } value={ eachFilterIndex }>{eachFilterIndex}</option>)) }
       </select>
       <select
         data-testid="comparison-filter"
