@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PlanetsContext from './PlanetsContext';
 import fetchPlanet from '../services/fetchPlanets';
 
@@ -7,15 +7,11 @@ function PlanetsProvider(prop) {
 
   async function fetch() {
     const planetsReturn = await fetchPlanet();
-    setPlanets(planetsReturn);
+    return planetsReturn;
   }
 
-  useEffect(() => {
-    fetch();
-  }, []);
-
   return (
-    <PlanetsContext.Provider value={ { data } }>
+    <PlanetsContext.Provider value={ { data, setPlanets, fetch } }>
       { prop.children }
     </PlanetsContext.Provider>
   );

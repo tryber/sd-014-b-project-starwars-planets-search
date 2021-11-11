@@ -1,14 +1,24 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function Table() {
-  const { data } = useContext(PlanetsContext);
+  const { data, setPlanets, fetch } = useContext(PlanetsContext);
   let dataKeys = [];
   if (data.length > 0) {
     dataKeys = Object.keys(data[0]);
     const deleteIndex = 9;
     dataKeys.splice(deleteIndex, 1);
   }
+
+  async function fethcPlanets() {
+    const planets = await fetch();
+    setPlanets(planets);
+  }
+
+  useEffect(() => {
+    fethcPlanets();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <table>
@@ -18,7 +28,7 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {
+        { data && (
           data.map((planet, index) => (
             <tr key={ index }>
               <td>{ planet.name }</td>
@@ -36,7 +46,7 @@ function Table() {
               <td>{ planet.url }</td>
             </tr>
           ))
-        }
+        )}
       </tbody>
     </table>
   );
