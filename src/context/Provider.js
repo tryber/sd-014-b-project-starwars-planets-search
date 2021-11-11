@@ -65,3 +65,5 @@ Provider.propTypes = {
 };
 
 export default Provider;
+
+// Requisito 4 resolvido com ajuda da colega Grupo Online Store Shop;
