@@ -8,17 +8,23 @@ export default function Filters() {
     searchInput,
     updateSearchInput,
   } = useContext(MyContext);
+
   const [columnFilter, updateColumnFilter] = useState('population');
   const [comparisonFilter, updateComparisonFilter] = useState('maior que');
   const [valueFilter, updateValueFilter] = useState(0);
 
-  function handleInputChange({ target }) {
-    console.log(comparisonFilter);
-    updateSearchInput(target.value.toLowerCase());
+  const comparisons = ['maior que', 'menor que', 'igual a'];
+  const columns = ['population', 'orbital_period', 'diameter',
+    'rotation_period', 'surface_water'];
+  const [columnsSearched, setcolumnsSearched] = useState([...columns]);
+
+  function createNewColumns() {
+    const newColumn = columns.filter((op) => (op !== columnFilter));
+    setcolumnsSearched(newColumn);
   }
 
   function numberFilter() {
-    console.log(filteredData.length);
+    createNewColumns();
     switch (comparisonFilter) {
     case 'maior que':
       return data.filter((planet) => planet[columnFilter] > parseInt(valueFilter, 10));
@@ -40,7 +46,7 @@ export default function Filters() {
     <div>
       <input
         type="text"
-        onChange={ handleInputChange }
+        onChange={ ({ target }) => updateSearchInput(target.value.toLowerCase()) }
         value={ searchInput }
         data-testid="name-filter"
       />
@@ -48,20 +54,18 @@ export default function Filters() {
         data-testid="column-filter"
         onChange={ ({ target }) => updateColumnFilter(target.value) }
       >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        {columnsSearched.map((column, i) => (
+          <option key={ i }>{ column }</option>
+        ))}
       </select>
 
       <select
         data-testid="comparison-filter"
         onChange={ ({ target }) => updateComparisonFilter(target.value) }
       >
-        <option value="maior que">maior que</option>
-        <option value="menor que">menor que</option>
-        <option value="igual a">igual a</option>
+        {comparisons.map((comparison, i) => (
+          <option key={ i } value={ comparison }>{ comparison }</option>
+        ))}
       </select>
 
       <input
