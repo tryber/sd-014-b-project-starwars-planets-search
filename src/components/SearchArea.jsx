@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function SearchArea() {
@@ -16,10 +16,18 @@ function SearchArea() {
     setColumnFiltersIndex,
   } = useContext(StarWarsContext);
 
+  useEffect(() => {
+    
+  }, [columnFiltersIndex]);
+
   const columnFilterExclude = (selectedIndex) => {
     const excludedColumnIndex = columnFiltersIndex
       .filter((remainingIndex) => remainingIndex !== selectedIndex);
     setColumnFiltersIndex(excludedColumnIndex);
+  };
+
+  const excludeSearchPreset = () => {
+    console.log('excluir');
   };
 
   const handleClick = () => {
@@ -76,6 +84,27 @@ function SearchArea() {
       >
         Click to apply filter
       </button>
+      <div>
+        { filters.filterByNumericValues.map(({ column, comparison, value }, index) => (
+          <span key={ index }>
+            <strong>
+              { column }
+              {'\b'}
+              {comparison}
+              {'\b'}
+              {value}
+            </strong>
+            {'\b'}
+            <button
+              type="button"
+              data-testid="filter"
+              onClick={ () => excludeSearchPreset() }
+            >
+              X
+            </button>
+          </span>
+        )) }
+      </div>
     </section>
   );
 }
