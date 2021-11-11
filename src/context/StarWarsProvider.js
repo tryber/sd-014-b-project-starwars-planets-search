@@ -5,6 +5,8 @@ import getAPI from '../services/getAPI';
 
 function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
+  const [initialData, setInitialData] = useState([]);
+  const [inputName, setInputName] = useState(false);
   const [searchByNumerics, setSearchByNumerics] = useState(false);
   const [inputSearch, setInputSearch] = useState({
     filters: {
@@ -25,12 +27,21 @@ function StarWarsProvider({ children }) {
     async function initialState() {
       const API = await getAPI();
       setData(API);
+      setInitialData(API);
     }
     initialState();
   }, []);
 
   const stateObject = {
-    data, inputSearch, setInputSearch, searchByNumerics, setSearchByNumerics,
+    data,
+    setData,
+    inputSearch,
+    setInputSearch,
+    searchByNumerics,
+    setSearchByNumerics,
+    initialData,
+    inputName,
+    setInputName,
   };
 
   return (

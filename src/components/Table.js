@@ -3,8 +3,55 @@ import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
   const [nameHeader, setNameHeader] = useState([]);
-  const { data, inputSearch, searchByNumerics } = useContext(StarWarsContext);
+  const { data, setData, inputSearch, searchByNumerics, setSearchByNumerics,
+    initialData, inputName, setInputName } = useContext(StarWarsContext);
+  const [planets, setPlanets] = useState(data);
   const { filters: { filterByName: { name: filterName } } } = inputSearch;
+
+  function searchButton() {
+    const { filters: { filterByNumericValues } } = inputSearch;
+    const { column, comparison, value } = filterByNumericValues[0];
+    if (comparison === 'maior que') {
+      const dataFilter = data.filter((planet) => Number(planet[column]) > Number(value));
+      setData(dataFilter);
+      return dataFilter;
+    }
+    if (comparison === 'menor que') {
+      const dataFilter = data.filter((planet) => Number(planet[column]) < Number(value));
+      setData(dataFilter);
+      return dataFilter;
+    }
+    if (comparison === 'igual a') {
+      const dataFilter = data.filter((planet) => (
+        Number(planet[column]) === Number(value)));
+      setData(dataFilter);
+      return dataFilter;
+    }
+  }
+
+  function dataFiltered() {
+    if (searchByNumerics) {
+      return setPlanets(searchButton());
+    }
+    const dataFilter = initialData.filter((planet) => (
+      planet.name.toLowerCase().includes(filterName.toLowerCase())
+    ));
+    return setPlanets(dataFilter);
+  }
+
+  useEffect(() => {
+    if (inputName) {
+      dataFiltered();
+      setInputName(false);
+    }
+  }, [inputName]);
+
+  useEffect(() => {
+    if (searchByNumerics) {
+      dataFiltered();
+      setSearchByNumerics(false);
+    }
+  }, [searchByNumerics]);
 
   useEffect(() => {
     if (data.length > 0) {
@@ -12,36 +59,10 @@ function Table() {
       const names = Object.keys(data[0]);
       names.splice(indexNine, 1);
       setNameHeader(names);
+      setPlanets(data);
+      dataFiltered();
     }
-  }, [data]);
-
-  function searchButton() {
-    const { filters: { filterByNumericValues } } = inputSearch;
-    const { column, comparison, value } = filterByNumericValues[0];
-    if (comparison === 'maior que') {
-      const dataFilter = data.filter((planet) => Number(planet[column]) > Number(value));
-      return dataFilter;
-    }
-    if (comparison === 'menor que') {
-      const dataFilter = data.filter((planet) => Number(planet[column]) < Number(value));
-      return dataFilter;
-    }
-    if (comparison === 'igual a') {
-      const dataFilter = data.filter((planet) => (
-        Number(planet[column]) === Number(value)));
-      return dataFilter;
-    }
-  }
-
-  function dataFiltered() {
-    if (searchByNumerics) {
-      return searchButton();
-    }
-    const dataFilter = data.filter((planet) => (
-      planet.name.toLowerCase().includes(filterName.toLowerCase())
-    ));
-    return dataFilter;
-  }
+  }, [initialData]);
 
   return (
     <table>
@@ -51,7 +72,7 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        { dataFiltered().map((value, index) => (
+        { planets.map((value, index) => (
           <tr key={ index }>
             <td key={ value.name }>{ value.name }</td>
             <td key={ value.rotation_period }>{ value.rotation_period }</td>

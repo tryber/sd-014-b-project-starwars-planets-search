@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
 import StarWarsContext from '../context/StarWarsContext';
 
-function Select() {
+function Select({ columnArray }) {
   const { inputSearch, setInputSearch } = useContext(StarWarsContext);
 
   function handleChange({ target }) {
@@ -56,11 +57,8 @@ function Select() {
         data-testid="column-filter"
         onChange={ (event) => handleChange(event) }
       >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        { columnArray.map((column) => (
+          <option key={ column } value={ column }>{ column }</option>)) }
       </select>
       <select
         id="comparison"
@@ -81,5 +79,9 @@ function Select() {
     </span>
   );
 }
+
+Select.propTypes = {
+  columnArray: PropTypes.arrayOf(PropTypes.string),
+}.isRequired;
 
 export default Select;
