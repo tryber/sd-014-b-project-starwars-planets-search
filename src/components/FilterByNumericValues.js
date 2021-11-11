@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import MyContext from '../context/MyContext';
 
 function FilterByNumericValues() {
@@ -16,24 +16,35 @@ function FilterByNumericValues() {
     setFilteredPlanets,
     columns } = useContext(MyContext);
 
+  useEffect(() => {
+    filterByNumericValues.forEach((inputsFilters) => {
+      switch (comparison) {
+      case 'menor que':
+        setFilteredPlanets(filteredPlanets
+          .filter((planet) => Number(planet[inputsFilters.column])
+          < Number(inputsFilters.value)));
+        break;
+      case 'maior que':
+        setFilteredPlanets(filteredPlanets
+          .filter((planet) => Number(planet[inputsFilters.column])
+          > Number(inputsFilters.value)));
+        break;
+      case 'igual a':
+        setFilteredPlanets(filteredPlanets
+          .filter((planet) => Number(planet[inputsFilters.column])
+          === Number(inputsFilters.value)));
+        break;
+      default:
+      }
+    });
+  }, [filterByNumericValues]);
+
   function handleClick() {
     setFilterByNumericValues([
       ...filterByNumericValues,
       { column, comparison, value },
     ]);
-    const planetsFiltered = filteredPlanets.filter((planet) => {
-      switch (comparison) {
-      case 'menor que':
-        return Number(planet[column]) < value;
-      case 'maior que':
-        return Number(planet[column]) > value;
-      case 'igual a':
-        return Number(planet[column]) === Number(value);
-      default:
-        return planet;
-      }
-    });
-    setFilteredPlanets(planetsFiltered);
+
     setColumns(columns.filter((eachColumn) => eachColumn !== column));
   }
 
