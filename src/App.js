@@ -1,7 +1,8 @@
 import React from 'react';
 import './App.css';
-import FilterNumbers from './Components/FilterNumbers';
-import FilterPlanets from './Components/FilterPlanets';
+import FilterNumbers from './Components/NumberFilter';
+import FilterPlanets from './Components/PlanetFilter';
+import SortFilter from './Components/SortFilter';
 import Table from './Components/Table';
 import { PlanetsProvider } from './context/usePlanets';
 
@@ -11,6 +12,7 @@ function App() {
       <h1>Star Wars Planets Search</h1>
       <FilterPlanets />
       <FilterNumbers />
+      <SortFilter />
       <Table />
     </PlanetsProvider>
   );

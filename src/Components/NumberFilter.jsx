@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { usePlanets } from '../context/usePlanets';
 
-function FilterNumbers() {
+const FilterNumbers = () => {
   const {
     filters: { filterByNumericValues },
     setFilterNumeric,
@@ -13,17 +13,8 @@ function FilterNumbers() {
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState('0');
   const [options, setOptions] = useState([]);
-  function handleColumn(target) {
-    setColumn(target.value);
-  }
-  function handleComparison(target) {
-    setComparison(target.value);
-  }
-  function handleValue(target) {
-    setValue(target.value);
-  }
 
-  function handleFilter() {
+  const handleFilter = () => {
     setFilterNumeric([...filterByNumericValues, { column, comparison, value }]);
 
     const filteredPlanets = planets.filter((planet) => {
@@ -35,7 +26,7 @@ function FilterNumbers() {
       return Number(planet[column]) === Number(value);
     });
     setPlanets(filteredPlanets);
-  }
+  };
 
   useEffect(() => {
     const selectOptions = [
@@ -60,7 +51,7 @@ function FilterNumbers() {
     createNewOptions();
   }, [filterByNumericValues, filterByNumericValues.length, data]);
 
-  function handleOnClick(filter) {
+  const handleClick = (filter) => {
     const removeFilter = filterByNumericValues.filter((NumericValue) => (
       NumericValue.column !== filter
     ));
@@ -70,7 +61,7 @@ function FilterNumbers() {
       setFilterNumeric([]);
       setPlanets(data);
     }
-  }
+  };
 
   return (
     <div>
@@ -78,7 +69,7 @@ function FilterNumbers() {
         <select
           name="column_filter"
           id="column_filter"
-          onChange={ ({ target }) => handleColumn(target) }
+          onChange={ ({ target }) => setColumn(target.value) }
           data-testid="column-filter"
         >
           {options.map((option) => (
@@ -90,7 +81,7 @@ function FilterNumbers() {
         <select
           name="comparison-filter"
           id="comparison-filter"
-          onChange={ ({ target }) => handleComparison(target) }
+          onChange={ ({ target }) => setComparison(target.value) }
           data-testid="comparison-filter"
         >
           <option value="maior que">maior que</option>
@@ -102,7 +93,7 @@ function FilterNumbers() {
         <input
           name="value-filter"
           id="value-filter"
-          onChange={ ({ target }) => handleValue(target) }
+          onChange={ ({ target }) => setValue(target.value) }
           data-testid="value-filter"
           type="number"
           min="0"
@@ -121,7 +112,7 @@ function FilterNumbers() {
             <div data-testid="filter" key={ index }>
               <p>{ filter.column }</p>
               <button
-                onClick={ () => handleOnClick(filter.column) }
+                onClick={ () => handleClick(filter.column) }
                 type="button"
               >
                 X
@@ -132,5 +123,6 @@ function FilterNumbers() {
       </div>
     </div>
   );
-}
+};
+
 export default FilterNumbers;

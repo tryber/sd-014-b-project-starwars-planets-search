@@ -2,6 +2,8 @@ import React, { createContext, useEffect, useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import mockData from '../testData';
 
+const DSC = -1;
+
 const PlanetsContext = createContext();
 
 const URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
@@ -13,13 +15,18 @@ export const PlanetsProvider = ({ children }) => {
   const [filterName, setFilterName] = useState([]);
   const [filterNumeric, setFilterNumeric] = useState([]);
   const [planets, setPlanets] = useState([]);
+  const [sortOption, setSortOption] = useState();
+  const [sortOrder, setSortOrder] = useState('ASC');
 
   useEffect(() => {
     const getPlanets = async () => {
       try {
         const results = await fetch(URL).then((response) => response.json());
-        setData(results.results);
-        setPlanets(results.results);
+        const sortedResult = results.results.sort((a, b) => (
+          a.name > b.name ? 1 : DSC
+        ));
+        setData(sortedResult);
+        setPlanets(sortedResult);
       } catch (error) {
         setServerError(error);
         setData(mockData.results);
@@ -38,11 +45,19 @@ export const PlanetsProvider = ({ children }) => {
     filters: {
       filterByName: { name: filterName },
       filterByNumericValues: filterNumeric,
+      order: {
+        column: sortOption,
+        sort: sortOrder,
+      },
     },
     setFilterName,
     setFilterNumeric,
     planets,
     setPlanets,
+    sortOption,
+    setSortOption,
+    sortOrder,
+    setSortOrder,
   };
 
   return (

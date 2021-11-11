@@ -1,7 +1,7 @@
 import React from 'react';
 import { usePlanets } from '../context/usePlanets';
 
-function FilterPlanets() {
+const FilterPlanets = () => {
   const { filters: { name }, setFilterName } = usePlanets();
 
   return (
@@ -14,6 +14,6 @@ function FilterPlanets() {
       />
     </section>
   );
-}
+};
 
 export default FilterPlanets;
