@@ -10,9 +10,6 @@ function ColumnFilter() {
     tableIndexes,
     filters,
     setFilters,
-    columnValue,
-    comparisonValue,
-    valueFilter,
   } = useContext(StarWarsContext);
 
   const [radioValue, setRadioValue] = useState('');
