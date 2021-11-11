@@ -9,17 +9,12 @@ class PlanetsProvider extends React.Component {
     this.state = {
       planets: [],
       buttonClick: false,
+      deleteOptions: [],
       filters: {
         filterByName: {
           name: '',
         },
-        filterByNumericValues: [
-          {
-            column: '',
-            comparison: '',
-            value: '',
-          },
-        ],
+        filterByNumericValues: [],
       },
     };
 
@@ -52,20 +47,20 @@ class PlanetsProvider extends React.Component {
   }
 
   handleFilterClick(objFilter) {
-    const { comparison, column, value } = objFilter;
-    const { filters: { filterByName: { name } } } = this.state;
+    const { filters: { filterByName: { name },
+      filterByNumericValues },
+    deleteOptions } = this.state;
+
     this.setState({
       buttonClick: true,
+      deleteOptions: [...deleteOptions, objFilter.column],
       filters: {
         filterByName: {
           name,
         },
         filterByNumericValues: [
-          {
-            column,
-            comparison,
-            value,
-          },
+          ...filterByNumericValues,
+          objFilter,
         ],
       },
     });
@@ -83,12 +78,13 @@ class PlanetsProvider extends React.Component {
     const {
       planets,
       filters: { filterByName, filterByNumericValues },
-      buttonClick } = this.state;
+      buttonClick, deleteOptions } = this.state;
     return (
       <PlanetsContext.Provider
         value={
           { planets,
             buttonClick,
+            deleteOptions,
             filterByName,
             filterByNumericValues,
             handleChange: this.handleChange,

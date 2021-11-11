@@ -1,23 +1,41 @@
 import React, { useContext, useState } from 'react';
 import planetsContext from '../context/PlanetsContext';
 
+const optionsColumn = [
+  'population', 'orbital_period',
+  'diameter', 'rotation_period', 'surface_water'];
+
 function Filters() {
+  const { handleChange,
+    handleFilterClick,
+    deleteOptions,
+    buttonClick } = useContext(planetsContext);
+
   const initialState = {
     column: 'population',
     comparison: 'maior que',
     value: 0,
   };
 
-  const [filterNumericValues, setHandleFilter] = useState(initialState);
+  const [filterNumbersAndValue, setHandleFilter] = useState(initialState);
+
+  const filterOptions = () => {
+    if (buttonClick) {
+      const optionsFiltered = deleteOptions.map((option) => (
+        optionsColumn.filter((opt) => opt !== option)
+      ));
+      return optionsFiltered[0];
+    }
+    return optionsColumn;
+  };
 
   const handleFilter = ({ target }) => (
     setHandleFilter({
-      ...filterNumericValues,
+      ...filterNumbersAndValue,
       [target.name]: target.value,
     })
   );
 
-  const { handleChange, handleFilterClick } = useContext(planetsContext);
   return (
     <main>
       <label htmlFor="input-filter">
@@ -35,13 +53,9 @@ function Filters() {
           data-testid="column-filter"
           name="column"
           onChange={ (event) => handleFilter(event) }
-
         >
-          <option>population</option>
-          <option>orbital_period</option>
-          <option>diameter</option>
-          <option>rotation_period</option>
-          <option>surface_water</option>
+          { filterOptions()
+            .map((option, index) => <option key={ index }>{ option }</option>) }
         </select>
         <select
           data-testid="comparison-filter"
@@ -61,7 +75,7 @@ function Filters() {
         <button
           data-testid="button-filter"
           type="submit"
-          onClick={ () => handleFilterClick(filterNumericValues) }
+          onClick={ () => handleFilterClick(filterNumbersAndValue) }
         >
           Filter
         </button>
