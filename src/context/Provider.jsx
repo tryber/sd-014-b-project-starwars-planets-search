@@ -5,6 +5,9 @@ import requestApi from '../services/requestApi';
 
 const Provider = ({ children }) => {
   const [response, setResponse] = useState([]);
+  const [value, setValue] = useState('');
+  const [column, setColumn] = useState('');
+  const [comparison, setComparison] = useState('');
   const [nameFilter, setNameFilter] = useState({
     filters: {
       filterByName: {
@@ -25,6 +28,13 @@ const Provider = ({ children }) => {
     response,
     nameFilter,
     setNameFilter,
+    setResponse,
+    value,
+    setValue,
+    column,
+    setColumn,
+    comparison,
+    setComparison,
   };
 
   return (
