@@ -7,15 +7,35 @@ function FilterNumeric() {
   const selectEquality = ['maior que', ' menor que', 'igual a'];
 
   const {
-    currentFilter, setCurrentFilter,
+    currentFilter, setCurrentFilter, listPlanets, setListPlanets, resetList,
   } = useContext(MyContext);
 
   function handleChange({ target: { name, value } }) {
     setCurrentFilter({ ...currentFilter, [name]: value });
   }
 
+  function handleFilterNumeric({ comparison, column, value }) {
+    switch (comparison) {
+    case 'maior que':
+      return setListPlanets(listPlanets
+        .filter((planet) => Number(planet[column]) > Number(value)));
+
+    case 'menor que':
+      return setListPlanets(listPlanets
+        .filter((planet) => Number(planet[column]) < Number(value)));
+
+    case 'igual a':
+      return setListPlanets(listPlanets
+        .filter((planet) => Number(planet[column]) === Number(value)));
+
+    default:
+      return resetList;
+    }
+  }
+
   function handleClick() {
     console.log(currentFilter);
+    handleFilterNumeric(currentFilter);
   }
 
   const { column, comparison, value } = currentFilter;
@@ -28,10 +48,8 @@ function FilterNumeric() {
         value={ column }
         onChange={ handleChange }
       >
-        {
-          selectColum
-            .map((columName, index) => <option key={ index }>{ columName }</option>)
-        }
+        { selectColum
+          .map((columName, index) => <option key={ index }>{ columName }</option>)}
       </select>
       <select
         data-testid="comparison-filter"
@@ -39,10 +57,8 @@ function FilterNumeric() {
         value={ comparison }
         onChange={ handleChange }
       >
-        {
-          selectEquality
-            .map((name, index) => <option key={ index }>{ name }</option>)
-        }
+        {selectEquality
+          .map((name, index) => <option key={ index }>{ name }</option>)}
       </select>
       <input
         data-testid="value-filter"

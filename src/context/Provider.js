@@ -21,12 +21,6 @@ function Provider({ children }) {
     value: '',
   });
 
-  // const [columns, setColumns] = useState(
-  //   [
-  //     'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
-  //   ],
-  // );
-
   async function getPlanets() {
     const planets = await fetchApiPlanets();
     setListPlanets(planets.results);
