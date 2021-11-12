@@ -7,16 +7,16 @@ function FilterNumeric() {
   const selectEquality = ['maior que', ' menor que', 'igual a'];
 
   const {
-    currentFilter, setCurrentFilter, listPlanets, setListPlanets,
+    currentFilter, setCurrentFilter,
   } = useContext(MyContext);
 
-  const handleChange = ({ target: { name, value } }) => {
+  function handleChange({ target: { name, value } }) {
     setCurrentFilter({ ...currentFilter, [name]: value });
-  };
+  }
 
-  const handleClick = () => {
+  function handleClick() {
     console.log(currentFilter);
-  };
+  }
 
   const { column, comparison, value } = currentFilter;
 
