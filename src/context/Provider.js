@@ -4,28 +4,50 @@ import MyContext from './MyContext';
 import fetchApiPlanets from '../services/RequestApi';
 
 function Provider({ children }) {
-  // const [list, setList] = useState([]);
+  const [resetList, setResetList] = useState([]);
 
   const [listPlanets, setListPlanets] = useState([]);
 
-  const [isLoadind, setIsLoading] = useState(true);
+  const [loadind, setLoading] = useState(true);
 
-  const takePlanets = async () => {
+  const [search, setSearch] = useState({
+    filterByName: { name: '' },
+    filterByNumericValues: [],
+  });
+
+  const [currentFilter, setCurrentFilter] = useState({
+    column: 'population',
+    comparison: 'maior que',
+    value: '',
+  });
+
+  // const [columns, setColumns] = useState(
+  //   [
+  //     'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+  //   ],
+  // );
+
+  async function getPlanets() {
     const planets = await fetchApiPlanets();
     setListPlanets(planets.results);
-    // setList(planets.results);
-    setIsLoading(false);
-  };
+    setResetList(planets.results);
+    setLoading(false);
+  }
 
   const context = {
     listPlanets,
     setListPlanets,
-    isLoadind,
-    setIsLoading,
+    loadind,
+    setLoading,
+    search,
+    setSearch,
+    resetList,
+    currentFilter,
+    setCurrentFilter,
   };
 
   useEffect(() => {
-    takePlanets();
+    getPlanets();
   }, []);
 
   return (

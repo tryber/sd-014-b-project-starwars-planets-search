@@ -1,22 +1,9 @@
 import React, { useContext } from 'react';
 import MyContext from '../context/MyContext';
-
-// name,
-// rotation_period,
-// orbital_period,
-// diameter,
-// climate,
-// gravity,
-// terrain,
-// surface_water,
-// population,
-// films,
-// created,
-// edited,
-// url,
+import Loading from './Loading';
 
 function TablePlanets() {
-  const { listPlanets } = useContext(MyContext);
+  const { loading, listPlanets } = useContext(MyContext);
   return (
     <table>
       <thead>
@@ -37,7 +24,7 @@ function TablePlanets() {
         </tr>
       </thead>
       <tbody>
-        { listPlanets.map((planet) => (
+        { loading ? <Loading /> : listPlanets.map((planet) => (
           <tr key={ planet.name }>
             <td>{ planet.name }</td>
             <td>{ planet.rotation_period }</td>
