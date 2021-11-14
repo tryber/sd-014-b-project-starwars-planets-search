@@ -3,18 +3,22 @@ import MyContext from '../context/MyContext';
 
 function FilterName() {
   const {
-    search, setSearch, listPlanets, setListPlanets, resetList } = useContext(MyContext);
+    filters,
+    setFilters,
+    setListPlanets,
+    resetList,
+  } = useContext(MyContext);
 
   function handlefilterByName(text) {
     const lowerSearch = text.toLowerCase();
     if (text === '') {
       setListPlanets(resetList);
     } else {
-      const searchPlanet = listPlanets.filter((planet) => (
+      const searchPlanet = resetList.filter((planet) => (
         planet.name.toLowerCase().includes(lowerSearch)
       ));
-      setSearch({
-        ...search,
+      setFilters({
+        ...filters,
         filterByName: { name: text },
         filterByNumericValues: [],
       });

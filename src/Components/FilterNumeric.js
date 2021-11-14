@@ -7,7 +7,11 @@ function FilterNumeric() {
   const selectEquality = ['maior que', ' menor que', 'igual a'];
 
   const {
-    currentFilter, setCurrentFilter, listPlanets, setListPlanets, resetList,
+    currentFilter,
+    setCurrentFilter,
+    setListPlanets,
+    resetList,
+    filters,
   } = useContext(MyContext);
 
   function handleChange({ target: { name, value } }) {
@@ -17,15 +21,15 @@ function FilterNumeric() {
   function handleFilterNumeric({ comparison, column, value }) {
     switch (comparison) {
     case 'maior que':
-      return setListPlanets(listPlanets
+      return setListPlanets(resetList
         .filter((planet) => Number(planet[column]) > Number(value)));
 
     case 'menor que':
-      return setListPlanets(listPlanets
+      return setListPlanets(resetList
         .filter((planet) => Number(planet[column]) < Number(value)));
 
     case 'igual a':
-      return setListPlanets(listPlanets
+      return setListPlanets(resetList
         .filter((planet) => Number(planet[column]) === Number(value)));
 
     default:
@@ -34,8 +38,11 @@ function FilterNumeric() {
   }
 
   function handleClick() {
+    console.log(filters);
     console.log(currentFilter);
     handleFilterNumeric(currentFilter);
+    const { filterByNumericValues } = filters;
+    filterByNumericValues.push(currentFilter);
   }
 
   const { column, comparison, value } = currentFilter;

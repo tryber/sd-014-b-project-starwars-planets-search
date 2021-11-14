@@ -10,7 +10,7 @@ function Provider({ children }) {
 
   const [loadind, setLoading] = useState(true);
 
-  const [search, setSearch] = useState({
+  const [filters, setFilters] = useState({
     filterByName: { name: '' },
     filterByNumericValues: [],
   });
@@ -33,8 +33,8 @@ function Provider({ children }) {
     setListPlanets,
     loadind,
     setLoading,
-    search,
-    setSearch,
+    filters,
+    setFilters,
     resetList,
     currentFilter,
     setCurrentFilter,
