@@ -1,41 +1,31 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
+import MyContext from '../context/MyContext';
 
-function SelectedFilters({ filterByNumeric }) {
-  function filterRemove() {
+function SelectedFilters() {
+  const { filters, setFilters, arrayColumns, setArrayColumns } = useContext(MyContext);
+  const { filterByNumericValues } = filters;
 
+  function filterRemove(selectedColumn) {
+    const filtered = filterByNumericValues
+      .filter(({ column }) => column !== selectedColumn);
+    setArrayColumns([...arrayColumns, selectedColumn]);
+    setFilters({
+      ...filters,
+      filterByNumericValues: filtered,
+    });
+    console.log(selectedColumn);
   }
 
   return (
     <div>
-      {filterByNumeric.map(({ column, comparison, value }) => (
-        <div key={ column }>
-          <span>{column}</span>
-          <span> - </span>
-          <span>{comparison}</span>
-          <span> - </span>
-          <span>{value}</span>
-          <button
-            type="button"
-            onClick={ () => filterRemove() }
-          >
-            X
-          </button>
+      {filterByNumericValues.map(({ column, comparison, value }, index) => (
+        <div key={ index }>
+          <span>{`${column} | ${comparison} | ${value}`}</span>
+          <button type="button" onClick={ () => filterRemove(column) }> X </button>
         </div>
       ))}
     </div>
   );
 }
-
-SelectedFilters.propTypes = {
-  filterByNumeric: PropTypes.arrayOf(
-    PropTypes.shape({
-      column: PropTypes.string,
-      comparison: PropTypes.string,
-      value: PropTypes.number,
-    }),
-  ).isRequired,
-  map: PropTypes.func.isRequired,
-};
 
 export default SelectedFilters;

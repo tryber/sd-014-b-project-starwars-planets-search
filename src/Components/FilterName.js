@@ -20,7 +20,7 @@ function FilterName() {
       setFilters({
         ...filters,
         filterByName: { name: text },
-        filterByNumericValues: [],
+        // filterByNumericValues: [],
       });
       return setListPlanets(searchPlanet);
     }

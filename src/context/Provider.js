@@ -11,11 +11,17 @@ function Provider({ children }) {
   const [loadind, setLoading] = useState(true);
 
   const [arrayColumns, setArrayColumns] = useState([
-    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water']);
+    'population', 'orbital period', 'diameter', 'rotation period', 'surface water']);
 
   const [filters, setFilters] = useState({
-    filterByName: { name: '' },
+    filterByName: {
+      name: '',
+    },
     filterByNumericValues: [],
+    order: {
+      column: 'name',
+      sort: 'ASC',
+    },
   });
 
   const [currentFilter, setCurrentFilter] = useState({
