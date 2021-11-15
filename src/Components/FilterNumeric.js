@@ -1,9 +1,8 @@
 import React, { useContext } from 'react';
 import MyContext from '../context/MyContext';
+import SelectedFilters from './SelectedFilters';
 
 function FilterNumeric() {
-  const selectColum = [
-    'population', 'orbital period', 'diameter', 'rotation period', 'surface water'];
   const selectEquality = ['maior que', ' menor que', 'igual a'];
 
   const {
@@ -12,6 +11,8 @@ function FilterNumeric() {
     setListPlanets,
     resetList,
     filters,
+    arrayColumns,
+    setArrayColumns,
   } = useContext(MyContext);
 
   function handleChange({ target: { name, value } }) {
@@ -33,16 +34,22 @@ function FilterNumeric() {
         .filter((planet) => Number(planet[column]) === Number(value)));
 
     default:
-      return resetList;
+      return null;
     }
   }
+
+  const { filterByNumericValues } = filters;
 
   function handleClick() {
     console.log(filters);
     console.log(currentFilter);
+    console.log(arrayColumns);
     handleFilterNumeric(currentFilter);
-    const { filterByNumericValues } = filters;
     filterByNumericValues.push(currentFilter);
+
+    const filterColumn = arrayColumns.filter((item) => item !== currentFilter.column);
+
+    setArrayColumns(filterColumn);
   }
 
   const { column, comparison, value } = currentFilter;
@@ -55,8 +62,8 @@ function FilterNumeric() {
         value={ column }
         onChange={ handleChange }
       >
-        { selectColum
-          .map((columName, index) => <option key={ index }>{ columName }</option>)}
+        { arrayColumns
+          .map((columnName, index) => <option key={ index }>{ columnName }</option>)}
       </select>
       <select
         data-testid="comparison-filter"
@@ -81,6 +88,7 @@ function FilterNumeric() {
       >
         Filtrar
       </button>
+      <SelectedFilters filterByNumeric={ filterByNumericValues } />
     </section>
   );
 }

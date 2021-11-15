@@ -10,6 +10,9 @@ function Provider({ children }) {
 
   const [loadind, setLoading] = useState(true);
 
+  const [arrayColumns, setArrayColumns] = useState([
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water']);
+
   const [filters, setFilters] = useState({
     filterByName: { name: '' },
     filterByNumericValues: [],
@@ -38,6 +41,8 @@ function Provider({ children }) {
     resetList,
     currentFilter,
     setCurrentFilter,
+    arrayColumns,
+    setArrayColumns,
   };
 
   useEffect(() => {
