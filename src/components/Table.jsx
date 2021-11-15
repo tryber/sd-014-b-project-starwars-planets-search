@@ -1,10 +1,10 @@
-import React, { useContext } from 'react';
-import PlanetsContext from '../context/PlanetsContext';
+import React from 'react';
+import usePlanets from '../hooks/usePlanets';
 
 function Table() {
-  const { data } = useContext(PlanetsContext);
+  const planets = usePlanets();
 
-  if (!data) {
+  if (!planets.length) {
     return <h2>Carregando...</h2>;
   }
 
@@ -28,20 +28,20 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {data.map((planet, i) => (
+        {planets && planets.map((planet, i) => (
           <tr key={ i }>
-            <td>{planet.climate}</td>
-            <td>{planet.created}</td>
-            <td>{planet.diameter}</td>
-            <td>{planet.edited}</td>
-            <td>{planet.films.map((film) => film)}</td>
-            <td>{planet.gravity}</td>
             <td>{planet.name}</td>
-            <td>{planet.orbital_period}</td>
-            <td>{planet.population}</td>
             <td>{planet.rotation_period}</td>
-            <td>{planet.surface_water}</td>
+            <td>{planet.orbital_period}</td>
+            <td>{planet.diameter}</td>
+            <td>{planet.climate}</td>
+            <td>{planet.gravity}</td>
             <td>{planet.terrain}</td>
+            <td>{planet.surface_water}</td>
+            <td>{planet.population}</td>
+            <td>{planet.films.map((film) => film)}</td>
+            <td>{planet.created}</td>
+            <td>{planet.edited}</td>
             <td>{planet.url}</td>
           </tr>
         ))}
