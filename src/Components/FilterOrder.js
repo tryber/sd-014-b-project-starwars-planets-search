@@ -33,14 +33,6 @@ function FilterOrder() {
     setFilters({ ...filters, order: { ...order, [name]: value } });
   }
 
-  // useEffect(() => {
-  //   if (column === 'name') {
-  //     const sorted = listPlanets.sort((a, b) => (
-  //       a[column].toLowerCase() > b[column].toLowerCase() ? 1 : num1));
-  //     return setListPlanets(sorted);
-  //   }
-  // }, [column, listPlanets, num1, setListPlanets]);
-
   function filterOrder() {
     if (sort === 'ASC') {
       const sorted = [...listPlanets].sort((a, b) => (
@@ -52,7 +44,6 @@ function FilterOrder() {
         Number(a[column].toLowerCase()) < Number(b[column].toLowerCase()) ? 1 : num1));
       return setListPlanets(sorted);
     }
-    console.log(order);
   }
 
   function handleOrder() {

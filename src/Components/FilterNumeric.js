@@ -84,23 +84,3 @@ function FilterNumeric() {
 }
 
 export default FilterNumeric;
-
-// function handleFilterNumeric(element) {
-//   const { comparison, column, value } = element;
-//   switch (comparison) {
-//   case 'maior que':
-//     return setListPlanets(listPlanets
-//       .filter((planet) => Number(planet[column]) > Number(value)));
-
-//   case 'menor que':
-//     return setListPlanets(listPlanets
-//       .filter((planet) => Number(planet[column]) < Number(value)));
-
-//   case 'igual a':
-//     return setListPlanets(listPlanets
-//       .filter((planet) => Number(planet[column]) === Number(value)));
-
-//   default:
-//     return null;
-//   }
-// }

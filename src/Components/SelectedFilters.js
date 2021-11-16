@@ -69,19 +69,3 @@ function SelectedFilters() {
 }
 
 export default SelectedFilters;
-
-// const result = () => {
-//   switch (comparison) {
-//   case 'maior que':
-//     return resetList
-//       .filter((planet) => Number(planet[selectedColumn]) < Number(value));
-//   case 'menor que':
-//     return resetList
-//       .filter((planet) => Number(planet[selectedColumn]) > Number(value));
-//   case 'igual a':
-//     return resetList
-//       .filter((planet) => Number(planet[selectedColumn]) !== Number(value));
-//   default:
-//     return null;
-//   }
-// };
