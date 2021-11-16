@@ -1,4 +1,4 @@
-import React, { useState, createContext } from 'react';
+import React, { useState, createContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 const INITIAL_STATE = {
@@ -19,25 +19,27 @@ const INITIAL_FILTERS = {
 const PlanetsContext = createContext(INITIAL_STATE);
 
 export function PlanetsProvider({ children }) {
-  const [planets, setPlanets] = useState(INITIAL_STATE.planets);
+  const [allPlanets, setAllPlanets] = useState([]);
+  const [planets, setPlanets] = useState(allPlanets);
   const [filters, setFilters] = useState(INITIAL_FILTERS);
-
-  const filterPlanetsByName = (name) => {
-    if (planets && name !== '') {
-      const filtered = planets.filter((planet) => planet.name.includes(name));
-      setPlanets(filtered);
-    } else {
-      setPlanets(planets);
-    }
-  };
 
   const handleFilterByName = ({ target: { value } }) => {
     setFilters({
       ...filters,
       filterByName: { name: value },
     });
-    filterPlanetsByName(value);
   };
+
+  useEffect(() => {
+    if (filters.filterByName.name !== '') {
+      const filtered = allPlanets.filter(
+        (planet) => planet.name.includes(filters.filterByName.name),
+      );
+      setPlanets(filtered);
+    } else {
+      setPlanets(allPlanets);
+    }
+  }, [allPlanets, filters.filterByName.name]);
 
   const filterPlanetsByValues = (valuesFilters, planetsData) => {
     if (valuesFilters.length !== 0) {
@@ -95,6 +97,8 @@ export function PlanetsProvider({ children }) {
     handleFilterValues,
     filterByNumericValues: filters.filterByNumericValues,
     deleteNumericFilter,
+    allPlanets,
+    setAllPlanets,
   };
 
   return (
