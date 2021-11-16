@@ -2,10 +2,10 @@ import React, { useContext } from 'react';
 import MyContext from '../context/MyContext';
 
 function FilterNumeric() {
-  const selectEquality = ['maior que', ' menor que', 'igual a'];
+  const selectEquality = ['maior que', 'igual a', 'menor que'];
 
   const {
-    // lisPlanets,
+    listPlanets,
     currentFilter,
     setCurrentFilter,
     setListPlanets,
@@ -24,31 +24,26 @@ function FilterNumeric() {
   function handleFilterNumeric({ comparison, column, value }) {
     switch (comparison) {
     case 'maior que':
-      return setListPlanets(resetList
+      return setListPlanets(listPlanets
         .filter((planet) => Number(planet[column]) > Number(value)));
 
     case 'menor que':
-      return setListPlanets(resetList
+      return setListPlanets(listPlanets
         .filter((planet) => Number(planet[column]) < Number(value)));
 
     case 'igual a':
-      return setListPlanets(resetList
+      return setListPlanets(listPlanets
         .filter((planet) => Number(planet[column]) === Number(value)));
 
     default:
-      return null;
+      return resetList;
     }
   }
 
   function handleClick() {
-    console.log(filters);
-    console.log(currentFilter);
-    console.log(arrayColumns);
     handleFilterNumeric(currentFilter);
     filterByNumericValues.push(currentFilter);
-
     const filterColumn = arrayColumns.filter((item) => item !== currentFilter.column);
-
     setArrayColumns(filterColumn);
   }
 

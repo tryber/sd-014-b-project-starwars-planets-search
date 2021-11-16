@@ -2,7 +2,13 @@ import React, { useContext } from 'react';
 import MyContext from '../context/MyContext';
 
 function SelectedFilters() {
-  const { filters, setFilters, arrayColumns, setArrayColumns } = useContext(MyContext);
+  const {
+    filters,
+    setFilters,
+    arrayColumns,
+    setArrayColumns,
+  } = useContext(MyContext);
+
   const { filterByNumericValues } = filters;
 
   function filterRemove(selectedColumn) {
@@ -20,8 +26,14 @@ function SelectedFilters() {
     <div>
       {filterByNumericValues.map(({ column, comparison, value }, index) => (
         <div key={ index }>
-          <span>{`${column} | ${comparison} | ${value}`}</span>
-          <button type="button" onClick={ () => filterRemove(column) }> X </button>
+          <p>{`${column} | ${comparison} | ${value}`}</p>
+          <button
+            data-testid="filter"
+            type="button"
+            onClick={ () => filterRemove(column) }
+          >
+            X
+          </button>
         </div>
       ))}
     </div>

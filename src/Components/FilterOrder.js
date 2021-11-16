@@ -1,30 +1,55 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import MyContext from '../context/MyContext';
 
 function FilterOrder() {
-  const selectOrder = ['population', 'orbital_period', 'diameter',
-    'rotation_period', 'surface_water'];
+  const selectOrder = [
+    // 'name',
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+    // 'climate',
+    // 'gravity',
+    // 'terrain',
+    // 'films',
+    // 'created',
+    // 'edited',
+    // 'url',
+  ];
 
-  const { listPlanets, setListPlanets, setFilters, filters } = useContext(MyContext);
+  const {
+    listPlanets,
+    setListPlanets,
+    setFilters,
+    filters,
+    resetList } = useContext(MyContext);
 
   const { order } = filters;
   const { column, sort } = order;
+  const num1 = -1;
 
   function handleChangeOrder({ target: { name, value } }) {
     setFilters({ ...filters, order: { ...order, [name]: value } });
   }
 
-  function filterOrder() {
-    const num1 = -1;
+  useEffect(() => {
+    if (column === 'name') {
+      const sorted = [...resetList].sort((a, b) => (
+        a[column].toLowerCase() > b[column].toLowerCase() ? 1 : num1));
+      return setListPlanets(sorted);
+    }
+  }, [column, num1, resetList, setListPlanets]);
 
+  function filterOrder() {
     if (sort === 'ASC') {
       const sorted = [...listPlanets].sort((a, b) => (
-        Number(a[column]) > Number(b[column]) ? 1 : num1));
+        Number(a[column].toLowerCase()) > Number(b[column].toLowerCase()) ? 1 : num1));
       return setListPlanets(sorted);
     }
     if (sort === 'DESC') {
       const sorted = [...listPlanets].sort((a, b) => (
-        Number(a[column]) < Number(b[column]) ? 1 : num1));
+        Number(a[column].toLowerCase()) < Number(b[column].toLowerCase()) ? 1 : num1));
       return setListPlanets(sorted);
     }
     console.log(order);
