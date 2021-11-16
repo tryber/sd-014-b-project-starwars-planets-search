@@ -7,11 +7,14 @@ function SelectedFilters() {
     setFilters,
     arrayColumns,
     setArrayColumns,
+    setListPlanets,
+    resetList,
+    listPlanets,
   } = useContext(MyContext);
 
   const { filterByNumericValues } = filters;
 
-  function filterRemove(selectedColumn) {
+  function filterRemove(selectedColumn, comparison, value) {
     const filtered = filterByNumericValues
       .filter(({ column }) => column !== selectedColumn);
     setArrayColumns([...arrayColumns, selectedColumn]);
@@ -19,25 +22,66 @@ function SelectedFilters() {
       ...filters,
       filterByNumericValues: filtered,
     });
-    console.log(selectedColumn);
+
+    const result = resetList.filter((planet) => {
+      switch (comparison) {
+      case 'maior que':
+        return Number(planet[selectedColumn]) < Number(value);
+      case 'menor que':
+        return Number(planet[selectedColumn]) > Number(value);
+      case 'igual a':
+        return Number(planet[selectedColumn]) !== Number(value);
+      default:
+        return resetList;
+      }
+    });
+
+    const sorted = () => {
+      if (listPlanets > 1) {
+        return [...listPlanets, ...result];
+      }
+      return resetList;
+    };
+
+    setListPlanets(sorted);
   }
 
   return (
     <div>
       {filterByNumericValues.map(({ column, comparison, value }, index) => (
-        <div key={ index }>
-          <p>{`${column} | ${comparison} | ${value}`}</p>
+        <label
+          data-testid="filter"
+          htmlFor="btn-remove"
+          key={ index }
+        >
+          {`${column} | ${comparison} | ${value}`}
           <button
-            data-testid="filter"
+            id="btn-remove"
             type="button"
-            onClick={ () => filterRemove(column) }
+            onClick={ () => filterRemove(column, comparison, value) }
           >
             X
           </button>
-        </div>
+        </label>
       ))}
     </div>
   );
 }
 
 export default SelectedFilters;
+
+// const result = () => {
+//   switch (comparison) {
+//   case 'maior que':
+//     return resetList
+//       .filter((planet) => Number(planet[selectedColumn]) < Number(value));
+//   case 'menor que':
+//     return resetList
+//       .filter((planet) => Number(planet[selectedColumn]) > Number(value));
+//   case 'igual a':
+//     return resetList
+//       .filter((planet) => Number(planet[selectedColumn]) !== Number(value));
+//   default:
+//     return null;
+//   }
+// };

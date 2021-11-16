@@ -12,7 +12,6 @@ function FilterNumeric() {
     filters,
     arrayColumns,
     setArrayColumns,
-    resetList,
   } = useContext(MyContext);
 
   const { filterByNumericValues } = filters;
@@ -22,22 +21,19 @@ function FilterNumeric() {
   }
 
   function handleFilterNumeric({ comparison, column, value }) {
-    switch (comparison) {
-    case 'maior que':
-      return setListPlanets(listPlanets
-        .filter((planet) => Number(planet[column]) > Number(value)));
-
-    case 'menor que':
-      return setListPlanets(listPlanets
-        .filter((planet) => Number(planet[column]) < Number(value)));
-
-    case 'igual a':
-      return setListPlanets(listPlanets
-        .filter((planet) => Number(planet[column]) === Number(value)));
-
-    default:
-      return resetList;
-    }
+    const filterNumeric = listPlanets.filter((planet) => {
+      switch (comparison) {
+      case 'maior que':
+        return Number(planet[column]) > Number(value);
+      case 'menor que':
+        return Number(planet[column]) < Number(value);
+      case 'igual a':
+        return Number(planet[column]) === Number(value);
+      default:
+        return null;
+      }
+    });
+    return setListPlanets(filterNumeric);
   }
 
   function handleClick() {
@@ -88,3 +84,23 @@ function FilterNumeric() {
 }
 
 export default FilterNumeric;
+
+// function handleFilterNumeric(element) {
+//   const { comparison, column, value } = element;
+//   switch (comparison) {
+//   case 'maior que':
+//     return setListPlanets(listPlanets
+//       .filter((planet) => Number(planet[column]) > Number(value)));
+
+//   case 'menor que':
+//     return setListPlanets(listPlanets
+//       .filter((planet) => Number(planet[column]) < Number(value)));
+
+//   case 'igual a':
+//     return setListPlanets(listPlanets
+//       .filter((planet) => Number(planet[column]) === Number(value)));
+
+//   default:
+//     return null;
+//   }
+// }

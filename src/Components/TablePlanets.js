@@ -1,9 +1,8 @@
 import React, { useContext } from 'react';
 import MyContext from '../context/MyContext';
-import Loading from './Loading';
 
 function TablePlanets() {
-  const { loading, listPlanets } = useContext(MyContext);
+  const { listPlanets } = useContext(MyContext);
   return (
     <table>
       <thead>
@@ -24,7 +23,7 @@ function TablePlanets() {
         </tr>
       </thead>
       <tbody>
-        { loading ? <Loading /> : listPlanets.map((planet) => (
+        { listPlanets.map((planet) => (
           <tr key={ planet.name }>
             <td data-testid="planet-name">{ planet.name }</td>
             <td>{ planet.rotation_period }</td>

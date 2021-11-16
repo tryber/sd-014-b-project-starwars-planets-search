@@ -1,21 +1,21 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import MyContext from '../context/MyContext';
 
 function FilterOrder() {
   const selectOrder = [
-    // 'name',
+    'name',
     'population',
     'orbital_period',
     'diameter',
     'rotation_period',
     'surface_water',
-    // 'climate',
-    // 'gravity',
-    // 'terrain',
-    // 'films',
-    // 'created',
-    // 'edited',
-    // 'url',
+    'climate',
+    'gravity',
+    'terrain',
+    'films',
+    'created',
+    'edited',
+    'url',
   ];
 
   const {
@@ -23,7 +23,7 @@ function FilterOrder() {
     setListPlanets,
     setFilters,
     filters,
-    resetList } = useContext(MyContext);
+  } = useContext(MyContext);
 
   const { order } = filters;
   const { column, sort } = order;
@@ -33,13 +33,13 @@ function FilterOrder() {
     setFilters({ ...filters, order: { ...order, [name]: value } });
   }
 
-  useEffect(() => {
-    if (column === 'name') {
-      const sorted = [...resetList].sort((a, b) => (
-        a[column].toLowerCase() > b[column].toLowerCase() ? 1 : num1));
-      return setListPlanets(sorted);
-    }
-  }, [column, num1, resetList, setListPlanets]);
+  // useEffect(() => {
+  //   if (column === 'name') {
+  //     const sorted = listPlanets.sort((a, b) => (
+  //       a[column].toLowerCase() > b[column].toLowerCase() ? 1 : num1));
+  //     return setListPlanets(sorted);
+  //   }
+  // }, [column, listPlanets, num1, setListPlanets]);
 
   function filterOrder() {
     if (sort === 'ASC') {
@@ -62,7 +62,7 @@ function FilterOrder() {
   return (
     <section>
       <label htmlFor="column">
-        Ordenar
+        Ordenar por:
         <select
           data-testid="column-sort"
           name="column"

@@ -55,6 +55,15 @@ function Provider({ children }) {
     getPlanets();
   }, []);
 
+  useEffect(() => {
+    const { order: { column, sort } } = filters;
+    const num1 = -1;
+    if (sort === 'ASC') {
+      const sorted = listPlanets.sort((a, b) => (a[column] > b[column] ? 1 : num1));
+      return setListPlanets(sorted);
+    }
+  }, [filters, listPlanets, setListPlanets]);
+
   return (
     <MyContext.Provider value={ context }>
       {children}
