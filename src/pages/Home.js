@@ -4,16 +4,18 @@ import TablePlanets from '../Components/TablePlanets';
 import FilterName from '../Components/FilterName';
 import FilterNumeric from '../Components/FilterNumeric';
 import SelectedFilters from '../Components/SelectedFilters';
+import FilterOrder from '../Components/FilterOrder';
 
 function Home() {
   return (
-    <div>
+    <main>
       <Header />
       <FilterName />
       <FilterNumeric />
       <SelectedFilters />
+      <FilterOrder />
       <TablePlanets />
-    </div>
+    </main>
   );
 }
 

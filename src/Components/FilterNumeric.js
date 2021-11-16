@@ -3,27 +3,22 @@ import MyContext from '../context/MyContext';
 
 function FilterNumeric() {
   const selectEquality = ['maior que', ' menor que', 'igual a'];
-  const selectOrder = ['population', 'orbital_period', 'diameter',
-    'rotation_period', 'surface_water'];
 
   const {
+    // lisPlanets,
     currentFilter,
     setCurrentFilter,
     setListPlanets,
-    resetList,
     filters,
     arrayColumns,
     setArrayColumns,
-    setFilters,
+    resetList,
   } = useContext(MyContext);
+
+  const { filterByNumericValues } = filters;
 
   function handleChange({ target: { name, value } }) {
     setCurrentFilter({ ...currentFilter, [name]: value });
-  }
-
-  function handleChangeOrder({ target: { name, value } }) {
-    const { order } = filters;
-    setFilters({ ...order, [name]: value });
   }
 
   function handleFilterNumeric({ comparison, column, value }) {
@@ -45,8 +40,6 @@ function FilterNumeric() {
     }
   }
 
-  const { filterByNumericValues } = filters;
-
   function handleClick() {
     console.log(filters);
     console.log(currentFilter);
@@ -59,16 +52,7 @@ function FilterNumeric() {
     setArrayColumns(filterColumn);
   }
 
-  // function filterOrder({ column, sort }) {
-  //   resetList.filter()
-  // }
-
-  function handleOrder() {
-
-  }
-
   const { column, comparison, value } = currentFilter;
-  const { order } = filters;
 
   return (
     <section>
@@ -100,51 +84,9 @@ function FilterNumeric() {
       <button
         type="button"
         data-testid="button-filter"
-        onClick={ () => handleClick() }
+        onClick={ handleClick }
       >
         Filtrar
-      </button>
-      <label htmlFor="column">
-        Ordenar
-        <select
-          data-testid="column-sort"
-          id="column"
-          name="column"
-          value={ order.column }
-          onChange={ () => handleChangeOrder() }
-        >
-          {selectOrder
-            .map((name, index) => <option key={ index }>{name}</option>)}
-        </select>
-      </label>
-      <label htmlFor="asc">
-        Ascendente
-        <input
-          data-testid="column-sort-input-asc"
-          is="asc"
-          type="radio"
-          name="asc"
-          value="ASC"
-          onChange={ () => handleChangeOrder() }
-        />
-      </label>
-      <label htmlFor="desc">
-        Descendente
-        <input
-          data-testid="column-sort-input-desc"
-          id="desc"
-          type="radio"
-          name="desc"
-          value="DESC"
-          onChange={ () => handleChangeOrder() }
-        />
-      </label>
-      <button
-        data-testid="column-sort-button"
-        type="button"
-        onClick={ () => handleOrder() }
-      >
-        Ordenar
       </button>
     </section>
   );
