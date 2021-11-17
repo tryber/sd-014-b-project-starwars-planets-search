@@ -4,12 +4,25 @@ import TableBody from './TableBody';
 import TableHeader from './TableHeader';
 
 function Table() {
-  const { data, name } = useContext(MyContext);
+  const { data, name, comparison, column, value, showFilter } = useContext(MyContext);
   const [fetchTrue, setFetchTrue] = useState(false);
 
   useEffect(() => {
     if (data.length > 0) setFetchTrue(true);
   }, [data]);
+
+  const filterDataNumbers = () => {
+    if (comparison === 'maior que') {
+      return data.filter((obj) => Number(obj[column]) > Number(value));
+    }
+    if (comparison === 'menor que') {
+      return data.filter((obj) => Number(obj[column]) < Number(value));
+    }
+    if (comparison === 'igual a') {
+      return data.filter((obj) => Number(obj[column]) === Number(value));
+    }
+    return [];
+  };
 
   return (
     <div>
@@ -19,11 +32,16 @@ function Table() {
         </thead>
         <tbody>
           {
-            !name && fetchTrue && data.map((obj, index) => (
+            !name && !showFilter && fetchTrue && data.map((obj, index) => (
               <TableBody key={ index } obj={ obj } />))
           }
           {
-            name && data.filter((obj) => obj.name.includes(name)).map((obj, index) => (
+            name && !showFilter
+            && data.filter((obj) => obj.name.includes(name)).map((obj, index) => (
+              <TableBody key={ index } obj={ obj } />))
+          }
+          {
+            filterDataNumbers().map((obj, index) => (
               <TableBody key={ index } obj={ obj } />))
           }
         </tbody>

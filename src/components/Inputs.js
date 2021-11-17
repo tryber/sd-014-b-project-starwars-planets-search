@@ -1,22 +1,12 @@
-import React, { useContext } from 'react';
-import MyContext from '../context/MyContext';
+import React from 'react';
+import InputName from './InputName';
+import InputColumnFilter from './InputColumnFilter';
 
 function Inputs() {
-  const { setFiltersByName, name } = useContext(MyContext);
-
-  const handleClick = ({ target }) => {
-    const { value } = target;
-    setFiltersByName(value);
-  };
-
   return (
     <div>
-      <input
-        data-testid="name-filter"
-        type="text"
-        value={ name }
-        onChange={ handleClick }
-      />
+      <InputName />
+      <InputColumnFilter />
     </div>
   );
 }
