@@ -17,14 +17,12 @@ function Table() {
   } = useContext(MyContext);
 
   const [fetchTrue, setFetchTrue] = useState(false);
-
   useEffect(() => {
     if (data.length > 0) {
       setFetchTrue(true);
       setCopyData([...data]);
-      console.log('setdata');
     }
-  }, [data]);
+  }, [data, setCopyData]);
 
   useEffect(() => {
     if (comparison === 'maior que') {
@@ -39,7 +37,7 @@ function Table() {
       const newArray = copyData.filter((obj) => Number(obj[column]) === Number(value));
       setCopyData(newArray);
     }
-  }, [filters]);
+  }, [column, comparison, copyData, filters, setCopyData, value]);
 
   return (
     <div>
