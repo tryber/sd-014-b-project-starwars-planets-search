@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import fetchApiPlanets from '../services/servicesAPI';
-import MyContext from "./MyContext";
+import MyContext from './MyContext';
 
 function FetchProvider({ children }) {
   const [data, setData] = useState([]);
