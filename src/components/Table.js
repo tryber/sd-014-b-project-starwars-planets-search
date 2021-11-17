@@ -4,7 +4,7 @@ import TableBody from './TableBody';
 import TableHeader from './TableHeader';
 
 function Table() {
-  const { data } = useContext(MyContext);
+  const { data, name } = useContext(MyContext);
   const [fetchTrue, setFetchTrue] = useState(false);
 
   useEffect(() => {
@@ -19,7 +19,12 @@ function Table() {
         </thead>
         <tbody>
           {
-            fetchTrue && data.map((obj, index) => <TableBody key={ index } obj={ obj } />)
+            !name && fetchTrue && data.map((obj, index) => (
+              <TableBody key={ index } obj={ obj } />))
+          }
+          {
+            name && data.filter((obj) => obj.name.includes(name)).map((obj, index) => (
+              <TableBody key={ index } obj={ obj } />))
           }
         </tbody>
       </table>
