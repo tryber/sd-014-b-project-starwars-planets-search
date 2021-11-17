@@ -2,18 +2,18 @@ import React, { useContext } from 'react';
 import MyContext from '../context/MyContext';
 
 function InputName() {
-  const { setFiltersByName, name } = useContext(MyContext);
+  const { filterName, setFilterName } = useContext(MyContext);
 
   const handleName = ({ target }) => {
     const { value } = target;
-    setFiltersByName(value);
+    setFilterName(value);
   };
 
   return (
     <input
       data-testid="name-filter"
       type="text"
-      value={ name }
+      value={ filterName }
       onChange={ handleName }
     />
   );

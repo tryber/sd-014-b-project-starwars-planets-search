@@ -1,15 +1,15 @@
 import React from 'react';
-import FetchProvider from '../context/fetchProvider';
+import MyProvider from '../context/MyProvider';
 import Table from '../components/Table';
 import Inputs from '../components/Inputs';
 
 function Home() {
   return (
     <div>
-      <FetchProvider>
+      <MyProvider>
         <Inputs />
         <Table />
-      </FetchProvider>
+      </MyProvider>
     </div>
   );
 }

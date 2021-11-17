@@ -1,67 +1,38 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import MyContext from '../context/MyContext';
 import TableBody from './TableBody';
 import TableHeader from './TableHeader';
+import HandleFetchData from '../Hooks/HandleFetchData';
+import HandleFilterByNumericValues from '../Hooks/HandleFilterByNumericValues';
 
 function Table() {
   const {
-    data,
-    name,
-    comparison,
-    column,
-    value,
+    filterName,
     showFilter,
-    copyData,
-    setCopyData,
-    filters,
   } = useContext(MyContext);
 
-  const [fetchTrue, setFetchTrue] = useState(false);
-  useEffect(() => {
-    if (data.length > 0) {
-      setFetchTrue(true);
-      setCopyData([...data]);
-    }
-  }, [data, setCopyData]); // Corrigido erro do eslint
-
-  useEffect(() => {
-    if (comparison === 'maior que') {
-      const newArray = copyData.filter((obj) => Number(obj[column]) > Number(value));
-      setCopyData(newArray);
-    }
-    if (comparison === 'menor que') {
-      const newArray = copyData.filter((obj) => Number(obj[column]) < Number(value));
-      setCopyData(newArray);
-    }
-    if (comparison === 'igual a') {
-      const newArray = copyData.filter((obj) => Number(obj[column]) === Number(value));
-      setCopyData(newArray);
-    }
-  }, [column, comparison, copyData, filters, setCopyData, value]); // Corrigido erro do eslint
-
+  const vamosver = HandleFetchData();
+  const { data, fetchTrue, dataInOrder } = vamosver;
+  const vamosver2 = HandleFilterByNumericValues();
+  const { copyData } = vamosver2;
   return (
-    <div>
+    <main>
       <table border="1">
         <thead>
           <TableHeader />
         </thead>
         <tbody>
-          {
-            !name && !showFilter && fetchTrue && data.map((obj, index) => (
-              <TableBody key={ index } obj={ obj } />))
-          }
-          {
-            name && !showFilter
-            && data.filter((obj) => obj.name.includes(name)).map((obj, index) => (
-              <TableBody key={ index } obj={ obj } />))
-          }
-          {
-            showFilter && copyData.map((obj, index) => (
-              <TableBody key={ index } obj={ obj } />))
-          }
+          { !filterName && !showFilter && fetchTrue && dataInOrder.map((obj, index) => (
+            <TableBody key={ index } obj={ obj } />)) }
+          { filterName && !showFilter
+            && data.filter((obj) => obj.name.includes(filterName)).map((obj, index) => (
+              <TableBody key={ index } obj={ obj } />)) }
+          { showFilter && copyData.map((obj, index) => (
+            <TableBody key={ index } obj={ obj } />)) }
         </tbody>
       </table>
-    </div>
+    </main>
   );
 }
+
 export default Table;

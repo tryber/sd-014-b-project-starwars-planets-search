@@ -2,20 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function TableBody({ obj }) {
-  const magicNumber = 9;
+  const INDEX = 9;
   const array = Object.values(obj);
-  array.splice(magicNumber, 1);
+  array.splice(INDEX, 1);
   return (
     <tr>
       {
-        array.map((item, index) => <td key={ index }>{ item }</td>)
+        array.map((item, index) => (
+          <td data-testid={ index === 0 && 'planet-name' } key={ index }>{item}</td>))
       }
     </tr>
   );
 }
-
 TableBody.propTypes = {
   obj: PropTypes.objectOf(PropTypes.any).isRequired,
 };
-
 export default TableBody;
