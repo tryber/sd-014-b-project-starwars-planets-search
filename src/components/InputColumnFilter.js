@@ -2,21 +2,27 @@ import React, { useContext, useState } from 'react';
 import MyContext from '../context/MyContext';
 
 function InputColumnFilter() {
-  const { setFilterByNumericValues, setShowFilter } = useContext(MyContext);
+  const {
+    setFilterByNumericValues,
+    setShowFilter,
+    setObjKeys,
+    objKeys,
+  } = useContext(MyContext);
   const [column, setColumn] = useState('population');
-  const [comparison, setComparison] = useState('maior');
+  const [comparison, setComparison] = useState('maior que');
   const [inputValue, setValue] = useState('');
 
   const handleClick = () => {
     setFilterByNumericValues(column, comparison, inputValue);
     setShowFilter(true);
+    const newColumn = objKeys.filter((optionColumn) => optionColumn !== column);
+    setObjKeys(newColumn);
   };
 
   const handleChangeNumericValues = ({ target }, callback) => {
     const { value } = target;
     callback(value);
   };
-
   return (
     <form>
       <label htmlFor="column">
@@ -26,11 +32,16 @@ function InputColumnFilter() {
           id="column"
           onChange={ (e) => handleChangeNumericValues(e, setColumn) }
         >
-          <option name="column" value="population">population</option>
-          <option name="column" value="orbital_period">orbital_period</option>
-          <option name="column" value="diameter">diameter</option>
-          <option name="column" value="rotation_period">rotation_period</option>
-          <option name="column" value="surface_water">surface_water</option>
+          {
+            objKeys.map((optionColumn, index) => (
+              <option
+                key={ index }
+                name="column"
+                value={ optionColumn }
+              >
+                {optionColumn}
+              </option>))
+          }
         </select>
       </label>
       <label htmlFor="comparison">
@@ -61,5 +72,4 @@ function InputColumnFilter() {
     </form>
   );
 }
-
 export default InputColumnFilter;

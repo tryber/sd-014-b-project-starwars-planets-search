@@ -4,25 +4,42 @@ import TableBody from './TableBody';
 import TableHeader from './TableHeader';
 
 function Table() {
-  const { data, name, comparison, column, value, showFilter } = useContext(MyContext);
+  const {
+    data,
+    name,
+    comparison,
+    column,
+    value,
+    showFilter,
+    copyData,
+    setCopyData,
+    filters,
+  } = useContext(MyContext);
+
   const [fetchTrue, setFetchTrue] = useState(false);
 
   useEffect(() => {
-    if (data.length > 0) setFetchTrue(true);
+    if (data.length > 0) {
+      setFetchTrue(true);
+      setCopyData([...data]);
+      console.log('setdata');
+    }
   }, [data]);
 
-  const filterDataNumbers = () => {
+  useEffect(() => {
     if (comparison === 'maior que') {
-      return data.filter((obj) => Number(obj[column]) > Number(value));
+      const newArray = copyData.filter((obj) => Number(obj[column]) > Number(value));
+      setCopyData(newArray);
     }
     if (comparison === 'menor que') {
-      return data.filter((obj) => Number(obj[column]) < Number(value));
+      const newArray = copyData.filter((obj) => Number(obj[column]) < Number(value));
+      setCopyData(newArray);
     }
     if (comparison === 'igual a') {
-      return data.filter((obj) => Number(obj[column]) === Number(value));
+      const newArray = copyData.filter((obj) => Number(obj[column]) === Number(value));
+      setCopyData(newArray);
     }
-    return [];
-  };
+  }, [filters]);
 
   return (
     <div>
@@ -41,7 +58,7 @@ function Table() {
               <TableBody key={ index } obj={ obj } />))
           }
           {
-            filterDataNumbers().map((obj, index) => (
+            showFilter && copyData.map((obj, index) => (
               <TableBody key={ index } obj={ obj } />))
           }
         </tbody>
@@ -49,5 +66,4 @@ function Table() {
     </div>
   );
 }
-
 export default Table;

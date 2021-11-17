@@ -5,14 +5,13 @@ import MyContext from './MyContext';
 
 function FetchProvider({ children }) {
   const [data, setData] = useState([]);
-
   useEffect(() => {
     (async () => {
+      console.log('fetch');
       const result = await fetchApiPlanets();
       setData(result);
     })();
   }, []);
-
   const objFilters = {
     filters: {
       filterByName: {
@@ -26,11 +25,9 @@ function FetchProvider({ children }) {
       ],
     },
   };
-
   const [filters, setFilters] = useState({ ...objFilters });
   const { filters: { filterByName: { name } } } = filters;
   const { filters: { filterByNumericValues: [{ column, comparison, value }] } } = filters;
-
   const setFiltersByName = (params) => {
     const newFilters = {
       filters: {
@@ -42,7 +39,6 @@ function FetchProvider({ children }) {
     };
     setFilters(newFilters);
   };
-
   const setFilterByNumericValues = (paramsColum, paramsComparison, paramsValue) => {
     const newFilters = {
       filters: {
@@ -56,25 +52,39 @@ function FetchProvider({ children }) {
         ],
       },
     };
-
     setFilters(newFilters);
   };
-
   const [showFilter, setShowFilter] = useState(false);
+  const arrayObjKeys = [
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ];
+
+  const [objKeys, setObjKeys] = useState([...arrayObjKeys]);
+  const [copyData, setCopyData] = useState([]);
 
   const objContext = {
     data,
     setFiltersByName,
     name,
-    setFilterByNumericValues,
     setShowFilter,
     showFilter,
+    setFilterByNumericValues,
     column,
     comparison,
     value,
+    setObjKeys,
+    objKeys,
+    copyData,
+    setCopyData,
+    filters,
   };
 
   return (
+
     <MyContext.Provider value={ objContext }>
       { children }
     </MyContext.Provider>
