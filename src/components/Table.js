@@ -22,7 +22,7 @@ function Table() {
       setFetchTrue(true);
       setCopyData([...data]);
     }
-  }, [data, setCopyData]);
+  }, [data, setCopyData]); // Corrigido erro do eslint
 
   useEffect(() => {
     if (comparison === 'maior que') {
@@ -37,7 +37,7 @@ function Table() {
       const newArray = copyData.filter((obj) => Number(obj[column]) === Number(value));
       setCopyData(newArray);
     }
-  }, [column, comparison, copyData, filters, setCopyData, value]);
+  }, [column, comparison, copyData, filters, setCopyData, value]); // Corrigido erro do eslint
 
   return (
     <div>
