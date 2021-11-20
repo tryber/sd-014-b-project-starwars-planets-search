@@ -1,9 +1,9 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function FilterNumber() {
   const { data, setPlanets, fetch } = useContext(PlanetsContext);
-  const [planets, setPlanetFilter] = useState([]);
+  const [setPlanetFilter] = useState([]);
   const [filters, setFilters] = useState({
     filterByNumericValues: {
       column: 'population',
