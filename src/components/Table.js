@@ -22,7 +22,6 @@ function Table() {
 
   return (
     <table>
-      { console.log(data) }
       <thead>
         <tr>
           { dataKeys.map((keys) => <th key={ keys }>{ keys}</th>) }

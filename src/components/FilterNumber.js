@@ -2,40 +2,37 @@ import React, { useContext, useState } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function FilterNumber() {
-  const { data, setPlanets, fetch } = useContext(PlanetsContext);
-  const [setPlanetFilter] = useState([]);
+  const { data, setPlanets } = useContext(PlanetsContext);
   const [filters, setFilters] = useState({
     filterByNumericValues: {
       column: 'population',
       comparison: 'maior que',
-      value: 100000,
+      value: 0,
     },
   });
 
-  async function fetchPlanets() {
-    const dataPlanets = await fetch();
-    setPlanetFilter(dataPlanets);
-  }
-
   function handleChange({ target }) {
     const filter = filters;
-    console.log(filter.filterByNumericValues.column);
     filter.filterByNumericValues[target.name] = target.value;
     setFilters(filter);
   }
 
   function filterSubmit() {
-    fetchPlanets();
     const { filterByNumericValues: { column, comparison, value } } = filters;
     if (comparison === 'menor que') {
       const dataReturn = data.filter((
         planet,
-      ) => Number(planet[column] < value));
+      ) => Number(planet[column]) < Number(value));
+      setPlanets(dataReturn);
+    } else if (comparison === 'maior que') {
+      const dataReturn = data.filter((
+        planet,
+      ) => Number(planet[column]) > Number(value));
       setPlanets(dataReturn);
     } else {
       const dataReturn = data.filter((
         planet,
-      ) => Number(planet[column]) > value);
+      ) => Number(planet[column]) === Number(value));
       setPlanets(dataReturn);
     }
   }
