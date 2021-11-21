@@ -3,22 +3,35 @@ import PlanetsContext from '../context/PlanetsContext';
 
 function FilterNumber() {
   const { data, setPlanets } = useContext(PlanetsContext);
-  const [filters, setFilters] = useState({
-    filterByNumericValues: {
-      column: 'population',
-      comparison: 'maior que',
-      value: 0,
-    },
+  const [inputs, setInputs] = useState({
+    column: 'population',
+    comparison: 'maior que',
+    value: 0,
   });
+  const [filters, setFilters] = useState({
+    filterByNumericValues: [],
+  });
+  const optionsColumns = [
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ];
 
   function handleChange({ target }) {
-    const filter = filters;
-    filter.filterByNumericValues[target.name] = target.value;
-    setFilters(filter);
+    const input = inputs;
+    input[target.name] = target.value;
+    setInputs(input);
   }
 
   function filterSubmit() {
-    const { filterByNumericValues: { column, comparison, value } } = filters;
+    const { column, comparison, value } = inputs;
+    const filterArray = filters.filterByNumericValues;
+    filterArray.push(inputs);
+    const newFilter = filters;
+    newFilter.filterByNumericValues = filterArray;
+    setFilters(newFilter);
     if (comparison === 'menor que') {
       const dataReturn = data.filter((
         planet,
@@ -46,11 +59,19 @@ function FilterNumber() {
           id="filterNumber"
           onChange={ handleChange }
         >
-          <option>population</option>
-          <option>orbital_period</option>
-          <option>diameter</option>
-          <option>rotation_period</option>
-          <option>surface_water</option>
+          {
+            (filters.filterByNumericValues.length >= 1) ? (
+              optionsColumns.filter((
+                option,
+              ) => filters.filterByNumericValues.some((
+                optionFilter,
+              ) => optionFilter.column !== option)).map((
+                optionReturn,
+              ) => <option key={ optionReturn }>{ optionReturn }</option>)
+            ) : (
+              optionsColumns.map((option) => <option key={ option }>{ option }</option>)
+            )
+          }
         </select>
       </label>
       <select
