@@ -40,6 +40,7 @@ const StarwarsProvider = ({ children }) => {
 
   useEffect(() => {
     filterPlanetByName();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters]);
 
   const state = {
