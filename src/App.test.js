@@ -159,7 +159,7 @@ describe('2 - Filtre a tabela através de um texto, inserido num *campo de texto
   });
 });
 
-describe('3 - Crie um filtro para valores numéricos', () => {
+describe.only('3 - Crie um filtro para valores numéricos', () => {
   beforeAll(mockFetch);
   beforeEach(cleanup);
 
@@ -236,21 +236,21 @@ describe('3 - Crie um filtro para valores numéricos', () => {
     expect(await screen.findAllByRole(ROW_ROLE_SELECTOR)).toHaveLength(8);
   });
 
-  // it('Filtre utilizando a comparação "igual a"', async () => {
-  //   await act(async () => {
-  //     render(<App />);
-  //   });
+  it('Filtre utilizando a comparação "igual a"', async () => {
+    await act(async () => {
+      render(<App />);
+    });
 
-  //   fireEvent.change(await screen.findByTestId(COLUMN_FILTER_SELECTOR), { target: { value: 'population' }});
-  //   fireEvent.change(await screen.findByTestId(COMPARISON_FILTER_SELECTOR), { target: { value: 'igual a' }});
-  //   fireEvent.change(await screen.findByTestId(VALUE_FILTER_SELECTOR), { target: { value: '200000' }});
-  //   fireEvent.click(await screen.findByTestId(BUTTON_FILTER_SELECTOR));
+    fireEvent.change(await screen.findByTestId(COLUMN_FILTER_SELECTOR), { target: { value: 'population' }});
+    fireEvent.change(await screen.findByTestId(COMPARISON_FILTER_SELECTOR), { target: { value: 'igual a' }});
+    fireEvent.change(await screen.findByTestId(VALUE_FILTER_SELECTOR), { target: { value: '200000' }});
+    fireEvent.click(await screen.findByTestId(BUTTON_FILTER_SELECTOR));
 
-  //   expect(await screen.findAllByRole(ROW_ROLE_SELECTOR)).toHaveLength(2);
-  // });
+    expect(await screen.findAllByRole(ROW_ROLE_SELECTOR)).toHaveLength(2);
+  });
 });
 
-describe.only('4 - Não utilize filtros repetidos', () => {
+describe('4 - Não utilize filtros repetidos', () => {
   beforeAll(mockFetch);
   beforeEach(cleanup);
 

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Context from '../context/Context';
 import tableHeaders from '../utils/tableHeaders';
 import Header from './Header';
@@ -15,6 +15,17 @@ function Table() {
     filteredByComparison,
   } = useContext(Context);
 
+  const [renderTable, setRenderTable] = useState([]);
+
+  useEffect(() => {
+    setRenderTable(planets);
+  }, [planets]);
+
+  useEffect(() => {
+    if (filteredByName.length > 0) setRenderTable(filteredByName);
+    if (filteredByComparison.length > 0) setRenderTable(filteredByComparison);
+  }, [filteredByName, filteredByComparison]);
+
   function renderTh() {
     return tableHeaders.map((header) => (
       <th key={ header }>{ header }</th>
@@ -22,16 +33,16 @@ function Table() {
   }
 
   function renderTd() {
-    let renders = [];
-    renders = planets;
-    if (filteredByName.length >= 1) {
-      renders = filteredByName;
-    }
-    if (filteredByComparison.length >= 1) {
-      renders = filteredByComparison;
-      console.log(removedColumn);
-    }
-    return renders.map((data) => (
+    console.log(renderTable);
+    // let renders = [];
+    // renders = planets;
+    // if (filteredByName.length >= 1) {
+    //   renders = filteredByName;
+    // }
+    // if (filteredByComparison.length >= 1) {
+    //   renders = filteredByComparison;
+    // }
+    return renderTable.map((data) => (
       <tr key={ data }>
         { Object.values(data).map((iten) => (
           <td key={ iten }>

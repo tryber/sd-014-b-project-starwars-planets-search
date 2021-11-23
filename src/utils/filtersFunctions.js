@@ -15,8 +15,9 @@ export function comparePlanet(compare, value, setState, list) {
     setState(fiterComparison);
   }
   if (compare === igualA) {
-    const fiterComparison = list.filter((planet) => parseInt(planet
-      .population, 0) === value);
+    const fiterComparison = list.filter((planet) => planet
+      .population === value);
+    console.log(fiterComparison);
     setState(fiterComparison);
   }
 }
@@ -38,9 +39,8 @@ export function compareOrbital(compare, value, setState, list) {
     setState(fiterComparison);
   }
   if (compare === igualA) {
-    const fiterComparison = list.filter((planet) => parseInt(planet
-      .orbital_period, 0) === value && planet
-      .orbital_period !== 'unknown');
+    const fiterComparison = list.filter((planet) => planet
+      .orbital_period === value);
     setState(fiterComparison);
   }
 }
@@ -62,9 +62,8 @@ export function compareDiameter(compare, value, setState, list) {
     setState(fiterComparison);
   }
   if (compare === igualA) {
-    const fiterComparison = list.filter((planet) => parseInt(planet
-      .diameter, 0) === value && planet
-      .diameter !== 'unknown');
+    const fiterComparison = list.filter((planet) => planet
+      .diameter === value);
     setState(fiterComparison);
   }
 }
@@ -86,9 +85,8 @@ export function compareRotation(compare, value, setState, list) {
     setState(fiterComparison);
   }
   if (compare === igualA) {
-    const fiterComparison = list.filter((planet) => parseInt(planet
-      .rotation_period, 0) === value && planet
-      .rotation_period !== 'unknown');
+    const fiterComparison = list.filter((planet) => planet
+      .rotation_period === value);
     setState(fiterComparison);
   }
 }
@@ -110,9 +108,8 @@ export function compareSurface(compare, value, setState, list) {
     setState(fiterComparison);
   }
   if (compare === igualA) {
-    const fiterComparison = list.filter((planet) => parseInt(planet
-      .surface_water, 0) === value && planet
-      .surface_water !== 'unknown');
+    const fiterComparison = list.filter((planet) => planet
+      .surface_water === value);
     setState(fiterComparison);
   }
 }
