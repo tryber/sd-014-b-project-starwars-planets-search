@@ -1,12 +1,18 @@
 import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
 import Context from './Context';
+import { comparePlanet,
+  compareDiameter,
+  compareRotation,
+  compareSurface,
+  compareOrbital } from '../utils/filtersFunctions';
 
 function Provider({ children }) {
   const [planets, setPlanets] = useState([]);
   const [loading, setLoading] = useState(false);
   const [filteredByName, setFilteredByName] = useState([]);
   const [filteredByComparison, setFilteredByComparison] = useState([]);
+  const [removedColumn, setRemovedColun] = useState('');
   const [filteredValues, setFilteredValues] = useState(
     {
       filters: {
@@ -24,6 +30,7 @@ function Provider({ children }) {
     },
   );
 
+  // Requisição da API
   useEffect(() => {
     async function fetchPlanets() {
       try {
@@ -87,129 +94,23 @@ function Provider({ children }) {
     setNewValue(0);
   }, []);
 
-  // auxiliado por Ariane Ueti
-  // references: https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Number
-  function comparePlanet(compare, value, setState) {
-    const maiorQue = 'maior que';
-    const menorQue = 'menor que';
-    const igualA = 'igual a';
-    if (compare === maiorQue) {
-      const filterComparison = planets
-        .filter((planet) => Number(planet.population) > value);
-      setState(filterComparison);
-    }
-    if (compare === menorQue) {
-      const fiterComparison = planets.filter((planet) => Number(planet
-        .population) < value);
-      setState(fiterComparison);
-    }
-    if (compare === igualA) {
-      const fiterComparison = planets.filter((planet) => Number(planet
-        .population) === value);
-      setState(fiterComparison);
-    }
-  }
-
-  function compareOrbital(compare, value, setState) {
-    const maiorQue = 'maior que';
-    const menorQue = 'menor que';
-    const igualA = 'igual a';
-    if (compare === maiorQue) {
-      const filterComparison = planets.filter((planet) => planet
-        .orbital_period > value);
-      setState(filterComparison);
-    }
-    if (compare === menorQue) {
-      const fiterComparison = planets.filter((planet) => planet
-        .orbital_period < value);
-      setState(fiterComparison);
-    }
-    if (compare === igualA) {
-      const fiterComparison = planets.filter((planet) => planet
-        .orbital_period === value);
-      setState(fiterComparison);
-    }
-  }
-
-  function compareDiameter(compare, value, setState) {
-    const maiorQue = 'maior que';
-    const menorQue = 'menor que';
-    const igualA = 'igual a';
-    if (compare === maiorQue) {
-      const filterComparison = planets.filter((planet) => planet
-        .diameter > value);
-      setState(filterComparison);
-    }
-    if (compare === menorQue) {
-      const fiterComparison = planets.filter((planet) => planet
-        .diameter < value);
-      setState(fiterComparison);
-    }
-    if (compare === igualA) {
-      const fiterComparison = planets.filter((planet) => planet
-        .diameter === value);
-      setState(fiterComparison);
-    }
-  }
-
-  function compareRotation(compare, value, setState) {
-    const maiorQue = 'maior que';
-    const menorQue = 'menor que';
-    const igualA = 'igual a';
-    if (compare === maiorQue) {
-      const filterComparison = planets.filter((planet) => planet
-        .rotation_period > value);
-      setState(filterComparison);
-    }
-    if (compare === menorQue) {
-      const fiterComparison = planets.filter((planet) => planet
-        .rotation_period < value);
-      setState(fiterComparison);
-    }
-    if (compare === igualA) {
-      const fiterComparison = planets.filter((planet) => planet
-        .rotation_period === value);
-      setState(fiterComparison);
-    }
-  }
-
-  function compareSurface(compare, value, setState) {
-    const maiorQue = 'maior que';
-    const menorQue = 'menor que';
-    const igualA = 'igual a';
-    if (compare === maiorQue) {
-      const filterComparison = planets.filter((planet) => planet
-        .surface_water > value);
-      setState(filterComparison);
-    }
-    if (compare === menorQue) {
-      const fiterComparison = planets.filter((planet) => planet
-        .surface_water < value);
-      setState(fiterComparison);
-    }
-    if (compare === igualA) {
-      const fiterComparison = planets.filter((planet) => planet
-        .surface_water === value);
-      setState(fiterComparison);
-    }
-  }
-
   function handleClick() {
+    setRemovedColun(newColunm);
     switch (newColunm) {
     case 'population':
-      comparePlanet(newComparison, nemValue, setFilteredByComparison);
+      comparePlanet(newComparison, nemValue, setFilteredByComparison, planets);
       break;
     case 'orbital_period':
-      compareOrbital(newComparison, nemValue, setFilteredByComparison);
+      compareOrbital(newComparison, nemValue, setFilteredByComparison, planets);
       break;
     case 'diameter':
-      compareDiameter(newComparison, nemValue, setFilteredByComparison);
+      compareDiameter(newComparison, nemValue, setFilteredByComparison, planets);
       break;
     case 'rotation_period':
-      compareRotation(newComparison, nemValue, setFilteredByComparison);
+      compareRotation(newComparison, nemValue, setFilteredByComparison, planets);
       break;
     case 'surface_water':
-      compareSurface(newComparison, nemValue, setFilteredByComparison);
+      compareSurface(newComparison, nemValue, setFilteredByComparison, planets);
       break;
     default:
       break;
@@ -221,6 +122,7 @@ function Provider({ children }) {
     loading,
     filteredByName,
     filteredByComparison,
+    removedColumn,
     handleFilterComparison,
     handleFilterName,
     handleClick,

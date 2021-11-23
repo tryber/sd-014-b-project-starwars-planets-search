@@ -9,6 +9,7 @@ function Table() {
     loading,
     handleFilterName,
     filteredByName,
+    removedColumn,
     handleFilterComparison,
     handleClick,
     filteredByComparison,
@@ -28,8 +29,8 @@ function Table() {
     }
     if (filteredByComparison.length >= 1) {
       renders = filteredByComparison;
+      console.log(removedColumn);
     }
-    console.log(renders);
     return renders.map((data) => (
       <tr key={ data }>
         { Object.values(data).map((iten) => (
@@ -63,11 +64,16 @@ function Table() {
             data-testid="column-filter"
             onChange={ (e) => handleFilterComparison(e) }
           >
-            <option value="population" selected>population</option>
-            <option value="orbital_period">orbital_period</option>
-            <option value="diameter">diameter</option>
-            <option value="rotation_period">rotation_period</option>
-            <option value="surface_water">surface_water</option>
+            { removedColumn === 'population' ? '' : (
+              <option value="population" selected>population</option>)}
+            { removedColumn === 'orbital_period' ? '' : (
+              <option value="orbital_period">orbital_period</option>)}
+            { removedColumn === 'orbital_period' ? '' : (
+              <option value="diameter">diameter</option>)}
+            { removedColumn === 'rotation_period' ? '' : (
+              <option value="rotation_period">rotation_period</option>)}
+            { removedColumn === 'surface_water' ? '' : (
+              <option value="surface_water">surface_water</option>)}
           </select>
         </label>
         <label htmlFor="value-filter">

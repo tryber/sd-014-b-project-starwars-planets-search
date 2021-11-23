@@ -159,7 +159,7 @@ describe('2 - Filtre a tabela através de um texto, inserido num *campo de texto
   });
 });
 
-describe.only('3 - Crie um filtro para valores numéricos', () => {
+describe('3 - Crie um filtro para valores numéricos', () => {
   beforeAll(mockFetch);
   beforeEach(cleanup);
 
@@ -209,6 +209,7 @@ describe.only('3 - Crie um filtro para valores numéricos', () => {
     expect(await screen.findByTestId(BUTTON_FILTER_SELECTOR)).toHaveProperty('nodeName', 'BUTTON');
   });
 
+  
   it('Filtre utilizando a comparação "menor que"', async () => {
     await act(async () => {
       render(<App />);
@@ -222,18 +223,18 @@ describe.only('3 - Crie um filtro para valores numéricos', () => {
     expect(await screen.findAllByRole(ROW_ROLE_SELECTOR)).toHaveLength(7);
   });
 
-  // it('Filtre utilizando a comparação "maior que"', async () => {
-  //   await act(async () => {
-  //     render(<App />);
-  //   });
+  it('Filtre utilizando a comparação "maior que"', async () => {
+    await act(async () => {
+      render(<App />);
+    });
 
-  //   fireEvent.change(await screen.findByTestId(COLUMN_FILTER_SELECTOR), { target: { value: 'diameter' }});
-  //   fireEvent.change(await screen.findByTestId(COMPARISON_FILTER_SELECTOR), { target: { value: 'maior que' }});
-  //   fireEvent.change(await screen.findByTestId(VALUE_FILTER_SELECTOR), { target: { value: '8900' }});
-  //   fireEvent.click(await screen.findByTestId(BUTTON_FILTER_SELECTOR));
+    fireEvent.change(await screen.findByTestId(COLUMN_FILTER_SELECTOR), { target: { value: 'diameter' }});
+    fireEvent.change(await screen.findByTestId(COMPARISON_FILTER_SELECTOR), { target: { value: 'maior que' }});
+    fireEvent.change(await screen.findByTestId(VALUE_FILTER_SELECTOR), { target: { value: '8900' }});
+    fireEvent.click(await screen.findByTestId(BUTTON_FILTER_SELECTOR));
 
-  //   expect(await screen.findAllByRole(ROW_ROLE_SELECTOR)).toHaveLength(8);
-  // });
+    expect(await screen.findAllByRole(ROW_ROLE_SELECTOR)).toHaveLength(8);
+  });
 
   // it('Filtre utilizando a comparação "igual a"', async () => {
   //   await act(async () => {
@@ -249,7 +250,7 @@ describe.only('3 - Crie um filtro para valores numéricos', () => {
   // });
 });
 
-describe('4 - Não utilize filtros repetidos', () => {
+describe.only('4 - Não utilize filtros repetidos', () => {
   beforeAll(mockFetch);
   beforeEach(cleanup);
 
