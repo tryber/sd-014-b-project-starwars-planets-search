@@ -3,7 +3,7 @@ import { PlanetFinderContext } from '../context/PlanetFinderContext';
 
 export default function FilterByName() {
   const {
-    filter: { FilterByName: name },
+    filters: { FilterByName: name },
     setters: { setName },
   } = useContext(PlanetFinderContext);
 

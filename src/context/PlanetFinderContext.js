@@ -83,7 +83,7 @@ export default function PlanetFinderProvider({ children }) {
     planets: filteredPlanets,
     columns: filteredColumns,
     numericValues: { column, comparison, value },
-    filter: { filteredByName: { name }, filterByNumericValues },
+    filters: { filterByName: { name }, filterByNumericValues },
     setters: {
       setName,
       setFilterByNumericValues,

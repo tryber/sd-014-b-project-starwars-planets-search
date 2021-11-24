@@ -15,7 +15,7 @@ export default function FilterButtons() {
   };
   return (
     <div>
-      {filterByNumericValues.comparison(({ column, comparison, value }) => (
+      {filterByNumericValues.map(({ column, comparison, value }) => (
         <span data-testid="filter" key={ `${column} ${comparison} ${value}` }>
           {`${column} ${comparison} ${value}`}
           <button

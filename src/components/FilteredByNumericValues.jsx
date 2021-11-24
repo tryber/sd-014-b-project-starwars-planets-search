@@ -6,11 +6,11 @@ export default function FilterByNumericValues() {
     columns,
     numericValues: { column, comparison, value },
     filters: { filterByNumericValues },
-    setters: { setFilteredByNumericValues, setColumn, setComparison, setValue },
+    setters: { setFilterByNumericValues, setColumn, setComparison, setValue },
   } = useContext(PlanetFinderContext);
 
   const handleClick = () => {
-    setFilteredByNumericValues([
+    setFilterByNumericValues([
       ...filterByNumericValues,
       { column, comparison, value },
     ]);
