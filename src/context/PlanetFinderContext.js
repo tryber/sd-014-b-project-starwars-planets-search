@@ -54,6 +54,31 @@ export default function PlanetFinderProvider({ children }) {
     setColumn(filteredColumns[0]);
   }, [filteredColumns]);
 
+  useEffect(() => {
+    let planets = initialPlanets;
+    filterByNumericValues.forEach((element) => {
+      switch (element.comparison) {
+      case 'maior que': planets = planets.filter(
+        (planet) => parseInt(planet[element.column], 10) > element.value,
+      );
+        break;
+      case 'menor que':
+        planets = planets.filter(
+          (planet) => parseInt(planet[element.column], 10) < element.value,
+        );
+        break;
+      case 'igual a':
+        planets = planets.filter(
+          (planet) => planet[element.column] === element.value,
+        );
+        break;
+      default:
+        break;
+      }
+    });
+    setFilteredPlanets(planets);
+  }, [filterByNumericValues]);
+
   const providerValue = {
     planets: filteredPlanets,
     columns: filteredColumns,

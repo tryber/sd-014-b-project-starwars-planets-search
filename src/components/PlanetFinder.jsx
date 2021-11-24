@@ -1,12 +1,10 @@
-import React, { useContext } from 'react';
-import { PlanetFinderContext } from '../context/PlanetFinderContext';
+import React from 'react';
 import PlanetTable from './PlanetTable';
 import FilterByName from './FilteredByName';
 import FilteredByNumericValues from './FilteredByNumericValues';
 import FilterButtons from './FilterButtons';
 
 export default function PlanetFinder() {
-  const { planets } = useContext(PlanetFinderContext);
   return (
     <>
       <header>
@@ -16,7 +14,7 @@ export default function PlanetFinder() {
         <FilterButtons />
       </header>
       <main>
-        <PlanetTable planets={ planets } />
+        <PlanetTable />
       </main>
     </>
   );
