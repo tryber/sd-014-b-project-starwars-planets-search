@@ -1,6 +1,6 @@
 @font-face {
   font-family: star-wars;
-  src: url(fonts/starjedi/Starjedi.ttf);
+  src: url('fonts/starjedi/Starjedi.ttf');
 }
 
 
@@ -10,7 +10,7 @@ body {
 
 header h1, .btn-filter, .labelOrder {
   background-color: black;
-  color: #fff;
+  color: white;
   font-family: star-wars , sans-serif;
   font-size: 80px;
   text-align: center;
@@ -59,7 +59,7 @@ header h1, .btn-filter, .labelOrder {
 table thead th {
   background-color: white;
   border: 1px black solid;
-  color: #fff;
+  color: white;
   font-family: star-wars , sans-serif;
   font-size: 13px;
   text-align: center;
