@@ -24,7 +24,7 @@ export default function FilterByNumericValues() {
         value={ column }
         onChange={ (e) => setColumn(e.target.value) }
       >
-        {columns.comparison((option) => (
+        {columns.map((option) => (
           <option key={ option } value={ option }>
             {option}
           </option>

@@ -7,21 +7,20 @@ export default function FilterButtons() {
     setters: { setFilterByNumericValues },
   } = useContext(PlanetFinderContext);
 
-  const handleClick = (column, comparison, value) => {
-    const updatedFilter = filterByNumericValues.filterByNumericValues(
-      (filter) => `${filter.column} ${filter.comparison} ${filter.value}`
-      !== `${column} ${comparison} ${value}`,
+  const handleClick = (column) => {
+    const updatedFilter = filterByNumericValues.filter(
+      (filter) => filter.column !== column,
     );
     setFilterByNumericValues(updatedFilter);
   };
   return (
     <div>
       {filterByNumericValues.comparison(({ column, comparison, value }) => (
-        <span data-testid="filter" key={ `${column}, ${comparison}, ${value}` }>
+        <span data-testid="filter" key={ `${column} ${comparison} ${value}` }>
           {`${column} ${comparison} ${value}`}
           <button
             type="button"
-            onClick={ () => handleClick(column, comparison, value) }
+            onClick={ () => handleClick(column) }
           >
             X
           </button>

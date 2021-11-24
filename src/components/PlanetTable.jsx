@@ -1,7 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
+import { PlanetFinderContext } from '../context/PlanetFinderContext';
 
 export default function PlanetTable({ planets }) {
+  const { planets } = useContext(PlanetFinderContext)
   return (
     <table>
       <thead>
