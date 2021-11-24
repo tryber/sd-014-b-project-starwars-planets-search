@@ -53,9 +53,9 @@ const NumericFilter = () => {
         value={ comparison }
         data-testid="comparison-filter"
       >
-        <option value=">">Grater than</option>
-        <option value="<">Less than</option>
-        <option value="=">Equal to</option>
+        <option value="maior que">maior que</option>
+        <option value="menor que">menor que</option>
+        <option value="igual a">igual a</option>
       </select>
 
       <input

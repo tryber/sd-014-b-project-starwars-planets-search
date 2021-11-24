@@ -12,10 +12,10 @@ const fetchPlanets = async (url) => {
 
   response.results.forEach((planet) => planets.push(planet));
 
-  if (response.next) {
-    const planetsContinuation = await fetchPlanets(response.next);
-    planetsContinuation.forEach((planet) => planets.push(planet));
-  }
+  // if (response.next) {
+  //   const planetsContinuation = await fetchPlanets(response.next);
+  //   planetsContinuation.forEach((planet) => planets.push(planet));
+  // }
 
   return planets;
 };
@@ -23,7 +23,13 @@ const fetchPlanets = async (url) => {
 function StarWarsPlanets() {
   const [planets, setPlanets] = useState([]);
   const [tableHeaders, setTableHeaders] = useState([]);
-
+  const numericFilters = [
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ];
   const {
     filters: { filterByName, filterNumericValues, order },
     setFilterByName,
@@ -35,13 +41,13 @@ function StarWarsPlanets() {
     const PLUS = 1;
     const EQUAL = 0;
 
-    const planetA = typeof a[order.column] === 'string'
-      ? a[order.column].toLowerCase()
-      : a[order.column];
+    const planetA = numericFilters.includes(order.column)
+      ? parseInt(a[order.column], 10)
+      : a[order.column].toLowerCase();
 
-    const planetB = typeof b[order.column] === 'string'
-      ? b[order.column].toLowerCase()
-      : b[order.column];
+    const planetB = numericFilters.includes(order.column)
+      ? parseInt(b[order.column], 10)
+      : b[order.column].toLowerCase();
 
     if (order.sort === 'ASC') {
       if (planetA > planetB) return PLUS;
@@ -74,19 +80,19 @@ function StarWarsPlanets() {
         .reduce((toReturn, { column, comparison, value }) => {
           if (!value) return toReturn;
 
-          if (comparison === '>') {
+          if (comparison === 'maior que') {
             return toReturn.filter(
               (planet) => parseInt(planet[column], 10) > parseInt(value, 10),
             );
           }
 
-          if (comparison === '<') {
+          if (comparison === 'menor que') {
             return toReturn.filter(
               (planet) => parseInt(planet[column], 10) < parseInt(value, 10),
             );
           }
 
-          if (comparison === '=') {
+          if (comparison === 'igual a') {
             return toReturn.filter(
               (planet) => parseInt(planet[column], 10) === parseInt(value, 10),
             );
