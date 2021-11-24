@@ -3,12 +3,13 @@ import React, { useEffect, useContext } from 'react';
 import ContextPlanets from '../context/ContextPlanets';
 import Filter from './Filter';
 import Header from './Header';
-import UlFilter from './UlFilter';
 
 const Table = () => {
-  const { getDataApi, data, filter } = useContext(ContextPlanets);
-  const dataKeys = data.length > 0 && Object.keys(data[0]);
-  const titles = data.length > 0 && dataKeys.filter((title) => title !== 'residents');
+  const { getDataApi, planetFiltered } = useContext(ContextPlanets);
+  const dataKeys = planetFiltered.length > 0
+  && Object.keys(planetFiltered[0]);
+  const titles = planetFiltered.length > 0
+  && dataKeys.filter((title) => title !== 'residents');
 
   useEffect(() => {
     getDataApi();
@@ -18,23 +19,22 @@ const Table = () => {
     <>
       <Header />
       <Filter />
-      <UlFilter />
       <table>
         <thead>
           <tr>
-            { data.length > 0 && titles.map((title, index) => (
+            { planetFiltered.length > 0 && titles.map((title, index) => (
               <th key={ index }>{title}</th>
             ))}
           </tr>
         </thead>
         <tbody>
-          { data.length > 0 && data.map((planet, index) => {
+          { planetFiltered.map((planet, index) => {
             const { name, rotation_period: rotation, orbital_period: orbital,
               diameter, climate, gravity, terrain, surface_water: surface, population,
               films, created, edited, url } = planet;
             return (
               <tr key={ index }>
-                <td>{ name }</td>
+                <td data-testid="planet-name">{ name }</td>
                 <td>{ rotation }</td>
                 <td>{ orbital }</td>
                 <td>{ diameter }</td>

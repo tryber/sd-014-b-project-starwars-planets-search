@@ -1,13 +1,13 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import ContextPlanets from '../context/ContextPlanets';
-import optionsCollum, { optionsComparison } from '../helper/helper';
+import { optionsComparison } from '../helper/helper';
+import OrderData from './OrderData';
+import UlFilter from './UlFilter';
 
 const Filter = () => {
-  const { getFilterNumeric, data, setData } = useContext(ContextPlanets);
-  const [column, setColumn] = useState('');
-  const [comparison, setComparison] = useState('');
-  const [value, setValue] = useState('0');
-  const [filterColums, setFilterColumns] = useState(optionsCollum);
+  const { getFilterNumeric, column, comparison,
+    setComparison, setColumn, filterComparison,
+    setValue, value, filterColums, setFilterColumns } = useContext(ContextPlanets);
 
   const handleColumn = ({ target }) => {
     setColumn(target.value);
@@ -21,25 +21,6 @@ const Filter = () => {
     setValue(target.value);
   };
 
-  const filterData = () => {
-    if (comparison === 'maior que') {
-      const dataFilter = data
-        .filter((planet) => Number(planet[column]) > Number(value));
-      setData(dataFilter);
-    }
-    if (comparison === 'menor que') {
-      const dataFilter = data
-        .filter((planet) => Number(planet[column]) < Number(value));
-      setData(dataFilter);
-    }
-
-    if (comparison === 'igual a') {
-      const dataFilter = data
-        .filter((planet) => Number(planet[column]) === Number(value));
-      setData(dataFilter);
-    }
-  };
-
   const resetState = () => {
     setColumn('');
     setComparison('');
@@ -47,48 +28,58 @@ const Filter = () => {
   };
 
   const handleClick = () => {
+    getFilterNumeric();
     const filteredColums = filterColums
       .filter((option) => option !== column);
-    getFilterNumeric(column, comparison, value);
-    filterData();
+    filterComparison();
     setFilterColumns(filteredColums);
     resetState();
   };
 
   return (
-    <section>
-      <select
-        data-testid="column-filter"
-        onChange={ handleColumn }
-        value={ column }
-      >
-        { filterColums.map((option, index) => (
-          <option key={ index }>{ option }</option>
-        ))}
-      </select>
-      <select
-        data-testid="comparison-filter"
-        onChange={ handleComparison }
-        value={ comparison }
-      >
-        {optionsComparison.map((option, index) => (
-          <option key={ index }>{ option }</option>
-        ))}
-      </select>
-      <input
-        type="number"
-        data-testid="value-filter"
-        onChange={ handleInput }
-        value={ value }
-      />
-      <button
-        type="button"
-        data-testid="button-filter"
-        onClick={ handleClick }
-      >
-        Filtrar
-      </button>
-    </section>
+    <>
+      <section className="section-filter">
+        <select
+          data-testid="column-filter"
+          onChange={ handleColumn }
+          value={ column }
+          className="select-filter"
+        >
+          { filterColums.map((option, index) => (
+            <option key={ index }>{ option }</option>
+          ))}
+        </select>
+        <select
+          data-testid="comparison-filter"
+          onChange={ handleComparison }
+          value={ comparison }
+          className="select-filter"
+        >
+          {optionsComparison.map((option, index) => (
+            <option key={ index }>{ option }</option>
+          ))}
+        </select>
+        <input
+          type="number"
+          data-testid="value-filter"
+          onChange={ handleInput }
+          value={ value }
+          className="input-select-filter"
+        />
+        <button
+          type="button"
+          data-testid="button-filter"
+          onClick={ handleClick }
+          className="btn-filter"
+        >
+          Filtrar
+        </button>
+        <OrderData />
+      </section>
+      <section>
+        <UlFilter />
+      </section>
+    </>
   );
 };
 
