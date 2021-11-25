@@ -1,16 +1,43 @@
-import React, { useContext, useEffect } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useContext, useEffect, useState } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 import NewRow from './NewRow';
 
 function Table() {
-  const { data, requestApi } = useContext(PlanetsContext);
+  const { data, setData, requestApi,
+    filters: { filters }, setFilters } = useContext(PlanetsContext);
+  const [dataToFilter, setDataToFilter] = useState([]);
+  function filterName(nome) {
+    const filterByName = data.filter((planet) => planet.name.includes(nome.toLowerCase()));
+    setDataToFilter(filterByName);
+    console.log(data);
+  }
+
+  function handleChange({ target }) {
+    setFilters({
+      filters: {
+        filterByName: {
+          name: target.value,
+        },
+      },
+    });
+  }
+
+  useEffect(() => {
+    filterName(filters.filterByName.name);
+  }, [filters]);
 
   useEffect(() => {
     requestApi();
-  }, [requestApi]);
+  }, []);
+
+  useEffect(() => {
+    setDataToFilter(data);
+  }, [data]);
 
   return (
     <main>
+      <input type="text" onChange={ handleChange } data-testid="name-filter" />
       <table>
         <thead>
           <tr>
@@ -30,8 +57,8 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {data
-        && (data.map((element, index) => <NewRow key={ index } elements={ element } />))}
+          {dataToFilter
+        && (dataToFilter.map((element, index) => <NewRow key={ index } elements={ element } />))}
         </tbody>
       </table>
     </main>
