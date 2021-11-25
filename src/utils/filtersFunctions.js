@@ -1,115 +1,39 @@
-export function comparePlanet(compare, value, setState, list) {
-  const maiorQue = 'maior que';
-  const menorQue = 'menor que';
-  const igualA = 'igual a';
-  if (compare === maiorQue) {
-    const filterComparison = list
-      .filter((planet) => parseInt(planet.population, 0) > value && planet
-        .population !== 'unknown');
-    setState(filterComparison);
+export function compareByValue(list, colunm, value, compare) {
+  let result = [];
+  switch (compare) {
+  case 'maior que':
+    result = list.filter((item) => parseInt(item[colunm], 0) > value);
+    break;
+  case 'menor que':
+    result = list.filter((item) => parseInt(item[colunm], 0) < value);
+    break;
+  case 'igual a':
+    result = list.filter((item) => item[colunm] === value);
+    break;
+  default:
+    break;
   }
-  if (compare === menorQue) {
-    const fiterComparison = list.filter((planet) => parseInt(planet
-      .population, 0) < value && planet
-      .population !== 'unknown');
-    setState(fiterComparison);
-  }
-  if (compare === igualA) {
-    const fiterComparison = list.filter((planet) => planet
-      .population === value);
-    console.log(fiterComparison);
-    setState(fiterComparison);
-  }
+  return result;
 }
 
-export function compareOrbital(compare, value, setState, list) {
-  const maiorQue = 'maior que';
-  const menorQue = 'menor que';
-  const igualA = 'igual a';
-  if (compare === maiorQue) {
-    const filterComparison = list.filter((planet) => parseInt(planet
-      .orbital_period, 0) > value && planet
-      .orbital_period !== 'unknown');
-    setState(filterComparison);
-  }
-  if (compare === menorQue) {
-    const fiterComparison = list.filter((planet) => parseInt(planet
-      .orbital_period, 0) < value && planet
-      .orbital_period !== 'unknown');
-    setState(fiterComparison);
-  }
-  if (compare === igualA) {
-    const fiterComparison = list.filter((planet) => planet
-      .orbital_period === value);
-    setState(fiterComparison);
-  }
+// references: https://pt.stackoverflow.com/questions/46600/como-ordenar-uma-array-de-objetos-com-array-sort
+export function ordenation(a, b) {
+  const ONE_NEGATIVE = -1;
+  if (a.name < b.name) return ONE_NEGATIVE;
+  if (a.name > b.name) return 1;
+  return 0;
 }
 
-export function compareDiameter(compare, value, setState, list) {
-  const maiorQue = 'maior que';
-  const menorQue = 'menor que';
-  const igualA = 'igual a';
-  if (compare === maiorQue) {
-    const filterComparison = list.filter((planet) => parseInt(planet
-      .diameter, 0) > value && planet
-      .diameter !== 'unknown');
-    setState(filterComparison);
+export function ordenatioByColumn(a, b, order, colunm) {
+  const ONE_NEGATIVE = -1;
+  if (order === 'ASC') {
+    if (a[colunm] < b[colunm]) return ONE_NEGATIVE;
+    if (a[colunm] > b[colunm]) return 1;
+    return 0;
   }
-  if (compare === menorQue) {
-    const fiterComparison = list.filter((planet) => parseInt(planet
-      .diameter, 0) < value && planet
-      .diameter !== 'unknown');
-    setState(fiterComparison);
-  }
-  if (compare === igualA) {
-    const fiterComparison = list.filter((planet) => planet
-      .diameter === value);
-    setState(fiterComparison);
-  }
-}
-
-export function compareRotation(compare, value, setState, list) {
-  const maiorQue = 'maior que';
-  const menorQue = 'menor que';
-  const igualA = 'igual a';
-  if (compare === maiorQue) {
-    const filterComparison = list.filter((planet) => parseInt(planet
-      .rotation_period, 0) > value && planet
-      .rotation_period !== 'unknown');
-    setState(filterComparison);
-  }
-  if (compare === menorQue) {
-    const fiterComparison = list.filter((planet) => parseInt(planet
-      .rotation_period, 0) < value && planet
-      .rotation_period !== 'unknown');
-    setState(fiterComparison);
-  }
-  if (compare === igualA) {
-    const fiterComparison = list.filter((planet) => planet
-      .rotation_period === value);
-    setState(fiterComparison);
-  }
-}
-
-export function compareSurface(compare, value, setState, list) {
-  const maiorQue = 'maior que';
-  const menorQue = 'menor que';
-  const igualA = 'igual a';
-  if (compare === maiorQue) {
-    const filterComparison = list.filter((planet) => parseInt(planet
-      .surface_water, 0) > value && planet
-      .surface_water !== 'unknown');
-    setState(filterComparison);
-  }
-  if (compare === menorQue) {
-    const fiterComparison = list.filter((planet) => parseInt(planet
-      .surface_water, 0) < value && planet
-      .surface_water !== 'unknown');
-    setState(fiterComparison);
-  }
-  if (compare === igualA) {
-    const fiterComparison = list.filter((planet) => planet
-      .surface_water === value);
-    setState(fiterComparison);
+  if (order === 'DESC') {
+    if (a[colunm] > b[colunm]) return ONE_NEGATIVE;
+    if (a[colunm] < b[colunm]) return 1;
+    return 0;
   }
 }

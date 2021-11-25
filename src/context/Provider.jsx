@@ -1,18 +1,18 @@
 import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
 import Context from './Context';
-import { comparePlanet,
-  compareDiameter,
-  compareRotation,
-  compareSurface,
-  compareOrbital } from '../utils/filtersFunctions';
+import { compareByValue } from '../utils/filtersFunctions';
 
 function Provider({ children }) {
   const [planets, setPlanets] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [newColunm, setNewColumn] = useState('');
+  const [newComparison, setNemComparison] = useState('');
+  const [newValue, setNewValue] = useState(0);
+  const [btnFilters, setBtnFilters] = useState([]);
   const [filteredByName, setFilteredByName] = useState([]);
   const [filteredByComparison, setFilteredByComparison] = useState([]);
-  const [removedColumn, setRemovedColun] = useState('');
+  const [removedColumn, setRemovedColun] = useState([]);
   const [filteredValues, setFilteredValues] = useState(
     {
       filters: {
@@ -71,9 +71,24 @@ function Provider({ children }) {
     alteredFiltername();
   }, [filteredValues, planets]);
 
-  const [newColunm, setNewColumn] = useState('');
-  const [newComparison, setNemComparison] = useState('');
-  const [nemValue, setNewValue] = useState(0);
+  useEffect(() => {
+    setNewColumn('population');
+    setNemComparison('maior que');
+    setNewValue(0);
+  }, []);
+
+  useEffect(() => {
+    const arrColuns = [
+      'population',
+      'orbital_period',
+      'diameter',
+      'rotation_period',
+      'surface_water'];
+    const newArrColuns = arrColuns
+      .filter((item) => !removedColumn.some((colunm) => colunm === item));
+    setNewColumn(newArrColuns[0]);
+  }, [removedColumn]);
+
   function handleFilterComparison({ target: { name, value } }) {
     if (name === 'column') setNewColumn(value);
     if (name === 'comparison') setNemComparison(value);
@@ -83,38 +98,60 @@ function Provider({ children }) {
       filterByNumericValues: [{
         column: newColunm,
         comparison: newComparison,
-        value: nemValue,
+        value: newValue,
       }],
     });
   }
 
   useEffect(() => {
-    setNewColumn('population');
-    setNemComparison('maior que');
-    setNewValue(0);
-  }, []);
+    function renderPlantesFilter() {
+      let plantsFilter = [...planets];
+      btnFilters.forEach((item) => {
+        const newItem = item.split(' ');
+        const comparisonItem = `${newItem[1]} ${newItem[2]}`;
+        plantsFilter = compareByValue(
+          plantsFilter, newItem[0], newItem[3], comparisonItem,
+        );
+      });
+      setFilteredByComparison(plantsFilter);
+    }
+    renderPlantesFilter();
+  }, [btnFilters, planets]);
 
   function handleClick() {
-    setRemovedColun(newColunm);
-    switch (newColunm) {
-    case 'population':
-      comparePlanet(newComparison, nemValue, setFilteredByComparison, planets);
-      break;
-    case 'orbital_period':
-      compareOrbital(newComparison, nemValue, setFilteredByComparison, planets);
-      break;
-    case 'diameter':
-      compareDiameter(newComparison, nemValue, setFilteredByComparison, planets);
-      break;
-    case 'rotation_period':
-      compareRotation(newComparison, nemValue, setFilteredByComparison, planets);
-      break;
-    case 'surface_water':
-      compareSurface(newComparison, nemValue, setFilteredByComparison, planets);
-      break;
-    default:
-      break;
-    }
+    const setBtnToFilers = [...btnFilters, `${newColunm} ${newComparison} ${newValue}`];
+    setBtnFilters(setBtnToFilers);
+    const columnsToRemoved = [...removedColumn, newColunm];
+    setRemovedColun(columnsToRemoved);
+    // const valueFilter = compareByValue(planets, newColunm, newValue, newComparison);
+  }
+
+  function removeItem({ target: { name } }) {
+    const removeFilter = btnFilters.filter((item) => item !== name);
+    setBtnFilters(removeFilter);
+    // ...
+    const colunmName = name.split(' ');
+    const columnsToRemoved = removedColumn.filter((item) => item !== colunmName[0]);
+    setRemovedColun(columnsToRemoved);
+  }
+
+  function handleSort({ target: { value } }) {
+    setNemComparison(value);
+  }
+
+  function handleColunmSort({ target: { value } }) {
+    setNewColumn(value);
+  }
+
+  function handleClickSort() {
+    setFilteredValues({
+      ...filteredValues,
+      filterByNumericValues: [],
+      order: {
+        column: newColunm,
+        sort: newComparison,
+      },
+    });
   }
 
   const contextValues = {
@@ -123,7 +160,14 @@ function Provider({ children }) {
     filteredByName,
     filteredByComparison,
     removedColumn,
+    btnFilters,
+    newColunm,
+    handleClickSort,
+    handleColunmSort,
+    handleSort,
+    removeItem,
     handleFilterComparison,
+    setFilteredValues,
     handleFilterName,
     handleClick,
   };

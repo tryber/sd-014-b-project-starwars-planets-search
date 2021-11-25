@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import Context from '../context/Context';
 import tableHeaders from '../utils/tableHeaders';
 import Header from './Header';
+import { ordenation } from '../utils/filtersFunctions';
 
 function Table() {
   const {
@@ -10,9 +11,14 @@ function Table() {
     handleFilterName,
     filteredByName,
     removedColumn,
+    btnFilters,
     handleFilterComparison,
     handleClick,
     filteredByComparison,
+    removeItem,
+    handleSort,
+    handleColunmSort,
+    newColunm,
   } = useContext(Context);
 
   const [renderTable, setRenderTable] = useState([]);
@@ -33,15 +39,6 @@ function Table() {
   }
 
   function renderTd() {
-    console.log(renderTable);
-    // let renders = [];
-    // renders = planets;
-    // if (filteredByName.length >= 1) {
-    //   renders = filteredByName;
-    // }
-    // if (filteredByComparison.length >= 1) {
-    //   renders = filteredByComparison;
-    // }
     return renderTable.map((data) => (
       <tr key={ data }>
         { Object.values(data).map((iten) => (
@@ -51,6 +48,36 @@ function Table() {
         )) }
       </tr>
     ));
+  }
+
+  function renderFilters() {
+    return btnFilters.map((column, index) => (
+      <span
+        key={ index }
+        data-testid="filter"
+      >
+        { column }
+        <button
+          type="button"
+          name={ column }
+          onClick={ (e) => removeItem(e) }
+        >
+          X
+        </button>
+        { ' ' }
+      </span>
+    ));
+  }
+
+  function handleClicksort({ target: { value } }) {
+    if (value === 'ASC') {
+      const orderASC = renderTable.sort((a, b) => ordenation(a, b));
+      setRenderTable(orderASC);
+    }
+    if (value === 'DESC') {
+      const orderDESC = renderTable.sort((a, b) => ordenation(b, a));
+      setRenderTable(orderDESC);
+    }
   }
 
   return (
@@ -72,18 +99,19 @@ function Table() {
           <select
             name="column"
             id="column-filter"
+            value={ newColunm }
             data-testid="column-filter"
             onChange={ (e) => handleFilterComparison(e) }
           >
-            { removedColumn === 'population' ? '' : (
-              <option value="population" selected>population</option>)}
-            { removedColumn === 'orbital_period' ? '' : (
+            { removedColumn.includes('population') ? '' : (
+              <option value="population">population</option>)}
+            { removedColumn.includes('orbital_period') ? '' : (
               <option value="orbital_period">orbital_period</option>)}
-            { removedColumn === 'orbital_period' ? '' : (
+            { removedColumn.includes('diameter') ? '' : (
               <option value="diameter">diameter</option>)}
-            { removedColumn === 'rotation_period' ? '' : (
+            { removedColumn.includes('rotation_period') ? '' : (
               <option value="rotation_period">rotation_period</option>)}
-            { removedColumn === 'surface_water' ? '' : (
+            { removedColumn.includes('surface_water') ? '' : (
               <option value="surface_water">surface_water</option>)}
           </select>
         </label>
@@ -117,6 +145,50 @@ function Table() {
         >
           Filtrar
         </button>
+        <label htmlFor="column-sort">
+          <select
+            data-testid="column-sort"
+            id="column-sort"
+            onChange={ (e) => handleColunmSort(e) }
+          >
+            <option value="population">population</option>
+            <option value="orbital_period">orbital_period</option>
+            <option value="diameter">diameter</option>
+            <option value="rotation_period">rotation_period</option>
+            <option value="surface_water">surface_water</option>
+          </select>
+        </label>
+        <label htmlFor="column-sort-input-asc">
+          <input
+            type="radio"
+            name="input-sort"
+            value="ASC"
+            id="column-sort-input-asc"
+            data-testid="column-sort-input-asc"
+            onChange={ (e) => handleSort(e) }
+            onClick={ (e) => handleClicksort(e) }
+          />
+          Crescente
+        </label>
+        <label htmlFor="column-sort-input-desc">
+          <input
+            type="radio"
+            name="input-sort"
+            value="DESC"
+            id="column-sort-input-desc"
+            data-testid="column-sort-input-desc"
+            onChange={ (e) => handleSort(e) }
+            onClick={ (e) => handleClicksort(e) }
+          />
+          Decrescente
+        </label>
+        <button
+          type="button"
+          data-testid="column-sort-button"
+        >
+          Ordenar
+        </button>
+        { renderFilters() }
       </form>
       <table>
         <thead>
