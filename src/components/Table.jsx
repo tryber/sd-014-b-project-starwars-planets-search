@@ -29,8 +29,11 @@ function Table() {
 
   useEffect(() => {
     if (filteredByName.length > 0) setRenderTable(filteredByName);
+  }, [filteredByName]);
+
+  useEffect(() => {
     if (filteredByComparison.length > 0) setRenderTable(filteredByComparison);
-  }, [filteredByName, filteredByComparison]);
+  }, [filteredByComparison]);
 
   function renderTh() {
     return tableHeaders.map((header) => (
