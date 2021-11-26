@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
 import Context from './Context';
-import { compareByValue } from '../utils/filtersFunctions';
+import { compareByValue, ordenationByColumn } from '../utils/filtersFunctions';
 
 function Provider({ children }) {
   const [planets, setPlanets] = useState([]);
@@ -9,6 +9,7 @@ function Provider({ children }) {
   const [newColunm, setNewColumn] = useState('');
   const [newComparison, setNemComparison] = useState('');
   const [newValue, setNewValue] = useState(0);
+  const [newSort, setNewSort] = useState('ASC');
   const [btnFilters, setBtnFilters] = useState([]);
   const [filteredByName, setFilteredByName] = useState([]);
   const [filteredByComparison, setFilteredByComparison] = useState([]);
@@ -77,6 +78,7 @@ function Provider({ children }) {
     setNewValue(0);
   }, []);
 
+  // auxiliado por Gustavo Sant'anna
   useEffect(() => {
     const arrColuns = [
       'population',
@@ -103,6 +105,7 @@ function Provider({ children }) {
     });
   }
 
+  // auxiliado por Gustavo Sant'anna
   useEffect(() => {
     function renderPlantesFilter() {
       let plantsFilter = [...planets];
@@ -123,20 +126,23 @@ function Provider({ children }) {
     setBtnFilters(setBtnToFilers);
     const columnsToRemoved = [...removedColumn, newColunm];
     setRemovedColun(columnsToRemoved);
-    // const valueFilter = compareByValue(planets, newColunm, newValue, newComparison);
   }
 
+  // auxiliador por Gustavo Sant'anna
   function removeItem({ target: { name } }) {
     const removeFilter = btnFilters.filter((item) => item !== name);
     setBtnFilters(removeFilter);
-    // ...
     const colunmName = name.split(' ');
     const columnsToRemoved = removedColumn.filter((item) => item !== colunmName[0]);
     setRemovedColun(columnsToRemoved);
   }
 
   function handleSort({ target: { value } }) {
-    setNemComparison(value);
+    setNewSort(value);
+    // const orderedPlanes = planets
+    //   .sort((a, b) => ordenationByColumn(a, b, value, newColunm));
+    // setFilteredByComparison([...orderedPlanes]);
+    // console.log(orderedPlanes);
   }
 
   function handleColunmSort({ target: { value } }) {
@@ -144,14 +150,18 @@ function Provider({ children }) {
   }
 
   function handleClickSort() {
+    planets.sort((a, b) => ordenationByColumn(a, b, newSort, newColunm));
+    // console.log(newSort, newColunm);
+    setFilteredByComparison([...planets]);
     setFilteredValues({
       ...filteredValues,
       filterByNumericValues: [],
       order: {
         column: newColunm,
-        sort: newComparison,
+        sort: newSort,
       },
     });
+    console.log(planets.map((planet) => planet.name));
   }
 
   const contextValues = {
@@ -162,6 +172,7 @@ function Provider({ children }) {
     removedColumn,
     btnFilters,
     newColunm,
+    newSort,
     handleClickSort,
     handleColunmSort,
     handleSort,

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import Context from '../context/Context';
 import tableHeaders from '../utils/tableHeaders';
 import Header from './Header';
-import { ordenation } from '../utils/filtersFunctions';
+import { ordenation, ordenationByColumn } from '../utils/filtersFunctions';
 
 function Table() {
   const {
@@ -19,12 +19,14 @@ function Table() {
     handleSort,
     handleColunmSort,
     newColunm,
+    handleClickSort,
   } = useContext(Context);
 
   const [renderTable, setRenderTable] = useState([]);
 
   useEffect(() => {
-    setRenderTable(planets);
+    const order = planets.sort((a, b) => ordenation(a, b));
+    setRenderTable(order);
   }, [planets]);
 
   useEffect(() => {
@@ -41,12 +43,21 @@ function Table() {
     ));
   }
 
+  // function handleClickSortRadio({ target: { value } }) {
+  //   if (value === 'ASC') {
+  //     renderTable.sort((a, b) => ordenationByColumn(a, b, value, newColunm));
+  //   }
+  //   if (value === 'DESC') {
+  //     renderTable.sort((a, b) => ordenationByColumn(a, b, value, newColunm));
+  //   }
+  // }
+
   function renderTd() {
-    return renderTable.map((data) => (
-      <tr key={ data }>
-        { Object.values(data).map((iten) => (
-          <td key={ iten }>
-            { iten }
+    return renderTable.map((data, i) => (
+      <tr key={ i }>
+        { Object.values(data).map((item, index) => (
+          <td key={ item } data-testid={ index === 0 && 'planet-name' }>
+            { item }
           </td>
         )) }
       </tr>
@@ -70,17 +81,6 @@ function Table() {
         { ' ' }
       </span>
     ));
-  }
-
-  function handleClicksort({ target: { value } }) {
-    if (value === 'ASC') {
-      const orderASC = renderTable.sort((a, b) => ordenation(a, b));
-      setRenderTable(orderASC);
-    }
-    if (value === 'DESC') {
-      const orderDESC = renderTable.sort((a, b) => ordenation(b, a));
-      setRenderTable(orderDESC);
-    }
   }
 
   return (
@@ -125,7 +125,7 @@ function Table() {
             data-testid="comparison-filter"
             onChange={ (e) => handleFilterComparison(e) }
           >
-            <option value="maior que" selected>maior que</option>
+            <option value="maior que">maior que</option>
             <option value="menor que">menor que</option>
             <option value="igual a">igual a</option>
           </select>
@@ -150,9 +150,13 @@ function Table() {
         </button>
         <label htmlFor="column-sort">
           <select
+            name="column-sort"
             data-testid="column-sort"
             id="column-sort"
-            onChange={ (e) => handleColunmSort(e) }
+            onChange={ (e) => {
+              handleColunmSort(e);
+              console.log(e.target.value);
+            } }
           >
             <option value="population">population</option>
             <option value="orbital_period">orbital_period</option>
@@ -169,7 +173,7 @@ function Table() {
             id="column-sort-input-asc"
             data-testid="column-sort-input-asc"
             onChange={ (e) => handleSort(e) }
-            onClick={ (e) => handleClicksort(e) }
+            // onClick={ (e) => handleClickSortRadio(e) }
           />
           Crescente
         </label>
@@ -180,14 +184,21 @@ function Table() {
             value="DESC"
             id="column-sort-input-desc"
             data-testid="column-sort-input-desc"
-            onChange={ (e) => handleSort(e) }
-            onClick={ (e) => handleClicksort(e) }
+            onChange={ (e) => {
+              handleSort(e);
+              console.log(e.target.value);
+            } }
+            // onClick={ (e) => handleClickSortRadio(e) }
           />
           Decrescente
         </label>
         <button
           type="button"
           data-testid="column-sort-button"
+          onClick={ () => {
+            handleClickSort();
+            console.log('column-sort-button');
+          } }
         >
           Ordenar
         </button>
@@ -200,7 +211,7 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          { !loading ? renderTd() : 'Carregando...' }
+          { renderTd() }
         </tbody>
       </table>
     </div>

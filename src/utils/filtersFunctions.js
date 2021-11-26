@@ -24,16 +24,30 @@ export function ordenation(a, b) {
   return 0;
 }
 
-export function ordenatioByColumn(a, b, order, colunm) {
+// export function ordenationByColumn(a, b, order, colunm) {
+//   const ONE_NEGATIVE = -1;
+//   if (order === 'ASC') {
+//     if (Number(a[colunm]) < Number(b[colunm])) return 1;
+//   }
+//   if (order === 'DESC') {
+//     if (Number(a[colunm]) > Number(b[colunm])) {
+//       console.log('ok');
+//       return ONE_NEGATIVE;
+//     }
+//   }
+//   return 0;
+// }
+
+export function ordenationByColumn(a, b, order, colunm) {
   const ONE_NEGATIVE = -1;
-  if (order === 'ASC') {
-    if (a[colunm] < b[colunm]) return ONE_NEGATIVE;
-    if (a[colunm] > b[colunm]) return 1;
-    return 0;
+  if (Number(a[colunm]) < Number(b[colunm])) {
+    if (order === 'ASC') return 1;
+    return 1;
   }
-  if (order === 'DESC') {
-    if (a[colunm] > b[colunm]) return ONE_NEGATIVE;
-    if (a[colunm] < b[colunm]) return 1;
-    return 0;
+  if (Number(a[colunm]) > Number(b[colunm])) {
+    console.log(colunm);
+    if (order === 'DESC') return ONE_NEGATIVE;
+    return ONE_NEGATIVE;
   }
+  return 0;
 }
