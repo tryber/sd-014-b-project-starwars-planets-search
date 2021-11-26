@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import Context from '../context/Context';
 import tableHeaders from '../utils/tableHeaders';
 import Header from './Header';
-import { ordenation, ordenationByColumn } from '../utils/filtersFunctions';
+import { ordenation } from '../utils/filtersFunctions';
 
 function Table() {
   const {
@@ -155,7 +155,6 @@ function Table() {
             id="column-sort"
             onChange={ (e) => {
               handleColunmSort(e);
-              console.log(e.target.value);
             } }
           >
             <option value="population">population</option>
@@ -173,7 +172,6 @@ function Table() {
             id="column-sort-input-asc"
             data-testid="column-sort-input-asc"
             onChange={ (e) => handleSort(e) }
-            // onClick={ (e) => handleClickSortRadio(e) }
           />
           Crescente
         </label>
@@ -186,9 +184,7 @@ function Table() {
             data-testid="column-sort-input-desc"
             onChange={ (e) => {
               handleSort(e);
-              console.log(e.target.value);
             } }
-            // onClick={ (e) => handleClickSortRadio(e) }
           />
           Decrescente
         </label>
@@ -197,7 +193,6 @@ function Table() {
           data-testid="column-sort-button"
           onClick={ () => {
             handleClickSort();
-            console.log('column-sort-button');
           } }
         >
           Ordenar
@@ -211,7 +206,7 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          { renderTd() }
+          { !loading ? renderTd() : 'Carregando...' }
         </tbody>
       </table>
     </div>

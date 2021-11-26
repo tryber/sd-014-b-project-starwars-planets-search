@@ -139,10 +139,6 @@ function Provider({ children }) {
 
   function handleSort({ target: { value } }) {
     setNewSort(value);
-    // const orderedPlanes = planets
-    //   .sort((a, b) => ordenationByColumn(a, b, value, newColunm));
-    // setFilteredByComparison([...orderedPlanes]);
-    // console.log(orderedPlanes);
   }
 
   function handleColunmSort({ target: { value } }) {
@@ -151,7 +147,6 @@ function Provider({ children }) {
 
   function handleClickSort() {
     planets.sort((a, b) => ordenationByColumn(a, b, newSort, newColunm));
-    // console.log(newSort, newColunm);
     setFilteredByComparison([...planets]);
     setFilteredValues({
       ...filteredValues,
@@ -161,7 +156,6 @@ function Provider({ children }) {
         sort: newSort,
       },
     });
-    console.log(planets.map((planet) => planet.name));
   }
 
   const contextValues = {

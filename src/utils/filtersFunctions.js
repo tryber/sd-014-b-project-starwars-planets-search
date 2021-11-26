@@ -24,20 +24,7 @@ export function ordenation(a, b) {
   return 0;
 }
 
-// export function ordenationByColumn(a, b, order, colunm) {
-//   const ONE_NEGATIVE = -1;
-//   if (order === 'ASC') {
-//     if (Number(a[colunm]) < Number(b[colunm])) return 1;
-//   }
-//   if (order === 'DESC') {
-//     if (Number(a[colunm]) > Number(b[colunm])) {
-//       console.log('ok');
-//       return ONE_NEGATIVE;
-//     }
-//   }
-//   return 0;
-// }
-
+// Auxiliado por Gustavo Sant'ann
 export function ordenationByColumn(a, b, order, colunm) {
   const ONE_NEGATIVE = -1;
   if (Number(a[colunm]) < Number(b[colunm])) {
@@ -45,7 +32,6 @@ export function ordenationByColumn(a, b, order, colunm) {
     return 1;
   }
   if (Number(a[colunm]) > Number(b[colunm])) {
-    console.log(colunm);
     if (order === 'DESC') return ONE_NEGATIVE;
     return ONE_NEGATIVE;
   }

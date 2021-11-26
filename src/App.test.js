@@ -363,7 +363,6 @@ describe('6 - Ordene as colunas de forma ascendente ou descendente', () => {
     const expected = ['Bespin', 'Yavin IV', 'Hoth', 'Kamino', 'Endor', 'Coruscant', 'Alderaan', 'Dagobah', 'Naboo', 'Tatooine'];
     const planets = await screen.findAllByTestId(PLANET_NAME_SELECTOR);
     const actual = planets.map(planet => planet.innerHTML);
-    console.log(actual);
     expect(actual).toEqual(expected);
   });
 });
