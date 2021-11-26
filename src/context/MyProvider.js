@@ -5,18 +5,13 @@ import { getPlanets } from '../services';
 
 export default function MyProvider({ children }) {
   const [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    (async () => {
-      setIsLoading(true);
-      setData(await getPlanets());
-      setIsLoading(true);
-    })();
+    (async () => setData(await getPlanets()))();
   }, []);
 
   return (
-    <MyContext.Provider value={ { data, isLoading } }>
+    <MyContext.Provider value={ data }>
       {children}
     </MyContext.Provider>
   );
