@@ -209,6 +209,7 @@ describe('3 - Crie um filtro para valores numéricos', () => {
     expect(await screen.findByTestId(BUTTON_FILTER_SELECTOR)).toHaveProperty('nodeName', 'BUTTON');
   });
 
+  
   it('Filtre utilizando a comparação "menor que"', async () => {
     await act(async () => {
       render(<App />);
