@@ -2,14 +2,15 @@ import React, { useContext, useState } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function NumericFilter() {
-  const [columnFilterValue, setColumnFilterValue] = useState('population');
-  const [comparisonFilterValue, setComparisonFilterValue] = useState('more-than');
-  const [valueFilterValue, setValueFilterValue] = useState('');
-
   const {
     filtersList, setFiltersList, setToShowPlanetsList, allPlanetsList,
-    columnsList, setColumnsList,
+    columnsList,
   } = useContext(PlanetsContext);
+
+  const [columnOptions, setColumnsOptions] = useState(columnsList);
+  const [columnFilterValue, setColumnFilterValue] = useState(columnOptions[0]);
+  const [comparisonFilterValue, setComparisonFilterValue] = useState('maior que');
+  const [valueFilterValue, setValueFilterValue] = useState('');
 
   function addFilter() {
     setFiltersList({
@@ -38,7 +39,7 @@ function NumericFilter() {
       }
       return null;
     });
-    setColumnsList(columnsList.filter((column) => column !== columnFilterValue));
+    setColumnsOptions(columnsList.filter((column) => column !== columnFilterValue));
     setToShowPlanetsList(filteredPlanets);
   }
 
@@ -53,7 +54,7 @@ function NumericFilter() {
             setColumnFilterValue(value);
           } }
         >
-          { columnsList.map((column, key) => (
+          { columnOptions.map((column, key) => (
             <option key={ key } value={ column }>{ column }</option>
           )) }
         </select>
@@ -89,6 +90,17 @@ function NumericFilter() {
       >
         Add filter
       </button>
+      <div>
+        { filtersList.filters.filterByNumericValues
+          .map(({ column, comparison, value }, key) => (
+            <div key={ key } data-testid="filter">
+              { `${column} ${comparison} ${value}` }
+              <button type="button">
+                X
+              </button>
+            </div>
+          )) }
+      </div>
     </>
   );
 }
