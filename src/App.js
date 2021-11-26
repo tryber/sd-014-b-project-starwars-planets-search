@@ -1,23 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { getPlanets } from './services';
-import './App.css';
+import React from 'react';
 import Table from './components/Table';
+import MyProvider from './context/MyProvider';
 
 function App() {
-  const [planets, setPlanets] = useState([]);
-
-  useEffect(() => {
-    (async () => setPlanets(await getPlanets()))();
-  }, []);
-
   return (
-    <>
-      <span>Hello, App!</span>
-      <ul>
-        {planets.map((p) => <li key={ p.name }>{p.name}</li>)}
-      </ul>
+    <MyProvider>
       <Table />
-    </>
+    </MyProvider>
   );
 }
 
