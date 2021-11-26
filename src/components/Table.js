@@ -4,11 +4,13 @@ import PlanetsContext from '../context/PlanetsContext';
 import NewRow from './NewRow';
 
 function Table() {
-  const { data, setData, requestApi,
+  const { data, requestApi,
     filters: { filters }, setFilters } = useContext(PlanetsContext);
   const [dataToFilter, setDataToFilter] = useState([]);
   function filterName(nome) {
-    const filterByName = data.filter((planet) => planet.name.includes(nome.toLowerCase()));
+    const filterByName = data.filter(
+      (planet) => planet.name.includes(nome.toLowerCase()),
+    );
     setDataToFilter(filterByName);
     console.log(data);
   }
@@ -58,7 +60,11 @@ function Table() {
         </thead>
         <tbody>
           {dataToFilter
-        && (dataToFilter.map((element, index) => <NewRow key={ index } elements={ element } />))}
+        && (
+          dataToFilter.map((element, index) => (<NewRow
+            key={ index }
+            elements={ element }
+          />)))}
         </tbody>
       </table>
     </main>
