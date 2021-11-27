@@ -10,10 +10,6 @@ const INITIAL_FILTERS = {
     name: '',
   },
   filterByNumericValues: [],
-  order: {
-    column: 'name',
-    sort: 'ASC',
-  },
 };
 
 const PlanetsContext = createContext(INITIAL_STATE);
@@ -57,8 +53,14 @@ export function PlanetsProvider({ children }) {
         });
         setPlanets(filtered);
       });
+    } else {
+      setPlanets(planetsData);
     }
   };
+
+  useEffect(() => {
+    filterPlanetsByValues(filters.filterByNumericValues, allPlanets);
+  }, [filters.filterByNumericValues, allPlanets]);
 
   const handleFilterValues = (filterValue) => {
     const updateFilterValues = filters.filterByNumericValues.concat(filterValue);
@@ -66,22 +68,12 @@ export function PlanetsProvider({ children }) {
       ...filters,
       filterByNumericValues: updateFilterValues,
     });
-    filterPlanetsByValues(updateFilterValues, planets);
-  };
-
-  const resetPlanets = () => {
-    setPlanets(planets);
   };
 
   const deleteNumericFilter = (column) => {
     const updateNumericFilter = filters.filterByNumericValues.filter(
       (item) => item.column !== column,
     );
-    if (updateNumericFilter.length > 0) {
-      filterPlanetsByValues(updateNumericFilter, planets);
-    } else {
-      resetPlanets();
-    }
     setFilters({
       ...filters,
       filterByNumericValues: updateNumericFilter,

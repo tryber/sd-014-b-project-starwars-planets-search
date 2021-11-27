@@ -42,6 +42,7 @@ function FilterByNumber() {
     const updateOptions = [...columnOptions, column];
     setColumnOptions(updateOptions);
     deleteNumericFilter(column);
+    console.log(column);
   };
 
   return (
