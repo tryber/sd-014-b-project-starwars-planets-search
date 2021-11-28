@@ -12,10 +12,10 @@ td, th {
 }
 
 tr:nth-child( even ) {
-  background-color: #fbd8d8;
+  background-color: #d8fbe0;
 }
 
-tr:hover { background-color: #cac4e6; }
+tr:hover { background-color: #a7ffdf; }
 
 th {
   background-color: #04aa6d;
