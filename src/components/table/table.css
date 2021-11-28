@@ -1,25 +1,26 @@
 table {
-  font-family: arial, sans-serif;
   border-collapse: collapse;
-  width: 100%
+  font-family: arial , sans-serif;
+  margin: auto;
+  width: 100%;
 }
 
 td, th {
-  border: 1px solid #ddd;
-  text-align: center;
+  border: 1px solid #b2b2b2;
   padding: 8px;
+  text-align: center;
 }
 
-tr:nth-child(even) {
-  background-color: #f2f2f2;
+tr:nth-child( even ) {
+  background-color: #fbd8d8;
 }
 
-tr:hover {background-color: #ddd;}
+tr:hover { background-color: #cac4e6; }
 
 th {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: center;
-  background-color: #04AA6D;
+  background-color: #04aa6d;
   color: white;
+  padding-bottom: 12px;
+  padding-top: 12px;
+  text-align: center;
 }
