@@ -1,0 +1,15 @@
+.title {
+  background-color: black;
+  color: purple;
+  text-align: center;
+}
+
+#searchInput {
+  background-color: black;
+  border-bottom: 10px;
+  border-color: purple;
+  color: white;
+  display: block;
+  margin: 0 auto;
+  width: 420px;
+}

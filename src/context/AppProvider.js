@@ -4,6 +4,7 @@ import AppContext from './AppContext';
 
 function AppProvider({ children }) {
   const [data, setData] = useState([]);
+  const [filters, setFilters] = useState([]);
 
   async function fetchData() {
     const URL = 'https://swapi-trybe.herokuapp.com/api/planets';
@@ -16,8 +17,12 @@ function AppProvider({ children }) {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    setFilters(data);
+  }, [data]);
+
   const stateDefault = {
-    data,
+    data, filters, setFilters,
   };
 
   return (
