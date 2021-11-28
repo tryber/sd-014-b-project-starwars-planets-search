@@ -6,11 +6,24 @@ import fetchPlanets from '../services/fecthApi';
 function Provider({ children }) {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
+  const [filters, setFilters] = useState({ filterByName: { name: '' } });
 
   const handleFetch = async () => {
     const planetsList = await fetchPlanets();
     setData(planetsList.results);
     setLoading(false);
+  };
+
+  // Aprendi como usar da forma correta o .filter em: https://stackoverflow.com/questions/50185401/filter-arrow-function-es6
+
+  const handleFilterName = (input) => {
+    if (input) {
+      const newData = data.filter((item) => item.name.toLowerCase()
+        .includes(input.toLowerCase()));
+      setData(newData);
+    } else {
+      handleFetch();
+    }
   };
 
   useEffect(() => {
@@ -21,6 +34,9 @@ function Provider({ children }) {
   const contextValue = {
     loading,
     data,
+    filters,
+    setFilters,
+    handleFilterName,
   };
 
   return (
