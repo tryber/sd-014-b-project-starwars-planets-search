@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
 import PlanetContext from './PlanetContext';
+import useFetch from '../hooks/useFetch';
 import useFilter from '../hooks/useFilter';
 
 const API_URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
@@ -18,16 +19,7 @@ export default function Provider({ children }) {
   const [planetFilter, setPlanetFilter] = useState([]);
   const [columns, setColumns] = useState(columnIndexes);
 
-  const fetchPlanets = async () => {
-    setLoading(true);
-    const response = await fetch(API_URL);
-    const { results } = await response.json();
-    setData(results);
-    setLoading(false);
-  };
-
   useEffect(() => {
-    fetchPlanets();
     setPlanetFilter(listOfPlanets);
   }, [listOfPlanets]);
 
