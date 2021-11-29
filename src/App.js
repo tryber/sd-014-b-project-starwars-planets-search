@@ -1,9 +1,17 @@
+// Feito com ajuda do Wallacy Francis
+
 import React from 'react';
 import './App.css';
+import Table from './components/PlanetTable';
+import Provider from './context/PlanetFinderProvider';
 
 function App() {
   return (
-    <span>Hello, App!</span>
+    <Provider>
+      <main>
+        <Table />
+      </main>
+    </Provider>
   );
 }
 
