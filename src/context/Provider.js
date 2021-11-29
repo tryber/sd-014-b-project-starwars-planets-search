@@ -1,10 +1,11 @@
+import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import AppContext from './AppContext';
 
 function Provider({ children }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  const [filterName, setFilterName] = useState('');
 
   useEffect(() => {
     async function fetchData() {
@@ -22,6 +23,12 @@ function Provider({ children }) {
     setData,
     loading,
     setLoading,
+    filters: {
+      filterByName: {
+        name: filterName,
+      },
+    },
+    setFilterName,
   };
 
   return (
@@ -30,5 +37,9 @@ function Provider({ children }) {
     </AppContext.Provider>
   );
 }
+
+Provider.propTypes = {
+  children: PropTypes.isRequired,
+};
 
 export default Provider;
