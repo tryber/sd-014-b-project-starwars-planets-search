@@ -4,9 +4,9 @@ import AppContext from './context/AppContext';
 const myHeaders = ['Name', 'Rotation period',
   'Orbital period', 'Diameter', 'Climate', 'Gravity',
   'Terrain', 'Population', 'films', 'Created', 'Edited', 'URL', 'Surface Water'];
-const colum_filter = ['population', 'orbital_period',
+const columFilter = ['population', 'orbital_period',
   'diameter', 'rotation_period', 'surface_water'];
-const comparison_filter = ['maior que', 'igual a', 'menor que'];
+const comparisonFilter = ['maior que', 'igual a', 'menor que'];
 
 const Table = () => {
   const { data, results, filters: { filterByName: { name: filterName },
@@ -30,42 +30,46 @@ const Table = () => {
         data-testid="column-filter"
         onChange={ ({ target }) => {
           setData(results);
-          setFilterColum(target.value)} }
+          setFilterColum(target.value);
+        } }
       >
-        {colum_filter.map((item) => <option>{item}</option>)}
+        {columFilter.map((item, index) => <option key={ index }>{item}</option>)}
       </select>
       <select
         data-testid="comparison-filter"
         onChange={ ({ target }) => {
           setData(results);
-          setFilterComparison(target.value)} }
+          setFilterComparison(target.value);
+        } }
       >
-        {comparison_filter.map((item) => <option>{item}</option>)}
+        {comparisonFilter.map((item, index) => <option key={ index }>{item}</option>)}
       </select>
-      <input 
+      <input
         onChange={ ({ target }) => {
-          console.log(typeof(filterValue))
           setData(results);
-          setFilterValue(target.value)}} 
-        data-testid="value-filter" 
-        type="number" 
+          setFilterValue(target.value);
+        } }
+        data-testid="value-filter"
+        type="number"
       />
       <button
-        data-testid='button-filter'
-        type='button'
-        onClick={()=> {
-          setData(data.filter(obj => {
-            if(filterComparison === 'maior que' ){
+        data-testid="button-filter"
+        type="button"
+        onClick={ () => {
+          setData(data.filter((obj) => {
+            if (filterComparison === 'maior que') {
               return Number(obj[filterColum]) > Number(filterValue);
             }
-            if(filterComparison === 'menor que' ){
+            if (filterComparison === 'menor que') {
               return Number(obj[filterColum]) < Number(filterValue);
             }
-            if(filterComparison === 'igual a' ){
+            if (filterComparison === 'igual a') {
               return Number(obj[filterColum]) === Number(filterValue);
             }
-        }))}}
-        >
+            return obj;
+          }));
+        } }
+      >
         Add filtro
       </button>
       <table>
@@ -91,7 +95,7 @@ const Table = () => {
                 <td>{item.surface_water}</td>
               </tr>
             ))}
-        
+
         </tbody>
       </table>
     </>
