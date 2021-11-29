@@ -90,13 +90,29 @@ function Table() {
         <option value="rotation_period">rotation_period</option>
         <option value="surface_water">surface_water</option>
       </select>
-      <select name="comparison" onChange={ handleFilters } data-testid="comparison-filter">
+      <select
+        name="comparison"
+        onChange={ handleFilters }
+        data-testid="comparison-filter"
+      >
         <option value="maior que">maior que</option>
         <option value="menor que">menor que</option>
         <option value="igual a">igual a</option>
       </select>
-      <input type="number" onChange={ handleFilters } name="value" data-testid="value-filter" />
-      <button type="button" onClick={ saveGlobalState } data-testid="button-filter">Filtrar</button>
+      <input
+        type="number"
+        onChange={ handleFilters }
+        name="value"
+        data-testid="value-filter"
+      />
+      <button
+        type="button"
+        onClick={ saveGlobalState }
+        data-testid="button-filter"
+      >
+        Filtrar
+
+      </button>
       <table>
         <thead>
           <tr>
