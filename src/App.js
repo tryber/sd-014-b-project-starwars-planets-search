@@ -1,12 +1,14 @@
 import React from 'react';
-import Filters from './components/filters/Filters';
+import NominalFilter from './components/nominalFilter/NominalFilter';
+import NumericFilter from './components/numericFilter/NumericFilter';
 import Table from './components/table/Table';
 import MyProvider from './context/MyProvider';
 
 function App() {
   return (
     <MyProvider>
-      <Filters />
+      <NominalFilter />
+      <NumericFilter />
       <Table />
     </MyProvider>
   );

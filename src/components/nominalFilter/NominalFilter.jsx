@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react';
 import MyContext from '../../context/MyContext';
-import './filters.css';
+import './nominalFilter.css';
 
-export default function Filters() {
+export default function NominalFilter() {
   const [name, setName] = useState('');
   const { planetsData, setFilteredPlanets, filterByName } = useContext(MyContext);
 
