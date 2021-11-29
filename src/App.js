@@ -4,6 +4,7 @@ import Search from './components/Search';
 import Table from './components/Table';
 import PlanetsProvider from './context/PlanetsProvider';
 import FilterNumber from './components/FilterNumber';
+import Order from './components/Order';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       </header>
       <Search />
       <FilterNumber />
+      <Order />
       <hr />
       <Table />
     </PlanetsProvider>

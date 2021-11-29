@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function Table() {
-  const { data, setPlanets, fetch } = useContext(PlanetsContext);
+  const { data, setPlanets, fetch, orderData } = useContext(PlanetsContext);
   let dataKeys = [];
   if (data.length > 0) {
     dataKeys = Object.keys(data[0]);
@@ -12,7 +12,7 @@ function Table() {
 
   async function fethcPlanets() {
     const planets = await fetch();
-    setPlanets(planets);
+    setPlanets(orderData(planets));
   }
 
   useEffect(() => {
@@ -31,7 +31,7 @@ function Table() {
         { data && (
           data.map((planet, index) => (
             <tr key={ index } style={ { backgroundColor: 'red' } }>
-              <td>{ planet.name }</td>
+              <td data-testid="planet-name">{ planet.name }</td>
               <td>{ planet.rotation_period }</td>
               <td>{ planet.orbital_period }</td>
               <td>{ planet.diameter }</td>

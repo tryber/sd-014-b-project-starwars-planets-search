@@ -5,6 +5,10 @@ function FilterNumber() {
   const { data, setPlanets, fetch } = useContext(PlanetsContext);
   const [filters, setFilters] = useState({
     filterByNumericValues: [],
+    order: {
+      column: 'name',
+      sort: 'ASC',
+    },
   });
   const [bkpPlanets, setBkpPlanets] = useState([]);
   const optionsColumns = [
@@ -95,6 +99,7 @@ function FilterNumber() {
 
   return (
     <>
+      <hr />
       <div>
         <label htmlFor="filterNumber">
           <select
@@ -153,6 +158,7 @@ function FilterNumber() {
           </button>
         </div>
       ))}
+      <hr />
     </>
   );
 }
