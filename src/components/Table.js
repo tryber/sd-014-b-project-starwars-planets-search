@@ -54,18 +54,22 @@ function Table() {
   }
 
   useEffect(() => {
-    onClickFilter(filters.filterByNumericValues);
+    if (filters.filterByNumericValues.length > 0) {
+      const lengthFilter = filters.filterByNumericValues.length - 1;
+      onClickFilter(filters.filterByNumericValues[lengthFilter]);
+    }
   }, [filters.filterByNumericValues]);
 
   function handleFilters({ target: { name, value } }) {
     setSaveFilters({ ...saveFilters, [name]: value });
   }
 
-  useEffect(() => { console.log(saveFilters); }, [saveFilters]);
-
   function saveGlobalState() {
-    setFilters({ ...filters, filterByNumericValues: saveFilters });
+    setFilters({ ...filters,
+      filterByNumericValues: [...filters.filterByNumericValues, saveFilters] });
   }
+
+  useEffect(() => { console.log(filters); }, [filters]);
 
   useEffect(() => {
     console.log('chamei a funcao filterName');
