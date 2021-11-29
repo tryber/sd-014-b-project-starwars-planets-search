@@ -5,11 +5,7 @@ import { getPlanets } from '../services';
 
 export default function MyProvider({ children }) {
   const [data, setData] = useState([]);
-  const [filters, setFilters] = useState({
-    filterByName: {
-      name: '',
-    },
-  });
+  const [arrayFilters, setArrayFilters] = useState([]);
 
   useEffect(() => {
     (async () => setData(await getPlanets()))();
@@ -17,8 +13,8 @@ export default function MyProvider({ children }) {
 
   const contextValue = {
     data,
-    filters,
-    setFilters,
+    arrayFilters,
+    setArrayFilters,
   };
 
   return (
