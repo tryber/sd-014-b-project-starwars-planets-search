@@ -44,19 +44,16 @@ function Provider({ children }) {
       const newData = data.filter((item) => (
         parseInt(item[column], 10) > parseInt(value, 10)
       ));
-      console.log(newData);
       setFilterData(newData);
     } else if (comparison === 'menor que') {
       const newData = data.filter((item) => (
         parseInt(item[column], 10) < parseInt(value, 10)
       ));
-      console.log(newData);
       setFilterData(newData);
     } else if (comparison === 'igual a') {
       const newData = data.filter((item) => (
         parseInt(item[column], 10) === parseInt(value, 10)
       ));
-      console.log(newData);
       setFilterData(newData);
     } else {
       baseData();
@@ -66,6 +63,21 @@ function Provider({ children }) {
   const deleteColumns = (columnName) => {
     const newColumns = columns.filter((column) => column !== columnName);
     setColumns(newColumns);
+  };
+
+  const restoreColumns = (columnName) => {
+    const newColumns = [...columns, columnName];
+    setColumns(newColumns);
+  };
+
+  const deleteFilters = (columnName) => {
+    const { filterByNumericValues } = filters;
+    const newFilters = filterByNumericValues.filter((item) => item.column !== columnName);
+    setFilters({
+      ...filters,
+      filterByNumericValues: newFilters,
+    });
+    setFilterData(data);
   };
 
   useEffect(() => {
@@ -85,6 +97,8 @@ function Provider({ children }) {
     handleFilterNumber,
     columns,
     deleteColumns,
+    restoreColumns,
+    deleteFilters,
   };
 
   return (
