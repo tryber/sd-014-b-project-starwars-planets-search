@@ -4,17 +4,19 @@ import MyContext from './MyContext';
 import { getPlanets } from '../services';
 
 export default function MyProvider({ children }) {
-  const [data, setData] = useState([]);
-  const [arrayFilters, setArrayFilters] = useState([]);
+  const [planetsData, setPlanetsData] = useState([]);
+  const [filteredPlanets, setFilteredPlanets] = useState([]);
 
   useEffect(() => {
-    (async () => setData(await getPlanets()))();
+    (async () => setPlanetsData(await getPlanets()))();
   }, []);
 
+  useEffect(() => { setFilteredPlanets(planetsData); }, [planetsData]);
+
   const contextValue = {
-    data,
-    arrayFilters,
-    setArrayFilters,
+    planetsData,
+    filteredPlanets,
+    setFilteredPlanets,
   };
 
   return (
