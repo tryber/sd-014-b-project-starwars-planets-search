@@ -1,10 +1,14 @@
 import React, { createContext, useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import planetsAPI from '../services/fetchAPI';
 
 const PlanetsContext = createContext();
 
 export const PlanetsData = ({ children }) => {
   const [data, setData] = useState([]);
+  const [filters, setFilters] = useState({
+    filterByName: '',
+  });
 
   useEffect(() => {
     const search = async () => {
@@ -16,6 +20,9 @@ export const PlanetsData = ({ children }) => {
 
   const dataValue = {
     data,
+    setData,
+    filters,
+    setFilters,
   };
 
   return (
@@ -23,6 +30,10 @@ export const PlanetsData = ({ children }) => {
       {children}
     </PlanetsContext.Provider>
   );
+};
+
+PlanetsData.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 export default PlanetsContext;
