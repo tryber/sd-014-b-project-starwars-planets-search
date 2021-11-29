@@ -1,24 +1,11 @@
-import React, { useContext } from 'react';
-import PlanetsContext from '../Context/StarWarsContext';
+import React from 'react';
 
-const Header = () => {
-  const { filters, setFilters } = useContext(PlanetsContext);
+import Filters from './Filters';
 
-  return (
-    <header>
-      <h1>Projeto Star Wars - Trybe</h1>
-      <input
-        type="text"
-        value={ filters.filterByName }
-        placeholder="Filtrar por nome"
-        onChange={ (e) => setFilters({
-          ...filters,
-          filterByName: e.target.value,
-        }) }
-        data-testid="name-filter"
-      />
-    </header>
-  );
-};
+const Header = () => (
+  <header>
+    <Filters />
+  </header>
+);
 
 export default Header;
