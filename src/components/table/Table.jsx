@@ -1,30 +1,16 @@
 import React, { useContext } from 'react';
 import MyContext from '../../context/MyContext';
+import tableHeader from './tableData';
 import './table.css';
-
-const thead = [
-  'Name',
-  'Rotation Period',
-  'Orbital Period',
-  'Diameter',
-  'Climate',
-  'Gravity',
-  'Terrain',
-  'Surface Water',
-  'Population',
-  'Films',
-  'Criado',
-  'Editado',
-  'Url',
-];
 
 export default function Table() {
   const { data: planets } = useContext(MyContext);
+
   return (
     <table>
       <thead>
         <tr>
-          {thead.map((h) => <th key={ h }>{h}</th>)}
+          {tableHeader.map((h) => <th key={ h }>{h}</th>)}
         </tr>
       </thead>
       <tbody>
