@@ -1,0 +1,5 @@
+table, th, td {
+  background-color: black;
+  border: 1px solid purple;
+  color: white;
+}
