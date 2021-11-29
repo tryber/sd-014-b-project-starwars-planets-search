@@ -6,11 +6,10 @@ function PlanetsProvider({ children }) {
   const [data, setData] = useState([]);
   const [filters, setFilters] = useState(
     {
-      filters: {
-        filterByName: {
-          name: '',
-        },
+      filterByName: {
+        name: '',
       },
+      filterByNumericValues: [],
     },
   );
 
@@ -20,8 +19,16 @@ function PlanetsProvider({ children }) {
       .then((result) => setData(result.results));
   }
 
+  // function setFilterNumeric() {
+  //   setFilters({ ...filters, filterByNumericValues: NumericValues });
+  // }
+
   return (
-    <PlanetsContext.Provider value={ { data, setData, requestApi, filters, setFilters } }>
+    <PlanetsContext.Provider
+      value={
+        { data, setData, requestApi, filters, setFilters }
+      }
+    >
       {children}
     </PlanetsContext.Provider>
   );
