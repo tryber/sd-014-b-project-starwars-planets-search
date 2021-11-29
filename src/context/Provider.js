@@ -6,9 +6,10 @@ function Provider({ children }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [filterName, setFilterName] = useState('');
-  const [filterColum, setFilterColum] = useState('');
-  const [filterComparison, setFilterComparison] = useState('');
+  const [filterColum, setFilterColum] = useState('population');
+  const [filterComparison, setFilterComparison] = useState('maior que');
   const [filterValue, setFilterValue] = useState('');
+  const [results, setResults] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -16,6 +17,7 @@ function Provider({ children }) {
       const request = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
       const response = await request.json();
       setData(response.results);
+      setResults(response.results);
       setLoading(false);
     }
     fetchData();
@@ -24,6 +26,8 @@ function Provider({ children }) {
   const contextValue = {
     data,
     setData,
+    results,
+    setResults,
     loading,
     setLoading,
     filters: {
