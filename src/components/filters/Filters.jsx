@@ -3,23 +3,10 @@ import MyContext from '../../context/MyContext';
 import './filters.css';
 
 export default function Filters() {
-  const [stateLocal, setStateLocal] = useState({
-    filters: {
-      filterByName: {
-        name: '',
-      },
-    },
-  });
+  const [nameFilter, setNameFilter] = useState({ name: '' });
 
-  const { setArrayFilters } = useContext(MyContext);
+  const { data } = useContext(MyContext);
 
-  function filterByName({ target: { id, value } }) {
-    setFilters((prevState) => ({
-      ...prevState,
-      filters: { filterByName: { [id]: value } },
-    }));
-    setArrayFilters([filters]);
-  }
   // data.filter(({ name }) => {
   //   console.log(name);
   //   return name;
@@ -31,12 +18,15 @@ export default function Filters() {
   // passar plela minha logíca de filtros
 
   // LÓGICA DO FILTER
-  // pegar o que está sendo digitado no input
-  console.log(filters);
-  // verificar se os dados na posição name inclui o que está sendo digitado no input
+  // pegar o que está sendo digitado no input - ok
+  // console.log(nameFilter);
+  // verificar se os dados na posição name inclui o que está sendo digitado no input - ok
+  const teste = data.filter(({ name }) => name.toLowerCase()
+    .includes(nameFilter.name.toLowerCase()));
+  console.log(teste);
   // retornar esses dados
 
-  // salvar os dados filtrados no contextos
+  // salvar os dados filtrados no contexto
   // renderizar os dados filtrados na tabela
 
   return (
@@ -45,11 +35,11 @@ export default function Filters() {
         <input
           id="name"
           name="name"
-          // value={ filters.filterByName.name }
+          value={ nameFilter.name }
           type="text"
           data-testid="name-filter"
           placeholder="Filtrar por nome"
-          onChange={ filterByName }
+          onChange={ ({ target: { id, value } }) => setNameFilter({ [id]: value }) }
         />
       </label>
     </form>
