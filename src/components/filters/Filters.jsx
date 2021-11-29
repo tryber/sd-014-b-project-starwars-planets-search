@@ -4,10 +4,11 @@ import './filters.css';
 
 export default function Filters() {
   const [name, setName] = useState('');
-  const { planetsData, setFilteredPlanets } = useContext(MyContext);
+  const { planetsData, setFilteredPlanets, filterByName } = useContext(MyContext);
 
   const handleFilter = (((value) => {
     setName(value);
+    filterByName(value);
     const listPlanets = planetsData.filter(({ name: planetName }) => planetName
       .toLowerCase().includes(value.toLowerCase()));
     setFilteredPlanets(listPlanets);
