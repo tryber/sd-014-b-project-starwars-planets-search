@@ -13,7 +13,7 @@ export default function useFetch(URL) {
     const fetchApi = async () => {
       try {
         const response = await fetch(URL);
-        const resolve = await response.jason();
+        const resolve = await response.json();
 
         setThePlanets(resolve.results);
         setIsLoading(false);
