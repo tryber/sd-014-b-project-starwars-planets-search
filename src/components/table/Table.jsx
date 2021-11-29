@@ -19,7 +19,7 @@ const thead = [
 ];
 
 export default function Table() {
-  const planets = useContext(MyContext);
+  const { data: planets } = useContext(MyContext);
   return (
     <table>
       <thead>
