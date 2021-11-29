@@ -1,7 +1,9 @@
 import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
-const tHeadColumns = ['Name', 'Rotation Period', 'Orbital Period', 'Diameter', 'Climate', 'Gravity', 'Terrain', 'Surface Water', 'Population', 'Films', 'Created', 'Edited', 'URL'];
+const tHeadColumns = ['Name', 'Rotation Period', 'Orbital Period', 'Diameter',
+  'Climate', 'Gravity', 'Terrain', 'Surface Water', 'Population',
+  'Films', 'Created', 'Edited', 'URL'];
 
 export default function Table() {
   const { planetsFilter } = useContext(PlanetsContext);
