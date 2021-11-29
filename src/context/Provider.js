@@ -6,6 +6,9 @@ function Provider({ children }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [filterName, setFilterName] = useState('');
+  const [filterColum, setFilterColum] = useState('');
+  const [filterComparison, setFilterComparison] = useState('');
+  const [filterValue, setFilterValue] = useState('');
 
   useEffect(() => {
     async function fetchData() {
@@ -27,8 +30,19 @@ function Provider({ children }) {
       filterByName: {
         name: filterName,
       },
+      filterByNumericValues: [
+        {
+          column: filterColum,
+          comparison: filterComparison,
+          value: filterValue,
+        },
+      ],
     },
     setFilterName,
+    setFilterColum,
+    setFilterComparison,
+    setFilterValue,
+
   };
 
   return (

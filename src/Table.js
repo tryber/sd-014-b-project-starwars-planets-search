@@ -4,13 +4,19 @@ import AppContext from './context/AppContext';
 const myHeaders = ['Name', 'Rotation period',
   'Orbital period', 'Diameter', 'Climate', 'Gravity',
   'Terrain', 'Population', 'films', 'Created', 'Edited', 'URL', 'Surface Water'];
+const colum_filter = ['population', 'orbital_period',
+  'diameter', 'rotation_period', 'surface_Water'];
+const comparison_filter = ['maior que', 'igual a', 'menor que'];
 
 const Table = () => {
-  const { data, filters: {
-    filterByName: {
-      name: filterName,
-    },
-  }, setFilterName } = useContext(AppContext);
+  const { data, filters: { filterByName: { name: filterName },
+    filterByNumericValues: [{
+      column: filterColum,
+      comparison: filterComparison,
+      value: filterValue,
+    }],
+  }, setFilterName, setFilterComparison,
+  setFilterColum, setFilterValue } = useContext(AppContext);
   return (
     <>
       <input
@@ -19,12 +25,32 @@ const Table = () => {
         placeholder="filtrar por nome"
         type="text"
       />
+      <br />
+      <select
+        data-testid="column-filter"
+        onChange={ ({ target }) => setFilterColum(target.value) }
+      >
+        {colum_filter.map((item) => <option>{item}</option>)}
+      </select>
+      <select
+        data-testid="comparison-filter"
+        onChange={ ({ target }) => setFilterComparison(target.value) }
+      >
+        {comparison_filter.map((item) => <option>{item}</option>)}
+      </select>
+      <input 
+        onChange={ ({ target }) => setFilterValue(target.value)} 
+        data-testid="value-filter" 
+        type="number" 
+      />
+      <button type='button'>Add filtro</button>
+      {' '}
+      JOGAR FILTRO NO DATA
       <table>
         <tbody>
           <tr>
             {myHeaders.map((header, index) => <th key={ index }>{header}</th>)}
           </tr>
-          {console.log(data)}
           {data.filter((obj) => obj.name.includes(filterName))
             .map((item, index) => (
               <tr key={ index }>
