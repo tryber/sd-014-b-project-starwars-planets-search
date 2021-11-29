@@ -7,6 +7,8 @@ function NameSearch() {
     setFilters,
     handleFilterName,
     handleFilterNumber,
+    columns,
+    deleteColumns,
   } = useContext(myContext);
 
   const [temporaryFilter, setTemporaryFilter] = useState({});
@@ -34,9 +36,8 @@ function NameSearch() {
   };
 
   const handleButton = () => {
-    console.log(temporaryFilter);
     const { column, comparison, value } = temporaryFilter;
-    console.log(column, comparison, value);
+    deleteColumns(column);
     handleFilterChange();
     handleFilterNumber(column, comparison, value);
   };
@@ -54,11 +55,11 @@ function NameSearch() {
         name="column"
         onChange={ handleTemporaryFilter }
       >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        {
+          columns.map((item, index) => (
+            <option key={ item + index } value={ item }>{ item }</option>
+          ))
+        }
       </select>
       <select
         data-testid="comparison-filter"

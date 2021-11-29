@@ -12,6 +12,9 @@ function Provider({ children }) {
     filterByName: { name: '' },
     filterByNumericValues: [{ column: 'population', comparison: 'maior que', value: 0 }],
   });
+  const [columns, setColumns] = useState([
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+  ]);
 
   const baseData = () => {
     setFilterData(data);
@@ -60,6 +63,11 @@ function Provider({ children }) {
     }
   };
 
+  const deleteColumns = (columnName) => {
+    const newColumns = columns.filter((column) => column !== columnName);
+    setColumns(newColumns);
+  };
+
   useEffect(() => {
     setLoading(true);
     handleFetch();
@@ -75,6 +83,8 @@ function Provider({ children }) {
     setFilters,
     handleFilterName,
     handleFilterNumber,
+    columns,
+    deleteColumns,
   };
 
   return (
