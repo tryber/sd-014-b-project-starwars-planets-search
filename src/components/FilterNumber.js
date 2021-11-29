@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function FilterNumber() {
@@ -6,6 +6,7 @@ function FilterNumber() {
   const [filters, setFilters] = useState({
     filterByNumericValues: [],
   });
+  const [bkpPlanets, setBkpPlanets] = useState([]);
   const optionsColumns = [
     'population',
     'orbital_period',
@@ -14,9 +15,9 @@ function FilterNumber() {
     'surface_water',
   ];
 
-  async function fetchPlanets() {
+  async function fetchBkpPlanets() {
     const dataPlanets = await fetch();
-    return dataPlanets;
+    setBkpPlanets(dataPlanets);
   }
 
   function filterSubmit() {
@@ -56,22 +57,28 @@ function FilterNumber() {
     setFilters(allFilters);
   }
 
-  async function clearFilter({ column, comparison, value }) {
+  function clearFilter({ column, comparison, value }) {
     const currentData = data;
-    const planets = await fetchPlanets();
-
+    const planets = bkpPlanets;
+    if (filters.filterByNumericValues.length === 1) {
+      setPlanets(bkpPlanets);
+      return false;
+    }
     if (comparison === 'maior que') {
       const returnValues = planets.filter((
         planet,
       ) => Number(planet[column]) <= Number(value));
       setPlanets(currentData.concat(returnValues));
       removeFilter(column);
+      console.log(document.getElementsByTagName('tr'));
     } else if (comparison === 'menor que') {
+      console.log(currentData);
       const returnValues = planets.filter((
         planet,
       ) => Number(planet[column]) >= Number(value));
       setPlanets(currentData.concat(returnValues));
       removeFilter(column);
+      console.log(document.getElementsByTagName('tr'));
     } else {
       const returnValues = planets.filter((
         planet,
@@ -80,6 +87,11 @@ function FilterNumber() {
       removeFilter(column);
     }
   }
+
+  useEffect(() => {
+    fetchBkpPlanets();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
