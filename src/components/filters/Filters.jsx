@@ -7,6 +7,11 @@ export default function Filters() {
 
   const { data } = useContext(MyContext);
 
+  const handleFilter = (name) => (
+    name ? 'Dados digitados' : name.length
+  );
+
+  console.log(handleFilter(nameFilter.name));
   // data.filter(({ name }) => {
   //   console.log(name);
   //   return name;
@@ -28,6 +33,14 @@ export default function Filters() {
 
   // salvar os dados filtrados no contexto
   // renderizar os dados filtrados na tabela
+
+  // LÓGICA 2 DO FILTER
+  // pega os dados da tabela e desestrutura em um array vazio
+  // verifica se o input de filtro está vazio
+  // se não pega os array com os dados da tabela e faz um filtro nele
+  // o filtro verifica se os dados da tabela coincidem com os dados do imput e retorna apenas os que coincidem
+  // salva esse array filtrado no contexto
+  // a tabela renderiza o array filtrado.
 
   return (
     <form>
