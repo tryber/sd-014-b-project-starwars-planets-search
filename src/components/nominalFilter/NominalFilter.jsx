@@ -23,7 +23,7 @@ export default function NominalFilter() {
           value={ name }
           type="text"
           data-testid="name-filter"
-          placeholder="Filtrar por nome"
+          placeholder="Filter by name"
           onChange={ ({ target: { value } }) => handleFilter(value) }
         />
       </label>
