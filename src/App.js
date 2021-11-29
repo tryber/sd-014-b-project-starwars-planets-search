@@ -1,16 +1,17 @@
+// Feito com ajuda do Wallacy Francis
+
 import React from 'react';
 import './App.css';
-import PlanetFinder from './components/PlanetFinder';
-import PlanetFinderProvider from './context/PlanetFinderContext';
+import Table from './components/PlanetTable';
+import Provider from './context/PlanetFinderProvider';
 
 function App() {
   return (
-    <div>
-      <PlanetFinderProvider>
-        <PlanetFinder />
-      </PlanetFinderProvider>
-    </div>
-
+    <Provider>
+      <main>
+        <Table />
+      </main>
+    </Provider>
   );
 }
 
