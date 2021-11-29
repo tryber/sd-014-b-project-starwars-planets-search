@@ -8,7 +8,11 @@ function NameSearch() {
     handleFilterName,
     handleFilterNumber,
     columns,
+    columnsSort,
     deleteColumns,
+    order,
+    setOrder,
+    sortData,
   } = useContext(myContext);
 
   const [temporaryFilter, setTemporaryFilter] = useState({});
@@ -40,6 +44,20 @@ function NameSearch() {
     deleteColumns(column);
     handleFilterChange();
     handleFilterNumber(column, comparison, value);
+  };
+
+  const handleTemporaryColumn = ({ target }) => {
+    setOrder({
+      ...order,
+      column: target.value,
+    });
+  };
+
+  const handleTemporarySort = ({ target }) => {
+    setOrder({
+      ...order,
+      sort: target.value,
+    });
   };
 
   return (
@@ -82,6 +100,40 @@ function NameSearch() {
         type="button"
       >
         Filtrar
+      </button>
+      <select
+        data-testid="column-sort"
+        name="column"
+        onChange={ handleTemporaryColumn }
+      >
+        {
+          columnsSort.map((item, index) => (
+            <option key={ `sort${item}-${index}` } value={ item }>{ item }</option>
+          ))
+        }
+      </select>
+      <input
+        data-testid="column-sort-input-asc"
+        name="sort"
+        onChange={ handleTemporarySort }
+        type="radio"
+        value="ASC"
+      />
+      Ascendente
+      <input
+        data-testid="column-sort-input-desc"
+        name="sort"
+        onChange={ handleTemporarySort }
+        type="radio"
+        value="DESC"
+      />
+      Descendente
+      <button
+        data-testid="column-sort-button"
+        onClick={ sortData }
+        type="button"
+      >
+        Listar
       </button>
     </div>
   );

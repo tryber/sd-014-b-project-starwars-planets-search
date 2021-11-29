@@ -12,12 +12,43 @@ function Provider({ children }) {
     filterByName: { name: '' },
     filterByNumericValues: [{ column: 'population', comparison: 'maior que', value: 0 }],
   });
+  const [order, setOrder] = useState({
+    column: 'name',
+    sort: 'ASC',
+  });
   const [columns, setColumns] = useState([
     'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
   ]);
+  const columnsSort = [
+    'name',
+    'rotation_period',
+    'orbital_period',
+    'diameter',
+    'climate',
+    'gravity',
+    'terrain',
+    'surface_water',
+    'films',
+    'created',
+    'edited',
+    'url',
+  ];
+
+  const valueComparator = (a, b) => {
+    const negativo = -1;
+    if (Number.isNaN(parseInt(a, 10))) {
+      if (a < b) return negativo;
+      if (a > b) return 1;
+      return 0;
+    }
+    if (Number(a) < Number(b)) return negativo;
+    if (Number(a) > Number(b)) return 1;
+    return 0;
+  };
 
   const baseData = () => {
-    setFilterData(data);
+    const orderedData = data.sort((a, b) => valueComparator(a.name, b.name));
+    setFilterData(orderedData);
   };
 
   const handleFetch = async () => {
@@ -80,6 +111,20 @@ function Provider({ children }) {
     setFilterData(data);
   };
 
+  // A ideia de resolução para o requisito 6 veio do repositório de Kelvin Wevertor: https://github.com/tryber/sd-014-a-project-starwars-planets-search/pull/121/files
+
+  const sortData = () => {
+    const { column, sort } = order;
+    const newData = [...filterData];
+    if (sort === 'ASC') {
+      newData.sort((a, b) => valueComparator(a[column], b[column]));
+    }
+    if (sort === 'DESC') {
+      newData.sort((b, a) => valueComparator(a[column], b[column]));
+    }
+    setFilterData(newData);
+  };
+
   useEffect(() => {
     setLoading(true);
     handleFetch();
@@ -96,9 +141,13 @@ function Provider({ children }) {
     handleFilterName,
     handleFilterNumber,
     columns,
+    columnsSort,
     deleteColumns,
     restoreColumns,
     deleteFilters,
+    order,
+    setOrder,
+    sortData,
   };
 
   return (

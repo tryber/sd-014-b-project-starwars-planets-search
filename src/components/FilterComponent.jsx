@@ -8,8 +8,6 @@ function FiltererComponent() {
     deleteFilters,
   } = useContext(myContext);
 
-  console.log(filters);
-
   return (
     filters.filterByNumericValues.map(({ column, comparison, value }, index) => (
       <div data-testid="filter" key={ column + index } name={ column }>
