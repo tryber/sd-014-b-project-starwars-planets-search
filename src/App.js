@@ -1,9 +1,20 @@
 import React from 'react';
-import './App.css';
+import FilterValue from './components/FilterValue';
+import Filter from './components/Filter';
+import Table from './components/Table';
+import FilterSort from './components/FilterSort';
+import { AppContext } from './context/ProviderApp';
 
 function App() {
   return (
-    <span>Hello, App!</span>
+    <div>
+      <AppContext>
+        <Filter />
+        <FilterValue />
+        <FilterSort />
+        <Table />
+      </AppContext>
+    </div>
   );
 }
 
