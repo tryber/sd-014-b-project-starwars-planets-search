@@ -37,7 +37,7 @@ const FilterValue = () => {
     optionsOnFilter();
   }, [filterNumbers, filterNumbers.length, data]);
 
-  const handleFilterButtom = () => {
+  const handleButtomFilter = () => {
     setFilterNumeric([...filterNumbers, { columFilter, compare, value }]);
 
     const filteredPlanets = apiResponse.filter((response) => {
@@ -64,21 +64,34 @@ const FilterValue = () => {
     }
   };
 
-  const renderX = () => {
-    (
-      filterNumbers.map((filtered, i) => (
-        <div data-testid="filter" key={ i }>
-          <p>{ filtered.columFilter }</p>
-          <button
-            onClick={ () => handleClick(filtered.columFilter) }
-            type="button"
-          >
-            X
-          </button>
-        </div>
-      ))
-    );
+  const handleTemporaryColumn = ({ target }) => {
+    setOrder({
+      ...order,
+      column: target.value,
+    });
   };
+
+  const handleTemporarySort = ({ target }) => {
+    setOrder({
+      ...order,
+      sort: target.value,
+    });
+  };
+
+  const columnsSort = [
+    'name',
+    'rotation_period',
+    'orbital_period',
+    'diameter',
+    'climate',
+    'gravity',
+    'terrain',
+    'surface_water',
+    'films',
+    'created',
+    'edited',
+    'url',
+  ];
 
   return (
     <forms>
@@ -117,15 +130,62 @@ const FilterValue = () => {
         />
       </label>
       <button
-        onClick={ handleFilterButtom }
+        onClick={ handleButtomFilter }
         data-testid="button-filter"
         type="button"
       >
         Filtrar
       </button>
       <div>
-        {filterNumbers.length > 0 ? renderX : null}
+        {filterNumbers.length > 0 ? (
+          filterNumbers.map((filtered, i) => (
+            <div data-testid="filter" key={ i }>
+              <p>{ filtered.columFilter }</p>
+              <button
+                onClick={ () => handleClick(filtered.columFilter) }
+                type="button"
+              >
+                X
+              </button>
+            </div>
+          ))
+        ) : null}
       </div>
+      {/* //------------------------------------------- */}
+      <select
+        data-testid="column-sort"
+        name="column"
+        onChange={ handleTemporaryColumn }
+      >
+        {
+          columnsSort.map((item, index) => (
+            <option key={ `sort${item}-${index}` } value={ item }>{ item }</option>
+          ))
+        }
+      </select>
+      <input
+        data-testid="column-sort-input-asc"
+        name="sort"
+        onChange={ handleTemporarySort }
+        type="radio"
+        value="ASC"
+      />
+      Ascendente
+      <input
+        data-testid="column-sort-input-desc"
+        name="sort"
+        onChange={ handleTemporarySort }
+        type="radio"
+        value="DESC"
+      />
+      Descendente
+      <button
+        data-testid="column-sort-button"
+        onClick={ sortData }
+        type="button"
+      >
+        Listar
+      </button>
     </forms>
   );
 };
