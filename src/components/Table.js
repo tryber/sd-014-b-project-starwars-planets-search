@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 import NewRow from './NewRow';
 import Columns from './Colunas';
+import ShowFilters from './InfosFilters';
 
 const initialFilter = [
   {
@@ -16,7 +17,9 @@ function Table() {
   const { data, requestApi,
     filters, setFilters } = useContext(PlanetsContext);
   const [dataToFilter, setDataToFilter] = useState([]);
-  const [saveFilters, setSaveFilters] = useState(initialFilter);
+  const [saveFilters, setSaveFilters] = useState([]);
+  const [infosFilter, setInfosFilter] = useState([]);
+  const [testFilters, setTestFilters] = useState([]);
 
   const [columnsName, setColumnsName] = useState(
     ['population',
@@ -24,14 +27,6 @@ function Table() {
       'diameter',
       'rotation_period', 'surface_water'],
   );
-
-  // const initialFilter = [
-  //   {
-  //     column: 'population',
-  //     comparison: 'maior que',
-  //     value: '',
-  //   },
-  // ];
 
   function filterName(nome) {
     const filterByName = data.filter(
@@ -42,14 +37,20 @@ function Table() {
 
   function onClickFilter({ column, comparison, value }) {
     if (comparison === 'maior que') {
-      setDataToFilter(data.filter((planet) => Number(planet[column]) > Number(value)));
+      setDataToFilter(dataToFilter.filter((planet) => Number(planet[column]) > Number(value)));
     }
     if (comparison === 'menor que') {
-      setDataToFilter(data.filter((planet) => Number(planet[column]) < Number(value)));
+      setDataToFilter(dataToFilter.filter((planet) => Number(planet[column]) < Number(value)));
     }
     if (comparison === 'igual a') {
-      setDataToFilter(data.filter((planet) => Number(planet[column]) === Number(value)));
+      setDataToFilter(dataToFilter.filter((planet) => Number(planet[column]) === Number(value)));
     }
+  }
+
+  function renderizeAllFilters() {
+    infosFilter.forEach((element) => {
+      onClickFilter(element);
+    });
   }
 
   function handleChange({ target }) {
@@ -77,12 +78,40 @@ function Table() {
     setSaveFilters({ ...saveFilters, [name]: value });
   }
 
+  function removeFilter({ target: { name } }) {
+    setDataToFilter(data);
+    setInfosFilter(infosFilter.filter((element) => element.column !== name));
+  }
+
+  useEffect(() => { 
+    renderizeAllFilters(); 
+  }, [infosFilter]);
+
+  function renderizeFilters() {
+    return (
+      <div>
+        {infosFilter && infosFilter.map((element, index) => (
+          <div data-testid="filter" key={ index }>
+            <ShowFilters
+              test={ element }
+            />
+            <button type="button" onClick={ removeFilter } name={ element.column }>x</button>
+          </div>
+        )) }
+      </div>
+    );
+  }
+
   function saveGlobalState() {
     setFilters({ ...filters,
       filterByNumericValues: [...filters.filterByNumericValues, saveFilters] });
+    if (infosFilter.length === 0) {
+      setInfosFilter([saveFilters]);
+    } else {
+      setInfosFilter([...infosFilter, saveFilters]);
+    }
+    renderizeFilters();
   }
-
-  useEffect(() => { console.log(filters); }, [filters]);
 
   useEffect(() => {
     filterName(filters.filterByName.name);
@@ -90,8 +119,9 @@ function Table() {
 
   useEffect(() => {
     requestApi();
-    console.log(columnsName);
   }, []);
+
+  useEffect(() => { setTestFilters(data); }, [data]);
 
   useEffect(() => {
     setDataToFilter(data);
@@ -129,8 +159,8 @@ function Table() {
         data-testid="button-filter"
       >
         Filtrar
-
       </button>
+      { renderizeFilters() }
       <table>
         <thead>
           <tr>
