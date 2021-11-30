@@ -1,52 +1,56 @@
-import React, { useState, useEffect } from 'react';
-import fetchApi from '../helpers/fetchApi';
+import React, { useContext, useEffect } from 'react';
+import appContext from '../context/Context';
+import SearchBar from './SearchBar';
 
 export default function Table() {
-  const [data, setData] = useState([]);
-
-  const URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
+  const { data, filter, dataFiltered, setDataFiltered } = useContext(appContext);
 
   const headers = ['Name', 'Rotation Period', 'Orbital Period', 'Diameter', 'Climate',
     'Gravity', 'Terrain', 'Surface Water',
     'Population', 'Films', 'Created', 'Edited', 'URL'];
 
-  async function fetchUrl(PlantUrl) {
-    const result = await fetchApi(PlantUrl);
-    setData(result.results);
-  }
+  const setDataFilter = (filtered) => {
+    setDataFiltered(filtered);
+  };
 
   useEffect(() => {
-    fetchUrl(URL);
-  }, []);
+    const { filters: { filterByName: { name } } } = filter;
+    const filterDataByName = data.filter((planet) => (
+      planet.name.includes(name)
+    ));
+    setDataFilter(filterDataByName);
+  }, [data, filter]);
 
-  console.log(data);
   return (
-    <table>
-      <thead>
-        <tr>
-          { headers.map((item) => (
-            <th key={ item }>{ item }</th>)) }
-        </tr>
-      </thead>
-      <tbody>
-        { data.map((planet, index) => (
-          <tr key={ index }>
-            <td>{ planet.name }</td>
-            <td>{ planet.rotation_period }</td>
-            <td>{ planet.orbital_period }</td>
-            <td>{ planet.diameter }</td>
-            <td>{ planet.climate }</td>
-            <td>{ planet.gravity }</td>
-            <td>{ planet.terrain }</td>
-            <td>{ planet.surface_water }</td>
-            <td>{ planet.population }</td>
-            <td>{ planet.films }</td>
-            <td>{ planet.created }</td>
-            <td>{ planet.edited }</td>
-            <td>{ planet.url }</td>
+    <>
+      <SearchBar />
+      <table>
+        <thead>
+          <tr>
+            { headers.map((item) => (
+              <th key={ item }>{ item }</th>)) }
           </tr>
-        )) }
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          { dataFiltered.map((planet, index) => (
+            <tr key={ index }>
+              <td>{ planet.name }</td>
+              <td>{ planet.rotation_period }</td>
+              <td>{ planet.orbital_period }</td>
+              <td>{ planet.diameter }</td>
+              <td>{ planet.climate }</td>
+              <td>{ planet.gravity }</td>
+              <td>{ planet.terrain }</td>
+              <td>{ planet.surface_water }</td>
+              <td>{ planet.population }</td>
+              <td>{ planet.films }</td>
+              <td>{ planet.created }</td>
+              <td>{ planet.edited }</td>
+              <td>{ planet.url }</td>
+            </tr>
+          )) }
+        </tbody>
+      </table>
+    </>
   );
 }
