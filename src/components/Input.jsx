@@ -14,10 +14,6 @@ function Input() {
     setPlanets(filteredPlanets);
   }
 
-  // useEffect(() => {
-  //   filterPlanets(search);
-  // }, [search]);
-
   return (
     <input
       type="text"

@@ -8,12 +8,15 @@ export default function FilterNumeric() {
     numericFilter,
     columns,
     setColumns,
-    setFilteredPlanets, planets, orderBy, sortRadio } = useContext(planetContext);
+    setFilteredPlanets,
+    planets,
+    orderBy, sortRadio, planetsFilter, setIsFiltered } = useContext(planetContext);
 
   const [column, setColumn] = useState('population');
   const [orderColumn, setOrderColumn] = useState('population');
   const [comparation, setComparation] = useState('maior que');
   const [value, setValue] = useState();
+  // const [orderValue, setOrderValue] = useState('asc');
 
   const handleClick = () => {
     numericFilter({ column, comparation, value });
@@ -32,6 +35,17 @@ export default function FilterNumeric() {
     const filteredColums = columns.filter((filteredColumn) => filteredColumn !== column);
     setFilteredPlanets(filterByNumeric);
     setColumns(filteredColums);
+  };
+
+  const handleOrderClick = () => {
+    if (planetsFilter.filters.order.sort === 'asc') {
+      setFilteredPlanets(planets
+        .sort((a, b) => a[orderColumn] - b[orderColumn]));
+    } else {
+      setFilteredPlanets(planets
+        .sort((a, b) => b[orderColumn] - a[orderColumn]));
+    }
+    setIsFiltered(true);
   };
 
   return (
@@ -72,7 +86,7 @@ export default function FilterNumeric() {
         value={ orderColumn }
         onChange={ ({ target: { value: targetValue } }) => {
           setOrderColumn(targetValue);
-          orderBy(orderColumn);
+          orderBy(targetValue);
         } }
       >
         {columns.map((item) => (
@@ -104,7 +118,7 @@ export default function FilterNumeric() {
       <button
         type="button"
         data-testid="column-sort-button"
-        onClick={ () => handleClick() }
+        onClick={ () => handleOrderClick() }
       >
         Ordenar
       </button>

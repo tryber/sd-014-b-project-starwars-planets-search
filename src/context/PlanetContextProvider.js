@@ -8,7 +8,7 @@ const PlanetContextProvider = ({ children }) => {
       filterByName: {},
       filterByNumericValues: [],
       order: {
-        column: 'name',
+        column: 'population',
         sort: 'ASC',
       },
     },
@@ -27,6 +27,7 @@ const PlanetContextProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [planetsFilter, setPlanetsFilter] = useState(INIT_FILTER);
   const [columns, setColumns] = useState(tableColums);
+  const [isFiltered, setIsFiltered] = useState(false);
 
   const nameFilter = (value) => {
     setPlanetsFilter({
@@ -53,7 +54,7 @@ const PlanetContextProvider = ({ children }) => {
       filters: {
         ...planetsFilter.filters,
         order: {
-          ...planetsFilter.filters.order,
+          sort: planetsFilter.filters.order.sort,
           column,
         },
       },
@@ -103,6 +104,9 @@ const PlanetContextProvider = ({ children }) => {
     setColumns,
     orderBy,
     sortRadio,
+    tableColums,
+    isFiltered,
+    setIsFiltered,
   };
 
   return (
