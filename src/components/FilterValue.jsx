@@ -64,20 +64,6 @@ const FilterValue = () => {
     }
   };
 
-  const handleTemporaryColumn = ({ target }) => {
-    setOrder({
-      ...order,
-      column: target.value,
-    });
-  };
-
-  const handleTemporarySort = ({ target }) => {
-    setOrder({
-      ...order,
-      sort: target.value,
-    });
-  };
-
   const columnsSort = [
     'name',
     'rotation_period',
@@ -151,7 +137,7 @@ const FilterValue = () => {
           ))
         ) : null}
       </div>
-      {/* //------------------------------------------- */}
+      {/* //------------------req6------------------------- */}
       <select
         data-testid="column-sort"
         name="column"
@@ -166,7 +152,7 @@ const FilterValue = () => {
       <input
         data-testid="column-sort-input-asc"
         name="sort"
-        onChange={ handleTemporarySort }
+        onChange={ (event) => setOrder(event.target.value) }
         type="radio"
         value="ASC"
       />
@@ -174,7 +160,7 @@ const FilterValue = () => {
       <input
         data-testid="column-sort-input-desc"
         name="sort"
-        onChange={ handleTemporarySort }
+        onChange={ (event) => setOrder(event.target.value) }
         type="radio"
         value="DESC"
       />
