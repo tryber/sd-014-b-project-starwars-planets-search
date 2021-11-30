@@ -9,6 +9,10 @@ export const PlanetsData = ({ children }) => {
   const [filters, setFilters] = useState({
     filterByName: '',
     filterByNumericValues: [],
+    order: {
+      column: 'name',
+      sort: 'ASC',
+    },
   });
 
   useEffect(() => {
@@ -17,7 +21,7 @@ export const PlanetsData = ({ children }) => {
       setData(results);
     };
     search();
-  }, []);
+  }, [setData]);
 
   const dataValue = {
     data,

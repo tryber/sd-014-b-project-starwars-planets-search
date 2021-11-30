@@ -10,7 +10,7 @@ export default function filterData(data, arrayOfFilters) {
           return Number(planet[column]) < Number(value);
         }
         if (comparison === 'igual a') return planet[column] === value;
-        return true; // eslint(array-callback-return)
+        return true;
       }))
     .reduce((acc, curr) => {
       if (curr !== undefined) {
