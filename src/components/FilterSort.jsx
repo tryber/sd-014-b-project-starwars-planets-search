@@ -67,6 +67,6 @@ const FilterSort = () => {
 };
 
 // https://github.com/tryber/sd-014-b-project-starwars-planets-search/pull/114/files
-// parte do req 5 e 6 com base no projeto do joao pedro reis
+// parte do req 5 e 6 com base no projeto do joao pedro reis, cansado e com fome
 
 export default FilterSort;
