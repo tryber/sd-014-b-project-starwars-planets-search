@@ -2,14 +2,19 @@ import React, { useContext } from 'react';
 import appContext from '../context/Context';
 
 export default function SearchBar() {
-  const { setFilter } = useContext(appContext);
+  const { filter, setFilter } = useContext(appContext);
 
   const handleChange = (name) => {
     setFilter({
-      filters: {
+      filters:
+      {
+        ...filter,
         filterByName: {
           name,
         },
+        filterByNumericValues: [
+          ...filter.filters.filterByNumericValues,
+        ],
       },
     });
   };

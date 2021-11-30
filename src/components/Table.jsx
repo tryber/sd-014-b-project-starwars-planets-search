@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import appContext from '../context/Context';
+import NumberFilter from './NumberFilter';
 import SearchBar from './SearchBar';
 
 export default function Table() {
@@ -9,21 +10,18 @@ export default function Table() {
     'Gravity', 'Terrain', 'Surface Water',
     'Population', 'Films', 'Created', 'Edited', 'URL'];
 
-  const setDataFilter = (filtered) => {
-    setDataFiltered(filtered);
-  };
-
   useEffect(() => {
     const { filters: { filterByName: { name } } } = filter;
     const filterDataByName = data.filter((planet) => (
       planet.name.includes(name)
     ));
-    setDataFilter(filterDataByName);
+    setDataFiltered(filterDataByName);
   }, [data, filter]);
 
   return (
     <>
       <SearchBar />
+      <NumberFilter />
       <table>
         <thead>
           <tr>

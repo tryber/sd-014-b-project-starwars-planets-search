@@ -8,13 +8,18 @@ const URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
 export default function Provider({ children }) {
   const [data, setData] = useState([]);
   const [dataFiltered, setDataFiltered] = useState([data]);
-  const [filter, setFilter] = useState({
-    filters: {
+
+  const INITIAL_STATE = {
+    filters:
+    {
       filterByName: {
         name: '',
       },
+      filterByNumericValues: [],
     },
-  });
+  };
+
+  const [filter, setFilter] = useState(INITIAL_STATE);
 
   async function fetchUrl(PlantUrl) {
     const result = await fetchApi(PlantUrl);
