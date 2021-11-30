@@ -7,7 +7,7 @@ import { getPlanets } from '../services';
 const INITIAL_STATE = {
   filters:
   {
-    filterByName: {},
+    filterByName: { name: '' },
     filterByNumericValues: [],
   },
 };
@@ -25,7 +25,9 @@ export default function MyProvider({ children }) {
 
   useEffect(() => {
     let filterNumeric = planetsData;
-    const { filters: { filterByNumericValues } } = filters;
+    const { filters: { filterByName: { name }, filterByNumericValues } } = filters;
+    filterNumeric = planetsData.filter(({ name: planetName }) => planetName.toLowerCase()
+      .includes(name.toLowerCase()));
     filterByNumericValues.forEach(({ comparison, column, value }) => {
       filterNumeric = filterNumeric.filter((planet) => {
         if (comparison === 'maior que') {
