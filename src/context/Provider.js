@@ -1,48 +1,60 @@
-import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
-import PlanetContext from './PlanetContext';
-import useFetch from '../hooks/useFetch';
-import useFilter from '../hooks/useFilter';
+import PropTypes from 'prop-types';
+import PlanetsContext from './PlanetsContext';
 
-const API_URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
+const URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
 
-const columnIndexes = ['population',
-  'orbital_period',
-  'diameter',
-  'rotation_period',
-  'surface_water',
-];
-
-export default function Provider({ children }) {
-  const [listOfPlanets] = useFetch(API_URL);
-  const [filterData, newTextFilter, newNumericFilter] = useFilter('');
-  const [planetFilter, setPlanetFilter] = useState([]);
-  const [columns, setColumns] = useState(columnIndexes);
+function Provider({ children }) {
+  const [data, setData] = useState([]);
+  const [filters, setFilters] = useState({
+    filterByName: {
+      name: '',
+    },
+    filterByNumericValues: [],
+    order: {
+      column: 'Name',
+      sort: 'ASC',
+    },
+  });
+  const [filterOptions, setFilterOptions] = useState({
+    column: '',
+    comparison: 'maior que',
+    value: '0',
+  });
+  const [orderOption, setOrderOption] = useState({
+    column: 'Name',
+    sort: 'ASC',
+  });
 
   useEffect(() => {
-    setPlanetFilter(listOfPlanets);
-  }, [listOfPlanets]);
+    const fetchPlanets = async () => {
+      const fetchAPI = fetch(URL);
+      const response = await fetchAPI;
+      const { results } = await response.json();
+      setData(results);
+    };
+    fetchPlanets();
+  }, []);
 
-  const planetContext = {
-    listOfPlanets,
-    filterData,
-    newTextFilter,
-    newNumericFilter,
-    planetFilter,
-    setPlanetFilter,
-    columns,
-    setColumns,
+  const planetsContext = {
+    data,
+    filters,
+    setFilters,
+    filterOptions,
+    setFilterOptions,
+    orderOption,
+    setOrderOption,
   };
 
   return (
-    <main>
-      <PlanetContext.Provider value={ planetContext }>
-        { children }
-      </PlanetContext.Provider>
-    </main>
+    <PlanetsContext.Provider value={ planetsContext }>
+      { children }
+    </PlanetsContext.Provider>
   );
 }
 
 Provider.propTypes = {
-  children: PropTypes.arrayOf(PropTypes.object).isRequired,
+  children: PropTypes.element.isRequired,
 };
+
+export default Provider;
