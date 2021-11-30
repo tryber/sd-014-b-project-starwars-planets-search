@@ -3,6 +3,7 @@ import PlanetsContext from '../context/PlanetsContext';
 import NewRow from './NewRow';
 import Columns from './Colunas';
 import ShowFilters from './InfosFilters';
+import ListTh from './listTh';
 
 function Table() {
   const { data, requestApi,
@@ -219,26 +220,16 @@ function Table() {
           data-testid="column-sort-input-desc"
         />
       </label>
-      <button type="button" onClick={ onClickOrdernation } data-testid="column-sort-button">Ordenar</button>
+      <button
+        type="button"
+        onClick={ onClickOrdernation }
+        data-testid="column-sort-button"
+      >
+        Ordenar
+      </button>
       { renderizeFilters() }
       <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Rotation Period</th>
-            <th>Orbital Period</th>
-            <th>Diameter</th>
-            <th>Climate</th>
-            <th>Gravity</th>
-            <th>Terrain</th>
-            <th>Surface Water</th>
-            <th>Population</th>
-            <th>Films</th>
-            <th>Created</th>
-            <th>Edited</th>
-            <th>URL</th>
-          </tr>
-        </thead>
+        <ListTh />
         <tbody>
           {dataToFilter
         && (
