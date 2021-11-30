@@ -16,6 +16,10 @@ export default function Provider({ children }) {
         name: '',
       },
       filterByNumericValues: [],
+      order: {
+        column: 'name',
+        sort: 'ASC',
+      },
     },
   };
 
@@ -29,6 +33,8 @@ export default function Provider({ children }) {
 
   const [filter, setFilter] = useState(INITIAL_STATE);
   const [columns, setColumns] = useState(INIT_COL);
+  const [sort, setSort] = useState('ASC');
+  const [column, setColumn] = useState('name');
 
   async function fetchUrl(PlantUrl) {
     const result = await fetchApi(PlantUrl);
@@ -48,6 +54,10 @@ export default function Provider({ children }) {
     setDataFiltered,
     columns,
     setColumns,
+    sort,
+    setSort,
+    column,
+    setColumn,
   };
 
   return (

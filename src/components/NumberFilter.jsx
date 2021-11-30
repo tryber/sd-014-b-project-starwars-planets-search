@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import appContext from '../context/Context';
+import OrderFilter from './OrderFilter';
 
 export default function NumberFilter() {
   const {
@@ -87,41 +88,7 @@ export default function NumberFilter() {
       >
         Filtrar
       </button>
-      <label htmlFor="order">
-        <select name="order" id="order" data-testid="column-sort">
-          <option value="population">population</option>
-          <option value="orbital_period">orbital_period</option>
-          <option value="diameter">diameter</option>
-          <option value="rotation_period">rotation_period</option>
-          <option value="surface_water">surface_water</option>
-        </select>
-      </label>
-      <label htmlFor="radio-asc">
-        Ascendente
-        <input
-          type="radio"
-          name="radio-order"
-          id="radio-asc"
-          testid="column-sort-input-asc"
-        />
-      </label>
-      <label htmlFor="radio-desc">
-        Descendente
-        <input
-          type="radio"
-          name="radio-order"
-          id="radio-desc"
-          testid="column-sort-input-desc"
-        />
-      </label>
-      <button
-        name="Filtar"
-        id="Filtar"
-        type="button"
-        data-testid="column-sort-button"
-      >
-        Ordenar
-      </button>
+      <OrderFilter />
     </div>
   );
 }
