@@ -18,7 +18,16 @@ export default function Table() {
     'Population', 'Films', 'Created', 'Edited', 'URL'];
 
   const compare = (a, b) => {
-    if (a[column].toLowerCase() < b[column].toLowerCase()) return '-1';
+    if (column !== 'name' && column !== '') {
+      const valueA = Number(a[column]);
+      const valueB = Number(b[column]);
+      if (valueA < valueB) return '-1';
+    } else if (column === 'name' && column !== '') {
+      const valueA = a[column];
+      const valueB = b[column];
+      if (valueA < valueB) return '-1';
+      if (a[column] < b[column]) return '-1';
+    }
     if (a[column].toLowerCase() > b[column].toLowerCase()) return '1';
     return '0';
   };
