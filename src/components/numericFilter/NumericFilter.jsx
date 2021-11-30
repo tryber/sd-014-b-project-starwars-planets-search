@@ -13,7 +13,7 @@ const selectList = ['name', 'population', 'orbital_period', 'diameter', 'rotatio
 const comparisonList = ['maior que', 'menor que', 'igual a'];
 
 export default function NumericFilter() {
-  const { filterByNumericValue } = useContext(MyContext);
+  const { filterByNumericValue, orderFilter } = useContext(MyContext);
   const [numValue, setNumValue] = useState({
     column: 'population', comparison: 'maior que', value: 0,
   });
@@ -36,7 +36,7 @@ export default function NumericFilter() {
   };
 
   const orderClick = () => {
-
+    orderFilter(orderSort);
   };
 
   return (
@@ -111,7 +111,6 @@ export default function NumericFilter() {
         onClick={ orderClick }
       >
         Ordenar
-
       </button>
     </form>
   );
