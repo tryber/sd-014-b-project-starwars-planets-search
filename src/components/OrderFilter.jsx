@@ -1,10 +1,8 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import appContext from '../context/Context';
 
 export default function OrderFilter() {
   const {
-    dataFiltered,
-    setDataFiltered,
     filter,
     setFilter,
     sort,
@@ -12,20 +10,6 @@ export default function OrderFilter() {
     column,
     setColumn,
   } = useContext(appContext);
-
-  /*  function compare(a, b) {
-      if (a[column] < b[column]) return '-1';
-      if (a[column] > b[column]) return '1';
-      return '0';
-    }
-  
-    useEffect(() => {
-      if (sort === 'ASC') {
-        setDataFiltered(dataFiltered.sort(compare));
-      } else {
-        setDataFiltered(dataFiltered.sort(compare).reverse());
-      }
-    }, [filter, setDataFiltered, dataFiltered, sort]); */
 
   const handleClick = () => {
     setFilter({

@@ -4,15 +4,22 @@ import NumberFilter from './NumberFilter';
 import SearchBar from './SearchBar';
 
 export default function Table() {
-  const { data, filter, dataFiltered, setDataFiltered, column, sort } = useContext(appContext);
+  const {
+    data,
+    filter,
+    dataFiltered,
+    setDataFiltered,
+    column,
+    sort,
+  } = useContext(appContext);
 
   const headers = ['Name', 'Rotation Period', 'Orbital Period', 'Diameter', 'Climate',
     'Gravity', 'Terrain', 'Surface Water',
     'Population', 'Films', 'Created', 'Edited', 'URL'];
 
   const compare = (a, b) => {
-    if (a[column] < b[column]) return '-1';
-    if (a[column] > b[column]) return '1';
+    if (a[column].toLowerCase() < b[column].toLowerCase()) return '-1';
+    if (a[column].toLowerCase() > b[column].toLowerCase()) return '1';
     return '0';
   };
 
