@@ -1,12 +1,15 @@
 .App {
   text-align: center;
+  background-image: url("https://c4.wallpaperflare.com/wallpaper/356/487/776/star-wars-background-darth-vader-darth-vader-wallpaper-preview.jpg");
+  background-size: 100%;
+  color: antiquewhite;
 }
 
 .App-logo {
   height: 40vmin;
   pointer-events: none;
 }
-
+.
 @media ( prefers-reduced-motion : no-preference ) {
 
   .App-logo {
