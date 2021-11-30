@@ -2,6 +2,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 import NewRow from './NewRow';
+import Columns from './Colunas';
 
 const initialFilter = [
   {
@@ -16,6 +17,13 @@ function Table() {
     filters, setFilters } = useContext(PlanetsContext);
   const [dataToFilter, setDataToFilter] = useState([]);
   const [saveFilters, setSaveFilters] = useState(initialFilter);
+
+  const [columnsName, setColumnsName] = useState(
+    ['population',
+      'orbital_period',
+      'diameter',
+      'rotation_period', 'surface_water'],
+  );
 
   // const initialFilter = [
   //   {
@@ -53,10 +61,15 @@ function Table() {
     );
   }
 
+  function filterColumns({ column }) {
+    setColumnsName(columnsName.filter((element) => element !== column));
+  }
+
   useEffect(() => {
     if (filters.filterByNumericValues.length > 0) {
       const lengthFilter = filters.filterByNumericValues.length - 1;
       onClickFilter(filters.filterByNumericValues[lengthFilter]);
+      filterColumns(filters.filterByNumericValues[lengthFilter]);
     }
   }, [filters.filterByNumericValues]);
 
@@ -72,12 +85,12 @@ function Table() {
   useEffect(() => { console.log(filters); }, [filters]);
 
   useEffect(() => {
-    console.log('chamei a funcao filterName');
     filterName(filters.filterByName.name);
   }, [filters.filterByName.name]);
 
   useEffect(() => {
     requestApi();
+    console.log(columnsName);
   }, []);
 
   useEffect(() => {
@@ -88,11 +101,12 @@ function Table() {
     <main>
       <input type="text" onChange={ handleChange } data-testid="name-filter" />
       <select name="column" onChange={ handleFilters } data-testid="column-filter">
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        {columnsName
+        && columnsName.map((element, index) => (
+          <Columns
+            nameColumn={ element }
+            key={ index }
+          />))}
       </select>
       <select
         name="comparison"
