@@ -1,28 +1,15 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import planetContext from '../context/planetContext';
 
 function Input() {
-  const {
-    nameFilter, setPlanets, planets,
-  } = useContext(planetContext);
-  const [searchValue, setSearchValue] = useState('');
-
-  const handleSearch = (value) => {
-    setSearchValue(value);
-    nameFilter(value);
-    const filterDataByName = planets.filter(({ name: nameData }) => (
-      nameData.toLowerCase().includes(value.toLowerCase())
-    ));
-    setPlanets(filterDataByName);
-  };
+  const { handleFilterName } = useContext(planetContext);
 
   return (
     <input
-      data-testid="name-filter"
       type="text"
-      value={ searchValue }
-      onChange={ ({ target: { value } }) => handleSearch(value) }
-      placeholder="Procurar por nome"
+      data-testid="name-filter"
+      placeholder="Filtrar por Nome"
+      onChange={ handleFilterName }
     />
   );
 }

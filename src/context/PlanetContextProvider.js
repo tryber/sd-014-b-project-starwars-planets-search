@@ -1,123 +1,144 @@
-import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
+import usePlanets from '../hooks/usePlanets';
 import planetContext from './planetContext';
 
-const PlanetContextProvider = ({ children }) => {
-  const INIT_FILTER = {
-    filters: {
-      filterByName: {},
-      filterByNumericValues: [],
-      order: {
-        column: 'population',
-        sort: 'ASC',
-      },
+// muita refatoração nesse arquivo após ajuda do Sathler e Adilson Gabriel
+
+function PlanetContextProvider({ children }) {
+  const initialFilters = {
+    filterByName: {
+      name: '',
+    },
+    filterByNumericValues: [],
+    order: {
+      column: 'population',
+      sort: 'asc',
     },
   };
 
-  const tableColums = [
-    'population',
-    'orbital_period',
-    'diameter',
-    'rotation_period',
-    'surface_water',
-  ];
-
+  const [data] = usePlanets();
   const [planets, setPlanets] = useState();
-  const [filteredPlanets, setFilteredPlanets] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [planetsFilter, setPlanetsFilter] = useState(INIT_FILTER);
-  const [columns, setColumns] = useState(tableColums);
-  const [isFiltered, setIsFiltered] = useState(false);
+  const [filters, setFilters] = useState(initialFilters);
 
-  const nameFilter = (value) => {
-    setPlanetsFilter({
-      filters: {
-        ...planetsFilter.filters,
-        filterByName: {
-          name: value,
-        },
-      },
+  const orderPlanetsByString = (planetsData, column, sort) => {
+    const MINUS_ONE = -1;
+    if (sort === 'asc') {
+      return planetsData.sort((a, b) => (a[column] > b[column] ? 1 : MINUS_ONE));
+    }
+    return planetsData.sort((a, b) => (a[column] < b[column] ? 1 : MINUS_ONE));
+  };
+
+  const orderPlanetsByValue = (planetsData, column, sort) => {
+    const MINUS_ONE = -1;
+    if (sort === 'asc') {
+      return planetsData.sort((a, b) => (Number(a[column]) > Number(b[column])
+        ? 1 : MINUS_ONE));
+    }
+    return planetsData.sort((a, b) => (Number(a[column]) < Number(b[column])
+      ? 1 : MINUS_ONE));
+  };
+
+  const filterPlanetsByName = (name) => {
+    if (planets && name !== '') {
+      const filtered = planets.filter((item) => item.name.includes(name));
+      setPlanets(filtered);
+    } else {
+      setPlanets(data.results);
+    }
+  };
+
+  const filterPlanetsByValues = (valuesFilters, planetsData) => {
+    if (valuesFilters.length !== 0) {
+      valuesFilters.forEach((filter) => {
+        const filtered = planetsData.filter((item) => {
+          const columnValue = Number(item[filter.column]);
+          const filterValue = Number(filter.value);
+          if (filter.comparison === 'maior que') {
+            return columnValue > filterValue;
+          }
+          if (filter.comparison === 'menor que') {
+            return columnValue < filterValue;
+          }
+          return columnValue === filterValue;
+        });
+        setPlanets(filtered);
+      });
+    }
+  };
+
+  const resetPlanets = () => {
+    setPlanets(data.results);
+  };
+
+  const deleteFilterNumeric = (column) => {
+    const updateFilterNumeric = filters.filterByNumericValues
+      .filter((item) => item.column !== column);
+    if (updateFilterNumeric.length > 0) {
+      filterPlanetsByValues(updateFilterNumeric, data.results);
+    } else {
+      resetPlanets();
+    }
+    setFilters({
+      ...filters,
+      filterByNumericValues: updateFilterNumeric,
     });
   };
 
-  const numericFilter = (value) => {
-    setPlanetsFilter({
-      filters: {
-        ...planetsFilter.filters,
-        filterByNumericValues: [...planetsFilter.filters.filterByNumericValues, value],
-      },
+  const handleFilterName = ({ target }) => {
+    setFilters({
+      ...filters,
+      filterByName: { name: target.value },
     });
+    filterPlanetsByName(target.value);
   };
 
-  const orderBy = (column) => {
-    setPlanetsFilter({
-      filters: {
-        ...planetsFilter.filters,
-        order: {
-          sort: planetsFilter.filters.order.sort,
-          column,
-        },
-      },
+  const handleFilterValues = (filterValue) => {
+    const updateFilterValues = filters.filterByNumericValues.concat(filterValue);
+    setFilters({
+      ...filters,
+      filterByNumericValues: updateFilterValues,
     });
+    filterPlanetsByValues(updateFilterValues, planets);
   };
 
-  const sortRadio = (sort) => {
-    setPlanetsFilter({
-      filters: {
-        ...planetsFilter.filters,
-        order: {
-          ...planetsFilter.filters.order,
-          sort,
-        },
-      },
+  const handleOrderColumns = (order) => {
+    setFilters({
+      ...filters,
+      order,
     });
+    if (order.column === 'name') {
+      setPlanets(orderPlanetsByString(planets, order.column, order.sort));
+    } else {
+      setPlanets(orderPlanetsByValue(planets, order.column, order.sort));
+    }
   };
-
-  const URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
 
   useEffect(() => {
-    setIsLoading(true);
-    const planetsAPI = async () => {
-      const request = await fetch(URL);
-      const response = await request.json();
-      setPlanets(response.results);
-      setIsLoading(false);
-    };
-    planetsAPI();
-  }, []);
-
-  useEffect(() => {
-    setPlanets(filteredPlanets);
-  }, [filteredPlanets]);
+    if (data) {
+      setPlanets(orderPlanetsByString(data.results, 'name', 'asc'));
+    }
+  }, [data]);
 
   const context = {
     planets,
-    setPlanets,
-    isLoading,
-    planetsFilter,
-    setPlanetsFilter,
-    nameFilter,
-    numericFilter,
-    filteredPlanets,
-    setFilteredPlanets,
-    columns,
-    setColumns,
-    orderBy,
-    sortRadio,
-    tableColums,
-    isFiltered,
-    setIsFiltered,
+    filterByNumericValues: filters.filterByNumericValues,
+    order: filters.order,
+    handleFilterName,
+    handleFilterValues,
+    deleteFilterNumeric,
+    handleOrderColumns,
   };
 
   return (
     <planetContext.Provider value={ context }>
-      { children }
+      {children}
     </planetContext.Provider>
   );
-};
+}
 
 PlanetContextProvider.propTypes = {
-  children: PropTypes.arrayOf(PropTypes.objectOf({})).isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default PlanetContextProvider;
