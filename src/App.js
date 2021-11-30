@@ -1,9 +1,18 @@
 import React from 'react';
-import './App.css';
+import FilterValue from './components/FilterValue';
+import Filter from './components/Filter';
+import Table from './components/Table';
+import { AppContext } from './context/ProviderApp';
 
 function App() {
   return (
-    <span>Hello, Appsu!</span>
+    <div>
+      <AppContext>
+        <Filter />
+        <FilterValue />
+        <Table />
+      </AppContext>
+    </div>
   );
 }
 
