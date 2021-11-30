@@ -3,7 +3,6 @@ import PlanetsContext from '../context/PlanetsContext';
 import NewRow from './NewRow';
 import Columns from './Colunas';
 import ShowFilters from './InfosFilters';
-import ListTh from './listTh';
 
 function Table() {
   const { data, requestApi,
@@ -66,7 +65,7 @@ function Table() {
       onClickFilter(filters.filterByNumericValues[lengthFilter]);
       filterColumns(filters.filterByNumericValues[lengthFilter]);
     }
-  }, [filterColumns, filters.filterByNumericValues, onClickFilter]);
+  }, [filters.filterByNumericValues]);
 
   function handleFilters({ target: { name, value } }) {
     setSaveFilters({ ...saveFilters, [name]: value });
@@ -79,7 +78,7 @@ function Table() {
 
   useEffect(() => {
     renderizeAllFilters();
-  }, [infosFilter, renderizeAllFilters]);
+  }, [infosFilter]);
 
   function renderizeFilters() {
     return (
@@ -116,11 +115,11 @@ function Table() {
 
   useEffect(() => {
     filterName(filters.filterByName.name);
-  }, [filterName, filters.filterByName.name]);
+  }, [filters.filterByName.name]);
 
   useEffect(() => {
     requestApi();
-  }, [requestApi]);
+  }, []);
 
   // Funcao ajudada por Wallacy Francis
   function ordenation(a, b) {
@@ -220,17 +219,26 @@ function Table() {
           data-testid="column-sort-input-desc"
         />
       </label>
-      <button
-        type="button"
-        onClick={ onClickOrdernation }
-        data-testid="column-sort-button"
-      >
-        Ordenar
-
-      </button>
+      <button type="button" onClick={ onClickOrdernation } data-testid="column-sort-button">Ordenar</button>
       { renderizeFilters() }
       <table>
-        <ListTh />
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Rotation Period</th>
+            <th>Orbital Period</th>
+            <th>Diameter</th>
+            <th>Climate</th>
+            <th>Gravity</th>
+            <th>Terrain</th>
+            <th>Surface Water</th>
+            <th>Population</th>
+            <th>Films</th>
+            <th>Created</th>
+            <th>Edited</th>
+            <th>URL</th>
+          </tr>
+        </thead>
         <tbody>
           {dataToFilter
         && (
