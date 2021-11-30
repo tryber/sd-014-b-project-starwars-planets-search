@@ -19,7 +19,16 @@ export default function Provider({ children }) {
     },
   };
 
+  const INIT_COL = [
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ];
+
   const [filter, setFilter] = useState(INITIAL_STATE);
+  const [columns, setColumns] = useState(INIT_COL);
 
   async function fetchUrl(PlantUrl) {
     const result = await fetchApi(PlantUrl);
@@ -37,6 +46,8 @@ export default function Provider({ children }) {
     setFilter,
     dataFiltered,
     setDataFiltered,
+    columns,
+    setColumns,
   };
 
   return (

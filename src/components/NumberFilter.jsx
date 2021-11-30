@@ -2,10 +2,17 @@ import React, { useState, useContext } from 'react';
 import appContext from '../context/Context';
 
 export default function NumberFilter() {
-  const { dataFiltered, setData, filter, setFilter } = useContext(appContext);
+  const {
+    dataFiltered,
+    setData,
+    columns,
+    setColumns,
+    filter,
+    setFilter,
+  } = useContext(appContext);
 
   const [column, setColumn] = useState('population');
-  const [comparison, setComparison] = useState('>');
+  const [comparison, setComparison] = useState('maior que');
   const [numericFilter, setNumericFilter] = useState('');
 
   const handleClick = () => {
@@ -18,7 +25,6 @@ export default function NumberFilter() {
         ],
       },
     });
-    console.log(comparison);
     const filterByNumeric = dataFiltered.filter((planet) => {
       if (comparison === 'maior que') {
         return Number(planet[column]) > Number(numericFilter);
@@ -31,7 +37,10 @@ export default function NumberFilter() {
       }
       return null;
     });
+    // Requisito 4 feito ao reflexo do código de Michael Caxias
+    const newColumns = columns.filter((columnItem) => columnItem !== column);
     setData(filterByNumeric);
+    setColumns(newColumns);
   };
 
   return (
@@ -43,11 +52,9 @@ export default function NumberFilter() {
           data-testid="column-filter"
           onChange={ (e) => setColumn(e.target.value) }
         >
-          <option value="population">population</option>
-          <option value="orbital_period">orbital_period</option>
-          <option value="diameter">diameter</option>
-          <option value="rotation_period">rotation_period</option>
-          <option value="surface_water">surface_water</option>
+          { columns.map((item) => (
+            <option key={ item }>{ item }</option>
+          )) }
         </select>
       </label>
       <label htmlFor="comparison">
