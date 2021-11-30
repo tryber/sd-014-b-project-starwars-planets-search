@@ -4,7 +4,7 @@ import './numericFilter.css';
 
 // parte desse código foi inpirado no repositório do Michael Cachias https://github.com/tryber/sd-014-b-project-starwars-planets-search/blob/michaelcaxias-starwars-planets/src/components/FilterNumeric.jsx
 
-const options = ['population', 'orbital_period', 'diameter', 'rotation_period',
+const optionsList = ['population', 'orbital_period', 'diameter', 'rotation_period',
   'surface_water'];
 
 const comparisonList = ['maior que', 'menor que', 'igual a'];
@@ -13,10 +13,9 @@ export default function NumericFilter() {
   const { filterByNumericValues, filteredPlanets,
     setFilteredPlanets } = useContext(MyContext);
   const [numValue, setNumValue] = useState({
-    column: 'population',
-    comparison: 'maior que',
-    value: 0,
+    column: 'population', comparison: 'maior que', value: 0,
   });
+  const [options, setOptions] = useState(optionsList);
 
   const handleChange = ({ target: { name, value } }) => {
     setNumValue({ ...numValue, [name]: value });
@@ -35,6 +34,8 @@ export default function NumericFilter() {
       } return filterNumeric;
     });
     setFilteredPlanets(filterNumeric);
+    const newColumns = options.filter((newcolumn) => column !== newcolumn);
+    setOptions(newColumns);
   };
 
   return (
