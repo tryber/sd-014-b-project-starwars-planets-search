@@ -23,6 +23,23 @@ export default function MyProvider({ children }) {
 
   useEffect(() => { setFilteredPlanets(planetsData); }, [planetsData]);
 
+  useEffect(() => {
+    let filterNumeric = planetsData;
+    const { filters: { filterByNumericValues } } = filters;
+    filterByNumericValues.forEach(({ comparison, column, value }) => {
+      filterNumeric = filterNumeric.filter((planet) => {
+        if (comparison === 'maior que') {
+          return +planet[column] > +value;
+        } if (comparison === 'menor que') {
+          return +planet[column] < +value;
+        } if (comparison === 'igual a') {
+          return +planet[column] === +value;
+        } return null;
+      });
+    });
+    setFilteredPlanets(filterNumeric);
+  }, [filters, planetsData]);
+
   const filterByName = (name) => {
     setFilters((prevState) => ({
       filters: {
@@ -32,12 +49,21 @@ export default function MyProvider({ children }) {
     }));
   };
 
-  const filterByNumericValues = (name) => {
-    setFilters((prevState) => ({
+  const delFilterNumeric = (arrFilter) => {
+    setFilters(({
       filters: {
-        ...prevState.filters,
+        ...filters.filters,
+        filterByNumericValues: arrFilter,
+      },
+    }));
+  };
+
+  const filterByNumericValue = (name) => {
+    setFilters(({
+      filters: {
+        ...filters.filters,
         filterByNumericValues: [
-          ...prevState.filters.filterByNumericValues,
+          ...filters.filters.filterByNumericValues,
           { ...name },
         ],
       },
@@ -49,8 +75,10 @@ export default function MyProvider({ children }) {
     filteredPlanets,
     setFilteredPlanets,
     filters,
+    setFilters,
     filterByName,
-    filterByNumericValues,
+    filterByNumericValue,
+    delFilterNumeric,
   };
 
   return (

@@ -4,6 +4,7 @@ import './listFilters.css';
 
 export default function Listfilters() {
   const { filters: { filters: { filterByNumericValues } } } = useContext(MyContext);
+  const { delFilterNumeric } = useContext(MyContext);
   const [numericFilter, setNumericFilter] = useState([]);
 
   useEffect(() => {
@@ -11,8 +12,9 @@ export default function Listfilters() {
   }, [filterByNumericValues]);
 
   const delFilter = (id) => {
-    const delId = numericFilter.filter((_filter, i) => i !== id);
+    const delId = filterByNumericValues.filter((_filter, i) => i !== id);
     setNumericFilter(delId);
+    delFilterNumeric(delId);
   };
 
   return (

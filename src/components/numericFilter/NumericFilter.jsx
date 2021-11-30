@@ -10,8 +10,7 @@ const optionsList = ['population', 'orbital_period', 'diameter', 'rotation_perio
 const comparisonList = ['maior que', 'menor que', 'igual a'];
 
 export default function NumericFilter() {
-  const { filterByNumericValues, filteredPlanets,
-    setFilteredPlanets } = useContext(MyContext);
+  const { filterByNumericValue } = useContext(MyContext);
   const [numValue, setNumValue] = useState({
     column: 'population', comparison: 'maior que', value: 0,
   });
@@ -22,18 +21,8 @@ export default function NumericFilter() {
   };
 
   const handleFilter = () => {
-    const { column, comparison, value } = numValue;
-    filterByNumericValues(numValue);
-    const filterNumeric = filteredPlanets.filter((planet) => {
-      if (comparison === 'maior que') {
-        return +planet[column] > +value;
-      } if (comparison === 'menor que') {
-        return +planet[column] < +value;
-      } if (comparison === 'igual a') {
-        return +planet[column] === +value;
-      } return filterNumeric;
-    });
-    setFilteredPlanets(filterNumeric);
+    const { column } = numValue;
+    filterByNumericValue(numValue);
     const newColumns = options.filter((newcolumn) => column !== newcolumn);
     setOptions(newColumns);
   };
