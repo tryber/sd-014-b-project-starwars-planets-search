@@ -20,13 +20,13 @@ export default function NumberFilter() {
     });
     console.log(comparison);
     const filterByNumeric = dataFiltered.filter((planet) => {
-      if (comparison === '>') {
+      if (comparison === 'maior que') {
         return Number(planet[column]) > Number(numericFilter);
       }
-      if (comparison === '<') {
+      if (comparison === 'menor que') {
         return Number(planet[column]) < Number(numericFilter);
       }
-      if (comparison === '=') {
+      if (comparison === 'igual a') {
         return Number(planet[column]) === Number(numericFilter);
       }
       return null;
@@ -57,9 +57,9 @@ export default function NumberFilter() {
           data-testid="comparison-filter"
           onChange={ (e) => setComparison(e.target.value) }
         >
-          <option value=">">maior que</option>
-          <option value="<">menor que</option>
-          <option value="=">igual a</option>
+          <option value="maior que">maior que</option>
+          <option value="menor que">menor que</option>
+          <option value="igual a">igual a</option>
         </select>
       </label>
       <label htmlFor="valueField">
