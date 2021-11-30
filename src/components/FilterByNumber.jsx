@@ -1,11 +1,13 @@
 import React, { useState, useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
+import ResetFilters from './ResetFilters';
 
 const selectComparisonList = ['maior que', 'menor que', 'igual a'];
 
 export default function FilterByNumber() {
-  const { numberFilter, setPlanetsFilter, thePlanets, columns, setColumns,
-  } = useContext(PlanetsContext);
+  const { numberFilter, setPlanetsFilter, thePlanets, principalColumns, setColumns,
+    filterObj } = useContext(PlanetsContext);
+  const { filterByNumericValues } = filterObj.filters;
 
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
@@ -26,45 +28,59 @@ export default function FilterByNumber() {
       }
       return null;
     });
-    const newColumns = columns.filter((columnInfo) => columnInfo !== column);
+    const newColumns = principalColumns.filter((columnItem) => columnItem !== column);
     setPlanetsFilter(filterByNumeric);
     setColumns(newColumns);
   };
 
-  return (
-    <form action="">
-      <select
-        data-testid="column-filter"
-        value={ column }
-        onChange={ ({ target: { value: targetValue } }) => setColumn(targetValue) }
-      >
-        {columns.map((item) => (
-          <option key={ item }>{ item }</option>
-        ))}
-      </select>
+  const removeFilter = () => {
+    setPlanetsFilter(thePlanets);
+  };
+  console.log(filterByNumericValues);
 
-      <select
-        data-testid="comparison-filter"
-        value={ comparison }
-        onChange={ ({ target: { value: targetValue } }) => setComparison(targetValue) }
-      >
-        {selectComparisonList.map((item) => (
-          <option key={ item }>{ item }</option>
-        ))}
-      </select>
-      <input
-        data-testid="value-filter"
-        type="number"
-        value={ value }
-        onChange={ ({ target: { value: targetValue } }) => setValue(targetValue) }
-      />
-      <button
-        data-testid="button-filter"
-        type="button"
-        onClick={ () => handleClick() }
-      >
-        Filtrar
-      </button>
-    </form>
+  return (
+    <div>
+      <form action="">
+        <select
+          data-testid="column-filter"
+          value={ column }
+          onChange={ ({ target: { value: targetValue } }) => setColumn(targetValue) }
+        >
+          {principalColumns.map((item) => (
+            <option key={ item }>{ item }</option>
+          ))}
+        </select>
+        <select
+          data-testid="comparison-filter"
+          value={ comparison }
+          onChange={ ({ target: { value: targetValue } }) => setComparison(targetValue) }
+        >
+          {selectComparisonList.map((item) => (
+            <option key={ item }>{ item }</option>
+          ))}
+        </select>
+        <input
+          data-testid="value-filter"
+          type="number"
+          value={ value }
+          onChange={ ({ target: { value: targetValue } }) => setValue(targetValue) }
+        />
+        <button
+          data-testid="button-filter"
+          type="button"
+          onClick={ () => handleClick() }
+        >
+          Filtrar
+        </button>
+      </form>
+      <div>
+        { filterByNumericValues.map((item) => (
+          <ResetFilters
+            key={ item.value }
+            columns={ item }
+            removeFilter={ removeFilter }
+          />))}
+      </div>
+    </div>
   );
 }

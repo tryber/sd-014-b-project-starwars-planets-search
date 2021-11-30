@@ -4,6 +4,10 @@ const INITIAL_FILTER = {
   filters: {
     filterByName: {},
     filterByNumericValues: [],
+    order: {
+      column: 'Name',
+      sort: 'ASC',
+    },
   },
 };
 
@@ -35,5 +39,18 @@ export default function useFilter() {
     });
   };
 
-  return [nameFilter, numberFilter, filterObj];
+  const funcAscDesc = (column, sort) => {
+    setFilter({
+      filters:
+      {
+        ...filterObj.filters,
+        order: {
+          column,
+          sort,
+        },
+      },
+    });
+  };
+
+  return [nameFilter, numberFilter, filterObj, funcAscDesc];
 }
