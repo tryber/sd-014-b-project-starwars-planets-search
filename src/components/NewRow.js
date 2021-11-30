@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 function NewRow({ elements }) {
   return (
     <tr>
-      <td>{ elements.name }</td>
+      <td data-testid="planet-name">{ elements.name }</td>
       <td>{ elements.rotation_period }</td>
       <td>{ elements.orbital_period }</td>
       <td>{ elements.diameter }</td>

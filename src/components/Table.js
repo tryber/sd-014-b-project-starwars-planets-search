@@ -1,17 +1,9 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useState } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 import NewRow from './NewRow';
 import Columns from './Colunas';
 import ShowFilters from './InfosFilters';
-
-// const initialFilter = [
-//   {
-//     column: 'population',
-//     comparison: 'maior que',
-//     value: '',
-//   },
-// ];
+import ListTh from './listTh';
 
 function Table() {
   const { data, requestApi,
@@ -74,7 +66,7 @@ function Table() {
       onClickFilter(filters.filterByNumericValues[lengthFilter]);
       filterColumns(filters.filterByNumericValues[lengthFilter]);
     }
-  }, [filters.filterByNumericValues]);
+  }, [filterColumns, filters.filterByNumericValues, onClickFilter]);
 
   function handleFilters({ target: { name, value } }) {
     setSaveFilters({ ...saveFilters, [name]: value });
@@ -87,7 +79,7 @@ function Table() {
 
   useEffect(() => {
     renderizeAllFilters();
-  }, [infosFilter]);
+  }, [infosFilter, renderizeAllFilters]);
 
   function renderizeFilters() {
     return (
@@ -124,15 +116,47 @@ function Table() {
 
   useEffect(() => {
     filterName(filters.filterByName.name);
-  }, [filters.filterByName.name]);
+  }, [filterName, filters.filterByName.name]);
 
   useEffect(() => {
     requestApi();
-  }, []);
+  }, [requestApi]);
+
+  // Funcao ajudada por Wallacy Francis
+  function ordenation(a, b) {
+    const ONE_NEGATIVE = -1;
+    if (a.name < b.name) return ONE_NEGATIVE;
+    if (a.name > b.name) return 1;
+    return 0;
+  }
 
   useEffect(() => {
-    setDataToFilter(data);
+    const orderList = data.sort((a, b) => ordenation(a, b));
+    setDataToFilter(orderList);
   }, [data]);
+
+  function handleChangeRadio({ target: { value, name } }) {
+    setFilters({ ...filters, order: { ...filters.order, [name]: value } });
+  }
+
+  function orderColumns(a, b) {
+    console.log(filters.order.column);
+    const ONE_NEGATIVE = -1;
+    if (Number(a[filters.order.column]) < Number(b[filters.order.column])) {
+      if (filters.order.sort === 'ASC') return 1;
+      return 1;
+    }
+    if (Number(a[filters.order.column]) > Number(b[filters.order.column])) {
+      if (filters.order.sort === 'DESC') return ONE_NEGATIVE;
+      return ONE_NEGATIVE;
+    }
+    return 0;
+  }
+
+  function onClickOrdernation() {
+    dataToFilter.sort((a, b) => orderColumns(a, b));
+    setDataToFilter([...dataToFilter]);
+  }
 
   return (
     <main>
@@ -143,6 +167,7 @@ function Table() {
           <Columns
             nameColumn={ element }
             key={ index }
+            name="column"
           />))}
       </select>
       <select
@@ -167,25 +192,45 @@ function Table() {
       >
         Filtrar
       </button>
+      <select onChange={ handleChangeRadio } name="column" data-testid="column-sort">
+        {columnsName
+        && columnsName.map((element, index) => (
+          <Columns
+            nameColumn={ element }
+            key={ index }
+          />))}
+      </select>
+      <label htmlFor="column-asc">
+        Ascendente
+        <input
+          type="radio"
+          value="ASC"
+          name="sort"
+          data-testid="column-sort-input-asc"
+          onChange={ handleChangeRadio }
+        />
+      </label>
+      <label htmlFor="column-desc">
+        Descendente
+        <input
+          onChange={ handleChangeRadio }
+          type="radio"
+          value="DSC"
+          name="sort"
+          data-testid="column-sort-input-desc"
+        />
+      </label>
+      <button
+        type="button"
+        onClick={ onClickOrdernation }
+        data-testid="column-sort-button"
+      >
+        Ordenar
+
+      </button>
       { renderizeFilters() }
       <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Rotation Period</th>
-            <th>Orbital Period</th>
-            <th>Diameter</th>
-            <th>Climate</th>
-            <th>Gravity</th>
-            <th>Terrain</th>
-            <th>Surface Water</th>
-            <th>Population</th>
-            <th>Films</th>
-            <th>Created</th>
-            <th>Edited</th>
-            <th>URL</th>
-          </tr>
-        </thead>
+        <ListTh />
         <tbody>
           {dataToFilter
         && (

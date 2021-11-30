@@ -10,6 +10,9 @@ function PlanetsProvider({ children }) {
         name: '',
       },
       filterByNumericValues: [],
+      order: {
+        column: 'Name', sort: 'ASC',
+      },
     },
   );
 
