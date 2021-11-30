@@ -1,4 +1,5 @@
 import React from 'react';
+import Listfilters from './components/listFilters/Listfilters';
 import NominalFilter from './components/nominalFilter/NominalFilter';
 import NumericFilter from './components/numericFilter/NumericFilter';
 import Table from './components/table/Table';
@@ -9,6 +10,7 @@ function App() {
     <MyProvider>
       <NominalFilter />
       <NumericFilter />
+      <Listfilters />
       <Table />
     </MyProvider>
   );
