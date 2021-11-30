@@ -14,28 +14,6 @@ const INITIAL_STATE = {
 
 export default function MyProvider({ children }) {
   const [filters, setFilters] = useState(INITIAL_STATE);
-
-  const filterByName = (name) => {
-    setFilters({
-      filters: {
-        ...INITIAL_STATE.filters,
-        filterByName: { name },
-      },
-    });
-  };
-
-  const filterByNumericValues = (name) => {
-    setFilters({
-      filters: {
-        ...INITIAL_STATE.filters,
-        filterByNumericValues: [
-          ...INITIAL_STATE.filters.filterByNumericValues,
-          { ...name },
-        ],
-      },
-    });
-  };
-
   const [planetsData, setPlanetsData] = useState([]);
   const [filteredPlanets, setFilteredPlanets] = useState([]);
 
@@ -44,6 +22,27 @@ export default function MyProvider({ children }) {
   }, []);
 
   useEffect(() => { setFilteredPlanets(planetsData); }, [planetsData]);
+
+  const filterByName = (name) => {
+    setFilters((prevState) => ({
+      filters: {
+        ...prevState.filters,
+        filterByName: { name },
+      },
+    }));
+  };
+
+  const filterByNumericValues = (name) => {
+    setFilters((prevState) => ({
+      filters: {
+        ...prevState.filters,
+        filterByNumericValues: [
+          ...prevState.filters.filterByNumericValues,
+          { ...name },
+        ],
+      },
+    }));
+  };
 
   const contextValue = {
     planetsData,
