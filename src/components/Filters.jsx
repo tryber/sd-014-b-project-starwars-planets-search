@@ -68,16 +68,44 @@ function Filters() {
         <button
           type="button"
           data-testid="button-filter"
-          onClick={ () => setFilters({
-            ...filters,
-            filterByNumericValues: [
-              ...filters.filterByNumericValues,
-              filterByNumericValues,
-            ],
-          }) }
+          onClick={ () => {
+            setFilters({
+              ...filters,
+              filterByNumericValues: [
+                ...filters.filterByNumericValues,
+                filterByNumericValues,
+              ],
+            });
+            setFilterByNumericValues((prevState) => ({
+              ...prevState,
+              column: columnsFilter.find((filter) => filter !== prevState.column),
+            }));
+          } }
         >
           Filtrar
         </button>
+      </div>
+      <div>
+        { filters.filterByNumericValues.map(({ column, comparison, value }) => (
+          <p
+            key={ column }
+            data-testid="filter"
+          >
+            { `${column} ${comparison} ${value} ` }
+            <button
+              type="button"
+              onClick={ () => setFilters({
+                ...filters,
+                filterByNumericValues: [
+                  ...filters.filterByNumericValues
+                    .filter((filter) => filter.column !== column),
+                ],
+              }) }
+            >
+              x
+            </button>
+          </p>
+        ))}
       </div>
     </section>
   );

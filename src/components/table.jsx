@@ -1,12 +1,17 @@
 import React, { useContext } from 'react';
 import PlanetsContext from '../Context/StarWarsContext';
+import filterData from '../helpers/filter';
 
 const Table = () => {
   const { data,
     filters: { filterByName, filterByNumericValues } } = useContext(PlanetsContext);
-  const defaultValue = { column: 'population', comparison: 'maior que', value: '' };
-  const { column, comparison, value } = filterByNumericValues[filterByNumericValues
-    .length - 1] || defaultValue;
+
+  let dataFiltered = [];
+  if (filterByNumericValues.length > 0) {
+    dataFiltered = filterData(data, filterByNumericValues);
+  } else {
+    dataFiltered = data;
+  }
   return (
     (
       <table>
@@ -28,19 +33,8 @@ const Table = () => {
           </tr>
         </thead>
         <tbody>
-          { data
+          { dataFiltered
             .filter(({ name }) => name.toLowerCase().includes(filterByName.toLowerCase()))
-            .filter((planet) => {
-              if (!value) return true;
-              if (comparison === 'maior que') {
-                return Number(planet[column]) > Number(value);
-              }
-              if (comparison === 'menor que') {
-                return Number(planet[column]) < Number(value);
-              }
-              if (comparison === 'igual a') return planet[column] === value;
-              return true;
-            })
             .map((planet) => (
               <tr key={ planet.name }>
                 <td>{planet.name}</td>
