@@ -2,10 +2,12 @@ import React, { useContext, useState } from 'react';
 import MyContext from '../../context/MyContext';
 import './numericFilter.css';
 
+// parte desse código foi inpirado no repositório do Michael Cachias https://github.com/tryber/sd-014-b-project-starwars-planets-search/blob/michaelcaxias-starwars-planets/src/components/FilterNumeric.jsx
+
 const options = ['population', 'orbital_period', 'diameter', 'rotation_period',
   'surface_water'];
 
-const comparison = ['maior que', 'menor que', 'igual'];
+const comparisonList = ['maior que', 'menor que', 'igual a'];
 
 export default function NumericFilter() {
   const { filterByNumericValues, filteredPlanets,
@@ -13,20 +15,26 @@ export default function NumericFilter() {
   const [numValue, setNumValue] = useState({
     column: 'population',
     comparison: 'maior que',
-    value: 100000,
+    value: 0,
   });
 
   const handleChange = ({ target: { name, value } }) => {
     setNumValue({ ...numValue, [name]: value });
   };
 
-  const handleFilter = (value) => {
+  const handleFilter = () => {
+    const { column, comparison, value } = numValue;
     filterByNumericValues(numValue);
-    filteredPlanets.filter((planet) => {
-      console.log(planet[numValue.column]);
-      return value;
+    const filterNumeric = filteredPlanets.filter((planet) => {
+      if (comparison === 'maior que') {
+        return +planet[column] > +value;
+      } if (comparison === 'menor que') {
+        return +planet[column] < +value;
+      } if (comparison === 'igual a') {
+        return +planet[column] === +value;
+      } return filterNumeric;
     });
-    console.log(typeof setFilteredPlanets);
+    setFilteredPlanets(filterNumeric);
   };
 
   return (
@@ -45,7 +53,7 @@ export default function NumericFilter() {
         value={ numValue.comparison }
         onChange={ handleChange }
       >
-        {comparison.map((opt, i) => <option key={ i }>{opt}</option>)}
+        {comparisonList.map((opt, i) => <option key={ i }>{opt}</option>)}
       </select>
       <label htmlFor="value">
         <input
@@ -61,7 +69,7 @@ export default function NumericFilter() {
       <button
         data-testid="button-filter"
         type="button"
-        onClick={ () => handleFilter(numValue) }
+        onClick={ handleFilter }
       >
         Filter
       </button>
