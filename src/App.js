@@ -1,9 +1,12 @@
 import React from 'react';
-import './App.css';
+import { FilterProvider } from './context';
+import StarWarsPlanets from './page';
 
 function App() {
   return (
-    <span>Hello, App!</span>
+    <FilterProvider>
+      <StarWarsPlanets />
+    </FilterProvider>
   );
 }
 
