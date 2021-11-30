@@ -36,7 +36,7 @@ export default function FilterByNumber() {
       <select
         data-testid="column-filter"
         value={ column }
-        onChange={ ({ target: { value: targetValue }}) => setColumn(targetValue) }
+        onChange={ ({ target: { value: targetValue } }) => setColumn(targetValue) }
       >
         {columns.map((item) => (
           <option key={ item }>{ item }</option>
@@ -46,7 +46,7 @@ export default function FilterByNumber() {
       <select
         data-testid="comparison-filter"
         value={ comparison }
-        onChange={ ({ target: { value: targetValue } }) => setComparison(targetValue)}
+        onChange={ ({ target: { value: targetValue } }) => setComparison(targetValue) }
       >
         {selectComparisonList.map((item) => (
           <option key={ item }>{ item }</option>
@@ -56,7 +56,7 @@ export default function FilterByNumber() {
         data-testid="value-filter"
         type="number"
         value={ value }
-        onChange={ ({ target: { value: targetValue }}) => setValue(targetValue) }
+        onChange={ ({ target: { value: targetValue } }) => setValue(targetValue) }
       />
       <button
         data-testid="button-filter"
