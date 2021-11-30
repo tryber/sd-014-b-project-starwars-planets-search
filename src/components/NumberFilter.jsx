@@ -4,8 +4,6 @@ import OrderFilter from './OrderFilter';
 
 export default function NumberFilter() {
   const {
-    dataFiltered,
-    setData,
     columns,
     setColumns,
     filter,
@@ -26,21 +24,8 @@ export default function NumberFilter() {
         ],
       },
     });
-    const filterByNumeric = dataFiltered.filter((planet) => {
-      if (comparison === 'maior que') {
-        return Number(planet[column]) > Number(numericFilter);
-      }
-      if (comparison === 'menor que') {
-        return Number(planet[column]) < Number(numericFilter);
-      }
-      if (comparison === 'igual a') {
-        return Number(planet[column]) === Number(numericFilter);
-      }
-      return null;
-    });
     // Requisito 4 feito ao reflexo do código de Michael Caxias
     const newColumns = columns.filter((columnItem) => columnItem !== column);
-    setData(filterByNumeric);
     setColumns(newColumns);
   };
 

@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import appContext from '../context/Context';
+import FilterButton from './FilterButton';
 import NumberFilter from './NumberFilter';
 import SearchBar from './SearchBar';
 
@@ -32,11 +33,32 @@ export default function Table() {
     return '0';
   };
 
+  const aplyNumberFilter = (planets, { column: col, comparison, numericFilter }) => {
+    const filterByNumeric = planets.filter((planet) => {
+      if (comparison === 'maior que') {
+        return Number(planet[col]) > Number(numericFilter);
+      }
+      if (comparison === 'menor que') {
+        return Number(planet[col]) < Number(numericFilter);
+      }
+      if (comparison === 'igual a') {
+        return Number(planet[col]) === Number(numericFilter);
+      }
+      return null;
+    });
+
+    return filterByNumeric;
+  };
+
   useEffect(() => {
-    const { filters: { filterByName: { name } } } = filter;
-    const filterDataByName = data.filter((planet) => (
-      planet.name.includes(name)
-    ));
+    const { filters: { filterByName: { name }, filterByNumericValues } } = filter;
+    // Com o magistroso apoio do JacsonSR o rei do pop.
+    const filterDataByName = filterByNumericValues
+      .reduce(aplyNumberFilter, data)
+      .filter((planet) => (
+        planet.name.includes(name)
+      ));
+
     if (sort === 'ASC') {
       setDataFiltered(filterDataByName.sort(compare));
     } else if (sort === 'DESC') {
@@ -50,6 +72,7 @@ export default function Table() {
     <>
       <SearchBar />
       <NumberFilter />
+      <FilterButton />
       <table>
         <thead>
           <tr>

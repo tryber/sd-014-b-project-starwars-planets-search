@@ -6,9 +6,6 @@ import appContext from './Context';
 const URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
 
 export default function Provider({ children }) {
-  const [data, setData] = useState([]);
-  const [dataFiltered, setDataFiltered] = useState([data]);
-
   const INITIAL_STATE = {
     filters:
     {
@@ -31,6 +28,8 @@ export default function Provider({ children }) {
     'surface_water',
   ];
 
+  const [data, setData] = useState([]);
+  const [dataFiltered, setDataFiltered] = useState(data);
   const [filter, setFilter] = useState(INITIAL_STATE);
   const [columns, setColumns] = useState(INIT_COL);
   const [sort, setSort] = useState('ASC');
