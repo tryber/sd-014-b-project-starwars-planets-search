@@ -5,13 +5,13 @@ import NewRow from './NewRow';
 import Columns from './Colunas';
 import ShowFilters from './InfosFilters';
 
-const initialFilter = [
-  {
-    column: 'population',
-    comparison: 'maior que',
-    value: '',
-  },
-];
+// const initialFilter = [
+//   {
+//     column: 'population',
+//     comparison: 'maior que',
+//     value: '',
+//   },
+// ];
 
 function Table() {
   const { data, requestApi,
@@ -19,7 +19,6 @@ function Table() {
   const [dataToFilter, setDataToFilter] = useState([]);
   const [saveFilters, setSaveFilters] = useState([]);
   const [infosFilter, setInfosFilter] = useState([]);
-  const [testFilters, setTestFilters] = useState([]);
 
   const [columnsName, setColumnsName] = useState(
     ['population',
@@ -37,13 +36,16 @@ function Table() {
 
   function onClickFilter({ column, comparison, value }) {
     if (comparison === 'maior que') {
-      setDataToFilter(dataToFilter.filter((planet) => Number(planet[column]) > Number(value)));
+      setDataToFilter(dataToFilter
+        .filter((planet) => Number(planet[column]) > Number(value)));
     }
     if (comparison === 'menor que') {
-      setDataToFilter(dataToFilter.filter((planet) => Number(planet[column]) < Number(value)));
+      setDataToFilter(dataToFilter
+        .filter((planet) => Number(planet[column]) < Number(value)));
     }
     if (comparison === 'igual a') {
-      setDataToFilter(dataToFilter.filter((planet) => Number(planet[column]) === Number(value)));
+      setDataToFilter(dataToFilter
+        .filter((planet) => Number(planet[column]) === Number(value)));
     }
   }
 
@@ -83,8 +85,8 @@ function Table() {
     setInfosFilter(infosFilter.filter((element) => element.column !== name));
   }
 
-  useEffect(() => { 
-    renderizeAllFilters(); 
+  useEffect(() => {
+    renderizeAllFilters();
   }, [infosFilter]);
 
   function renderizeFilters() {
@@ -95,7 +97,14 @@ function Table() {
             <ShowFilters
               test={ element }
             />
-            <button type="button" onClick={ removeFilter } name={ element.column }>x</button>
+            <button
+              type="button"
+              onClick={ removeFilter }
+              name={ element.column }
+            >
+              x
+
+            </button>
           </div>
         )) }
       </div>
@@ -120,8 +129,6 @@ function Table() {
   useEffect(() => {
     requestApi();
   }, []);
-
-  useEffect(() => { setTestFilters(data); }, [data]);
 
   useEffect(() => {
     setDataToFilter(data);
