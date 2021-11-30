@@ -8,12 +8,19 @@ export const AppContext = ({ children }) => {
   const [filter, setFilter] = useState([]);
   const [filterNumeric, setFilterNumeric] = useState([]);
   const [apiResponse, setApiResponse] = useState([]);
+  const [columSort, setColumSort] = useState();
+  const [ascOrDsc, setAscOrDsc] = useState('ASC');
+
+  const magicNumber = -1;
 
   const fetchPlanets = async () => {
     const response = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
     const responseJson = await response.json();
-    setData(responseJson.results);
-    setApiResponse(responseJson.results);
+    const sortedResponse = responseJson.results.sort((a, b) => (
+      a.name > b.name ? 1 : magicNumber
+    ));
+    setData(sortedResponse);
+    setApiResponse(sortedResponse);
   };
 
   useEffect(() => {
@@ -26,11 +33,19 @@ export const AppContext = ({ children }) => {
     filters: {
       filterName: { name: filter },
       filterNumbers: filterNumeric,
+      order: {
+        column: columSort,
+        sort: ascOrDsc,
+      },
     },
     setFilter,
     setFilterNumeric,
     apiResponse,
     setApiResponse,
+    columSort,
+    setColumSort,
+    ascOrDsc,
+    setAscOrDsc,
   };
 
   return (

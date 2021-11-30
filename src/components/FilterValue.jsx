@@ -64,21 +64,6 @@ const FilterValue = () => {
     }
   };
 
-  const columnsSort = [
-    'name',
-    'rotation_period',
-    'orbital_period',
-    'diameter',
-    'climate',
-    'gravity',
-    'terrain',
-    'surface_water',
-    'films',
-    'created',
-    'edited',
-    'url',
-  ];
-
   return (
     <forms>
       <label htmlFor="column-filter">
@@ -137,41 +122,6 @@ const FilterValue = () => {
           ))
         ) : null}
       </div>
-      {/* //------------------req6------------------------- */}
-      <select
-        data-testid="column-sort"
-        name="column"
-        onChange={ handleTemporaryColumn }
-      >
-        {
-          columnsSort.map((item, index) => (
-            <option key={ `sort${item}-${index}` } value={ item }>{ item }</option>
-          ))
-        }
-      </select>
-      <input
-        data-testid="column-sort-input-asc"
-        name="sort"
-        onChange={ (event) => setOrder(event.target.value) }
-        type="radio"
-        value="ASC"
-      />
-      Ascendente
-      <input
-        data-testid="column-sort-input-desc"
-        name="sort"
-        onChange={ (event) => setOrder(event.target.value) }
-        type="radio"
-        value="DESC"
-      />
-      Descendente
-      <button
-        data-testid="column-sort-button"
-        onClick={ sortData }
-        type="button"
-      >
-        Listar
-      </button>
     </forms>
   );
 };
