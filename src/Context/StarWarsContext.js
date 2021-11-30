@@ -8,13 +8,7 @@ export const PlanetsData = ({ children }) => {
   const [data, setData] = useState([]);
   const [filters, setFilters] = useState({
     filterByName: '',
-    filterByNumericValues: [
-      {
-        column: 'population',
-        comparison: 'maior que',
-        value: '',
-      },
-    ],
+    filterByNumericValues: [],
   });
 
   useEffect(() => {

@@ -4,7 +4,9 @@ import PlanetsContext from '../Context/StarWarsContext';
 const Table = () => {
   const { data,
     filters: { filterByName, filterByNumericValues } } = useContext(PlanetsContext);
-  const { column, comparison, value } = filterByNumericValues[0];
+  const defaultValue = { column: 'population', comparison: 'maior que', value: '' };
+  const { column, comparison, value } = filterByNumericValues[filterByNumericValues
+    .length - 1] || defaultValue;
   return (
     (
       <table>
@@ -29,7 +31,7 @@ const Table = () => {
           { data
             .filter(({ name }) => name.toLowerCase().includes(filterByName.toLowerCase()))
             .filter((planet) => {
-              if (!value) return planet;
+              if (!value) return true;
               if (comparison === 'maior que') {
                 return Number(planet[column]) > Number(value);
               }
@@ -37,7 +39,7 @@ const Table = () => {
                 return Number(planet[column]) < Number(value);
               }
               if (comparison === 'igual a') return planet[column] === value;
-              return planet; // eslint(array-callback-return)
+              return true;
             })
             .map((planet) => (
               <tr key={ planet.name }>

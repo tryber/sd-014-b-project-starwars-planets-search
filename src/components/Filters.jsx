@@ -8,7 +8,8 @@ function Filters() {
     comparison: 'maior que',
     value: '',
   });
-
+  const columnsFilter = ['population', 'orbital_period',
+    'diameter', 'rotation_period', 'surface_water'];
   return (
     <section>
       <input
@@ -31,11 +32,17 @@ function Filters() {
           }) }
           data-testid="column-filter"
         >
-          <option value="population">population</option>
-          <option value="orbital_period">orbital_period</option>
-          <option value="diameter">diameter</option>
-          <option value="rotation_period">rotation_period</option>
-          <option value="surface_water">surface_water</option>
+          { columnsFilter
+            .filter((columnFilter) => {
+              if (filters.filterByNumericValues.length > 0) {
+                return filters.filterByNumericValues
+                  .every((filter) => columnFilter !== filter.column);
+              }
+              return true;
+            })
+            .map((filter) => (
+              <option key={ filter } value={ filter }>{ filter }</option>
+            ))}
         </select>
         <select
           id="comparison-filter"
@@ -63,7 +70,10 @@ function Filters() {
           data-testid="button-filter"
           onClick={ () => setFilters({
             ...filters,
-            filterByNumericValues: [filterByNumericValues],
+            filterByNumericValues: [
+              ...filters.filterByNumericValues,
+              filterByNumericValues,
+            ],
           }) }
         >
           Filtrar
@@ -72,5 +82,4 @@ function Filters() {
     </section>
   );
 }
-
 export default Filters;
