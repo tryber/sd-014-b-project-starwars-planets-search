@@ -4,11 +4,11 @@ import './nominalFilter.css';
 
 export default function NominalFilter() {
   const [name, setName] = useState('');
-  const { planetsData, setFilteredPlanets, filterByName } = useContext(MyContext);
+  const { planetsData, setFilteredPlanets, setFilterByName } = useContext(MyContext);
 
   const handleFilter = (((value) => {
     setName(value);
-    filterByName(value);
+    setFilterByName(value);
     const listPlanets = planetsData.filter(({ name: planetName }) => planetName
       .toLowerCase().includes(value.toLowerCase()));
     setFilteredPlanets(listPlanets);
