@@ -12,14 +12,11 @@ import { getPlanets } from '../services';
 // recebi ajuda do Tiago e do Kelvin para o desenvolvimento dos requisitos 5 e 6 https://github.com/tiagosathler https://github.com/KelvinWevertor
 
 const INITIAL_STATE = {
-  filters:
-  {
-    filterByName: { name: '' },
-    filterByNumericValues: [],
-    order: {
-      column: 'name',
-      sort: 'ASC',
-    },
+  filterByName: { name: '' },
+  filterByNumericValues: [],
+  order: {
+    column: 'name',
+    sort: 'ASC',
   },
 };
 
@@ -34,10 +31,10 @@ export default function MyProvider({ children }) {
 
   useEffect(() => { setFilteredPlanets(planetsData); }, [planetsData]);
 
-  const compareAB = (a, b) => {
-    const minNumber = -1;
+  const testTypeofAB = (a, b) => {
+    const lessOne = -1;
     if (Number.isNaN(Number(a))) {
-      if (a < b) return minNumber;
+      if (a < b) return lessOne;
       if (a > b) return 1;
       return 0;
     }
@@ -45,23 +42,24 @@ export default function MyProvider({ children }) {
   };
 
   useEffect(() => {
-    let filterNumeric = [...planetsData];
+    const { filterByName: { name }, filterByNumericValues, order } = filters;
 
-    const { filters: { filterByName: { name }, filterByNumericValues, order } } = filters;
-    filterNumeric = filterNumeric.filter(({ name: planetName }) => planetName
+    let planets = [...planetsData];
+
+    planets = planets.filter(({ name: planetName }) => planetName
       .toLowerCase().includes(name.toLowerCase()));
 
     if (order.sort === 'ASC') {
-      filterNumeric = filterNumeric
-        .sort((a, b) => compareAB(a[order.column], b[order.column]));
+      planets = planets
+        .sort((a, b) => testTypeofAB(a[order.column], b[order.column]));
     }
     if (order.sort === 'DESC') {
-      filterNumeric = filterNumeric
-        .sort((b, a) => compareAB(a[order.column], b[order.column]));
+      planets = planets
+        .sort((b, a) => testTypeofAB(a[order.column], b[order.column]));
     }
 
     filterByNumericValues.forEach(({ comparison, column, value }) => {
-      filterNumeric = filterNumeric.filter((planet) => {
+      planets = planets.filter((planet) => {
         if (comparison === 'maior que') {
           return +planet[column] > +value;
         } if (comparison === 'menor que') {
@@ -72,45 +70,37 @@ export default function MyProvider({ children }) {
       });
     });
 
-    setFilteredPlanets(filterNumeric);
+    setFilteredPlanets(planets);
   }, [filters, planetsData]);
 
-  const filterByName = (name) => {
+  const setFilterByName = (name) => {
     setFilters((prevState) => ({
-      filters: {
-        ...prevState.filters,
-        filterByName: { name },
-      },
+      ...prevState,
+      filterByName: { name },
     }));
   };
 
-  const orderFilter = (data) => {
+  const setFilterByOrder = (order) => {
     setFilters((prevState) => ({
-      filters: {
-        ...prevState.filters,
-        order: data,
-      },
+      ...prevState,
+      order,
     }));
   };
 
   const delFilterNumeric = (arrFilter) => {
-    setFilters(({
-      filters: {
-        ...filters.filters,
-        filterByNumericValues: arrFilter,
-      },
+    setFilters((prevState) => ({
+      ...prevState,
+      filterByNumericValues: arrFilter,
     }));
   };
 
-  const filterByNumericValue = (name) => {
-    setFilters(({
-      filters: {
-        ...filters.filters,
-        filterByNumericValues: [
-          ...filters.filters.filterByNumericValues,
-          { ...name },
-        ],
-      },
+  const setFilterByNumericValues = (numericValues) => {
+    setFilters((prevState) => ({
+      ...prevState,
+      filterByNumericValues: [
+        ...prevState.filterByNumericValues,
+        { ...numericValues },
+      ],
     }));
   };
 
@@ -120,10 +110,10 @@ export default function MyProvider({ children }) {
     setFilteredPlanets,
     filters,
     setFilters,
-    filterByName,
-    filterByNumericValue,
+    setFilterByName,
+    setFilterByNumericValues,
     delFilterNumeric,
-    orderFilter,
+    setFilterByOrder,
   };
 
   return (
