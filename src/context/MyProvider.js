@@ -4,6 +4,13 @@ import MyContext from './MyContext';
 import { getPlanets } from '../services';
 
 // Parte desse código foi inspirado no repositório do Michael Cachias https://github.com/tryber/sd-014-b-project-starwars-planets-search/blob/michaelcaxias-starwars-planets/src/hooks/useFilter.jsx
+
+// documentação sort https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
+
+// documentação Number.IsNaN https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Number/isNaN
+
+// recebi ajuda do Tiago e do Kelvin para o desenvolvimento dos requisitos 5 e 6 https://github.com/tiagosathler https://github.com/KelvinWevertor
+
 const INITIAL_STATE = {
   filters:
   {
@@ -38,10 +45,11 @@ export default function MyProvider({ children }) {
   };
 
   useEffect(() => {
-    let filterNumeric = planetsData;
+    let filterNumeric = [...planetsData];
+
     const { filters: { filterByName: { name }, filterByNumericValues, order } } = filters;
-    filterNumeric = planetsData.filter(({ name: planetName }) => planetName.toLowerCase()
-      .includes(name.toLowerCase()));
+    filterNumeric = filterNumeric.filter(({ name: planetName }) => planetName
+      .toLowerCase().includes(name.toLowerCase()));
 
     if (order.sort === 'ASC') {
       filterNumeric = filterNumeric
@@ -63,6 +71,7 @@ export default function MyProvider({ children }) {
         } return null;
       });
     });
+
     setFilteredPlanets(filterNumeric);
   }, [filters, planetsData]);
 
