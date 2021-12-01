@@ -105,11 +105,8 @@ export default function MyProvider({ children }) {
   };
 
   const contextValue = {
-    planetsData,
     filteredPlanets,
-    setFilteredPlanets,
     filters,
-    setFilters,
     setFilterByName,
     setFilterByNumericValues,
     delFilterNumeric,
