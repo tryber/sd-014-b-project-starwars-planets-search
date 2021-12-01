@@ -1,30 +1,19 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import MyContext from '../../context/MyContext';
 import './nominalFilter.css';
 
 export default function NominalFilter() {
-  const [name, setName] = useState('');
-  const { planetsData, setFilteredPlanets, setFilterByName } = useContext(MyContext);
-
-  const handleFilter = (((value) => {
-    setName(value);
-    setFilterByName(value);
-    const listPlanets = planetsData.filter(({ name: planetName }) => planetName
-      .toLowerCase().includes(value.toLowerCase()));
-    setFilteredPlanets(listPlanets);
-  }));
+  const { setFilterByName } = useContext(MyContext);
 
   return (
     <form>
       <label htmlFor="name">
         <input
           id="name"
-          name="name"
-          value={ name }
           type="text"
           data-testid="name-filter"
           placeholder="Filter by name"
-          onChange={ ({ target: { value } }) => handleFilter(value) }
+          onChange={ ({ target: { value } }) => setFilterByName(value) }
         />
       </label>
     </form>
