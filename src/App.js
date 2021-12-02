@@ -1,9 +1,18 @@
 import React from 'react';
-import './App.css';
+import FilterList from './components/filterList/FilterList';
+import NominalFilter from './components/nominalFilter/NominalFilter';
+import NumericFilter from './components/numericFilter/NumericFilter';
+import Table from './components/table/Table';
+import MyProvider from './context/MyProvider';
 
 function App() {
   return (
-    <span>Hello, App!</span>
+    <MyProvider>
+      <NominalFilter />
+      <NumericFilter />
+      <FilterList />
+      <Table />
+    </MyProvider>
   );
 }
 
