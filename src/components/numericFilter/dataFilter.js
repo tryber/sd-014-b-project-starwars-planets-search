@@ -13,9 +13,6 @@ const dataFilter = {
     comparison: 'maior que',
     value: 0,
   },
-  dataOrder: {
-    column: 'name', sort: '',
-  },
 };
 
 export default dataFilter;

@@ -11,36 +11,40 @@ import { getPlanets } from '../services';
 
 // recebi ajuda do Tiago e do Kelvin para o desenvolvimento dos requisitos 5 e 6 https://github.com/tiagosathler https://github.com/KelvinWevertor
 
-const initialState = {
+const INITIAL_STATE = {
   filterByName: { name: '' },
   filterByNumericValues: [],
   order: {
     column: 'name',
     sort: 'ASC',
   },
+  filterNumericColumns: [],
 };
 
-const initialColumns = [
-  'rotation_period',
+const dataColumn = [
+  'population',
   'orbital_period',
   'diameter',
+  'rotation_period',
   'surface_water',
-  'population',
 ];
 
-const filterInputsValues = {
-  column: 'rotation_period', comparison: 'maior que', value: '' };
+const dataFilter = {
+  column: 'population', comparison: 'maior que', value: 0,
+};
 
 export default function MyProvider({ children }) {
+  const [filters, setFilters] = useState(INITIAL_STATE);
   const [planetsData, setPlanetsData] = useState([]);
   const [filteredPlanets, setFilteredPlanets] = useState([]);
-  const [filters, setFilters] = useState(initialState);
-  const [filteredColumns, setFilteredColumns] = useState(initialColumns);
-  const [filterInputs, setFilterInputs] = useState(filterInputsValues);
+  const [filteredColumns, setFilteredColumns] = useState([]);
+  // const [filterInputs, setFilterInputs] = useState({});
 
   useEffect(() => {
     (async () => setPlanetsData(await getPlanets()))();
   }, []);
+
+  // useEffect(() => { setFilteredPlanets(planetsData); }, [planetsData]);
 
   const testTypeofAB = (a, b) => {
     const lessOne = -1;
@@ -84,16 +88,9 @@ export default function MyProvider({ children }) {
     setFilteredPlanets(planets);
   }, [filters, planetsData]);
 
-  const setInputs = (data) => {
-    setFilterInputs((prevState) => ({
-      ...prevState,
-      ...data,
-    }));
-  };
-
   useEffect(() => {
     const { filterByNumericValues } = filters;
-    let columns = [...initialColumns];
+    let columns = [...dataColumn];
 
     filterByNumericValues.forEach(({ column }) => {
       columns = columns.filter((element) => {
@@ -102,8 +99,8 @@ export default function MyProvider({ children }) {
         } return null;
       });
     });
+
     setFilteredColumns(columns);
-    setInputs({ column: columns[0] });
   }, [filters]);
 
   const setFilterNumericColumns = (filterNumericColumns) => {
@@ -120,12 +117,12 @@ export default function MyProvider({ children }) {
     }));
   };
 
-  // const setFilterByOrder = (order) => {
-  //   setFilters((prevState) => ({
-  //     ...prevState,
-  //     order,
-  //   }));
-  // };
+  const setFilterByOrder = (order) => {
+    setFilters((prevState) => ({
+      ...prevState,
+      order,
+    }));
+  };
 
   const delFilterNumeric = (arrFilter) => {
     setFilters((prevState) => ({
@@ -148,12 +145,12 @@ export default function MyProvider({ children }) {
     filteredPlanets,
     filters,
     filteredColumns,
-    filterInputs,
     setFilterByName,
     setFilterByNumericValues,
     setFilterNumericColumns,
     delFilterNumeric,
-    setInputs,
+    setFilterByOrder,
+    dataFilter,
   };
 
   return (
