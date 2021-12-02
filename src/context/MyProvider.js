@@ -61,12 +61,10 @@ export default function MyProvider({ children }) {
       .toLowerCase().includes(name.toLowerCase()));
 
     if (order.sort === 'ASC') {
-      planets = planets
-        .sort((a, b) => testTypeofAB(a[order.column], b[order.column]));
+      planets = planets.sort((a, b) => testTypeofAB(a[order.column], b[order.column]));
     }
     if (order.sort === 'DESC') {
-      planets = planets
-        .sort((b, a) => testTypeofAB(a[order.column], b[order.column]));
+      planets = planets.sort((b, a) => testTypeofAB(a[order.column], b[order.column]));
     }
 
     filterByNumericValues.forEach(({ comparison, column, value }) => {
@@ -120,12 +118,12 @@ export default function MyProvider({ children }) {
     }));
   };
 
-  // const setFilterByOrder = (order) => {
-  //   setFilters((prevState) => ({
-  //     ...prevState,
-  //     order,
-  //   }));
-  // };
+  const setFilterByOrder = (order) => {
+    setFilters((prevState) => ({
+      ...prevState,
+      order: { ...prevState.order, ...order },
+    }));
+  };
 
   const delFilterNumeric = (arrFilter) => {
     setFilters((prevState) => ({
@@ -152,6 +150,7 @@ export default function MyProvider({ children }) {
     setFilterByName,
     setFilterByNumericValues,
     setFilterNumericColumns,
+    setFilterByOrder,
     delFilterNumeric,
     setInputs,
   };
