@@ -12,7 +12,7 @@ export default function NumericFilter() {
     });
   };
 
-  const alert = (input) => (!filterInputs.column
+  const alert = () => (!filterInputs.column
     ? <p style={ { color: 'red' } }>Remova um filro para continar</p> : null);
 
   const handleFilter = () => {
