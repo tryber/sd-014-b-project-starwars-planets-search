@@ -16,10 +16,7 @@
       "!src/index.js"
     ]
   },
-  "homepage": "https:\/\/jarana-2020.github.io/trybe-wars",
   "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
