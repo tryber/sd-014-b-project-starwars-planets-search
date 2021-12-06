@@ -1,3 +1,73 @@
+@font-face {
+  font-family: star-wars;
+  src: url('fonts/starjedi/Starjedi.ttf');
+}
+
+
+body {
+  background-color: black;
+}
+
+header h1, .btn-filter, .labelOrder {
+  background-color: black;
+  color: white;
+  font-family: star-wars , sans-serif;
+  font-size: 80px;
+  text-align: center;
+  -webkit-text-fill-color: black;
+  -webkit-text-stroke-color: yellow;
+  -webkit-text-stroke-width: 1px;
+}
+
+.labelOrder {
+  font-size: 20px;
+  margin-left: 10px;
+}
+
+.radio-order {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.input-filter {
+  height: 20px;
+  margin: 10px;
+  width: 20%;
+}
+
+.select-filter {
+  font-size: 15px;
+  height: 25px;
+  margin-right: 10px;
+}
+
+.input-select-filter {
+  font-size: 15px;
+  height: 20px;
+  margin-right: 10px;
+  width: 40px;
+}
+
+.btn-filter {
+  background-color: darkgrey;
+  cursor: pointer;
+  font-size: 15px;
+  margin-right: 10px;
+  width: 100px;
+}
+
+table thead th {
+  background-color: white;
+  border: 1px black solid;
+  color: white;
+  font-family: star-wars , sans-serif;
+  font-size: 13px;
+  text-align: center;
+  -webkit-text-fill-color: black;
+  -webkit-text-stroke-color: yellow;
+  -webkit-text-stroke-width: 1px;
+}
+
 .App {
   text-align: center;
 }
@@ -27,6 +97,17 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.section-filter {
+  display: flex;
+  margin-left: 10px;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.section-orderData {
+  margin-left: 200px;
 }
 
 @keyframes App-logo-spin {
