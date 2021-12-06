@@ -1,22 +1,22 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "2f1feb0c2775d798db426dee77a91231",
+    "revision": "c0d3b103a60889978a8f59cd99025312",
     "url": "/trybe-wars/index.html"
   },
   {
-    "revision": "7d459aef092d18606113",
-    "url": "/trybe-wars/static/css/main.81ad9b4a.chunk.css"
+    "revision": "29195a83032f6d5ed726",
+    "url": "/trybe-wars/static/css/main.55b7c84c.chunk.css"
   },
   {
-    "revision": "f0cf9ea78c5becbcd6c0",
-    "url": "/trybe-wars/static/js/2.74c56a4d.chunk.js"
+    "revision": "387574cf5f3b12e56d2c",
+    "url": "/trybe-wars/static/js/2.260e3c05.chunk.js"
   },
   {
     "revision": "570d362d673dab785e62d2b8563e1118",
-    "url": "/trybe-wars/static/js/2.74c56a4d.chunk.js.LICENSE.txt"
+    "url": "/trybe-wars/static/js/2.260e3c05.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "7d459aef092d18606113",
+    "revision": "29195a83032f6d5ed726",
     "url": "/trybe-wars/static/js/main.23f6d3ca.chunk.js"
   },
   {
