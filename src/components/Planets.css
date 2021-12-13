@@ -1,0 +1,100 @@
+*{
+  box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+h1 {
+  text-align: center;
+  color:rgb(219, 227, 230);
+  padding: 10px;
+}
+
+label {
+  color:rgb(219, 227, 230);
+  padding: 10px;
+  font-size: 20px;
+}
+
+body {
+  background-image: url('../Images/star-wars-backgrounds-2.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+input[type=text] {
+  border-radius: 13px;
+  display: block;
+	margin: 0 auto;
+  margin-bottom: 10px;
+  margin-left: auto;
+  margin-right: auto;
+	padding: 8px;
+  text-align: center;
+  width: 30%;
+}
+
+input[type=number] {
+  border-radius: 13px;
+  margin: 15px;
+	padding: 8px;
+  text-align: center;
+  width: 20%;
+}
+
+button {
+  border-radius: 13px;
+  height: 35px;
+  margin: 15px;
+  padding: 5px;
+  width: 10%;
+}
+
+form {
+  display: flex;
+  justify-content: space-around;
+}
+
+select {
+  border-radius: 13px;
+  width: 250px;
+  overflow: hidden;
+  background-position: 205px center;
+  height: 35px;
+  font-family:Arial, Helvetica, sans-serif;
+  font-size:18px;
+  margin: 15px;
+  padding:5px 20px 5px 12px;
+  color:rgb(61, 46, 46);    
+  text-indent: 0.01px;     
+  text-overflow: "";
+}
+
+table {
+  border: 1px solid rgb(19, 18, 18);
+  margin: 5px;
+  text-align: center;
+}
+
+th {
+  background-color: rgb(44, 42, 42);
+  border: 1px solid black;
+  color: whitesmoke;
+  padding: 8px;
+}
+
+td {
+  border: 1px solid black;
+  padding: 4px;
+}
+
+tbody tr:nth-child(even){
+  background-color: rgb(56, 122, 145);
+  color: white;
+}
+
+tbody tr:nth-child(odd){
+  background-color: rgb(194, 217, 224);
+}

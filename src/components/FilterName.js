@@ -1,7 +1,5 @@
 import React, { useState, useContext } from 'react';
 import NewContext from '../context/NewContext';
-// import PropTypes from 'prop-types';
-// import getDataByPlanets from '../services/ApiPlanets';
 
 function FilterName() {
   const { setFilter } = useContext(NewContext);
@@ -19,6 +17,7 @@ function FilterName() {
         onChange={ ({ target: { value } }) => handleChange(value) }
         placeholder="Filtrar por nome"
         name="namePlanet"
+        className="name-planet"
       />
     </form>
   );

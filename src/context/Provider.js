@@ -18,6 +18,10 @@ export default function Provider({ children }) {
           name: '',
         },
         filterByNumericValues: [],
+        order: {
+          column: '',
+          sort: '',
+        },
       },
     },
   );
@@ -27,6 +31,9 @@ export default function Provider({ children }) {
     comparison: '',
     value: '',
   });
+  // Estados requisito 6
+  const [order, setOrder] = useState('ASC');
+  const [column, setColumn] = useState('name');
 
   const context = {
     titlePlanets,
@@ -42,6 +49,10 @@ export default function Provider({ children }) {
     filterItem,
     setFilterItem,
     setComparison,
+    order,
+    setOrder,
+    column,
+    setColumn,
   };
 
   const callApi = () => {
@@ -79,8 +90,43 @@ export default function Provider({ children }) {
         return planet;
       }
     });
+    /* if (order === 'ASC') {
+      const ascOrder = getFilterNumber.sort(
+        ({ [column]: a }, { [column]: b }) => (
+          column ? a.localeCompare(b) : a - b
+        ),
+      );
+      setFilterPlanets(ascOrder);
+    } else if (order === 'DESC') {
+      const descOrder = getFilterNumber.sort(
+        ({ [column]: a }, { [column]: b }) => (
+          column ? b.localeCompare(a) : b - a
+        ),
+      );
+      setFilterPlanets(descOrder);
+    } else { */
     setFilterPlanets(getFilterNumber);
-  }, [filter, planets, comparison]);
+    /* } */
+  }, [filter, planets, comparison, column, order]);
+
+  /* useEffect(() => {
+    console.log('a');
+    if (order === 'ASC') {
+      const ascOrder = planets.sort(
+        ({ [column]: a }, { [column]: b }) => (
+          column ? a.localeCompare(b) : a - b
+        ),
+      );
+      setFilterPlanets(ascOrder);
+    } else if (order === 'DESC') {
+      const descOrder = planets.sort(
+        ({ [column]: a }, { [column]: b }) => (
+          column ? b.localeCompare(a) : b - a
+        ),
+      );
+      setFilterPlanets(descOrder);
+    }
+  }, [column, order, planets]); */
 
   return (
     <NewContext.Provider value={ context }>
