@@ -34,26 +34,7 @@ export default function Provider({ children }) {
   // Estados requisito 6
   const [order, setOrder] = useState('ASC');
   const [column, setColumn] = useState('name');
-
-  const context = {
-    titlePlanets,
-    setTitlePlanets,
-    planets,
-    setPlanets,
-    loading,
-    setLoading,
-    filterPlanets,
-    setFilterPlanets,
-    filter,
-    setFilter,
-    filterItem,
-    setFilterItem,
-    setComparison,
-    order,
-    setOrder,
-    column,
-    setColumn,
-  };
+  const NUM_MIN = -1;
 
   const callApi = () => {
     getDataByPlanets().then((data) => {
@@ -64,6 +45,30 @@ export default function Provider({ children }) {
       setTitlePlanets(Object.keys(getPlanets[0]));
       setPlanets(getPlanets);
     });
+  };
+
+  const orderByName = (filterBy) => {
+    if (order === 'ASC') {
+      const ascOrder = filterBy.sort((a, b) => (a[column] > b[column]
+        ? 1 : NUM_MIN));
+      setFilterPlanets(ascOrder);
+    } else {
+      const descOrder = filterBy.sort((a, b) => (a[column] < b[column]
+        ? 1 : NUM_MIN));
+      setFilterPlanets(descOrder);
+    }
+  };
+
+  const orderByNumber = (filterBy) => {
+    if (order === 'ASC') {
+      const ascOrder = filterBy.sort((a, b) => (Number(a[column])
+        > Number(b[column]) ? 1 : NUM_MIN));
+      setFilterPlanets(ascOrder);
+    } else {
+      const descOrder = filterBy.sort((a, b) => (Number(a[column])
+        < Number(b[column]) ? 1 : NUM_MIN));
+      setFilterPlanets(descOrder);
+    }
   };
 
   useEffect(() => {
@@ -90,43 +95,34 @@ export default function Provider({ children }) {
         return planet;
       }
     });
-    /* if (order === 'ASC') {
-      const ascOrder = getFilterNumber.sort(
-        ({ [column]: a }, { [column]: b }) => (
-          column ? a.localeCompare(b) : a - b
-        ),
-      );
-      setFilterPlanets(ascOrder);
-    } else if (order === 'DESC') {
-      const descOrder = getFilterNumber.sort(
-        ({ [column]: a }, { [column]: b }) => (
-          column ? b.localeCompare(a) : b - a
-        ),
-      );
-      setFilterPlanets(descOrder);
-    } else { */
-    setFilterPlanets(getFilterNumber);
-    /* } */
+    if (column === 'name') {
+      orderByName(getFilterNumber);
+    } else if (column !== 'name') {
+      orderByNumber(getFilterNumber);
+    } else {
+      setFilterPlanets(getFilterNumber);
+    }
   }, [filter, planets, comparison, column, order]);
 
-  /* useEffect(() => {
-    console.log('a');
-    if (order === 'ASC') {
-      const ascOrder = planets.sort(
-        ({ [column]: a }, { [column]: b }) => (
-          column ? a.localeCompare(b) : a - b
-        ),
-      );
-      setFilterPlanets(ascOrder);
-    } else if (order === 'DESC') {
-      const descOrder = planets.sort(
-        ({ [column]: a }, { [column]: b }) => (
-          column ? b.localeCompare(a) : b - a
-        ),
-      );
-      setFilterPlanets(descOrder);
-    }
-  }, [column, order, planets]); */
+  const context = {
+    titlePlanets,
+    setTitlePlanets,
+    planets,
+    setPlanets,
+    loading,
+    setLoading,
+    filterPlanets,
+    setFilterPlanets,
+    filter,
+    setFilter,
+    filterItem,
+    setFilterItem,
+    setComparison,
+    order,
+    setOrder,
+    column,
+    setColumn,
+  };
 
   return (
     <NewContext.Provider value={ context }>

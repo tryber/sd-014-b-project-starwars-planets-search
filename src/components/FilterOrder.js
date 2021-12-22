@@ -51,6 +51,7 @@ function FilterOrder() {
           value="ASC"
           onChange={ ({ target: { value } }) => handleChange(value) }
           name={ order }
+          checked
         />
       </label>
       <label htmlFor="DESC">
