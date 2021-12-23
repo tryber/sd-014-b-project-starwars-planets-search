@@ -24,10 +24,10 @@ body {
   background-size: cover;
 }
 
-input[type=text] {
+input[ type = "text" ] {
   border-radius: 10px;
   display: block;
-	margin: 0 auto;
+  margin: 0 auto;
   margin-bottom: 10px;
   margin-left: auto;
   margin-right: auto;
@@ -36,7 +36,7 @@ input[type=text] {
   width: 30%;
 }
 
-input[type=number] {
+input[ type = "number" ] {
   border-radius: 10px;
   margin: 15px;
 	padding: 8px;
@@ -63,15 +63,15 @@ form {
 select {
   background-position: 205px center;
   border-radius: 10px;
-  color:rgb(61, 46, 46); 
-  font-family:Arial, Helvetica, sans-serif;
-  font-size:18px;
+  color: rgb(61, 46, 46); 
+  font-family: Arial , Helvetica , sans-serif;
+  font-size: 18px;
   height: 35px;
   margin: 15px;
   overflow: hidden;
-  padding:5px 20px 5px 12px;
+  padding: 5px 20px 5px 12px;
   text-indent: 0.01px;     
-  text-overflow: "";
+  text-overflow: '';
   width: 250px;
 }
 
@@ -87,26 +87,27 @@ table {
 
 th {
   background-color: rgb(44, 42, 42);
-  border: 1px solid rgb(0, 0, 0);
-  color: rgb(245, 245, 245);
+  border: 1px solid rgb(3, 3, 3);
+  color: rgb(240, 240, 240);
   padding: 8px;
 }
 
 td {
-  border: 1px solid rgb(0, 0, 0);
+  border: 1px solid rgb(3, 3, 3);
   padding: 4px;
 }
 
-tbody tr:nth-child(even){
+tbody tr:nth-child( even ) {
   background-color: rgb(56, 122, 145);
-  color: rgb(245, 245, 245);
+  color: rgb(240, 240, 245);
 }
 
-tbody tr:nth-child(odd){
+tbody tr:nth-child( odd ) {
   background-color: rgb(194, 217, 224);
 }
 
-@media screen and (max-width: 750px) {
+@media screen and ( max-width: 750px ) {
+
   form {
     align-items: center;
     flex-direction: column;
@@ -114,17 +115,18 @@ tbody tr:nth-child(odd){
     text-align-last: center;
   }
 
-  input[type=text], input[type=number], select, button {
+  input[ type = "text" ], input[ type = "number" ], select, button {
     width: 95%;
   }
 
   option {
     background-color: rgb(56, 122, 145);
-    color: rgb(245, 245, 245);
+    color: rgb(240, 240, 240);
   }
 }
 
-@media screen and (max-width: 500px) {
+@media screen and ( max-width: 500px ) {
+
   table {
     display: flex;
     flex-flow: column wrap;
@@ -136,8 +138,8 @@ tbody tr:nth-child(odd){
   }
 
   tbody {
-    position: static;
     overflow-x: visible;
+    position: static;
   }
 
   tbody tr {
