@@ -102,6 +102,7 @@ export default function Provider({ children }) {
     } else {
       setFilterPlanets(getFilterNumber);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filter, planets, comparison, column, order]);
 
   const context = {

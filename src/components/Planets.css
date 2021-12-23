@@ -1,31 +1,31 @@
-*{
+* {
   box-sizing: border-box;
 	margin: 0;
-	padding: 0;
+  padding: 0;
 }
 
 h1 {
-  text-align: center;
   color:rgb(219, 227, 230);
   padding: 10px;
+  text-align: center;
 }
 
 label {
-  color:rgb(219, 227, 230);
-  padding: 10px;
+  color: rgb(219, 227, 230);
   font-size: 20px;
+  padding: 10px;
 }
 
 body {
-  background-image: url('../Images/star-wars-backgrounds-2.png');
-  background-repeat: no-repeat;
-  background-position: center center;
   background-attachment: fixed;
+  background-image: url('../Images/star-wars-backgrounds-2.png');
+  background-position: center center;
+  background-repeat: no-repeat;
   background-size: cover;
 }
 
 input[type=text] {
-  border-radius: 13px;
+  border-radius: 10px;
   display: block;
 	margin: 0 auto;
   margin-bottom: 10px;
@@ -37,7 +37,7 @@ input[type=text] {
 }
 
 input[type=number] {
-  border-radius: 13px;
+  border-radius: 10px;
   margin: 15px;
 	padding: 8px;
   text-align: center;
@@ -45,7 +45,10 @@ input[type=number] {
 }
 
 button {
-  border-radius: 13px;
+  background-color: rgb(42, 20, 20);
+  border: 3px solid white;
+  border-radius: 10px;
+  color: white;
   height: 35px;
   margin: 15px;
   padding: 5px;
@@ -58,43 +61,88 @@ form {
 }
 
 select {
-  border-radius: 13px;
-  width: 250px;
-  overflow: hidden;
   background-position: 205px center;
-  height: 35px;
+  border-radius: 10px;
+  color:rgb(61, 46, 46); 
   font-family:Arial, Helvetica, sans-serif;
   font-size:18px;
+  height: 35px;
   margin: 15px;
+  overflow: hidden;
   padding:5px 20px 5px 12px;
-  color:rgb(61, 46, 46);    
   text-indent: 0.01px;     
   text-overflow: "";
+  width: 250px;
 }
 
 table {
   border: 1px solid rgb(19, 18, 18);
+  display: block;
   margin: 5px;
+  overflow-x: auto;
+  position: relative;
   text-align: center;
+  width: auto;
 }
 
 th {
   background-color: rgb(44, 42, 42);
-  border: 1px solid black;
-  color: whitesmoke;
+  border: 1px solid rgb(0, 0, 0);
+  color: rgb(245, 245, 245);
   padding: 8px;
 }
 
 td {
-  border: 1px solid black;
+  border: 1px solid rgb(0, 0, 0);
   padding: 4px;
 }
 
 tbody tr:nth-child(even){
   background-color: rgb(56, 122, 145);
-  color: white;
+  color: rgb(245, 245, 245);
 }
 
 tbody tr:nth-child(odd){
   background-color: rgb(194, 217, 224);
+}
+
+@media screen and (max-width: 750px) {
+  form {
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    text-align-last: center;
+  }
+
+  input[type=text], input[type=number], select, button {
+    width: 95%;
+  }
+
+  option {
+    background-color: rgb(56, 122, 145);
+    color: rgb(245, 245, 245);
+  }
+}
+
+@media screen and (max-width: 500px) {
+  table {
+    display: flex;
+    flex-flow: column wrap;
+    width: 95%;
+  }
+
+  thead {
+    display: none;
+  }
+
+  tbody {
+    position: static;
+    overflow-x: visible;
+  }
+
+  tbody tr {
+    display: flex;
+    flex-flow: column wrap;
+    width: 100%;
+  }
 }
