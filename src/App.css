@@ -20,11 +20,6 @@ td {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
 .input {
   color: rgb(179, 179, 5);
   margin: 0 20px;
