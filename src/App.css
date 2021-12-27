@@ -25,6 +25,8 @@ td {
   pointer-events: none;
 }
 
-input {
-  margin: 20px;
+.input {
+  color: rgb(179, 179, 5);
+  margin: 0 20px;
+  text-align: center;
 }

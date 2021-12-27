@@ -1,4 +1,5 @@
 import React, { useEffect, useContext, useState } from 'react';
+import { TextField, Button, Select } from '@material-ui/core';
 import { Context } from '../context/Provider';
 import fetchPlanets from '../api/StarWars';
 
@@ -75,13 +76,17 @@ function Header() {
     <div className="header">
       <h1>Star Wars Planet Search</h1>
       <div>
-        <input
+        <TextField
+          variant="outlined"
+          className="input"
           data-testid="name-filter"
           onChange={ handleInput }
           type="text"
           placeholder="filtar por nome"
         />
-        <select
+        <Select
+          className="input"
+          variant="outlined"
           onChange={ ({ target }) => setColumnState(target.value) }
           data-testid="column-filter"
           name="column"
@@ -92,8 +97,10 @@ function Header() {
               { option }
             </option>
           )) }
-        </select>
-        <select
+        </Select>
+        <Select
+          className="input"
+          variant="outlined"
           data-testid="comparison-filter"
           name="comparison"
           onChange={ ({ target }) => setComparisonState(target.value) }
@@ -102,22 +109,26 @@ function Header() {
           <option value="maior que">maior que</option>
           <option value="menor que">menor que</option>
           <option value="igual a">igual a</option>
-        </select>
-        <input
+        </Select>
+        <TextField
+          variant="outlined"
           data-testid="value-filter"
           type="number"
           name="value"
           value={ valueState }
           onChange={ ({ target }) => setValueState(target.value) }
         />
-        <button
+        <Button
+          style={ { margin: '0 20px' } }
+          color="primary"
+          variant="contained"
           type="button"
           data-testid="button-filter"
           onClick={ handleNumericFilters }
         >
           Filtrar
 
-        </button>
+        </Button>
       </div>
     </div>
   );
