@@ -12,6 +12,7 @@ function Header() {
     setPlanets,
     options,
     setOptions,
+    planets: planetsList,
   } = useContext(Context);
 
   const [columnState, setColumnState] = useState('population');
@@ -32,7 +33,7 @@ function Header() {
   useEffect(() => {
     const { filterByNumericValues } = filters;
     filterByNumericValues.forEach(({ column, value, comparison }) => {
-      const filteredPlanets = data.filter((planet) => {
+      const filteredPlanets = planetsList.filter((planet) => {
         if (comparison === 'maior que') {
           return Number(planet[column]) > Number(value);
         }
@@ -71,7 +72,7 @@ function Header() {
   };
 
   return (
-    <div>
+    <div className="header">
       <h1>Star Wars Planet Search</h1>
       <div>
         <input
