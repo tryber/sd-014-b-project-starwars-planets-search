@@ -30,3 +30,7 @@ td {
   margin: 0 20px;
   text-align: center;
 }
+
+option {
+  cursor: pointer;
+}
