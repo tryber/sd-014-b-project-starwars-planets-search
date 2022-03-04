@@ -2,6 +2,8 @@ import React, { useContext, useEffect } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 import TableItem from './TableItem';
 
+import './styles/Table.css';
+
 function PlanetsTable() {
   const { toShowPlanetsList, fetchPlanets } = useContext(PlanetsContext);
 
@@ -22,9 +24,6 @@ function PlanetsTable() {
           <th>Terrain</th>
           <th>Surface Water</th>
           <th>Population</th>
-          <th>Films</th>
-          <th>Created</th>
-          <th>Edited</th>
           <th>URL</th>
         </tr>
       </thead>

@@ -1,9 +1,11 @@
 import React from 'react';
 
+import './styles/Footer.css';
+
 function Footer() {
   return (
     <footer>
-      Opa meu bom
+      Projeto do curso da Trybe, feito por Levi Manoel
     </footer>
   );
 }
