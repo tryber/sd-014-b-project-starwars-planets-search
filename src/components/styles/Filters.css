@@ -1,0 +1,31 @@
+.filters {
+  background-color: black;
+  color: white;
+  display: flex;
+  height: 4em;
+  padding-left: 7em;
+  flex-wrap: wrap;
+}
+
+.form_container {
+  height: 100%;
+}
+
+label {
+  height: 100%;
+}
+
+input {
+  border: solid 2px gray;
+  height: 50%;
+}
+
+select, button {
+  border: none;
+  height: 50%;
+  background-color: gray;
+}
+
+button {
+  padding: 0 1em;
+}

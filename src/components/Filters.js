@@ -2,6 +2,8 @@ import React, { useState, useContext, useEffect } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 import NumericFilter from './NumericFilter';
 
+import './styles/Filters.css';
+
 function Filters() {
   const { setFiltersList, filtersList, filterByName } = useContext(PlanetsContext);
 
@@ -26,10 +28,11 @@ function Filters() {
   }
 
   return (
-    <div>
-      <form>
+    <div className='filters'>
+      <form className="form_container">
         <label htmlFor="name-filter-input">
           <input
+          placeholder="  Procure por nome"
             value={ valueState }
             id="name-filter-input"
             data-testid="name-filter"
