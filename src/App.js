@@ -1,15 +1,22 @@
 import React from 'react';
-import './App.css';
 import Filters from './components/Filters';
+import Header from './components/Header';
+import Footer from './components/Footer';
 import PlanetsTable from './components/PlanetsTable';
 import PlanetsProvider from './context/PlanetsProvider';
 
+import './App.css';
+
 function App() {
   return (
-    <PlanetsProvider>
-      <Filters />
-      <PlanetsTable />
-    </PlanetsProvider>
+    <div className="app__body">
+      <Header />
+      <PlanetsProvider>
+        <Filters />
+        <PlanetsTable />
+      </PlanetsProvider>
+      <Footer />
+    </div>
   );
 }
 
